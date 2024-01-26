@@ -50,7 +50,7 @@ border-bottom-right-radius: .3rem;
               <div class="card-body p-md-5 mx-md-4">
 
                 <div class="text-center">
-                  <p class="form-label" style="font-size: 25px; font-weight:bold; padding-bottom: 20px;">POINT OF SALES</p>
+                  <p class="mt-1 mb-5 pb-1">POINT OF SALES</p>
                 </div>
 
                 <form action="#">
@@ -68,17 +68,17 @@ border-bottom-right-radius: .3rem;
                   </div>
 
 				<div class="text-center mb-1">
-					<button id="btnLogin" value="Login" class="btn btn-block fa-lg" type="button" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px; "> LOG
-					IN</button>
+					<button id="btnLogin" value="Login" class="btn btn-danger btn-block fa-lg" type="button" style="border-radius: 2px; padding:3px;padding-right: 1rem;padding-left: 1rem; font-size:12px">Log
+					in</button>
 				</div>
                 </form>
 
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-              <div class="text-white px-3 py-4 p-md-5 mx-md-1">
-                  <h4 style="font-size: 40px; font-weight:bold; padding-left: 70px; color: #ff3c00;">BIZMATECH</h4>
-                  <p class="small mb-0" style="font-size: 17px; padding-left: 65px; padding-top:-5px;">Business Machine Technologies</p>
+              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                <h4 class="mb-4">SNPMPC</h4>
+                <p class="small mb-0">Santo Nino Plaridel Parish Multipurpose Cooperative.</p>
               </div>
             </div>
           </div>
