@@ -1,0 +1,88 @@
+.contain{
+    height: 100vh;
+    width: 100%;
+    border-radius:10px;
+    background-image: url(TableTennis.jpeg);
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+    transition:3s;
+
+    animation-name: animate;
+   animation-direction: alternate;
+    animation-duration: 30s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    animation-timing-function: ease-in-out;
+
+
+}
+
+@keyframes animate{
+
+    0%{
+        background-image: url(Taekwondo.jpg),url(Tennis.jpg);
+    }
+    20%{
+        background-image: url(Tennis.jpg),url(Basketball.jpeg);
+    }
+    40%{
+        background-image: url(Basketball.jpeg),url(Volleyball.jpg);
+    }
+    60%{
+        background-image: url(Volleyball.jpg),url(Soccer.jpg);
+    }
+    80%{
+        background-image: url(Soccer.jpg),url(TableTennis.jpeg);
+    }
+    100%{
+        background-image: url(TableTennis.jpeg);
+    }
+
+
+}
+
+
+.contain::before {
+    
+    background-image: url(Taekwondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    alt: "Taekwondo";
+}
+
+.contain::before {
+    background-image: url(Tennis.jpg);
+    animation-delay: 2s;
+    /* Add alt attribute */
+    alt: "Tennis";
+}
+
+.contain::before {
+    background-image: url(Basketball.jpeg);
+    animation-delay: 4s;
+    /* Add alt attribute */
+    alt: "Basketball";
+}
+
+.contain::before {
+    background-image: url(Volleyball.jpg);
+    animation-delay: 6s;
+    /* Add alt attribute */
+    alt: "Volleyball";
+}
+
+.contain::before {
+    background-image: url(Soccer.jpg);
+    animation-delay: 8s;
+    /* Add alt attribute */
+    alt: "Soccer";
+}
+
+.contain::before {
+    background-image: url(TableTennis.jpeg);
+    /* Add alt attribute */
+    alt: "Table Tennis";
+}
+
