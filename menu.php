@@ -57,47 +57,17 @@
     </div>
 </li>  
 <li class="nav-item">
-        <a class="nav-link collapsed" href="athletes.php">
+        
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
-            <span>All Athletes</span>
+            <span>All products</span>
         </a>
-    <hr class="sidebar-divider d-none d-md-block">
-    <div class="sidebar-heading">
-        Year Level
-    </div>
+   
+   
     
  
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="firstyear.php">
-            <i class="fas fa-fw fa-user-circle"></i>
-            <span>First Year</span>
-        </a>
-        
-    </li>
    
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link" href="secondyear.php">
-            <i class="fas fa-fw fa-user-circle"></i>
-            <span>Second Year</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="thirdyear.php">
-            <i class="fas fa-fw fa-user-circle"></i>
-            <span>Third Year</span>
-        </a>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="fourthyear.php">
-            <i class="fas fa-fw fa-user-circle"></i>
-            <span>Fourth Year</span>
-        </a>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="irregular.php">
-            <i class="fas fa-fw fa-user-circle"></i>
-            <span>Irregular</span>
-        </a>
 
     
    
