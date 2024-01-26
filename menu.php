@@ -3,9 +3,9 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-        <div> <img src="Sogod.png" width="50" height="50">
+        <div> <img src="" width="50" height="50">
         </div>
-        <div class="sidebar-brand-text mx-3 ">SLSU-AMS</div>
+        <div class="sidebar-brand-text mx-3 ">Bizmatech-POS</div>
 
     </a>
 

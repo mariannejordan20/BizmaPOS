@@ -7,8 +7,8 @@
     <meta name="author" content="">
 
 
-    <title>SLSU Athlete Management System</title>
-    <link rel="shortcut icon" href="Sogod.png">
+    <title>Bizmatech-POS</title>
+    <link rel="shortcut icon" href="">
     
 
     <!-- Custom fonts for this template-->
