@@ -45,7 +45,13 @@ include('connection.php');
             <div id="content">
 <head>
     <title> Login Form Design </title>
-    
+    <style>
+    .border-left-primary-custom {
+        border-left-color: #343a40;
+        border-left-width: 4px;
+    }
+</style>
+
 </head>
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -110,11 +116,11 @@ include('connection.php');
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-1">
+                            <div class="card border-left-primary-custom shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
                                                 TOTAL ORDER</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                     <?php
@@ -139,11 +145,11 @@ include('connection.php');
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-1">
+                            <div class="card border-left-primary-custom shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
                                                 PENDING ORDER</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                  <?php
@@ -170,11 +176,11 @@ include('connection.php');
 
                         <!-- Earnings (Monthly) Card Example -->
                        <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-1">
+                            <div class="card border-left-primary-custom shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
                                                 UNFINISHED</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                  <?php
@@ -200,11 +206,11 @@ include('connection.php');
                         </div>
 
                         <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-1">
+                            <div class="card border-left-primary-custom shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
                                                 PRODUCTS</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                     <?php
@@ -229,11 +235,11 @@ include('connection.php');
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-1">
+                            <div class="card border-left-primary-custom shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
                                                 CUSTOMERS</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                  <?php
@@ -260,11 +266,11 @@ include('connection.php');
 
                         <!-- Earnings (Monthly) Card Example -->
                        <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-info primary h-100 py-1">
+                            <div class="card border-left-primary-custom shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
                                                 SUPPLIERS</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                  <?php
@@ -293,7 +299,14 @@ include('connection.php');
                             
 
                     </div>
-                    
+
+                        <!-- Additional Canvas for Bar Graph -->
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 mb-12">
+                            <canvas id="myBarChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+
                         
                         
                     </div>
@@ -362,6 +375,40 @@ include('connection.php');
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+
+                                                    
+    <script>
+    // Your PHP data for the bar graph
+    var barChartData = {
+        labels: ['Sales', 'Revenue', 'Net PFT', 'Expense', 'Growth'],
+        datasets: [{
+            label: 'Target and Status Graphs',
+            backgroundColor: '#343a40',
+            borderWidth: 1,
+            data: [10, 20, 30, 20, 3]  // Replace this with your actual data
+        }]
+    };
+
+    // Get the canvas element and initialize the bar chart
+    var ctx = document.getElementById('myBarChart').getContext('2d');
+    var myBarChart = new Chart(ctx, {
+        type: 'horizontalBar',  // Set the type to 'horizontalBar'
+        data: barChartData,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    display: false,  // Hide the y-axis
+                }
+            }
+        }
+    });
+</script>
+
+
 
 </body>
 
