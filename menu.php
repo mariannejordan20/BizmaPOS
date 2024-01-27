@@ -66,7 +66,7 @@ include('connection.php');
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">List of Category:</h6>';
+                        <h6 class="collapse-header">List of Category:</h6>';    
 
         // Display the list of categories
         while ($row = mysqli_fetch_assoc($result)) {
