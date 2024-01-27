@@ -322,7 +322,7 @@ include('connection.php');
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="text-align: center; font-weight: bold; color: white">1</td>
+                                                <td style="text-align: center; font-weight: bold; color: white; font-size: 20px;">1</td>
                                             </tr>
                                         </tbody>
                                         <thead style="background-color: #212529;">
@@ -334,7 +334,7 @@ include('connection.php');
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="color: white;">
+                                                <td style="color: white; font-size: 16px;">
                                                     <span style="float: left;">0</span>
                                                     <span style="float: right;">0</span>
                                                 </td>
@@ -349,7 +349,7 @@ include('connection.php');
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="color: white;">
+                                                <td style="color: white; font-size: 16px;">
                                                     <span style="float: left;">0</span>
                                                     <span style="float: right;">0</span>
                                                 </td>
@@ -365,7 +365,7 @@ include('connection.php');
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="color: white;">
+                                                <td style="color: white; font-size: 16px;">
                                                     <span style="float: left;">0</span>
                                                     <span style="float: right;">0</span>
                                                 </td>
@@ -380,7 +380,7 @@ include('connection.php');
                             </div><!-- end col-->
                      
 
-                        <div class="col-xl-3 col-lg-6" style="margin-left: 20px; height: 00px">
+                        <div class="col-xl-3 col-lg-6" style="margin-left: 20px; height: 400px">
                                 <div class="card-dbrd">
                                     <div class="d-flex card-header justify-content-between align-items-center" style="background-color: #212529;>
                                         <h4 class="header-title">TOP SELLER PRODUCTS</h4>
@@ -405,7 +405,7 @@ include('connection.php');
                                                         <td>JUNKFOODS</td>
                                                         <td style="padding-top: 14px;">
                                                             <div class="progress" style="height: 5px; width: 100px;">
-                                                                <div class="progress-bar" role="progressbar" style="width: 65%; background-color: #ff3c00;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                                                <div class="progress-bar" role="progressbar" style="width: 45%; background-color: #ff3c00;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
                                                             </div>
                                                             </div>
                                                         </td>
