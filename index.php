@@ -101,8 +101,8 @@ include('connection.php');
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 style="font-size: 30px; font-weight:bold; font-family: helvetica; color: black;">DATA MONITORING AND ESTIMATES</h1>
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <h1 style="font-size: 25px; font-weight: bold; font-family: sans-serif; padding-left: 10px; color: #343a40;">DATA MONITORING AND ESTIMATES</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -118,7 +118,7 @@ include('connection.php');
                                                 TOTAL ORDER</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                     <?php
-                                                        
+                                                    
                                                         $query = "select count(Student_ID) AS NumStudents FROM athletes";
 
                                                         $result = mysqli_query( $conn, $query);
