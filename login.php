@@ -68,7 +68,7 @@ border-bottom-right-radius: .3rem;
                   </div>
 
 				<div class="text-center mb-1">
-					<button id="btnLogin" value="Login" class="btn btn-block fa-lg" type="button" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px; "> LOG
+					<button id="btnLogin" value="Login" class="btn btn-block fa-lg" type="button" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;"> LOG
 					IN</button>
 				</div>
                 </form>

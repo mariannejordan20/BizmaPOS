@@ -42,10 +42,11 @@ include('connection.php');
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
-            <i class="fas fa-fw fa-users"></i>
+            <i class="fas fa-fw fa-cube"></i>
             <span>Products</span>
         </a>
     </li>
+
 
     <?php
     // Fetch distinct categories from the products table
@@ -76,6 +77,7 @@ include('connection.php');
     ?>
 
     <li class="nav-item">
+
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
             <span>Customers</span>
