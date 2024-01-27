@@ -58,7 +58,7 @@ include('connection.php');
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-soccer-ball-o"></i>
-                    <span>Stocks</span>
+                    <span>Product Category</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -76,11 +76,8 @@ include('connection.php');
     }
     ?>
 
-    <li class="nav-item">
 
-<<<<<<< Updated upstream
-        <a class="nav-link collapsed" href="products.php">
-=======
+
          <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock"
                 aria-expanded="true" aria-controls="collapseUtilities">
@@ -97,14 +94,15 @@ include('connection.php');
                 </div>
             </div>
         </li>  
+
         <li class="nav-item">
         <a class="nav-link collapsed" href="customers.php">
->>>>>>> Stashed changes
+
             <i class="fas fa-fw fa-users"></i>
             <span>Customers</span>
         </a>
-    </li>
-
+   
+</li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
