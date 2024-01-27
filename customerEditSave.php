@@ -3,10 +3,10 @@ session_start();
 
 include('connection.php');
     $Seqcode = $_POST['Seqcode'];
-    $IDNumber = $_POST['IDNumber'];
+    $number_id = $_POST['number_id'];
     $Barcode = $_POST['Barcode'];
     $CustomerName = $_POST['CustomerName'];
-    $Group = $_POST['Group'];
+    $grp = $_POST['grp'];
     $TermofPayment = $_POST['TermofPayment'];
     $VATTIN = $_POST['VATTIN'];
     $ContactPerson = $_POST['ContactPerson'];
@@ -16,7 +16,7 @@ include('connection.php');
 
 
 
-$query = mysqli_query($conn, "SELECT * FROM customer WHERE Seqcode = '$Seqcode' AND IDNumber = '$IDNumber' AND Barcode = '$Barcode' AND CustomerName = '$CustomerName' AND Group = '$Group' AND TermofPayment = '$TermofPayment'
+$query = mysqli_query($conn, "SELECT * FROM customer WHERE Seqcode = '$Seqcode' AND number_id = '$number_id' AND Barcode = '$Barcode' AND CustomerName = '$CustomerName' AND grp = '$grp' AND TermofPayment = '$TermofPayment'
 AND VATTIN = '$VATTIN' AND ContactPerson = '$ContactPerson' AND Address = '$Address' 
 AND Contact = '$Contact' AND Datee = '$Datee'");
 
@@ -82,12 +82,12 @@ if (mysqli_num_rows($query2) >1 ) {
         header("location:index.php");
     }
 } else {
-    $update = "Update customer set Seqcode = '".$Seqcode."', IDNumber = '".$IDNumber."', Barcode = '".$Barcode."', CustomerName = '".$CustomerName."', Group = '".$Group."', TermofPayment = '".$TermofPayment."', VATTIN = '".$VATTIN."', ContactPerson = '".$ContactPerson."', Address = '".$Address."' 
+    $update = "Update customer set Seqcode = '".$Seqcode."', number_id = '".$number_id."', Barcode = '".$Barcode."', CustomerName = '".$CustomerName."', grp = '".$grp."', TermofPayment = '".$TermofPayment."', VATTIN = '".$VATTIN."', ContactPerson = '".$ContactPerson."', Address = '".$Address."' 
 	, Contact = '".$Contact."' , Datee = '".$Datee."' ";
 
     $update .= "where id = ".$id;
 
-    if ($Seqcode !== "" || $IDNumber !== "" || $Barcode !== "" || $CustomerName !== "" || $Group !== "" || $TermofPayment !== "" || $VATTIN !== "" || $ContactPerson !== "" || $Address !== "" || $Contact !== "" || $Datee !== "") {
+    if ($Seqcode !== "" || $number_id !== "" || $Barcode !== "" || $CustomerName !== "" || $grp !== "" || $TermofPayment !== "" || $VATTIN !== "" || $ContactPerson !== "" || $Address !== "" || $Contact !== "" || $Datee !== "") {
         $res = $conn->query($update);
 
         if ($res && mysqli_affected_rows($conn) > 0) {

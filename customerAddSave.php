@@ -3,10 +3,10 @@ session_start();
 	include('connection.php');
 
     $Seqcode = $_POST['Seqcode'];
-    $IDNumber = $_POST['IDNumber'];
+    $number_id = $_POST['number_id'];
     $Barcode = $_POST['Barcode'];
     $CustomerName = $_POST['CustomerName'];
-    $Group = $_POST['Group'];
+    $grp = $_POST['grp'];
     $TermofPayment = $_POST['TermofPayment'];
     $VATTIN = $_POST['VATTIN'];
     $ContactPerson = $_POST['ContactPerson'];
@@ -35,7 +35,7 @@ else{
 
     
 
-$add = "insert into customer set Seqcode = '".$Seqcode."', IDNumber = '".$IDNumber."', Barcode = '".$Barcode."', CustomerName = '".$CustomerName."', Group = '".$Group."', TermofPayment = '".$TermofPayment."', VATTIN = '".$VATTIN."', ContactPerson = '".$ContactPerson."', Address = '".$Address."' 
+$add = "insert into customer set Seqcode = '".$Seqcode."', number_id = '".$number_id."', Barcode = '".$Barcode."', CustomerName = '".$CustomerName."', grp = '".$grp."', TermofPayment = '".$TermofPayment."', VATTIN = '".$VATTIN."', ContactPerson = '".$ContactPerson."', Address = '".$Address."' 
 ,Contact = '".$Contact."' , Datee = '".$Datee."' ";
 
 $res = $conn->query($add);

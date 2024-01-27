@@ -140,8 +140,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="IDNumber" class="control-label">ID Number</label>
-                                    <input type="text" name="IDNumber"  class="form-control form-control-sm rounded-5"  required/>
+                                    <label for="number_id" class="control-label">ID Number</label>
+                                    <input type="text" name="number_id"  class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
                                 
@@ -163,8 +163,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="Group" class="control-label">Group</label>
-                                        <select name="Group" class="form-control form-control-sm form-control-border rounded-5" required>
+                                        <label for="grp" class="control-label">Group</label>
+                                        <select name="grp" class="form-control form-control-sm form-control-border rounded-5" required>
                                         <option value="">Select Group</option>
                                         <option value="Arnis">Arnis</option>
                                         <option value="Athletics">Athletics</option>
