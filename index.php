@@ -308,8 +308,8 @@ include('connection.php');
                         </div>
                         
                     </div>
-
-                        <div class="col-xl-2 col-md-6 mb-4" style="margin-left: 20px;">
+                    <div class="row">       
+                        <div class="col-xl-12 col-md-6 mb-4" style="margin-left: 20px;">
                             <div class="card-dbrd">
                                 <div class="table-responsive-sm">
                                     <table class="table table-centered mb-4" style="font-size: 6px;">
@@ -378,10 +378,45 @@ include('connection.php');
 
                                     
                             </div><!-- end col-->
-                        </div>
-                        <!-- end row-->
+                     
 
+                        <div class="col-xl-3 col-lg-6" style="margin-left: 20px; height: 00px">
+                                <div class="card-dbrd">
+                                    <div class="d-flex card-header justify-content-between align-items-center" style="background-color: #212529;>
+                                        <h4 class="header-title">TOP SELLER PRODUCTS</h4>
+                                    </div>
 
+                                    <div class="card-body p-2">
+
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-centered table-hover table-borderless mb-1">
+                                                
+                                                <tbody>
+                                                    <tr>
+                                                        <td>SHAMPOO</td>
+                                                        <td style="padding-top: 14px;">
+                                                            <div class="progress" style="height: 5px; width: 100px;">
+                                                                <div class="progress-bar" role="progressbar" style="width: 65%; background-color: #ff3c00;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>JUNKFOODS</td>
+                                                        <td style="padding-top: 14px;">
+                                                            <div class="progress" style="height: 5px; width: 100px;">
+                                                                <div class="progress-bar" role="progressbar" style="width: 65%; background-color: #ff3c00;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end table-responsive-->
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
                           
                         </div>
 
