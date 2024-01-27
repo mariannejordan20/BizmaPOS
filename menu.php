@@ -32,26 +32,22 @@ include('connection.php');
     <div class="sidebar-heading">
         Main
     </div>
-   
+
     <li class="nav-item">
-    
-        <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-shopping-cart"></i>
             <span>Sales</span>
         </a>
+    </li>
 
-        <li class="nav-item">
-
-    
-
+    <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
             <span>Products</span>
         </a>
+    </li>
 
-
-<?php
+    <?php
     // Fetch distinct categories from the products table
     $query = "SELECT DISTINCT Categories FROM products";
     $result = mysqli_query($conn, $query);
@@ -66,11 +62,11 @@ include('connection.php');
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">List of Category:</h6>';    
+                        <h6 class="collapse-header">List of Category:</h6>';
 
         // Display the list of categories
         while ($row = mysqli_fetch_assoc($result)) {
-            echo '<a class="collapse-item" href="products.php?Categories=' . urlencode($row['Categories']) . '">' . $row['Categories'] . '</a>';
+            echo '<a class="collapse-item" href="stocks.php?category=' . urlencode($row['Categories']) . '">' . $row['Categories'] . '</a>';
         }
 
         echo '</div>
@@ -78,22 +74,20 @@ include('connection.php');
               </li>';
     }
     ?>
-        <li class="nav-item">
+
+    <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
             <span>Customers</span>
         </a>
+    </li>
 
-        <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
             <span>Expenses</span>
         </a>
-
-    
-
-    
-
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
