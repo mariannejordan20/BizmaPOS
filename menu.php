@@ -78,7 +78,28 @@ include('connection.php');
 
     <li class="nav-item">
 
+<<<<<<< Updated upstream
         <a class="nav-link collapsed" href="products.php">
+=======
+         <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-soccer-ball-o"></i>
+                <span>Stock</span>
+            </a>
+            <div id="collapseStock" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <!-- <h6 class="collapse-header">List of Sports:</h6> -->
+                    <a class="collapse-item" href="sports.php?sport=arnis">Item Categories</a>
+                    <a class="collapse-item" href="sports.php?sport=athletics">Item Sub-categories</a>
+                    <a class="collapse-item" href="sports.php?sport=badminton">Item Units</a>
+                </div>
+            </div>
+        </li>  
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="customers.php">
+>>>>>>> Stashed changes
             <i class="fas fa-fw fa-users"></i>
             <span>Customers</span>
         </a>
