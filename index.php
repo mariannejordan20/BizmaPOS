@@ -96,49 +96,41 @@ include('connection.php');
 
                 </nav>
                 <!-- End of Topbar -->
-
+            
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-
-
-
+                        <h1 style="font-size: 30px; font-weight:bold; font-family: helvetica; color: black;">DATA MONITORING AND ESTIMATES</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
+                        <div class="col-xl-2 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Registered Athletes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                 <?php
-                                                    
-                                                    $query = "select count(Student_ID) AS NumStudents FROM athletes";
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                                                TOTAL ORDER</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <?php
+                                                        
+                                                        $query = "select count(Student_ID) AS NumStudents FROM athletes";
 
-                                                    $result = mysqli_query( $conn, $query);
-                                                    
-                                                while ($row = mysqli_fetch_assoc($result))
-                                                    { 
-                                                        echo $row['NumStudents'];
-                                                    }
-                                                   
-
-                                                    
-                                                  ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class='fas fa-user-friends' style='font-size:24px'></i>
-
+                                                        $result = mysqli_query( $conn, $query);
+                                                        
+                                                    while ($row = mysqli_fetch_assoc($result))
+                                                        { 
+                                                            echo $row['NumStudents'];
+                                                        }
+                                                        
+                                                    ?>
+                                                    <i class='fas fa-female' style='font-size:24px; float: right;'></i>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -146,13 +138,13 @@ include('connection.php');
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="col-xl-2 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Number of Male Athletes</div>
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                                                PENDING ORDER</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                  <?php
                                                     
@@ -168,11 +160,8 @@ include('connection.php');
 
                                                     
                                                   ?>
-
+                                                <i class='fas fa-female' style='font-size:24px; float: right;'></i>
                                             </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class='fas fa-male' style='font-size:24px'></i>
                                         </div>
                                     </div>
                                 </div>
@@ -180,13 +169,13 @@ include('connection.php');
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
-                       <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
+                       <div class="col-xl-2 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-1">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Total Number Female Athletes</div>
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-3">
+                                                UNFINISHED</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                  <?php
                                                     
@@ -202,25 +191,108 @@ include('connection.php');
 
                                                     
                                                   ?>
+                                                  <i class='fas fa-female' style='font-size:24px; float: right;'></i>
                                             </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class='fas fa-female' style='font-size:24px'></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="col-xl-2 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-1">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">
+                                                PRODUCTS</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <?php
+                                                        
+                                                        $query = "select count(Student_ID) AS NumStudents FROM athletes";
 
+                                                        $result = mysqli_query( $conn, $query);
+                                                        
+                                                    while ($row = mysqli_fetch_assoc($result))
+                                                        { 
+                                                            echo $row['NumStudents'];
+                                                        }
+                                                        
+                                                    ?>
+                                                    <i class='fas fa-female' style='font-size:24px; float: right;'></i>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-2 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-1">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">
+                                                CUSTOMERS</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                 <?php
+                                                    
+                                                    $query = "select count(sex) AS numMale FROM athletes where sex = 'male'";
+
+                                                    $result = mysqli_query( $conn, $query);
+
+                                                while ($row = mysqli_fetch_assoc($result))
+                                                    { 
+                                                        echo $row['numMale'];
+                                                    }
+                                                   
+
+                                                    
+                                                  ?>
+                                                <i class='fas fa-female' style='font-size:24px; float: right;'></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                       <div class="col-xl-2 col-md-6 mb-4">
+                            <div class="card border-left-info primary h-100 py-1">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">
+                                                SUPPLIERS</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                 <?php
+                                                    
+                                                    $query = "select count(sex) AS numFemale FROM athletes where sex = 'female'";
+
+                                                    $result = mysqli_query( $conn, $query);
+
+                                                while ($row = mysqli_fetch_assoc($result))
+                                                    { 
+                                                        echo $row['numFemale'];
+                                                    }
+                                                   
+
+                                                    
+                                                  ?>
+                                                  <i class='fas fa-female' style='font-size:24px; float: right;'></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Pending Requests Card Example -->
                     <div class="col-xl-12 col-md-12 mb-12">
                             
-                        
-                    <div class="contain">
-       
-       </div>
-                                                </div>
+
+                    </div>
                     
                         
                         
