@@ -151,39 +151,17 @@
                                     <input type="text" name="Unit" class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                    <label for="Categories" class="control-label">Category</label>
+                                    <input type="text" name="Categories"  class="form-control form-control-sm rounded-5"  required/>
+                                    </div>
+                                </div>
                                 
                                 
                                 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="Categories" class="control-label">Category</label>
-                                        <select name="Categories" class="form-control form-control-sm form-control-border rounded-5" required>
-                                        <option value="">Select Sport</option>
-                                        <option value="Arnis">Arnis</option>
-                                        <option value="Athletics">Athletics</option>
-                                        <option value="Badminton">Badminton</option>
-                                        <option value="Baseball">Baseball</option>
-                                        <option value="Basketball">Basketball</option>
-                                        <option value="Chess">Chess</option>
-                                        <option value="Dancesports">Dancesports</option>
-                                        <option value="Futsal">Futsal</option>
-                                        <option value="Football">Football</option>
-                                        <option value="Softball">Softball</option>
-                                        <option value="Sepak Takraw">Sepak Takraw</option>
-                                        <option value="Swimming">Swimming</option>
-                                        <option value="Table Tennis">Table Tennis</option>
-                                        <option value="Taekwando Koryugi">Taekwando Koryugi</option>
-                                        <option value="Taekwando Poomsae">Taekwando Poomsae</option>
-                                        <option value="Tennis">Tennis</option>
-                                        <option value ="Volleyball">Volleyball</option>
-                                        
-                                        </select>
-                                    
-                                    
-                        
-                                    </div>
-                                </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
