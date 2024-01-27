@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, Barcode, Product,Unit,Quantity,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
+    $sql = "select ID, Barcode, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
     $results = $conn->query($sql);
 ?>
 
@@ -112,7 +112,6 @@ session_start();
                         <th class="text-center">Barcode</th>
                         <th class="text-center">Product Name</th>
                         <th class="text-center">Unit</th>
-                        <th class="text-center">Quantity</th>
                         <th class="text-center">Costing</th>
                         <th class="text-center">Price</th>
                         <th class="text-center">Wholesale</th>
@@ -140,8 +139,8 @@ session_start();
                                     echo '<tr>
                                             <td>
 
-                                            <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
-                                                <a class = "mr-2" href = "productsEdit.php?id='.$result['ID'].'">
+                                            
+                                                <a class = "mr-2" href = "stocksInEdit.php?id='.$result['ID'].'">
                                                 <i class = "fa fa-edit"></i>
                                                 </a>
 
@@ -154,7 +153,6 @@ session_start();
                                             <td>'.$result['Barcode'].'</td>
                                             <td>'.$result['Product'].'</td>
                                             <td>'.$result['Unit'].'</td>
-                                            <td>'.$result['Quantity'].'</td>
                                             <td>'.$result['Costing'].'</td>
                                             <td>'.$result['Price'].'</td>
                                             <td>'.$result['Wholesale'].'</td>
