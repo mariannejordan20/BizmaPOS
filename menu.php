@@ -50,11 +50,10 @@ include('connection.php');
             <span>Products</span>
         </a>
 
-<<<<<<< HEAD
          <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock"
                 aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fa-fw fas fa-cubes"></i>
+                <i class="fas fa-fw fa-soccer-ball-o"></i>
                 <span>Stock</span>
             </a>
             <div id="collapseStock" class="collapse" aria-labelledby="headingUtilities"
@@ -67,36 +66,6 @@ include('connection.php');
                 </div>
             </div>
         </li>  
-=======
-
-<?php
-    // Fetch distinct categories from the products table
-    $query = "SELECT DISTINCT Categories FROM products";
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        echo '<li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-soccer-ball-o"></i>
-                    <span>Stocks</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">List of Category:</h6>';    
-
-        // Display the list of categories
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo '<a class="collapse-item" href="products.php?Categories=' . urlencode($row['Categories']) . '">' . $row['Categories'] . '</a>';
-        }
-
-        echo '</div>
-              </div>
-              </li>';
-    }
-    ?>
->>>>>>> b755862ae4a77d0f1c0a0ec9b328a540c5064356
         <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
