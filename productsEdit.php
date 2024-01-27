@@ -133,36 +133,10 @@
                                     </div>
                                 </div>
 
-                               
-                                
-
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="Category" class="control-label">Category</label>
-                                        <select name="Category" class="form-control form-control-sm form-control-border rounded-5">
-                                        <option value="<?=$row['Categories']?>">Select Category</option>
-                                        <option value="Arnis">Arnis</option>
-                                        <option value="Athletics">Athletics</option>
-                                        <option value="Badminton">Badminton</option>
-                                        <option value="Baseball">Baseball</option>
-                                        <option value="Basketball">Basketball</option>
-                                        <option value="Chess">Chess</option>
-                                        <option value="Dancesports">Dancesports</option>
-                                        <option value="Futsal">Futsal</option>
-                                        <option value="Football">Football</option>
-                                        <option value="Softball">Softball</option>
-                                        <option value="Sepak Takraw">Sepak Takraw</option>
-                                        <option value="Swimming">Swimming</option>
-                                        <option value="Table Tennis">Table Tennis</option>
-                                        <option value="Taekwondo Koryugi">Taekwondo Koryugi</option>
-                                        <option value="Taekwando Poomsae">Taekwando Poomsae</option>
-                                        <option value="Tennis">Tennis</option>
-                                        <option value ="Volleyball">Volleyball</option>
-                                        
-                                        </select>
-                                    
-                                    
-                        
+                                    <label for="Categories" class="control-label">Categories</label>
+                                    <input type="text" name="Categories" class="form-control form-control-sm rounded-0" value="<?=$row['Categories']?>">
                                     </div>
                                 </div>
 
@@ -208,12 +182,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="Date" class="control-label">Date</label>
-                                        <input type="date" name="Date" id="Date" class="form-control form-control-sm rounded-0" value="<?php echo isset($date) ? $date : ''; ?>">
-                                    </div>
-                                </div>
+                                
 
                                 
 
