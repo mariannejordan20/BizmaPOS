@@ -98,7 +98,7 @@ include('header.php');
 
                     <div class="card card-outline rounded-0 card-maroon">
                         <div class="card-header">
-                            <h3 class="card-title">List of all Products</h3>
+                            <h3 class="card-title">List of all Customer</h3>
 
                         </div>
                         <div class="card-body">
