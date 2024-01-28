@@ -28,10 +28,12 @@ $newQuantity = max(0, $currentQuantity - $additionalQuantity);
 // Update the other fields in the database
 $update = "UPDATE products SET Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Quantity = '".$newQuantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."', Supplier = '".$supplier."' ";
 $update .= "WHERE id = ".$id;
+$stockOutHistory = "insert into stockouthistory set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."',Quantity = '".$additionalQuantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."' 
+,Supplier = '".$supplier."' ";
 
 if ($barcode !== "" || $product !== "" || $unit !== "" || $additionalQuantity !== "" || $costing !== "" || $price !== "" || $wholesale !== "" || $promo !== "" || $categories !== "" || $seller !== "" || $supplier !== "") {
     $res = $conn->query($update);
-
+    $res2 = $conn->query($stockOutHistory);
     if ($res && mysqli_affected_rows($conn) > 0) {
         $_SESSION['status'] = "Edit Successful";
         $_SESSION['status_code'] = "success";

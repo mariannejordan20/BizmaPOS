@@ -88,9 +88,9 @@ include('connection.php');
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <!-- <h6 class="collapse-header">List of Sports:</h6> -->
-                    <a class="collapse-item" href="sports.php?sport=arnis">Stock In History</a>
+                    <a class="collapse-item" href="stocksInHistory.php">Stock In History</a>
                     <a class="collapse-item" href="stocksIn.php">Stock In +</a>
-                    <a class="collapse-item" href="sports.php?sport=athletics">Stock Out History </a>
+                    <a class="collapse-item" href="stocksOutHistory.php">Stock Out History </a>
                     <a class="collapse-item" href="stocksOut.php">Stock out - </a>
                     <a class="collapse-item" href="products.php">Inventory List </a>
                 </div>
