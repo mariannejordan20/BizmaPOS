@@ -121,8 +121,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="number_id" class="control-label">ID Number</label>
-                                    <input type="text" name="number_id"  class="form-control form-control-sm rounded-0" value="<?=$row['number_id']?>">
+                                    <label for="IDNumber" class="control-label">ID Number</label>
+                                    <input type="text" name="IDNumber"  class="form-control form-control-sm rounded-0" value="<?=$row['IDNumber']?>">
                                     </div>
                                 </div>
                                 
@@ -143,9 +143,9 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="grp" class="control-label">Group</label>
-                                        <select name="grp" class="form-control form-control-sm form-control-border rounded-5">
-                                        <option value="<?=$row['grp']?>">Select Group</option>
+                                        <label for="Group" class="control-label">Group</label>
+                                        <select name="Group" class="form-control form-control-sm form-control-border rounded-5">
+                                        <option value="<?=$row['Group']?>">Select Group</option>
                                         <option value="Arnis">Arnis</option>
                                         <option value="Athletics">Athletics</option>
                                         <option value="Badminton">Badminton</option>
@@ -180,8 +180,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Address" class="control-label">Address</label>
-                                    <input type="text" name="Address" class="form-control form-control-sm rounded-0" value="<?=$row['Address']?>">
+                                    <label for="Loc" class="control-label">Address</label>
+                                    <input type="text" name="Loc" class="form-control form-control-sm rounded-0" value="<?=$row['Loc']?>">
                                     </div>
                                 </div>
 
@@ -194,8 +194,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Datee" class="control-label">Datee</label>
-                                    <input type="Date" name="Supplier" class="form-control form-control-sm rounded-0" value="<?=$row['Datee']?>">
+                                    <label for="Date_Joined" class="control-label">Datee</label>
+                                    <input type="Date" name="Date_Joined" class="form-control form-control-sm rounded-0" value="<?=$row['Date_Joined']?>">
                                     </div>
                                 </div>
 

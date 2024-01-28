@@ -3,16 +3,16 @@ session_start();
 	include('connection.php');
 
     $Seqcode = $_POST['Seqcode'];
-    $number_id = $_POST['number_id'];
+    $number_id = $_POST['IDNumber'];
     $Barcode = $_POST['Barcode'];
     $CustomerName = $_POST['CustomerName'];
-    $grp = $_POST['grp'];
+    $grp = $_POST['Group'];
     $TermofPayment = $_POST['TermofPayment'];
     $VATTIN = $_POST['VATTIN'];
     $ContactPerson = $_POST['ContactPerson'];
-    $Address = $_POST['Address'];
+    $Address = $_POST['Loc'];
     $Contact = $_POST['Contact'];
-    $Datee = $_POST['Datee'];
+    $Datee = $_POST['Date_Joined'];
         
 
 $query = mysqli_query($conn,"SELECT * FROM customer WHERE Seqcode = '$Seqcode'");
@@ -35,8 +35,8 @@ else{
 
     
 
-$add = "insert into customer set Seqcode = '".$Seqcode."', number_id = '".$number_id."', Barcode = '".$Barcode."', CustomerName = '".$CustomerName."', grp = '".$grp."', TermofPayment = '".$TermofPayment."', VATTIN = '".$VATTIN."', ContactPerson = '".$ContactPerson."', Address = '".$Address."' 
-,Contact = '".$Contact."' , Datee = '".$Datee."' ";
+    $add = "INSERT INTO customer SET Seqcode = '".$Seqcode."', IDNumber = '".$number_id."', Barcode = '".$Barcode."', CustomerName = '".$CustomerName."', `Group` = '".$grp."', TermofPayment = '".$TermofPayment."', VATTIN = '".$VATTIN."', ContactPerson = '".$ContactPerson."', Loc = '".$Address."', Contact = '".$Contact."', Date_Joined = '".$Datee."'";
+
 
 $res = $conn->query($add);
 

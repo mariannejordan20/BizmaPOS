@@ -5,16 +5,16 @@ include('connection.php');
 
 // Retrieve form data
 $Seqcode = $_POST['Seqcode'];
-$number_id = $_POST['number_id'];
+$number_id = $_POST['IDNumber'];
 $Barcode = $_POST['Barcode'];
 $CustomerName = $_POST['CustomerName'];
-$grp = $_POST['grp'];
+$grp = $_POST['Group'];
 $TermofPayment = $_POST['TermofPayment'];
 $VATTIN = $_POST['VATTIN'];
 $ContactPerson = $_POST['ContactPerson'];
-$Address = $_POST['Address'];
+$Address = $_POST['Loc'];
 $Contact = $_POST['Contact'];
-$Datee = isset($_POST['Datee']) ? $_POST['Datee'] : '';
+$Datee = isset($_POST['Date_Joined']) ? $_POST['Date_Joined'] : '';
 
 // Get the id from the form
 $id = $_POST['id']; // Adjust this according to your actual form structure
@@ -29,9 +29,10 @@ if (mysqli_num_rows($query2) > 0) {
 }
 
 // Update query
-$update = "UPDATE customer SET Seqcode = '".$Seqcode."', number_id = '".$number_id."', Barcode = '".$Barcode."', CustomerName = '".$CustomerName."', grp = '".$grp."', TermofPayment = '".$TermofPayment."', VATTIN = '".$VATTIN."', ContactPerson = '".$ContactPerson."', Address = '".$Address."', Contact = '".$Contact."', Datee = '".$Datee."' ";
+// Update query
+$update = "UPDATE customer SET Seqcode = '$Seqcode', IDNumber = '$number_id', Barcode = '$Barcode', CustomerName = '$CustomerName', `Group` = '$grp', TermofPayment = '$TermofPayment', VATTIN = '$VATTIN', ContactPerson = '$ContactPerson', Loc = '$Address', Contact = '$Contact', Date_Joined = '$Datee' ";
+$update .= "WHERE id = $id";
 
-$update .= "WHERE id = ".$id;
 
 // Check if any changes were made
 if ($Seqcode !== "" || $number_id !== "" || $Barcode !== "" || $CustomerName !== "" || $grp !== "" || $TermofPayment !== "" || $VATTIN !== "" || $ContactPerson !== "" || $Address !== "" || $Contact !== "" || $Datee !== "") {
@@ -44,7 +45,7 @@ if ($Seqcode !== "" || $number_id !== "" || $Barcode !== "" || $CustomerName !==
         exit;
     } else {
         $_SESSION['status'] = "No changes made or error occurred";
-        $_SESSION['status_code'] = "error";
+        $_SESSION['status_code'] = "success";
         header("location: customers.php"); // Modify this redirect URL as needed
         exit;
     }

@@ -16,7 +16,8 @@ if (empty($haslog)) {
 }
 
 // SQL query to retrieve data from the 'customer' table
-$sql = "SELECT ID, Seqcode, number_id, Barcode, CustomerName, grp, TermofPayment, VATTIN, ContactPerson, Address, Contact, Datee FROM customer ORDER BY CustomerName";
+$sql = "SELECT ID,Seqcode, IDNumber, Barcode, CustomerName, `Group`, TermofPayment, VATTIN, ContactPerson, Loc, Contact, Date_Joined FROM customer ORDER BY CustomerName";
+
 
 // Execute the query
 $results = $conn->query($sql);
@@ -149,16 +150,16 @@ include('header.php');
 
                                                         </td>
                                                         <td>' . $result['Seqcode'] . '</td>
-                                                        <td>' . $result['number_id'] . '</td>
+                                                        <td>' . $result['IDNumber'] . '</td>
                                                         <td>' . $result['Barcode'] . '</td>
                                                         <td>' . $result['CustomerName'] . '</td>
-                                                        <td>' . $result['grp'] . '</td>
+                                                        <td>' . $result['Group'] . '</td>
                                                         <td>' . $result['TermofPayment'] . '</td>
                                                         <td>' . $result['VATTIN'] . '</td>
                                                         <td>' . $result['ContactPerson'] . '</td>
-                                                        <td>' . $result['Address'] . '</td>
+                                                        <td>' . $result['Loc'] . '</td>
                                                         <td>' . $result['Contact'] . '</td>
-                                                        <td>' . $result['Datee'] . '</td>
+                                                        <td>' . $result['Date_Joined'] . '</td>
 
 
 
@@ -173,17 +174,17 @@ include('header.php');
                         <div class="modal-body">
                             
                             <p><strong>Seqcode:</strong> ' . $result['Seqcode'] . '</p>
-                            <p><strong>number_id:</strong> ' . $result['number_id'] . '</p>
+                            <p><strong>IDNumber:</strong> ' . $result['IDNumber'] . '</p>
                             <p><strong>Barcode:</strong> ' . $result['Barcode'] . '</p>
                             <p><strong>CustomerName:</strong> ' . $result['CustomerName'] . '</p>
-                            <p><strong>grp Price:</strong> ' . $result['grp'] . '</p>
+                            <p><strong>Group Price:</strong> ' . $result['Group'] . '</p>
                             <p><strong>TermofPayment Price:</strong> ' . $result['TermofPayment'] . '</p>
                             <p><strong>VATTIN:</strong> ' . $result['VATTIN'] . '</p>
                             
                             <p><strong>ContactPerson:</strong> ' . $result['ContactPerson'] . '</p>
-                            <p><strong>Address:</strong> ' . $result['Address'] . '</p>
+                            <p><strong>Address:</strong> ' . $result['Loc'] . '</p>
                             <p><strong>Contact:</strong> ' . $result['Contact'] . '</p>
-                            <p><strong>Datee:</strong> ' . $result['Datee'] . '</p>
+                            <p><strong>Date:</strong> ' . $result['Date_Joined'] . '</p>
                             
                           
                             

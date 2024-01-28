@@ -140,8 +140,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="number_id" class="control-label">ID Number</label>
-                                    <input type="text" name="number_id"  class="form-control form-control-sm rounded-5"  required/>
+                                    <label for="IDNumber"  class="control-label">ID Number</label>
+                                    <input type="text" name="IDNumber"  class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
                                 
@@ -163,8 +163,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="grp" class="control-label">Group</label>
-                                        <select name="grp" class="form-control form-control-sm form-control-border rounded-5" required>
+                                        <label for="Group" class="control-label">Group</label>
+                                        <select name="Group" class="form-control form-control-sm form-control-border rounded-5" required>
                                         <option value="">Select Group</option>
                                         <option value="Arnis">Arnis</option>
                                         <option value="Athletics">Athletics</option>
@@ -198,8 +198,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Address" class="control-label">Address</label>
-                                    <input type="text" name="Address" class="form-control form-control-sm form-control-border rounded-5" required>
+                                    <label for="Loc" class="control-label">Address</label>
+                                    <input type="text" name="Loc" class="form-control form-control-sm form-control-border rounded-5" required>
                                     </div>
                                 </div>
 
@@ -214,8 +214,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="Datee" class="control-label">Date</label>
-                                        <input type="date" name="Datee" id="Datee" class="form-control form-control-sm rounded-0" value="<?php echo isset($date) ? $date : ''; ?>" required/>
+                                        <label for="Date_Joined" class="control-label">Date</label>
+                                        <input type="date" name="Date_Joined" id="Date_Joined" class="form-control form-control-sm rounded-0" value="<?php echo isset($date) ? $date : ''; ?>" required/>
 
                                     </div>
                                 </div>
