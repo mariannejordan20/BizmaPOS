@@ -31,7 +31,7 @@ if (isset($_GET['category'])) {
 
     if (in_array($selectedCategory, $categories)) {
         // Use the selected category in the query
-        $sql = "SELECT ID, Barcode, Product, Unit, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products WHERE Categories = '$selectedCategory' ORDER BY Categories";
+        $sql = "SELECT ID, Barcode, Product, Unit,Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products WHERE Categories = '$selectedCategory' ORDER BY Categories";
         $categoryName = $selectedCategory;
     } else {
         // Handle invalid category
@@ -40,7 +40,7 @@ if (isset($_GET['category'])) {
     }
 } else {
     // Default query if no category is specified
-    $sql = "SELECT ID, Barcode, Product, Unit, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
+    $sql = "SELECT ID, Barcode, Product, Unit,Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
 }
 
 $results = $conn->query($sql);
@@ -144,6 +144,7 @@ $results = $conn->query($sql);
                         <th class="text-center">Barcode</th>
                         <th class="text-center">Product Name</th>
                         <th class="text-center">Unit</th>
+                        <th class="text-center">Quantity</th>
                         <th class="text-center">Costing</th>
                         <th class="text-center">Price</th>
                         <th class="text-center">Wholesale</th>
@@ -183,6 +184,7 @@ $results = $conn->query($sql);
                                             <td>'.$result['Barcode'].'</td>
                                             <td>'.$result['Product'].'</td>
                                             <td>'.$result['Unit'].'</td>
+                                            <td>'.$result['Quantity'].'</td>
                                             <td>'.$result['Costing'].'</td>
                                             <td>'.$result['Price'].'</td>
                                             <td>'.$result['Wholesale'].'</td>
