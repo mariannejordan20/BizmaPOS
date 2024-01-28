@@ -23,7 +23,7 @@ $row = $result->fetch_assoc();
 $currentQuantity = $row['Quantity'];
 
 // Calculate the new quantity (cannot be less than 0)
-$newQuantity = max(0, $currentQuantity + $additionalQuantity);
+$newQuantity = max(0, $currentQuantity - $additionalQuantity);
 
 // Update the other fields in the database
 $update = "UPDATE products SET Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Quantity = '".$newQuantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."', Supplier = '".$supplier."' ";
