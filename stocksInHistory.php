@@ -140,10 +140,7 @@ session_start();
                                     echo '<tr>
                                             <td>
 
-                                            <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
-                                                <a class = "mr-2" href = "productsEdit.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-edit"></i>
-                                                </a>
+                                            
 
                                                 <a href = "productsDelete.php?id='.$result['ID'].'">
                                                 <i class = "fa fa-trash text-danger"></i>

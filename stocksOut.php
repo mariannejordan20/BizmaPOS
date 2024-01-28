@@ -144,10 +144,7 @@ session_start();
                                                 <i class = "fa fa-edit"></i>
                                                 </a>
 
-                                                <a href = "productsDelete.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-trash text-danger"></i>
-                                                </a>
-
+                                              
 
                                             </td>
                                             <td>'.$result['Barcode'].'</td>
