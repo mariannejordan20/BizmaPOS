@@ -131,16 +131,22 @@ $results = $conn->query($sql);
                     </a>
                 </td>
                 <td>' . $result['maincat'] . '</td>
-                <td>
-                    ' . $result['subcat'] . '
-                    <a href="subCategoryDelete.php?sub_category=' . $result['subcat'] . '">
-                        <i class="fa fa-trash text-danger" style="margin-left: 5px;"></i>
-                    </a>
-                </td>
-            </tr>';
+                <td>';
+        
+        // Check if there is a subcategory before displaying the delete button
+        if (!empty($result['subcat'])) {
+            echo '
+                ' . $result['subcat'] . '
+                <a href="subCategoryDelete.php?sub_category=' . $result['subcat'] . '">
+                    <i class="fa fa-trash text-danger" style="margin-left: 5px;"></i>
+                </a>';
+        }
+
+        echo '</td></tr>';
     }
     ?>
 </tbody>
+
 
 
                   </div>     
