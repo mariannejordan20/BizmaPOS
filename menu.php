@@ -104,7 +104,9 @@ include('connection.php');
             <span>Customers</span>
         </a>
    
-</li>
+    </li>
+
+    
     <li class="nav-item">
         <a class="nav-link collapsed" href="products.php">
             <i class="fas fa-fw fa-users"></i>
@@ -114,6 +116,24 @@ include('connection.php');
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="units.php">
+
+            <i class="fas fa-fw fa-users"></i>
+            <span>Units</span>
+        </a>
+   
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="categories.php">
+
+            <i class="fas fa-fw fa-users"></i>
+            <span>Categories</span>
+        </a>
+   
+    </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
 
