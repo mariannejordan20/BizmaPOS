@@ -9,7 +9,7 @@ include('connection.php');
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-        <div><img src="bizmalogo.gif" width="50" height="50"></div>
+        <div><img src="img/Blogo.png" width="50" height="50"></div>
         <div class="sidebar-brand-text mx-3">Bizmatech-POS</div>
     </a>
 
