@@ -29,7 +29,7 @@ if (mysqli_num_rows($query)>0)
 
 	$_SESSION['status'] = "Product already exists!";
     $_SESSION['status_code'] = "error";
-	header("location: ".$_SERVER['HTTP_REFERER']);
+	header("location:products.php");
 }
 
 else{

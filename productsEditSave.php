@@ -45,13 +45,13 @@ if (mysqli_num_rows($query2) >1 ) {
             $_SESSION['status'] = "No changes made";
             $_SESSION['status_code'] = "success";
             header("location:products.php");
-            // Redirect to appropriate page
+            
         }
     } else {
         $_SESSION['status'] = "No changes made";
         $_SESSION['status_code'] = "success";
         header("location:products.php");
-        // Redirect to appropriate page
+       
     }
 	}
 }

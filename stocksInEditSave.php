@@ -39,25 +39,25 @@ if ($result && $result->num_rows > 0) {
         $res2 = $conn->query($stockInHistory);
 
         if ($res && $res2) {
-            $_SESSION['status'] = "Edit Successful";
+            $_SESSION['status'] = "Stock In Successful";
             $_SESSION['status_code'] = "success";
-            header("location: products.php");
+            header("location:stocksIn.php");
         } else {
             $_SESSION['status'] = "No changes made";
             $_SESSION['status_code'] = "success";
-            header("location: products.php");
-            // Redirect to the appropriate page
+            header("location:stocksIn.php");
+            
         }
     } else {
         $_SESSION['status'] = "No changes made";
         $_SESSION['status_code'] = "success";
-        header("location: products.php");
-        // Redirect to the appropriate page
+        header("location:stocksIn.php");
+        
     }
 } else {
     $_SESSION['status'] = "Error fetching current quantity";
     $_SESSION['status_code'] = "error";
-    header("location: products.php");
-    // Redirect to the appropriate page
+    header("location:stocksIn.php");
+    
 }
 ?>

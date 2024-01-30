@@ -41,21 +41,21 @@ if ($result && $result->num_rows > 0) {
             if ($res && mysqli_affected_rows($conn) > 0) {
                 $_SESSION['status'] = "Edit Successful";
                 $_SESSION['status_code'] = "success";
-                header("location:products.php");
+                header("location:stocksOutHistory.php");
             } else {
                 $_SESSION['status'] = "No changes made";
                 $_SESSION['status_code'] = "success";
-                header("location:products.php");
+                header("location:stocksOutHistory.php");
             }
         } else {
             $_SESSION['status'] = "No changes made";
             $_SESSION['status_code'] = "success";
-            header("location:products.php");
+            header("location:stocksOut.php");
         }
     } else {
         $_SESSION['status'] = "Error: Quantity exceeds current stock";
         $_SESSION['status_code'] = "error";
-        header("location: ".$_SERVER['HTTP_REFERER']);
+        header("location:stocksOutHistory.php");
     }
 } else {
     $_SESSION['status'] = "No product found";

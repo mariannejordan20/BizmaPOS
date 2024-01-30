@@ -9,7 +9,7 @@ session_start();
 	if ($res){
 		$_SESSION['status'] = "Delete Succesful";
         $_SESSION['status_code'] = "success";
-		header("location: ".$_SERVER['HTTP_REFERER']);
+		header("location:stocksInHistory.php");
 		exit;
 	}
 ?>
