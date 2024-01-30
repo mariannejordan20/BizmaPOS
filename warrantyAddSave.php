@@ -37,7 +37,7 @@ $res = $conn->query($add);
 
 		$_SESSION['status'] = "Warranty Duration Saved";
         $_SESSION['status_code'] = "success";
-        header("location: units.php");
+        header("location: warranty.php");
 
 		
 	
