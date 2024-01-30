@@ -37,7 +37,7 @@ $res = $conn->query($add);
 
 		$_SESSION['status'] = "Category Added";
         $_SESSION['status_code'] = "success";
-        header("location:index.php");
+        header("location:categories.php");
 
 		
 	
