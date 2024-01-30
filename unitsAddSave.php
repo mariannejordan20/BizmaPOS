@@ -37,7 +37,7 @@ $res = $conn->query($add);
 
 		$_SESSION['status'] = "Unit Information Saved";
         $_SESSION['status_code'] = "success";
-        header("location:index.php");
+        header("location: units.php");
 
 		
 	

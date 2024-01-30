@@ -148,6 +148,11 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Unit" class="control-label">Unit</label>
+                                    <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
+                                    <span class="icon text-white-50"  >
+                                        <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
+                                    </span>
+                                    </a>
                                     <input type="text" name="Unit" class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
@@ -256,6 +261,34 @@
         </div>
     </div>
 
+     <!-- Add Modal-->
+     <div class="modal fade" id="AddUModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header" style="background-color: #ff3c00;">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Add Unit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" id="modal">
+                <div id="alert-container"></div>
+                    <label>Unit Name: </label>
+                    <input type="text" class="form-control form-control-user"
+                        id="unitName" name="unitName" style="border-radius: 8px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border-radius: 8px; font-family: Verdana;">Cancel</button>
+                <button type="button" class="btn" onclick="addUnit()" style="background-color: #ff6333; color: white; border-radius: 8px; font-family: Verdana;">Save</a>
+            </div>
+             </div>
+        </div>
+    </div>
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -273,6 +306,35 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
+    <script>
+        function addUnit() {
+        var unitName = $('#unitName').val();
+
+        $.ajax({
+            url: "unitsModalAddSave.php",
+            type: 'post',
+            data: {
+                unitSend: unitName
+            },
+            success: function(data, status) {
+                     
+                var alert = $('<div class="alert alert-success alert-dismissible fade show rounded alert-sm" style="font-family: Segoe UI; font-size: 18px;" role="alert">Units added successfully!</div>');
+
+                $('#alert-container').append(alert);
+
+                setTimeout(function() {
+                    alert.remove();
+                }, 3000);
+            },
+            error: function(xhr, status, error) {
+                console.log("Ajax call failed");
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>
