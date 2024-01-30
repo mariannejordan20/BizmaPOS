@@ -1,6 +1,6 @@
 <?php
 	
-	$dbname = "athlete";
+	$dbname = "posdb";
 	$dbuser = "root";
 	$dbpass = "";
 	$dbhost = "localhost";
