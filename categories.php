@@ -114,44 +114,40 @@ $results = $conn->query($sql);
             <div class="table-responsive">
             <table class="table table-bordered  text-center" id="example" width="100%" cellspacing="0">
 
-                
-                <thead>
-                    <tr class="bg-primary text-white">
-                    
-                        <th class="text-center">Action</th>
-                        <th class="text-center">Category</th>
-                        <th class="text-center">Sub-Categories</th>
-                        
-                        
-                        
-                    </tr>
-                </thead>
-                <tbody>
+            <thead>
+    <tr class="bg-primary text-white">
+        <th class="text-center">Action</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Sub-Categories</th>
+    </tr>
+</thead>
+<tbody>
+    <?php
+    foreach ($results as $result) {
+        echo '<tr>
+                <td>
+                    <a href="categoryDelete.php?id=' . $result['ID'] . '">
+                        <i class="fa fa-trash text-danger"></i>
+                    </a>
+                </td>
+                <td>' . $result['maincat'] . '</td>
+                <td>';
+        
+        // Check if there is a subcategory before displaying the delete button
+        if (!empty($result['subcat'])) {
+            echo '
+                ' . $result['subcat'] . '
+                <a href="subCategoryDelete.php?sub_category=' . $result['subcat'] . '">
+                    <i class="fa fa-trash text-danger" style="margin-left: 5px;"></i>
+                </a>';
+        }
 
-                <?php
-                                foreach ($results as $result) {
-                                    echo '<tr>
-                                            <td>
-
-                                           
-                                                
-
-                                                <a href = "categoryDelete.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-trash text-danger"></i>
-                                                </a>
+        echo '</td></tr>';
+    }
+    ?>
+</tbody>
 
 
-                                            </td>
-                                            <td>'.$result['maincat'].'</td>
-                                            <td>'.$result['subcat'].'</td>
-                                            
-                                           
-                                        </tr>';
-                                        
-                                }
-
-                            ?>
-                        </tbody>
 
                   </div>     
                 </div>
