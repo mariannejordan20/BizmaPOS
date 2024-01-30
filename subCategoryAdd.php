@@ -1,7 +1,8 @@
 <?php
-session_start();   
+    session_start();
 
     include('connection.php');
+    
     // $haslog = (isset($_SESSION['hasLog'])?$_SESSION['hasLog']:0);
 
     if (isset($_SESSION['hasLog'])){
@@ -15,19 +16,10 @@ session_start();
         exit;
     }
 
-    $sql = "SELECT c.ID, c.main_category AS maincat, sc.sub_category AS subcat
-        FROM categories AS c
-        LEFT JOIN subcategories AS sc ON c.main_category = sc.main_category order by maincat ";
-$results = $conn->query($sql);
+    
 
-
-// Upper code to be edited to display main category even without a sub category
-
-
-
-
+    
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,11 +29,6 @@ $results = $conn->query($sql);
 ?>
 
 
-
-
-
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -67,11 +54,18 @@ $results = $conn->query($sql);
 
                     <!-- Topbar Search -->
                     
+
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <a href ="categoryAdd.php"><button class="btn btn-primary mb-3 mt-3" >Add New Category</button> </a>
+                        
+
+                        <!-- Nav Item - Alerts -->
+                        
+                        <!-- Nav Item - Messages -->
+                        
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -102,70 +96,71 @@ $results = $conn->query($sql);
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    
-                       <div class="card card-outline rounded-0 card-maroon">
-    <div class="card-header">
-        <h3 class="card-title">List of all Categories</h3> 
-        <a href ="subCategoryAdd.php"><button class="btn btn-primary mb-3 mt-3" >Add Sub-Category</button> </a>
-        
-    </div>
-    <div class="card-body">
-        <div class="container-fluid">
-            <div class="table-responsive">
-            <table class="table table-bordered  text-center" id="example" width="100%" cellspacing="0">
+
+
+
+
+                       
+                        <form action = "subCategoryAddSave.php" method="post" enctype="multipart/form-data">
+                       
+                        <h3><b><?= isset($id) ? "Update product Details" : "Add new Sub-Category" ?></b></h3>
+</div>
+<div class="mx-0 py-5 px-3 mx-ns-4 bg-gradient-maroon">
+<div class="row justify-content-center" style="margin-top:-2em;">
+    <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
+        <div class="card rounded-0 shadow">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <form action="" id="student-form">
+                        <input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
+                            
+                        <fieldset class="border-bottom">
+                            <legend>Category</legend>
+                            <div class="row">
+                                
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="main_category" class="control-label">Category</label>
+                                <select name="main_category" class="form-control form-control-sm rounded-5" required>
+                                    <?php
+                                    // Assuming $conn is your database connection
+                                    $sqlCategories = "SELECT main_category FROM categories";
+                                    $resultCategories = $conn->query($sqlCategories);
+
+                                    if ($resultCategories->num_rows > 0) {
+                                        while ($rowCategory = $resultCategories->fetch_assoc()) {
+                                            echo '<option value="' . $rowCategory['main_category'] . '">' . $rowCategory['main_category'] . '</option>';
+                                        }
+                                    } else {
+                                        echo '<option value="" disabled>No categories available</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+
+                                
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                    <label for="sub_category" class="control-label">Sub-Category</label>
+                                    <input type="text" name="sub_category"  class="form-control form-control-sm rounded-5"  required/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-success" name="Save" value="Save">
+                            </div>
+                        </div>
+                    </form>
+
+
 
                 
-                <thead>
-                    <tr class="bg-primary text-white">
-                    
-                        <th class="text-center">Action</th>
-                        <th class="text-center">Category</th>
-                        <th class="text-center">Sub-Categories</th>
-                        
-                        
-                        
-                    </tr>
-                </thead>
-                <tbody>
-
-                <?php
-                                foreach ($results as $result) {
-                                    echo '<tr>
-                                            <td>
-
-                                           
-                                                
-
-                                                <a href = "categoryDelete.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-trash text-danger"></i>
-                                                </a>
-
-
-                                            </td>
-                                            <td>'.$result['maincat'].'</td>
-                                            <td>'.$result['subcat'].'</td>
-                                            
-                                           
-                                        </tr>';
-                                        
-                                }
-
-                            ?>
-                        </tbody>
-
-                  </div>     
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -208,37 +203,6 @@ $results = $conn->query($sql);
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>   
-    
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-    <script src="assetsDT/js/bootstrap.bundle.min.js"></script>
-    <script src="assetsDT/js/jquery-3.6.0.min.js"></script>
-    <script src="assetsDT/js/pdfmake.min.js"></script>
-    <script src="assetsDT/js/vfs_fonts.js"></script>
-    <script src="assetsDT/js/custom.js"></script>
-    <script src="assetsDT/js/datatables.min.js"></script>
-
-    <script src="js/sweetalert2.all.min.js"></script>
-  <script src="js/sweetalert.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-
-<script src="js/delete.js"></script>
-
-<?php
-   if(isset($_SESSION['status']) && $_SESSION['status'] !=''){
-    ?>
-      <script>
-      swal({
-      title: "<?php echo $_SESSION['status'];?>",
-      icon: "<?php echo $_SESSION['status_code'];?>",
-       });
- </script>
- <?php
-      unset($_SESSION['status']);
-   }
-?>
-
 
 </body>
 

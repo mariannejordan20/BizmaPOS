@@ -62,7 +62,7 @@ session_start();
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <a href ="productsAdd.php"><button class="btn btn-primary mb-3 mt-3" >Add New Product</button> </a>
+                        
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
