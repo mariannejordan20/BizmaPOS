@@ -121,8 +121,8 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="warranty" class="control-label">Duration (Months)</label>
-                                    <input type="text" name="warranty" class="form-control form-control-sm rounded-5"  required/>
+                                    <label for="Warranty" class="control-label">Duration (Months)</label>
+                                    <input type="text" name="Warranty" class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
                                 

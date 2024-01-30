@@ -3,11 +3,11 @@ session_start();
 	include('connection.php');
 
    
-    $warranty = $_POST['warranty'];
+    $warranty = $_POST['Warranty'];
     
         
 
-$query = mysqli_query($conn,"SELECT * FROM warranty WHERE warranty = '$warranty'");
+$query = mysqli_query($conn,"SELECT * FROM warranty WHERE Warranty = '$warranty'");
 
 $msg = "";
  
@@ -27,7 +27,7 @@ else{
 
     
 
-$add = "insert into warranty set warranty = '".$warranty."'";
+$add = "insert into warranty set Warranty = '".$warranty."'";
 
 $res = $conn->query($add);
 

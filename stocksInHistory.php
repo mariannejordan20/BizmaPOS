@@ -142,7 +142,7 @@ session_start();
 
                                             
 
-                                                <a href = "productsDelete.php?id='.$result['ID'].'">
+                                                <a href = "stocksInHistoryDelete.php?id='.$result['ID'].'">
                                                 <i class = "fa fa-trash text-danger"></i>
                                                 </a>
 

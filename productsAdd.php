@@ -96,18 +96,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-<?php
-                           
-                            $sql = "select * from athletes";
-                            $result = $conn->query($sql);
-                            $row = $result->fetch_assoc();
 
-
-
-
-
-
-                        ?>
 
 
 
@@ -146,78 +135,97 @@
                                 </div>
                                 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Unit" class="control-label">Unit</label>
-                                    <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
-                                    <span class="icon text-white-50"  >
-                                        <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
-                                    </span>
-                                    </a>
-                                    <input type="text" name="Unit" class="form-control form-control-sm rounded-5"  required/>
-                                    </div>
-                                </div>
+    <div class="form-group">
+        <label for="Unit" class="control-label">Unit</label>
+        
+        <!-- Add new unit modal trigger -->
+        <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
+            </span>
+        </a>
+        
+        <!-- Unit dropdown -->
+        <select name="Unit" class="form-control form-control-sm rounded-5" required>
+            <?php
+           
+            $sqlUnitOptions = "SELECT unit_name FROM units";
+            $resultUnitOptions = $conn->query($sqlUnitOptions);
+
+            if ($resultUnitOptions->num_rows > 0) {
+                while ($rowUnit = $resultUnitOptions->fetch_assoc()) {
+                    echo '<option>' . $rowUnit['unit_name'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No unit options available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
+
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Categories" class="control-label">Category</label>
-                                    <input type="text" name="Categories"  class="form-control form-control-sm rounded-5"  required/>
-                                    </div>
-                                </div>
+    <div class="form-group">
+        <label for="Categories" class="control-label">Category</label>
+        <select name="Categories" class="form-control form-control-sm rounded-5" required>
+            <?php
+            
+            $sqlCategories = "SELECT ID, main_category FROM categories";
+            $resultCategories = $conn->query($sqlCategories);
+
+            if ($resultCategories->num_rows > 0) {
+                while ($rowCategory = $resultCategories->fetch_assoc()) {
+                    echo '<option>' . $rowCategory['main_category'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No categories available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
+
                                 
                                 
                                 
 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Costing" class="control-label">Costing</label>
-                                    <input type="number" name="Costing" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
+                                
+
+                                
+
+                                
+
+                                
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Price" class="control-label">Price</label>
-                                    <input type="number" name="Price" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
+    <div class="form-group">
+        <label for="Warranty" class="control-label">Warranty</label>
+        <select name="Warranty" class="form-control form-control-sm form-control-border rounded-5" required>
+            <?php
+            
+            $sqlWarrantyOptions = "SELECT Warranty FROM warranty";
+            $resultWarrantyOptions = $conn->query($sqlWarrantyOptions);
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Wholesale" class="control-label">Wholesale</label>
-                                    <input type="number" name="Wholesale" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Promo" class="control-label">Promo</label>
-                                    <input type="number" name="Promo" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
+            if ($resultWarrantyOptions->num_rows > 0) {
+                while ($rowWarranty = $resultWarrantyOptions->fetch_assoc()) {
+                    echo '<option>' . $rowWarranty['Warranty'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No warranty options available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Seller" class="control-label">Seller</label>
-                                    <input type="text" name="Seller" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
+                                
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Supplier" class="control-label">Supplier</label>
-                                    <input type="text" name="Supplier" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
+                                
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="Date" class="control-label">Date</label>
-                                        <input type="date" name="Date_Registered" id="Date_Registered" class="form-control form-control-sm rounded-0" value="<?php echo isset($date) ? $date : ''; ?>" required/>
-
-                                    </div>
-                                </div>
+                                
 
                                 
 

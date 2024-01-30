@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, warranty from warranty order by warranty asc";
+    $sql = "select ID, Warranty from warranty order by Warranty asc";
     $results = $conn->query($sql);
 ?>
 
@@ -130,7 +130,7 @@ session_start();
 
 
                                             </td>
-                                            <td>'.$result['warranty'].'</td>
+                                            <td>'.$result['Warranty'].'</td>
                                            
                                         </tr>';
                                         

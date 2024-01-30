@@ -145,7 +145,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="Quantity" class="control-label">Quantity</label>
-                                    <input type="number" name="Quantity" class="form-control form-control-sm rounded-0"  min="0">
+                                    <input type="number" name="Quantity" class="form-control form-control-sm rounded-0"  min="1" value ="0">
                                 </div>
                                 </div>
 

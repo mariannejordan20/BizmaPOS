@@ -143,11 +143,13 @@
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label for="Quantity" class="control-label">Quantity</label>
-                                    <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" min="0">
-                                </div>
-                                </div>
+    <div class="form-group">
+        <label for="Quantity" class="control-label">Quantity</label>
+        <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" min="1" value="0">
+    </div>
+</div>
+
+
 
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -181,14 +183,14 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Seller" class="control-label">Seller</label>
-                                    <input type="text" name="Seller" class="form-control form-control-sm rounded-0" value="<?=$row['Seller']?>">
+                                    <input type="text" name="Seller" class="form-control form-control-sm rounded-0" value="<?=$row['Seller']?>"required>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Supplier" class="control-label">Supplier</label>
-                                    <input type="text" name="Supplier" class="form-control form-control-sm rounded-0" value="<?=$row['Supplier']?>">
+                                    <input type="text" name="Supplier" class="form-control form-control-sm rounded-0" value="<?=$row['Supplier']?>"required>
                                     </div>
                                 </div>
 
