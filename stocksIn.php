@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, Barcode, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
+    $sql = "select ID, Barcode,Quantity, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
     $results = $conn->query($sql);
 ?>
 
@@ -112,6 +112,7 @@ session_start();
                         <th class="text-center">Barcode</th>
                         <th class="text-center">Product Name</th>
                         <th class="text-center">Unit</th>
+                        <th class="text-center">Quantity</th>
                         <th class="text-center">Costing</th>
                         <th class="text-center">Price</th>
                         <th class="text-center">Wholesale</th>
@@ -151,6 +152,7 @@ session_start();
                                             <td>'.$result['Barcode'].'</td>
                                             <td>'.$result['Product'].'</td>
                                             <td>'.$result['Unit'].'</td>
+                                            <td>'.$result['Quantity'].'</td>
                                             <td>'.$result['Costing'].'</td>
                                             <td>'.$result['Price'].'</td>
                                             <td>'.$result['Wholesale'].'</td>

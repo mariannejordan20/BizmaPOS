@@ -14,7 +14,7 @@ $delete->close();
 if ($delete) {
     $_SESSION['status'] = "Delete Successful";
     $_SESSION['status_code'] = "success";
-    header("location: " . $_SERVER['HTTP_REFERER']);
+    header("location:categories.php");
     exit;
 }
 ?>

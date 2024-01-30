@@ -20,7 +20,7 @@ if (mysqli_num_rows($query)>0)
 
 	$_SESSION['status'] = "Sub-Category already exists!";
     $_SESSION['status_code'] = "error";
-	header("location: ".$_SERVER['HTTP_REFERER']);
+	header("location:categories.php");
 }
 
 else{
@@ -38,7 +38,7 @@ $res = $conn->query($add);
 
 		$_SESSION['status'] = "Category Added";
         $_SESSION['status_code'] = "success";
-        header("location:index.php");
+        header("location:categories.php");
 
 		
 	
