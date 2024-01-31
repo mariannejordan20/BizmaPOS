@@ -6,6 +6,8 @@ $id = $_POST['hiddenID'];
 $barcode = $_POST['Barcode'];
 $product = $_POST['Product'];
 $unit = $_POST['Unit'];
+$quantity = $_POST['Quantity'];
+$warranty = $_POST['Warranty'];
 $costing = $_POST['Costing'];
 $price = $_POST['Price'];
 $wholesale = $_POST['Wholesale'];
@@ -17,7 +19,7 @@ $supplier = $_POST['Supplier'];
 
 
 
-$query = mysqli_query($conn, "SELECT * FROM products WHERE Barcode = '$barcode' AND Product = '$product' AND Unit = '$unit' AND Costing = '$costing' AND Price = '$price' AND Wholesale = '$wholesale'
+$query = mysqli_query($conn, "SELECT * FROM products WHERE Barcode = '$barcode' AND Product = '$product' AND Unit = '$unit' AND Warranty = '$warranty' AND Costing = '$costing' AND Price = '$price' AND Wholesale = '$wholesale'
 AND Promo = '$promo' AND Categories = '$categories' AND Seller = '$seller' 
 AND Supplier = '$supplier'");
 
@@ -29,10 +31,16 @@ if (mysqli_num_rows($query2) >1 ) {
     $_SESSION['status_code'] = "error";
     
 } else {
-    $update = "Update products set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."' 
+    $update = "Update products set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Warranty = '".$warranty."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."' 
 	, Supplier = '".$supplier."' ";
 
     $update .= "where id = ".$id;
+    
+    $add = "insert into productsedithistory set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Quantity = '".$quantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."' 
+    ,Supplier = '".$supplier."', Warranty = '".$warranty."'";
+    
+    $res = $conn->query($add);
+    
 
     if ($barcode !== "" || $product !== "" || $unit !== "" || $costing !== "" || $price !== "" || $wholesale !== "" || $promo !== "" || $categories !== "" || $seller !== "" || $supplier !== "") {
         $res = $conn->query($update);
