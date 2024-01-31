@@ -308,11 +308,11 @@ include('connection.php');
                         </div>
                         
                     </div>
-                    <div class="row">       
+                    <div class="row" style="width: 30%;">       
                         <div class="col-xl-12 col-md-6 mb-4" style="margin-left: 20px;">
                             <div class="card-dbrd">
                                 <div class="table-responsive-sm">
-                                    <table class="table table-centered mb-4" style="font-size: 6px;">
+                                    <table class="table table-centered mb-4" style="font-size: 10px;">
                                         <thead style="background-color: #212529;">
                                             <tr>
                                                 <th style="text-align: center; color: #ff3c00;">
@@ -382,7 +382,7 @@ include('connection.php');
 
                         <div class="col-xl-3 col-lg-6" style="margin-left: 20px; height: 400px">
                                 <div class="card-dbrd">
-                                    <div class="d-flex card-header justify-content-between align-items-center" style="background-color: #212529;>
+                                    <div class="d-flex card-header justify-content-between align-items-center" style="background-color: #212529;">
                                         <h4 class="header-title">TOP SELLER PRODUCTS</h4>
                                     </div>
 

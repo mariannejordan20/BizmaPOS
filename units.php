@@ -29,9 +29,6 @@ session_start();
 
 
 
-
-
-
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
 <body id="page-top">
 
@@ -102,7 +99,7 @@ session_start();
     <div class="card-body">
         <div class="container-fluid">
             <div class="table-responsive">
-            <table class="table table-bordered  text-center" id="example" width="100%" cellspacing="0">
+            <table class="table table-bordered text-center" id="example" width="30%" cellspacing="0">
 
                 
                 <thead>
