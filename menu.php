@@ -93,6 +93,7 @@ include('connection.php');
                     <a class="collapse-item" href="stocksOutHistory.php">Stock Out History </a>
                     <a class="collapse-item" href="stocksOut.php">Stock out - </a>
                     <a class="collapse-item" href="products.php">Inventory List </a>
+                    <a class="collapse-item" href="productsEditHistory.php">Product Edit History </a>
                 </div>
             </div>
         </li>  

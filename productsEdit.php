@@ -173,6 +173,33 @@
     </div>
 </div>
 
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="form-group">
+        <label for="Warranty" class="control-label">Warranty</label>
+        <select name="Warranty" class="form-control form-control-sm form-control-border rounded-5" required>
+            <?php
+            
+            $sqlWarrantyOptions = "SELECT Warranty FROM warranty";
+            $resultWarrantyOptions = $conn->query($sqlWarrantyOptions);
+
+            if ($resultWarrantyOptions->num_rows > 0) {
+                while ($rowWarranty = $resultWarrantyOptions->fetch_assoc()) {
+                    echo '<option>' . $rowWarranty['Warranty'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No warranty options available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
+
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                    <label for="Quantity" class="control-label">Quantity</label>
+                                    <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" value="<?=$row['Quantity']?>"readonly>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
