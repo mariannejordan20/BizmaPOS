@@ -151,7 +151,7 @@ $results = $conn->query($sql);
                                 <!-- Left Section - Categories -->
                                 <div class="col-md-6 categories-section">
                                     <h3>Categories</h3>
-                                    <a href="categoryAdd.php"><button class="btn btn-primary mb-3 mt-3">Add New Category  
+                                    <a href="categoryAdd.php"><button style="background-color:#2D333C; color:white" class="btn mb-3 mt-3">Add New Category  
                                     <i class="fas fa-plus"></i>
                                     </button>
                                     </a>
@@ -182,7 +182,7 @@ $results = $conn->query($sql);
                                 <!-- Right Section - Sub-Categories -->
                                 <div class="col-md-6 categories-section">
                                     <h3>Sub-Categories</h3>
-                                    <a href="subCategoryAdd.php" class="btn btn-primary mb-3 mt-3">
+                                    <a href="subCategoryAdd.php" class="btn mb-3 mt-3" style="background-color:#2D333C; color:white">
                                         Add Sub-Category <i class="fas fa-plus"></i>
                                     </a>
 
