@@ -25,7 +25,7 @@ if (isset($_POST['addUnit'])) {
 }
 
 // Set default values for pagination
-$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
+$limit = isset($_GET['limit']) ? $_GET['limit'] : 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
