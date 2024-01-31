@@ -145,7 +145,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="form-group">
         <label for="Quantity" class="control-label">Quantity</label>
-        <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" min="1" value="0">
+        <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" min="1" value="0"required>
     </div>
 </div>
 
@@ -155,28 +155,28 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Costing" class="control-label">Costing</label>
-                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="<?=$row['Costing']?>">
+                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="<?=$row['Costing']?>"required>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Price" class="control-label">Price</label>
-                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="<?=$row['Price']?>">
+                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="<?=$row['Price']?>"required>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Wholesale" class="control-label">Wholesale</label>
-                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" value="<?=$row['Wholesale']?>">
+                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" value="<?=$row['Wholesale']?>"required>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Promo" class="control-label">Promo</label>
-                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" value="<?=$row['Promo']?>">
+                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" value="<?=$row['Promo']?>"required>
                                     </div>
                                 </div>
 

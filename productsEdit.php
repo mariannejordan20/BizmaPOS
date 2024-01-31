@@ -127,18 +127,52 @@
                                 </div>
                                 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Unit" class="control-label">Unit</label>
-                                    <input type="text" name="Unit" class="form-control form-control-sm rounded-0" value="<?=$row['Unit']?>">
-                                    </div>
-                                </div>
+    <div class="form-group">
+        <label for="Unit" class="control-label">Unit</label>
+        
+        
+        
+        <!-- Unit dropdown -->
+        <select name="Unit" class="form-control form-control-sm rounded-5" required>
+            <?php
+           
+            $sqlUnitOptions = "SELECT unit_name FROM units";
+            $resultUnitOptions = $conn->query($sqlUnitOptions);
 
+            if ($resultUnitOptions->num_rows > 0) {
+                while ($rowUnit = $resultUnitOptions->fetch_assoc()) {
+                    echo '<option>' . $rowUnit['unit_name'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No unit options available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
+
+                                
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Categories" class="control-label">Categories</label>
-                                    <input type="text" name="Categories" class="form-control form-control-sm rounded-0" value="<?=$row['Categories']?>">
-                                    </div>
-                                </div>
+    <div class="form-group">
+        <label for="Categories" class="control-label">Category</label>
+        <select name="Categories" class="form-control form-control-sm rounded-5" required>
+            <?php
+            
+            $sqlCategories = "SELECT ID, main_category FROM categories";
+            $resultCategories = $conn->query($sqlCategories);
+
+            if ($resultCategories->num_rows > 0) {
+                while ($rowCategory = $resultCategories->fetch_assoc()) {
+                    echo '<option>' . $rowCategory['main_category'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No categories available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
+
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
