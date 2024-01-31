@@ -14,10 +14,14 @@ if (empty($haslog)) {
     exit;
 }
 
-$sql = "SELECT c.ID, c.main_category AS maincat
+$sql = "SELECT c.ID, c.main_category AS maincat, sc.sub_category AS subcat
         FROM categories AS c
-        GROUP BY maincat";
+        LEFT JOIN subcategories AS sc ON c.main_category = sc.main_category
+        GROUP BY maincat
+        ORDER BY maincat
+        LIMIT 5";
 $results = $conn->query($sql);
+
 
 ?>
 
@@ -109,7 +113,7 @@ $results = $conn->query($sql);
     <div id="wrapper">
         <?php include('menu.php'); ?>
 
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2d333c">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee">
 
             <div id="content">
                 <?php
@@ -117,26 +121,33 @@ $results = $conn->query($sql);
                 ?>
 
                 <div class="container-fluid">
-                    <div class="card card-outline rounded-0 card-maroon">
-                        <div class="card-header">
-                            <h3 class="card-title">List of all Categories</h3>
+                    <div class="card card-outline rounded-0 card-maroon" style="background-color: #eeeeee">
+                        <div class="card-header" style="background-color: #eeeeee">
+                            <h3 class="card-title"  style="color: #313A46;">List of all Categories</h3>
                         </div>
 
                         <div class="card-body">
-                        <div class="container-fluid">
+                        <div class="container-fluid" style="background-color: #eeeeee">
                             <div class="row">
                                 <!-- Left Section - Categories -->
-                                <div class="col-md-6 categories-section">
-                                    <h3>Categories</h3>
-                                    <a href="categoryAdd.php"><button style="background-color:#2D333C; color:white" class="btn mb-3 mt-3">Add New Category  
-                                    <i class="fas fa-plus"></i>
-                                    </button>
-                                    </a>
+                                <div class="col-md-6 mr-2 categories-section">
+                                <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                            Add New Category <i class="fas fa-plus"></i>
+                                        </a>
+                                        <div class="input-group ml-2" style="max-width: 68%;"> <!-- Adjusted max-width for a shorter search bar -->
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search Category">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table class="table  text-center" id="categoriesTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white"  style="color: #313A46;">
-                                                <th class="text-center">Action</th>
-                                                <th class="text-center">Category</th>
+                                                <th class="text-center" style="background-color: #313A46;">Action</th>
+                                                <th class="text-center" style="background-color: #313A46;">Category</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,17 +168,25 @@ $results = $conn->query($sql);
                                 </div>
 
                                 <!-- Right Section - Sub-Categories -->
-                                <div class="col-md-6 categories-section">
-                                    <h3>Sub-Categories</h3>
-                                    <a href="subCategoryAdd.php" class="btn mb-3 mt-3" style="background-color:#2D333C; color:white">
-                                        Add Sub-Category <i class="fas fa-plus"></i>
-                                    </a>
+                                <div class="col-md-5 ml-2 categories-section">
+                                    <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                            Add New Category <i class="fas fa-plus"></i>
+                                        </a>
+                                        <div class="input-group ml-2" style="max-width: 61%;"> <!-- Adjusted max-width for a shorter search bar -->
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search Sub-Category">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <table class="table text-center" id="subCategoriesTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="bg-primary text-white">
-                                                <th class="text-center">Action</th>
-                                                <th class="text-center">Sub-Category</th>
+                                                <th class="text-center" style="background-color: #313A46;">Action</th>
+                                                <th class="text-center" style="background-color: #313A46;">Sub-Category</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -211,6 +230,25 @@ $results = $conn->query($sql);
                                     console.error('Error fetching sub-categories:', error);
                                 });
                         }
+                        function searchTable() {
+                                var input, filter, table, tr, td, i, txtValue;
+                                input = document.getElementById("searchInput");
+                                filter = input.value.toUpperCase();
+                                table = document.getElementById("categoriesTable"); // Corrected table ID
+                                tr = table.getElementsByTagName("tr");
+
+                                for (i = 0; i < tr.length; i++) {
+                                    td = tr[i].getElementsByTagName("td")[1]; // Index 1 corresponds to the Category column
+                                    if (td) {
+                                        txtValue = td.textContent || td.innerText;
+                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                            tr[i].style.display = "";
+                                        } else {
+                                            tr[i].style.display = "none";
+                                        }
+                                    }
+                                }
+                            }
                     </script>
 
 
