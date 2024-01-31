@@ -40,10 +40,10 @@ while ($row = $recentResults->fetch_assoc()) {
 
 <?php include('header.php'); ?>
 
-<body id="page-top" >
+<body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper" >
+    <div id="wrapper">
 
         <?php include('menu.php'); ?>
 
@@ -51,7 +51,7 @@ while ($row = $recentResults->fetch_assoc()) {
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2D333C;">
 
             <!-- Main Content -->
-            <div id="content" >
+            <div id="content">
 
                 <!-- Topbar -->
                 <?php include('navbar.php'); ?>
@@ -60,91 +60,103 @@ while ($row = $recentResults->fetch_assoc()) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-<div class="row">
-    <!-- Left Content Column -->
-    <div class="col-lg-6 mb-4">
+                    <div class="row">
+                        <!-- Left Content Column -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card rounded-0 card-maroon border-0" style="background-color: #313A46;">
+                                <div class="card-header" style="background-color: #2f3742; display: flex; justify-content: space-between; align-items: center;">
+                                    <h3 class="card-title" style="color:white;">List of all Units</h3>
+                                    <form action="units.php" method="get" class="form-inline">
+                                        <div class="form-group">
+                                            <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchUnits()">
+                                        </div>
+                                        <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color:white;">Search</button>
+                                    </form>
+                                    <a href="unitsAdd.php"><button class="btn mb-3 mt-3" style="background-color: #FE3C00; color:white;">Add New Unit</button></a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container-fluid">
+                                        <div class="table-responsive" id="searchResults">
+                                            <table class="table table-bordered text-center" id="example" style="width: 100%;" cellspacing="0">
+                                                <thead>
+                                                    <tr class="text-white" style="background-color: #2D333C">
+                                                        <th class="text-center">Action</th>
+                                                        <th class="text-center">Units</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    // Check if search parameter is set
+                                                    if (isset($_GET['search'])) {
+                                                        $searchTerm = $_GET['search'];
+                                                        $sql = "SELECT ID, unit_name FROM units WHERE unit_name LIKE '%$searchTerm%' ORDER BY unit_name";
+                                                        $results = $conn->query($sql);
+                                                    }
 
-        <div class="card rounded-0 card-maroon border-0" style="background-color: #313A46;">
-            <div class="card-header" style="background-color: #FE3C00">
-                <h3 class="card-title" style="color:white;">List of all Units</h3>
-            </div>
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-center" id="example" style="width: 100%;"
-                            cellspacing="0">
-                            <thead>
-                                <tr class="text-white" style="background-color: #FE3C00">
-                                    <th class="text-center" >Action</th>
-                                    <th class="text-center">Units</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($results as $result) {
-                                    echo '<tr style="color: white;">
-                                            <td>
-                                                <a href="unitsDelete.php?id=' . $result['ID'] . '">
-                                                    <i class="fa fa-trash text-danger"></i>
-                                                </a>
-                                            </td>
-                                            <td>' . $result['unit_name'] . '</td>
-                                        </tr>';
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                                    foreach ($results as $result) {
+                                                        echo '<tr style="color: white;">
+                                                                <td>
+                                                                    <a href="unitsDelete.php?id=' . $result['ID'] . '">
+                                                                        <i class="fa fa-trash text-danger"></i>
+                                                                    </a>
+                                                                </td>
+                                                                <td>' . $result['unit_name'] . '</td>
+                                                            </tr>';
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.container-fluid -->
+                            </div>
+                        </div>
+
+
+                        <!-- End Left Content Column -->
+
+                        <!-- Right Content Column -->
+                        <div class="col-lg-6 mb-4">
+
+                            <!-- Recent Units Table -->
+                            <div class="card card-outline rounded-0 card-maroon border-0" style="background-color: #313A46;">
+                                <div class="card-header" style="background-color: #2f3742">
+                                    <h3 class="card-title" style="color:white;">Recent Units</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container-fluid">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered text-center" id="recentUnitsTable" style="width: 100%;" cellspacing="0">
+                                                <thead>
+                                                    <tr class="text-white" style="background-color: #2D333C">
+                                                        <th class="text-center">Date</th>
+                                                        <th class="text-center">Recent Unit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    foreach ($recentUnits as $recentUnit) {
+                                                        echo '<tr style="color: white;">
+                                                                <td>' . $recentUnit['created_at'] . '</td>
+                                                                <td>' . $recentUnit['unit_name'] . '</td>
+                                                            </tr>';
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.container-fluid -->
+                            </div>
+                            <!-- End Recent Units Table -->
+
+                        </div>
+                        <!-- End Right Content Column -->
                     </div>
+
                 </div>
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-
-    </div>
-    <!-- End Left Content Column -->
-
-    <!-- Right Content Column -->
-    <div class="col-lg-6 mb-4">
-
-        <!-- Recent Units Table -->
-        <div class="card card-outline rounded-0 card-maroon border-0" style="background-color: #313A46;">
-            <div class="card-header" style="background-color: #FE3C00">
-                <h3 class="card-title" style="color:white;">Recent Units</h3>
-            </div>
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-center" id="recentUnitsTable"
-                            style="width: 100%;" cellspacing="0">
-                            <thead>
-                                <tr class="text-white" style="background-color: #FE3C00">
-                                    <th class="text-center">Date</th>
-                                    <th class="text-center">Recent Unit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($recentUnits as $recentUnit) {
-                                    echo '<tr style="color: white;">
-                                            <td>' . $recentUnit['created_at'] . '</td>
-                                            <td>' . $recentUnit['unit_name'] . '</td>
-                                        </tr>';
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- End Recent Units Table -->
-
-    </div>
-    <!-- End Right Content Column -->
-</div>
-
-</div>
 
                 <!-- End of Main Content -->
 
@@ -160,8 +172,7 @@ while ($row = $recentResults->fetch_assoc()) {
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -208,10 +219,26 @@ while ($row = $recentResults->fetch_assoc()) {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
         <script src="js/delete.js"></script>
+        <script>
+    function searchUnits() {
+        var searchTerm = document.getElementById('searchInput').value;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'search.php?search=' + encodeURIComponent(searchTerm), true);
+        xhr.send();
+        xhr.onload = function () {
+            if (xhr.status != 200) {
+                console.error('Error ' + xhr.status + ': ' + xhr.statusText);
+            } else {
+                document.getElementById('searchResults').innerHTML = xhr.responseText;
+            }
+        };
+    }
+</script>
+
 
         <?php
         if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-            ?>
+        ?>
             <script>
                 swal({
                     title: "<?php echo $_SESSION['status']; ?>",
@@ -226,4 +253,3 @@ while ($row = $recentResults->fetch_assoc()) {
     </body>
 
 </html>
-
