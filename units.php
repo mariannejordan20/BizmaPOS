@@ -21,8 +21,13 @@ if (isset($_POST['addUnit'])) {
     exit;
 }
 
-// Fetch all units
-$sql = "SELECT ID, unit_name FROM units ORDER BY unit_name";
+// Set default values for pagination
+$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Fetch all units with pagination
+$sql = "SELECT ID, unit_name FROM units ORDER BY unit_name LIMIT $limit OFFSET $offset";
 $results = $conn->query($sql);
 
 // Fetch recent units
@@ -35,9 +40,24 @@ while ($row = $recentResults->fetch_assoc()) {
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    .pagination a.btn {
+        color: #fff; /* Text color for pagination buttons */
+    }
 
+    .pagination a.btn.btn-primary {
+        background-color: #FE3C00; /* Primary color for active and 'Previous'/'Next' buttons */
+    }
+
+    .pagination a.btn.btn-secondary {
+        background-color: #6c757d; /* Secondary color for inactive page number buttons */
+        border-color: #6c757d;
+    }
+</style>
 <?php include('header.php'); ?>
 
 <body id="page-top">
@@ -56,23 +76,23 @@ while ($row = $recentResults->fetch_assoc()) {
                 <!-- Topbar -->
                 <?php include('navbar.php'); ?>
                 <!-- End of Topbar -->
+                <div class="container-fluid" style="padding-left: 2%;">
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                    <a href="unitsAdd.php" class="btn btn-primary mt-3 mb-3" style="background-color: #FE3C00; color: white;">Add New Unit</a>
 
                     <div class="row">
+
                         <!-- Left Content Column -->
                         <div class="col-lg-6 mb-4">
                             <div class="card rounded-0 card-maroon border-0" style="background-color: #313A46;">
                                 <div class="card-header" style="background-color: #2f3742; display: flex; justify-content: space-between; align-items: center;">
-                                    <h3 class="card-title" style="color:white;">List of all Units</h3>
+                                    <h3 class="card-title" style="color: white;">List of all Units</h3>
                                     <form action="units.php" method="get" class="form-inline">
                                         <div class="form-group">
                                             <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchUnits()">
+                                            <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color: white;">Search</button>
                                         </div>
-                                        <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color:white;">Search</button>
                                     </form>
-                                    <a href="unitsAdd.php"><button class="btn mb-3 mt-3" style="background-color: #FE3C00; color:white;">Add New Unit</button></a>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
@@ -107,13 +127,37 @@ while ($row = $recentResults->fetch_assoc()) {
                                                 </tbody>
                                             </table>
                                         </div>
+
+                                        <!-- Pagination Links -->
+                                        <div class="pagination mt-3">
+                                            <?php
+                                            $totalRecordsResult = $conn->query("SELECT COUNT(*) FROM units");
+                                            $totalRecords = $totalRecordsResult->fetch_row()[0];
+                                            $totalPages = ceil($totalRecords / $limit);
+
+                                            // Previous Page
+                                            if ($page > 1) {
+                                                echo '<a href="units.php?page=' . ($page - 1) . '&limit=' . $limit . '" class="btn btn-secondary">Previous</a>';
+                                            }
+
+                                            // Page Numbers
+                                            for ($i = 1; $i <= $totalPages; $i++) {
+                                                echo '<a href="units.php?page=' . $i . '&limit=' . $limit . '" class="btn ' . ($page == $i ? 'btn-primary' : 'btn-secondary') . '">' . $i . '</a>';
+                                            }
+
+                                            // Next Page
+                                            if ($page < $totalPages) {
+                                                echo '<a href="units.php?page=' . ($page + 1) . '&limit=' . $limit . '" class="btn btn-secondary">Next</a>';
+                                            }
+                                            ?>
+                                        </div>
+                                        <!-- End Pagination Links -->
+
                                     </div>
                                 </div>
                                 <!-- /.container-fluid -->
                             </div>
                         </div>
-
-
                         <!-- End Left Content Column -->
 
                         <!-- Right Content Column -->
@@ -122,7 +166,7 @@ while ($row = $recentResults->fetch_assoc()) {
                             <!-- Recent Units Table -->
                             <div class="card card-outline rounded-0 card-maroon border-0" style="background-color: #313A46;">
                                 <div class="card-header" style="background-color: #2f3742">
-                                    <h3 class="card-title" style="color:white;">Recent Units</h3>
+                                    <h3 class="card-title" style="color: white;">Recent Units</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
@@ -154,10 +198,10 @@ while ($row = $recentResults->fetch_assoc()) {
 
                         </div>
                         <!-- End Right Content Column -->
+
                     </div>
 
                 </div>
-
                 <!-- End of Main Content -->
 
             </div>
@@ -220,35 +264,20 @@ while ($row = $recentResults->fetch_assoc()) {
 
         <script src="js/delete.js"></script>
         <script>
-    function searchUnits() {
-        var searchTerm = document.getElementById('searchInput').value;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'search.php?search=' + encodeURIComponent(searchTerm), true);
-        xhr.send();
-        xhr.onload = function () {
-            if (xhr.status != 200) {
-                console.error('Error ' + xhr.status + ': ' + xhr.statusText);
-            } else {
-                document.getElementById('searchResults').innerHTML = xhr.responseText;
+            function searchUnits() {
+                var searchTerm = document.getElementById('searchInput').value;
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'search.php?search=' + encodeURIComponent(searchTerm), true);
+                xhr.send();
+                xhr.onload = function () {
+                    if (xhr.status != 200) {
+                        console.error('Error ' + xhr.status + ': ' + xhr.statusText);
+                    } else {
+                        document.getElementById('searchResults').innerHTML = xhr.responseText;
+                    }
+                };
             }
-        };
-    }
-</script>
-
-
-        <?php
-        if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-        ?>
-            <script>
-                swal({
-                    title: "<?php echo $_SESSION['status']; ?>",
-                    icon: "<?php echo $_SESSION['status_code']; ?>",
-                });
-            </script>
-        <?php
-            unset($_SESSION['status']);
-        }
-        ?>
+        </script>
 
     </body>
 
