@@ -80,16 +80,14 @@ while ($row = $recentResults->fetch_assoc()) {
                 <?php include('navbar.php'); ?>
                 <!-- End of Topbar -->
                 <div class="container-fluid" style="padding-left: 2%;">
-
-                    <a href="unitsAdd.php" class="btn btn-primary mt-3 mb-3" style="background-color: #FE3C00; color: white;">Add New Unit</a>
-
+                <h3 class="card-title" style="color: white;">List of all Units</h3>
                     <div class="row">
 
                         <!-- Left Content Column -->
                         <div class="col-lg-6 mb-4">
                             <div class="card rounded-0 card-maroon border-0" style="background-color: #313A46;">
                                 <div class="card-header" style="background-color: #2f3742; display: flex; justify-content: space-between; align-items: center;">
-                                    <h3 class="card-title" style="color: white;">List of all Units</h3>
+                    <a href="unitsAdd.php" class="btn mt-3 mb-3" style="background-color: #FE3C00; color: white;">Add New Unit</a>
                                     <form action="units.php" method="get" class="form-inline">
                                         <div class="form-group">
                                             <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchUnits()">
@@ -169,7 +167,7 @@ while ($row = $recentResults->fetch_assoc()) {
                             <!-- Recent Units Table -->
                             <div class="card card-outline rounded-0 card-maroon border-0" style="background-color: #313A46;">
                                 <div class="card-header" style="background-color: #2f3742">
-                                    <h3 class="card-title" style="color: white;">Recent Units</h3>
+                                    <h3 class="card-title mb-3 mt-3" style="color: white;">Recent Units</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">

@@ -61,7 +61,7 @@ session_start();
                        <div class="card card-outline rounded-0 card-maroon">
     <div class="card-header">
         <h3 class="card-title">List of all Products</h3>
-        
+        <a href ="productsAdd.php"><button class="btn btn-primary mb-3 mt-3" >Add New Product</button> </a>
     </div>
     <div class="card-body">
         <div class="container-fluid">

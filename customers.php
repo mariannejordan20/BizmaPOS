@@ -65,7 +65,7 @@ include('header.php');
                     <div class="card card-outline rounded-0 card-maroon">
                         <div class="card-header">
                             <h3 class="card-title">List of all Customer</h3>
-
+                            <a href ="customeradd.php"><button class="btn btn-primary mb-3 mt-3" >Add Customer</button> </a>
                         </div>
                         <div class="card-body">
                             <div class="container-fluid">
