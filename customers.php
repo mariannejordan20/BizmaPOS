@@ -30,12 +30,54 @@ if (!$results) {
 
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    #customersTable{
+        cursor: pointer;
+    }
+    .categories-section {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+    margin-bottom: 20px;
+    background-color: #fff; /* Optional: Add a background color */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    }
+    #customersTable {
+        width: 100%  ;
+        border-spacing: 0  ;
+    }
 
+    #customersTable th,
+    #customersTable td {
+        padding: 12px  ;
+        text-align: center  ;
+    }
+
+    #customersTable th {    
+        color: #fff  ; /* White text for header */
+    }
+
+    #customersTable tbody tr {
+        transition: background-color 0.3s  ;
+    }
+
+    #customersTable tbody tr:hover {
+        background-color: #2D333C  ; /* Light gray background on hover */
+    }
+
+    #customersTable a:hover {
+        color: #c0392b; /* Darker red on hover */
+    }
+    #customersTable tbody tr.active {
+        background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
+    }
+
+
+</style>
 <?php
 include('header.php');
 ?>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css" />
 
 <body id="page-top">
 
@@ -47,7 +89,7 @@ include('header.php');
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2D333C;">
 
             <!-- Main Content -->
             <div id="content">
@@ -59,23 +101,23 @@ include('header.php');
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="padding-left: 2%;">
 
+                    <h3 class="card-title" style="color: white;">List of all Customer</h3>
 
-                    <div class="card card-outline rounded-0 card-maroon">
-                        <div class="card-header">
-                            <h3 class="card-title">List of all Customer</h3>
-                            <a href ="customeradd.php"><button class="btn btn-primary mb-3 mt-3" >Add Customer</button> </a>
+                        <div class="card-header" style="background-color: #2f3742; border: none">
+                            <a href ="customeradd.php"><button class="btn mb-2 mt-3" style="background-color: #FE3C00; color: white;">Add Customer</button> </a>
+                            
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="background-color: #2f3742;">
                             <div class="container-fluid">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered  text-center" id="example" width="100%"
+                                    <table class="table text-center" id="customersTable" width="100%"
                                         cellspacing="0">
 
 
                                         <thead>
-                                            <tr class="bg-primary text-white">
+                                            <tr class="text-white" style="background-color: #2D333C">
 
                                                 <th class="text-center">Action</th>
                                                 <th class="text-center">SeQCode</th>
@@ -171,7 +213,7 @@ include('header.php');
                                 </div>
                             </div>
                             <!-- /.container-fluid -->
-
+                                        </div>
                         </div>
                         <!-- End of Main Content -->
 
@@ -223,17 +265,16 @@ include('header.php');
                 <!-- Page level custom scripts -->
                 <script src="js/demo/chart-area-demo.js"></script>
                 <script src="js/demo/chart-pie-demo.js"></script>
-                <script type="text/javascript"
-                    src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
+
 
                 <!-- Page level custom scripts -->
-                <script src="js/demo/datatables-demo.js"></script>
+
                 <script src="assetsDT/js/bootstrap.bundle.min.js"></script>
                 <script src="assetsDT/js/jquery-3.6.0.min.js"></script>
                 <script src="assetsDT/js/pdfmake.min.js"></script>
                 <script src="assetsDT/js/vfs_fonts.js"></script>
                 <script src="assetsDT/js/custom.js"></script>
-                <script src="assetsDT/js/datatables.min.js"></script>
+
 
                 <script src="js/sweetalert2.all.min.js"></script>
                 <script src="js/sweetalert.min.js"></script>
