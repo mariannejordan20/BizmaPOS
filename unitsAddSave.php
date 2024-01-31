@@ -13,7 +13,7 @@ if (isset($_POST['unit_name'])) {
     if ($query_result->num_rows > 0) {
         $_SESSION['status'] = "Unit already exists!";
         $_SESSION['status_code'] = "error";
-        header("location: ".$_SERVER['HTTP_REFERER']);
+        header("location: units.php");
         exit;
     }
 
@@ -28,6 +28,21 @@ if (isset($_POST['unit_name'])) {
         $stmt->bind_param("s", $unitname);
         $stmt->execute();
 
+        // Check the number of records in recentunit
+        $countQuery = "SELECT COUNT(*) AS count FROM recentunit";
+        $result = $conn->query($countQuery);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $recordCount = $row["count"];
+
+            // Delete the oldest record if the count exceeds 5
+            if ($recordCount > 5) {
+                $sqlDeleteOldest = "DELETE FROM recentunit ORDER BY created_at ASC LIMIT 1";
+                $conn->query($sqlDeleteOldest);
+            }
+        }
+
         $_SESSION['status'] = "Unit Information Saved";
         $_SESSION['status_code'] = "success";
         header("location: units.php");
@@ -37,7 +52,7 @@ if (isset($_POST['unit_name'])) {
     // Handle the case where 'unit_name' is not set.
     $_SESSION['status'] = "Invalid data!";
     $_SESSION['status_code'] = "error";
-    header("location: ".$_SERVER['HTTP_REFERER']);
+    header("location: units.php");
     exit;
 }
 ?>

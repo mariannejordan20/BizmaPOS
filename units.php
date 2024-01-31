@@ -3,26 +3,7 @@ session_start();
 include('connection.php');
 
 // Check if the form is submitted to add a new unit
-if (isset($_POST['addUnit'])) {
-    $unit_name = $_POST['unit_name'];
 
-    // Insert unit into the main units table
-    $sql = "INSERT INTO units (unit_name) VALUES ('$unit_name')";
-    $conn->query($sql);
-
-    // Insert unit into the recentunit table
-    $sqlRecent = "INSERT INTO recentunit (unit_name, created_at) VALUES ('$unit_name', NOW())";
-    $conn->query($sqlRecent);
-
-    $_SESSION['status'] = "Unit added successfully!";
-    $_SESSION['status_code'] = "success";
-
-    // Debug output
-    echo "Debug: Session variables set.";
-
-    header("location: units.php#alert"); // Modified header location to include the anchor
-    exit;
-}
 
 // Set default values for pagination
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 5;
