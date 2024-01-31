@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include('connection.php');
 
 // Check if the form is submitted to add a new unit
@@ -17,7 +16,11 @@ if (isset($_POST['addUnit'])) {
 
     $_SESSION['status'] = "Unit added successfully!";
     $_SESSION['status_code'] = "success";
-    header("location: units.php");
+
+    // Debug output
+    echo "Debug: Session variables set.";
+
+    header("location: units.php#alert"); // Modified header location to include the anchor
     exit;
 }
 
@@ -261,6 +264,7 @@ while ($row = $recentResults->fetch_assoc()) {
         <script src="js/sweetalert2.all.min.js"></script>
         <script src="js/sweetalert.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script src="js/delete.js"></script>
         <script>
@@ -278,7 +282,20 @@ while ($row = $recentResults->fetch_assoc()) {
                 };
             }
         </script>
-
+            <script>
+                <?php
+                if (isset($_SESSION['status'])) {
+                    echo "Swal.fire({
+                        icon: '" . ($_SESSION['status_code'] == 'success' ? 'success' : 'error') . "',
+                        title: '" . $_SESSION['status'] . "',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });";
+                    unset($_SESSION['status']); // Clear the session variable
+                    unset($_SESSION['status_code']); // Clear the session variable
+                }
+                ?>
+            </script>
     </body>
 
 </html>
