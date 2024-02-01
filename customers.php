@@ -34,7 +34,7 @@ if (!$results) {
     #customersTable{
         cursor: pointer;
     }
-    .categories-section {
+    .customers-section {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
@@ -62,7 +62,7 @@ if (!$results) {
     }
 
     #customersTable tbody tr:hover {
-        background-color: #2D333C  ; /* Light gray background on hover */
+        background-color: #ecf0f1  ; /* Light gray background on hover */
     }
 
     #customersTable a:hover {
@@ -89,7 +89,7 @@ include('header.php');
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2D333C;">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
 
             <!-- Main Content -->
             <div id="content">
@@ -103,13 +103,16 @@ include('header.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-left: 2%;">
 
-                    <h3 class="card-title" style="color: white;">List of all Customer</h3>
 
-                        <div class="card-header" style="background-color: #2f3742; border: none">
-                            <a href ="customeradd.php"><button class="btn mb-2 mt-3" style="background-color: #FE3C00; color: white;">Add Customer</button> </a>
+                        <div class="card-header" style="background-color: #eeeeee; border: none">
+                        <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Customers</h3>
                             
                         </div>
-                        <div class="card-body" style="background-color: #2f3742;">
+                        <div class="card-body">
+                        <div class="customers-section">
+                            <div class="mb-3 d-flex align-items-center">
+                                <a href ="customeradd.php" class="btn" style="background-color: #fe3c00; color: white;">Add Customer</button> </a>
+                            </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
                                     <table class="table text-center" id="customersTable" width="100%"
@@ -135,7 +138,7 @@ include('header.php');
 
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody style="color: #313A46;">
 
                                             <?php
                                             // Check if there are records in the result set
@@ -216,7 +219,7 @@ include('header.php');
                                         </div>
                         </div>
                         <!-- End of Main Content -->
-
+                        </div>
 
                     </div>
                     <!-- End of Content Wrapper -->
