@@ -4,7 +4,6 @@ include('connection.php');
 
 // Check if the form is submitted to add a new unit
 
-
 // Set default values for pagination
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -23,8 +22,6 @@ while ($row = $recentResults->fetch_assoc()) {
     $recentUnits[] = $row;
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,25 +58,33 @@ while ($row = $recentResults->fetch_assoc()) {
                 <?php include('navbar.php'); ?>
                 <!-- End of Topbar -->
                 <div class="container-fluid" style="padding-left: 2%;">
-                <h3 class="card-title" style="color: white;">List of all Units</h3>
+                    <h3 class="card-title" style="color: white;">List of all Units</h3>
                     <div class="row">
 
                         <!-- Left Content Column -->
                         <div class="col-lg-6 mb-4">
                             <div class="card rounded-0 card-maroon border-0" style="background-color: #313A46;">
-                                <div class="card-header" style="background-color: #2f3742; display: flex; justify-content: space-between; align-items: center;">
-                    <a href="unitsAdd.php" class="btn mt-3 mb-3" style="background-color: #FE3C00; color: white;">Add New Unit</a>
+                                <div class="card-header"
+                                    style="background-color: #2f3742; display: flex; justify-content: space-between; align-items: center;">
+                                    <button type="button" class="btn mt-3 mb-3" style="background-color: #FE3C00; color: white;"
+                                        data-toggle="modal" data-target="#addUnitModal">
+                                        Add New Unit
+                                    </button>
                                     <form action="units.php" method="get" class="form-inline">
                                         <div class="form-group">
-                                            <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchUnits()">
-                                            <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color: white;">Search</button>
+                                            <input type="text" name="search" id="searchInput" class="form-control"
+                                                placeholder="Search" oninput="searchUnits()">
+                                            <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color: white;">
+                                                Search
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
                                         <div class="table-responsive" id="searchResults">
-                                            <table class="table table-bordered text-center" id="example" style="width: 100%;" cellspacing="0">
+                                            <table class="table table-bordered text-center" id="example" style="width: 100%;"
+                                                cellspacing="0">
                                                 <thead>
                                                     <tr class="text-white" style="background-color: #2D333C">
                                                         <th class="text-center">Action</th>
@@ -146,14 +151,16 @@ while ($row = $recentResults->fetch_assoc()) {
                         <div class="col-lg-6 mb-4">
 
                             <!-- Recent Units Table -->
-                            <div class="card card-outline rounded-0 card-maroon border-0" style="background-color: #313A46;">
+                            <div class="card card-outline rounded-0 card-maroon border-0"
+                                style="background-color: #313A46;">
                                 <div class="card-header" style="background-color: #2f3742">
                                     <h3 class="card-title mb-3 mt-3" style="color: white;">Recent Units</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered text-center" id="recentUnitsTable" style="width: 100%;" cellspacing="0">
+                                            <table class="table table-bordered text-center" id="recentUnitsTable"
+                                                style="width: 100%;" cellspacing="0">
                                                 <thead>
                                                     <tr class="text-white" style="background-color: #2D333C">
                                                         <th class="text-center">Date</th>
@@ -192,13 +199,43 @@ while ($row = $recentResults->fetch_assoc()) {
         </div>
         <!-- End of Page Wrapper -->
 
+        <!-- Add New Unit Modal -->
+        <div class="modal fade" id="addUnitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Unit</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="unitsAddSave.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                            <div class="form-group">
+                                <label for="unit_name">Unit Name</label>
+                                <input type="text" name="unit_name" class="form-control" maxlength="3" oninput="this.value = this.value.toUpperCase()" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Add New Unit Modal -->
+
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -232,21 +269,35 @@ while ($row = $recentResults->fetch_assoc()) {
         <!-- Page level custom scripts -->
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
-
-        <!-- Page level custom scripts -->
-        <script src="assetsDT/js/bootstrap.bundle.min.js"></script>
-        <script src="assetsDT/js/jquery-3.6.0.min.js"></script>
-        <script src="assetsDT/js/pdfmake.min.js"></script>
-        <script src="assetsDT/js/vfs_fonts.js"></script>
-        <script src="assetsDT/js/custom.js"></script>
-
-        <script src="js/sweetalert2.all.min.js"></script>
-        <script src="js/sweetalert.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        <script src="js/delete.js"></script>
         <script>
+            function validateForm() {
+                var unitName = document.forms["student-form"]["unit_name"].value;
+
+                // Check if the length is exactly 3
+                if (unitName.length !== 3) {
+                    alert("Unit Name must be exactly 3 letters.");
+                    return false;
+                }
+                return true;
+            }
+        </script>
+        <script>
+              <?php
+                    if (isset($_SESSION['status'])) {
+                        echo "Swal.fire({
+                            icon: '" . ($_SESSION['status_code'] == 'success' ? 'success' : 'error') . "',
+                            title: '" . $_SESSION['status'] . "',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });";
+                        unset($_SESSION['status']); // Clear the session variable
+                        unset($_SESSION['status_code']); // Clear the session variable
+                    }
+                    ?>
+        </script>
+
+<script>
             function searchUnits() {
                 var searchTerm = document.getElementById('searchInput').value;
                 var xhr = new XMLHttpRequest();
@@ -261,20 +312,6 @@ while ($row = $recentResults->fetch_assoc()) {
                 };
             }
         </script>
-            <script>
-                <?php
-                if (isset($_SESSION['status'])) {
-                    echo "Swal.fire({
-                        icon: '" . ($_SESSION['status_code'] == 'success' ? 'success' : 'error') . "',
-                        title: '" . $_SESSION['status'] . "',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });";
-                    unset($_SESSION['status']); // Clear the session variable
-                    unset($_SESSION['status_code']); // Clear the session variable
-                }
-                ?>
-            </script>
     </body>
 
 </html>
