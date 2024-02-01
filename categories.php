@@ -121,9 +121,9 @@ $results = $conn->query($sql);
                 ?>
 
                 <div class="container-fluid">
-                    <div class="card card-outline rounded-0 card-maroon" style="background-color: #eeeeee">
-                        <div class="card-header" style="background-color: #eeeeee">
-                            <h3 class="card-title"  style="color: #313A46;">List of all Categories</h3>
+
+                        <div class="card-header" style="background-color: #eeeeee; border: none">
+                            <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Categories</h3>
                         </div>
 
                         <div class="card-body">
@@ -131,10 +131,10 @@ $results = $conn->query($sql);
                             <div class="row">
                                 <!-- Left Section - Categories -->
                                 <div class="col-md-6 mr-2 categories-section">
-                                <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
+                                <h3 class="mb-3" style="color: #313A46;">Categories</h3>
                                     <div class="mb-3 d-flex align-items-center">
                                         <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
-                                            Add New Category <i class="fas fa-plus"></i>
+                                            Add New Category
                                         </a>
                                         <div class="input-group ml-2" style="max-width: 68%;"> <!-- Adjusted max-width for a shorter search bar -->
                                             <input type="text" id="searchInput" class="form-control" placeholder="Search Category">
@@ -145,12 +145,12 @@ $results = $conn->query($sql);
                                     </div>
                                     <table class="table  text-center" id="categoriesTable" width="100%" cellspacing="0">
                                         <thead>
-                                            <tr class="text-white"  style="color: #313A46;">
+                                            <tr class="text-white" style="color: #313A46;">
                                                 <th class="text-center" style="background-color: #313A46;">Action</th>
                                                 <th class="text-center" style="background-color: #313A46;">Category</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody style="color: #313A46;">
                                         <?php
                                         foreach ($results as $result) {
                                             echo '<tr data-category-id="' . $result['maincat'] . '">
@@ -171,8 +171,8 @@ $results = $conn->query($sql);
                                 <div class="col-md-5 ml-2 categories-section">
                                     <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
                                     <div class="mb-3 d-flex align-items-center">
-                                        <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
-                                            Add New Category <i class="fas fa-plus"></i>
+                                        <a href="subCategoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                            Add New Sub-category 
                                         </a>
                                         <div class="input-group ml-2" style="max-width: 61%;"> <!-- Adjusted max-width for a shorter search bar -->
                                             <input type="text" id="searchInput" class="form-control" placeholder="Search Sub-Category">
@@ -189,7 +189,7 @@ $results = $conn->query($sql);
                                                 <th class="text-center" style="background-color: #313A46;">Sub-Category</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody style="color: #313A46;">
                                             <!-- Sub-categories content will be dynamically loaded here -->
                                         </tbody>
                                     </table>
