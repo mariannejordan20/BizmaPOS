@@ -138,7 +138,7 @@ $results = $conn->query($sql);
     <div class="card-body">
     <div class="stocks-section">
         <div class="mb-3 d-flex align-items-center">
-            <a href ="productAdd.php" class="btn" style="background-color: #fe3c00; color: white;">Add New Product</a>
+            <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">Add New Product</a>
         </div>
 
         <div class="container-fluid">
