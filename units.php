@@ -30,7 +30,7 @@ while ($row = $recentResults->fetch_assoc()) {
         color: #fff; /* Text color for pagination buttons */
     }
 
-    .pagination a.btn.btn-primary {
+    .pagination a.btn {
         background-color: #FE3C00; /* Primary color for active and 'Previous'/'Next' buttons */
     }
 
@@ -38,6 +38,10 @@ while ($row = $recentResults->fetch_assoc()) {
         background-color: #6c757d; /* Secondary color for inactive page number buttons */
         border-color: #6c757d;
     }
+    .table-bordered tbody tr.search-result-row td {
+        color: #313A46 !important;
+    }
+    
 </style>
 <?php include('header.php'); ?>
 
@@ -49,7 +53,7 @@ while ($row = $recentResults->fetch_assoc()) {
         <?php include('menu.php'); ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2D333C;">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
 
             <!-- Main Content -->
             <div id="content">
@@ -58,27 +62,25 @@ while ($row = $recentResults->fetch_assoc()) {
                 <?php include('navbar.php'); ?>
                 <!-- End of Topbar -->
                 <div class="container-fluid" style="padding-left: 2%;">
-                    <h3 class="card-title" style="color: white;">List of all Units</h3>
+                    <h3 class="card-title" style="color:#313A46;">List of all Units</h3>
                     <div class="row">
 
                         <!-- Left Content Column -->
                         <div class="col-lg-6 mb-4">
-                            <div class="card rounded-0 card-maroon border-0" style="background-color: #313A46;">
+                            <div class="card rounded-0 card-maroon border-0">
                                 <div class="card-header"
-                                    style="background-color: #2f3742; display: flex; justify-content: space-between; align-items: center;">
+                                    style="background-color:white; display: flex; justify-content: space-between; align-items: center;">
                                     <button type="button" class="btn mt-3 mb-3" style="background-color: #FE3C00; color: white;"
                                         data-toggle="modal" data-target="#addUnitModal">
-                                        Add New Unit
+                                        Add Unit
                                     </button>
                                     <form action="units.php" method="get" class="form-inline">
                                         <div class="form-group">
-                                            <input type="text" name="search" id="searchInput" class="form-control"
-                                                placeholder="Search" oninput="searchUnits()">
-                                            <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color: white;">
-                                                Search
-                                            </button>
+                                            <input type="text" name="search" id="searchInput" class="form-control mr-2" placeholder="Search" oninput="searchUnits()">
+                                            <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color: white;">Search</button>
                                         </div>
                                     </form>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
@@ -101,13 +103,13 @@ while ($row = $recentResults->fetch_assoc()) {
                                                     }
 
                                                     foreach ($results as $result) {
-                                                        echo '<tr style="color: white;">
+                                                        echo '<tr class="search-result-row">
                                                                 <td>
                                                                     <a href="unitsDelete.php?id=' . $result['ID'] . '">
                                                                         <i class="fa fa-trash text-danger"></i>
                                                                     </a>
                                                                 </td>
-                                                                <td>' . $result['unit_name'] . '</td>
+                                                                <td style="color: #313A46;">' . $result['unit_name'] . '</td>
                                                             </tr>';
                                                     }
                                                     ?>
@@ -124,17 +126,17 @@ while ($row = $recentResults->fetch_assoc()) {
 
                                             // Previous Page
                                             if ($page > 1) {
-                                                echo '<a href="units.php?page=' . ($page - 1) . '&limit=' . $limit . '" class="btn btn-secondary">Previous</a>';
+                                                echo '<a href="units.php?page=' . ($page - 1) . '&limit=' . $limit . '" class="btn ">Previous</a>';
                                             }
 
                                             // Page Numbers
                                             for ($i = 1; $i <= $totalPages; $i++) {
-                                                echo '<a href="units.php?page=' . $i . '&limit=' . $limit . '" class="btn ' . ($page == $i ? 'btn-primary' : 'btn-secondary') . '">' . $i . '</a>';
+                                                echo '<a href="units.php?page=' . $i . '&limit=' . $limit . '" class="btn ' . ($page == $i ? : 'btn-secondary') . '">' . $i . '</a>';
                                             }
 
                                             // Next Page
                                             if ($page < $totalPages) {
-                                                echo '<a href="units.php?page=' . ($page + 1) . '&limit=' . $limit . '" class="btn btn-secondary">Next</a>';
+                                                echo '<a href="units.php?page=' . ($page + 1) . '&limit=' . $limit . '" class="btn ">Next</a>';
                                             }
                                             ?>
                                         </div>
@@ -151,10 +153,9 @@ while ($row = $recentResults->fetch_assoc()) {
                         <div class="col-lg-6 mb-4">
 
                             <!-- Recent Units Table -->
-                            <div class="card card-outline rounded-0 card-maroon border-0"
-                                style="background-color: #313A46;">
-                                <div class="card-header" style="background-color: #2f3742">
-                                    <h3 class="card-title mb-3 mt-3" style="color: white;">Recent Units</h3>
+                            <div class="card card-outline rounded-0 card-maroon border-0" >
+                                <div class="card-header" style="background-color:white;">
+                                    <h3 class="card-title mb-3 mt-3" style="color: #313A46;">Recent Units</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
@@ -170,7 +171,7 @@ while ($row = $recentResults->fetch_assoc()) {
                                                 <tbody>
                                                     <?php
                                                     foreach ($recentUnits as $recentUnit) {
-                                                        echo '<tr style="color: white;">
+                                                        echo '<tr style="color: #313A46;">
                                                                 <td>' . $recentUnit['created_at'] . '</td>
                                                                 <td>' . $recentUnit['unit_name'] . '</td>
                                                             </tr>';
@@ -204,7 +205,7 @@ while ($row = $recentResults->fetch_assoc()) {
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color:#313A46; color:white">
                         <h5 class="modal-title" id="exampleModalLabel">Add New Unit</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -216,7 +217,7 @@ while ($row = $recentResults->fetch_assoc()) {
                                 <label for="unit_name">Unit Name</label>
                                 <input type="text" name="unit_name" class="form-control" maxlength="3" oninput="this.value = this.value.toUpperCase()" required />
                             </div>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn" style="background-color:#fe3c00; color:white">Save</button>
                         </form>
                     </div>
 
@@ -297,21 +298,29 @@ while ($row = $recentResults->fetch_assoc()) {
                     ?>
         </script>
 
-<script>
-            function searchUnits() {
-                var searchTerm = document.getElementById('searchInput').value;
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', 'search.php?search=' + encodeURIComponent(searchTerm), true);
-                xhr.send();
-                xhr.onload = function () {
-                    if (xhr.status != 200) {
-                        console.error('Error ' + xhr.status + ': ' + xhr.statusText);
-                    } else {
-                        document.getElementById('searchResults').innerHTML = xhr.responseText;
-                    }
-                };
+    <script>
+  function searchUnits() {
+    var searchTerm = document.getElementById('searchInput').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'search.php?search=' + encodeURIComponent(searchTerm), true);
+    xhr.send();
+    xhr.onload = function () {
+        if (xhr.status != 200) {
+            console.error('Error ' + xhr.status + ': ' + xhr.statusText);
+        } else {
+            var searchResultsDiv = document.getElementById('searchResults');
+            searchResultsDiv.innerHTML = xhr.responseText;
+
+            // Set text color for search result rows
+            var searchResultRows = searchResultsDiv.getElementsByTagName('tr');
+            for (var i = 0; i < searchResultRows.length; i++) {
+                searchResultRows[i].style.color = '#313A46';
             }
-        </script>
+        }
+    };
+}
+
+    </script>
     </body>
 
 </html>
