@@ -136,7 +136,7 @@ $results = $conn->query($sql);
                                         <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
                                             Add New Category
                                         </a>
-                                        <div class="input-group ml-2" style="max-width: 68%;"> <!-- Adjusted max-width for a shorter search bar -->
+                                        <div class="input-group ml-2" style="max-width: 60%;"> <!-- Adjusted max-width for a shorter search bar -->
                                             <input type="text" id="searchInput" class="form-control" placeholder="Search Category">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">Search</button>
@@ -174,7 +174,7 @@ $results = $conn->query($sql);
                                         <a href="subCategoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
                                             Add New Sub-category 
                                         </a>
-                                        <div class="input-group ml-2" style="max-width: 61%;"> <!-- Adjusted max-width for a shorter search bar -->
+                                        <div class="input-group ml-2" style="max-width: 43%;"> <!-- Adjusted max-width for a shorter search bar -->
                                             <input type="text" id="searchInput" class="form-control" placeholder="Search Sub-Category">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">Search</button>
