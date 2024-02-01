@@ -23,7 +23,19 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+    .products-section {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+    margin-bottom: 20px;
+    background-color: #fff; /* Optional: Add a background color */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    }
+    label{
+    color: #313A46;
+    }
+</style>
 <?php
     include('header.php');
 ?>
@@ -39,83 +51,39 @@
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
 
             <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        
-
-                        <!-- Nav Item - Alerts -->
-                        
-                        <!-- Nav Item - Messages -->
-                        
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo " ".$_SESSION['Name']." ";?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
+                <?php
+                 include('navbar.php');
+                ?>
                 <!-- End of Topbar -->
 
+
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-
-
-
-
+                <div class="container-fluid" style="padding-left: 2%;">
                        
                         <form action = "productsAddSave.php" method="post" enctype="multipart/form-data">
-                       
-                        <h3><b><?= isset($id) ? "Update product Details" : "Register New Product" ?></b></h3>
+                        <div class="card-header" style="background-color: #eeeeee; border: none">
+                        <h3 style="color: #313A46; margin-bottom: -10px"><b><?= isset($id) ? "Update product Details" : "Register New Product" ?></b></h3>
 </div>
+</div>      
+<div class="section">
 <div class="mx-0 py-5 px-3 mx-ns-4 bg-gradient-maroon">
 <div class="row justify-content-center" style="margin-top:-2em;">
     <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-        <div class="card rounded-0 shadow">
+    <div class="products-section">
             <div class="card-body">
+            <div class="section">
                 <div class="container-fluid">
                     <form action="" id="student-form">
                         <input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
                             
-                        <fieldset class="border-bottom">
-                            <legend>Product Information</legend>
+                        <fieldset>
+                            <legend style="color: #313A46;">Product Information</legend>
                             <div class="row">
                                 
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -165,7 +133,7 @@
 </div>
 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="form-group">
         <label for="Categories" class="control-label">Category</label>
         <select name="Categories" class="form-control form-control-sm rounded-5" required>
@@ -199,7 +167,7 @@
 
                                 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="form-group">
         <label for="Warranty" class="control-label">Warranty</label>
         <select name="Warranty" class="form-control form-control-sm form-control-border rounded-5" required>
@@ -221,15 +189,6 @@
 </div>
 
 
-                                
-
-                                
-
-                                
-
-                                
-
-
 
                             </div>
 
@@ -240,7 +199,7 @@
                         </div>
                     </form>
 
-
+        </div>
 
                 
 
@@ -273,7 +232,7 @@
      <div class="modal fade" id="AddUModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header" style="background-color: #ff3c00;">
+            <div class="modal-header" style="background-color: #313A46;">
                 <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Add Unit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -284,7 +243,7 @@
                 <div id="alert-container"></div>
                     <label>Unit Name: </label>
                     <input type="text" class="form-control form-control-user"
-                        id="unitName" name="unitName" style="border-radius: 8px;">
+                        id="unitName" name="unitName" style="border-radius: 8px;" required>
                 </div>
             </div>
             <div class="modal-footer">
