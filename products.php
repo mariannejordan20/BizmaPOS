@@ -22,6 +22,51 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    #productsTable{
+        cursor: pointer;
+    }
+    .categories-section {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+    margin-bottom: 20px;
+    background-color: #fff; /* Optional: Add a background color */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    }
+    #productsTable {
+        width: 100%  ;
+        border-spacing: 0  ;
+    }
+
+    #productsTable th,
+    #productsTable td {
+        padding: 12px  ;
+        text-align: center  ;
+    }
+
+    #productsTable th {    
+        color: #fff  ; /* White text for header */
+    }
+
+    #productsTable tbody tr {
+        transition: background-color 0.3s  ;
+    }
+
+    #productsTable tbody tr:hover {
+        background-color: #2D333C  ; /* Light gray background on hover */
+    }
+
+    #productsTable a:hover {
+        color: #FE3C00; /* Darker red on hover */
+    }
+    #productsTable tbody tr.active {
+        background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
+    }
+
+
+</style>
+
 
 <?php
     include('header.php');
@@ -32,7 +77,6 @@ session_start();
 
 
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -43,7 +87,7 @@ session_start();
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2D333C;">
 
             <!-- Main Content -->
             <div id="content">
@@ -55,132 +99,123 @@ session_start();
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="padding-left: 2%;">
 
+                    <h3 class="card-title" style="color: white;">List of all Products</h3>
                     
-                       <div class="card card-outline rounded-0 card-maroon">
-    <div class="card-header">
-        <h3 class="card-title">List of all Products</h3>
-        <a href ="productsAdd.php"><button class="btn btn-primary mb-3 mt-3" >Add New Product</button> </a>
-    </div>
-    <div class="card-body">
-        <div class="container-fluid">
-            <div class="table-responsive">
-            <table class="table table-bordered  text-center" id="example" width="100%" cellspacing="0">
+                      
+                        <div class="card-header" style="background-color: #2f3742; border: none">
+                            <a href ="productsAdd.php"><button class="btn mb-1 mt-3" style="background-color: #FE3C00; color: white;">Add New Product</button> </a>
+                        </div>
+                        <div class="card-body" style="background-color: #2f3742;">
+                            <div class="container-fluid">
+                                <div class="table-responsive">
+                                <table class="table text-center" id="productsTable" width="100%" cellspacing="0">
 
                 
-                <thead>
-                    <tr class="bg-primary text-white">
-                    
-                        <th class="text-center">Action</th>
-                        <th class="text-center">Barcode</th>
-                        <th class="text-center">Product Name</th>
-                        <th class="text-center">Unit</th>
-                        <th class="text-center">Warranty</th>
-                        <th class="text-center">Quantity</th>
-                        <th class="text-center">Costing</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Wholesale</th>
-                        <th class="text-center">Promo</th>
-                        <th class="text-center">Categories</th>
-                        <th class="text-center">Seller</th>
-                        <th class="text-center">Supplier</th>
-                        <th class="text-center">Date Registered</th>
-                        
-                        
-                        
+                                    <thead>
+                                        <tr class="text-white" style="background-color: #2D333C">
+                                        
+                                            <th class="text-center">Action</th>
+                                            <th class="text-center">Barcode</th>
+                                            <th class="text-center">Product Name</th>
+                                            <th class="text-center">Unit</th>
+                                            <th class="text-center">Warranty</th>
+                                            <th class="text-center">Quantity</th>
+                                            <th class="text-center">Costing</th>
+                                            <th class="text-center">Price</th>
+                                            <th class="text-center">Wholesale</th>
+                                            <th class="text-center">Promo</th>
+                                            <th class="text-center">Categories</th>
+                                            <th class="text-center">Seller</th>
+                                            <th class="text-center">Supplier</th>
+                                            <th class="text-center">Date Registered</th>
+       
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <?php
+                                                    foreach ($results as $result) {
+                                                        echo '<tr>
+                                                                <td>
+
+                                                                <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
+                                                                    <a class = "mr-2" href = "productsEdit.php?id='.$result['ID'].'">
+                                                                    <i class = "fa fa-edit"></i>
+                                                                    </a>
+
+                                                                    <a href = "productsDelete.php?id='.$result['ID'].'">
+                                                                    <i class = "fa fa-trash text-danger"></i>
+                                                                    </a>
 
 
+                                                                </td>
+                                                                <td>'.$result['Barcode'].'</td>
+                                                                <td>'.$result['Product'].'</td>
+                                                                <td>'.$result['Unit'].'</td>
+                                                                <td>'.$result['Warranty'].'</td>
+                                                                <td>'.$result['Quantity'].'</td>
+                                                                <td>'.$result['Costing'].'</td>
+                                                                <td>'.$result['Price'].'</td>
+                                                                <td>'.$result['Wholesale'].'</td>
+                                                                <td>'.$result['Promo'].'</td>
+                                                                <td>'.$result['Categories'].'</td>
+                                                                <td>'.$result['Seller'].'</td>
+                                                                <td>'.$result['Supplier'].'</td>
+                                                                <td>'.$result['Date_Registered'].'</td>
+                                                                
 
-                        
+                                                            
 
-                        
-                        
-                    </tr>
-                </thead>
-                <tbody>
-
-                <?php
-                                foreach ($results as $result) {
-                                    echo '<tr>
-                                            <td>
-
-                                            <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
-                                                <a class = "mr-2" href = "productsEdit.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-edit"></i>
-                                                </a>
-
-                                                <a href = "productsDelete.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-trash text-danger"></i>
-                                                </a>
-
-
-                                            </td>
-                                            <td>'.$result['Barcode'].'</td>
-                                            <td>'.$result['Product'].'</td>
-                                            <td>'.$result['Unit'].'</td>
-                                            <td>'.$result['Warranty'].'</td>
-                                            <td>'.$result['Quantity'].'</td>
-                                            <td>'.$result['Costing'].'</td>
-                                            <td>'.$result['Price'].'</td>
-                                            <td>'.$result['Wholesale'].'</td>
-                                            <td>'.$result['Promo'].'</td>
-                                            <td>'.$result['Categories'].'</td>
-                                            <td>'.$result['Seller'].'</td>
-                                            <td>'.$result['Supplier'].'</td>
-                                            <td>'.$result['Date_Registered'].'</td>
+                                                            </tr>';
+                                                            echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-md">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">'.$result['Product'].'</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                
+                                                <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                                                <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                                                <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                                                <p><strong>Price:</strong> '.$result['Price'].'</p>
+                                                <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                                                <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                                                <p><strong>Category:</strong> '.$result['Categories'].'</p>
+                                                
+                                                <p><strong>Seller:</strong> '.$result['Seller'].'</p>
+                                                <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
+                                                <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
+                                                
                                             
+                                                
+                                                
 
-                                           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                                                    }
 
-                                        </tr>';
-                                        echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">'.$result['Product'].'</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                        </div>
-                        <div class="modal-body">
-                            
-                            <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
-                            <p><strong>Unit:</strong> '.$result['Unit'].'</p>
-                            <p><strong>Costing:</strong> '.$result['Costing'].'</p>
-                            <p><strong>Price:</strong> '.$result['Price'].'</p>
-                            <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
-                            <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
-                            <p><strong>Category:</strong> '.$result['Categories'].'</p>
-                            
-                            <p><strong>Seller:</strong> '.$result['Seller'].'</p>
-                            <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
-                            <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
-                            
-                          
-                            
-                            
+                                                ?>
+                                            </tbody>
+
+                                    </div>     
+                                    </div>
+                                    <!-- /.container-fluid -->
+
+                                </div>
+                                <!-- End of Main Content -->
+
+                                
+                            </div>
+                            <!-- End of Content Wrapper -->
 
                         </div>
-                    </div>
-                </div>
-            </div>';
-                                }
-
-                            ?>
-                        </tbody>
-
-                  </div>     
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
+                        <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -223,16 +258,13 @@ session_start();
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>   
     
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
     <script src="assetsDT/js/bootstrap.bundle.min.js"></script>
     <script src="assetsDT/js/jquery-3.6.0.min.js"></script>
     <script src="assetsDT/js/pdfmake.min.js"></script>
     <script src="assetsDT/js/vfs_fonts.js"></script>
     <script src="assetsDT/js/custom.js"></script>
-    <script src="assetsDT/js/datatables.min.js"></script>
 
     <script src="js/sweetalert2.all.min.js"></script>
   <script src="js/sweetalert.min.js"></script>
