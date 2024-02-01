@@ -26,7 +26,7 @@ session_start();
     #productsTable{
         cursor: pointer;
     }
-    .categories-section {
+    .products-section {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
@@ -54,11 +54,11 @@ session_start();
     }
 
     #productsTable tbody tr:hover {
-        background-color: #2D333C  ; /* Light gray background on hover */
+        background-color: #ecf0f1  ; /* Light gray background on hover */
     }
 
     #productsTable a:hover {
-        color: #FE3C00; /* Darker red on hover */
+        color: #c0392b; /* Darker red on hover */
     }
     #productsTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
@@ -87,7 +87,7 @@ session_start();
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2D333C;">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
 
             <!-- Main Content -->
             <div id="content">
@@ -101,13 +101,15 @@ session_start();
                 <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-left: 2%;">
 
-                    <h3 class="card-title" style="color: white;">List of all Products</h3>
-                    
+                <div class="card-header" style="background-color: #eeeeee; border: none">
+                    <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Products</h3>
+                </div>        
                       
-                        <div class="card-header" style="background-color: #2f3742; border: none">
-                            <a href ="productsAdd.php"><button class="btn mb-1 mt-3" style="background-color: #FE3C00; color: white;">Add New Product</button> </a>
-                        </div>
-                        <div class="card-body" style="background-color: #2f3742;">
+                        <div class="card-body">
+                        <div class="products-section">
+                            <div class="mb-3 d-flex align-items-center">
+                                <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">Add New Product</a>
+                            </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
                                 <table class="table text-center" id="productsTable" width="100%" cellspacing="0">
@@ -133,7 +135,7 @@ session_start();
        
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="color: #313A46;">
 
                                     <?php
                                                     foreach ($results as $result) {
@@ -213,7 +215,7 @@ session_start();
                                 
                             </div>
                             <!-- End of Content Wrapper -->
-
+                        </div>
                         </div>
                         <!-- End of Page Wrapper -->
 

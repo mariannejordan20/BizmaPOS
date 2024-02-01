@@ -96,7 +96,7 @@ session_start();
                 <div class="container-fluid">
                     
 
-                            <div class="card-header" style="background-color: #eeeeee; border: none"s>
+                            <div class="card-header" style="background-color: #eeeeee; border: none">
                                 <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">Warranty List</h3>
                             </div>
 
