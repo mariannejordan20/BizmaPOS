@@ -130,7 +130,7 @@ $results = $conn->query($sql);
                         <div class="container-fluid" style="background-color: #eeeeee">
                             <div class="row">
                                 <!-- Left Section - Categories -->
-                                <div class="col-md-6 mr-2 categories-section">
+                                <div class="col-md-6 ml-4 mr-3 categories-section">
                                 <h3 class="mb-3" style="color: #313A46;">Categories</h3>
                                     <div class="mb-3 d-flex align-items-center">
                                         <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
@@ -168,7 +168,7 @@ $results = $conn->query($sql);
                                 </div>
 
                                 <!-- Right Section - Sub-Categories -->
-                                <div class="col-md-5 ml-2 categories-section">
+                                <div class="col-md-5 ml-3 categories-section">
                                     <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
                                     <div class="mb-3 d-flex align-items-center">
                                         <a href="subCategoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
