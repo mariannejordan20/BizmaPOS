@@ -2,57 +2,48 @@
 session_start();
 include('connection.php');
 
-if (isset($_POST['unit_name'])) {
-    $unitname = $_POST['unit_name'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validate form data and perform any other necessary checks
 
-    $query = $conn->prepare("SELECT * FROM units WHERE unit_name = ?");
-    $query->bind_param("s", $unitname);
-    $query->execute();
-    $query_result = $query->get_result();
+    // Convert the unit_name to uppercase
+    $unit_name = strtoupper($_POST['unit_name']);
 
-    if ($query_result->num_rows > 0) {
-        $_SESSION['status'] = "Unit already exists!";
-        $_SESSION['status_code'] = "error";
-        header("location: units.php");
-        exit;
-    }
+    // Check if the unit already exists
+    $sqlCheckExist = "SELECT ID FROM units WHERE unit_name = '$unit_name'";
+    $resultExist = $conn->query($sqlCheckExist);
 
-    $insert_query = $conn->prepare("INSERT INTO units (unit_name) VALUES (?)");
-    $insert_query->bind_param("s", $unitname);
-    $insert_result = $insert_query->execute();
+    if ($resultExist->num_rows > 0) {
+        // Unit already exists, handle accordingly (e.g., show an error message)
+        $_SESSION['status'] = 'Unit already exists';
+        $_SESSION['status_code'] = 'error';
+        header("Location: units.php");
+        exit();
+    } else {
+        // Unit does not exist, proceed with insertion
 
-    if ($insert_result) {
-        // Insert unit into the recentunit table
-        $sqlRecent = "INSERT INTO recentunit (unit_name, created_at) VALUES (?, NOW())";
-        $stmt = $conn->prepare($sqlRecent);
-        $stmt->bind_param("s", $unitname);
-        $stmt->execute();
-
-        // Check the number of records in recentunit
-        $countQuery = "SELECT COUNT(*) AS count FROM recentunit";
-        $result = $conn->query($countQuery);
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $recordCount = $row["count"];
-
-            // Delete the oldest record if the count exceeds 5
-            if ($recordCount > 5) {
-                $sqlDeleteOldest = "DELETE FROM recentunit ORDER BY created_at ASC LIMIT 1";
-                $conn->query($sqlDeleteOldest);
-            }
+        // Insert the uppercase unit_name into the database
+        $sqlInsert = "INSERT INTO units (unit_name) VALUES ('$unit_name')";
+        if ($conn->query($sqlInsert) === TRUE) {
+            $_SESSION['status'] = 'Unit added successfully';
+            $_SESSION['status_code'] = 'success';
+        } else {
+            $_SESSION['status'] = 'Error: ' . $conn->error;
+            $_SESSION['status_code'] = 'error';
         }
 
-        $_SESSION['status'] = "Unit Information Saved";
-        $_SESSION['status_code'] = "success";
-        header("location: units.php");
-        exit;
+        // Insert the recent unit into the recentunit table
+        $sqlInsertRecent = "INSERT INTO recentunit (unit_name) VALUES ('$unit_name')";
+        $conn->query($sqlInsertRecent);
+
+        // Redirect back to the main page or wherever you want after processing the form
+        header("Location: units.php");
+        exit();
     }
 } else {
-    // Handle the case where 'unit_name' is not set.
-    $_SESSION['status'] = "Invalid data!";
-    $_SESSION['status_code'] = "error";
-    header("location: units.php");
-    exit;
+    // Handle cases where the form wasn't submitted properly
+    $_SESSION['status'] = 'Form submission error';
+    $_SESSION['status_code'] = 'error';
+    header("Location: units.php");
+    exit();
 }
 ?>
