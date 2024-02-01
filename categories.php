@@ -60,7 +60,7 @@ $results = $conn->query($sql);
     }
 
     #categoriesTable tbody tr:hover {
-        background-color: #2D333C  ; /* Light gray background on hover */
+        background-color: #ecf0f1  ; /* Light gray background on hover */
     }
 
     #categoriesTable a {
@@ -91,7 +91,7 @@ $results = $conn->query($sql);
     }
 
     #subCategoriesTable tbody tr:hover {
-        background-color: #2D333C  ; /* Light gray background on hover */
+        background-color: #ecf0f1  ; /* Light gray background on hover */
     }
 
     #subCategoriesTable a {
@@ -99,13 +99,8 @@ $results = $conn->query($sql);
     }
 
     #subCategoriesTable a:hover {
-        color: #2D333C; /* Darker red on hover */
+        color: #c0392b; /* Darker red on hover */
     }
-    #categoriesTable tbody tr.active {
-        background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
-    }
-
-
 </style>
 
 <?php include('header.php'); ?>
@@ -118,25 +113,25 @@ $results = $conn->query($sql);
     <div id="wrapper">
         <?php include('menu.php'); ?>
 
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2D333C">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee">
 
-            <div id="content" >
+            <div id="content">
                 <?php
                  include('navbar.php');
                 ?>
 
                 <div class="container-fluid">
-                    <div class="card rounded-0 card-maroon" style="background-color: #2f3742; border:none">
-                        <div class="card-header"style="background-color: #2f3742; border:none">
-                            <h3 class="card-title"  style="color: white;">List of all Categories</h3>
+                    <div class="card card-outline rounded-0 card-maroon" style="background-color: #eeeeee">
+                        <div class="card-header" style="background-color: #eeeeee">
+                            <h3 class="card-title"  style="color: #313A46;">List of all Categories</h3>
                         </div>
 
                         <div class="card-body">
-                        <div class="container-fluid" style="background-color: #2f3742; border:none">
+                        <div class="container-fluid" style="background-color: #eeeeee">
                             <div class="row">
                                 <!-- Left Section - Categories -->
-                                <div class="col-md-6 mr-2 categories-section" style="background-color: #2f3742; border:none">
-                                    <h3 class="mb-3" style="color: white;">Sub-Categories</h3>
+                                <div class="col-md-6 mr-2 categories-section">
+                                <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
                                     <div class="mb-3 d-flex align-items-center">
                                         <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
                                             Add New Category <i class="fas fa-plus"></i>
@@ -158,8 +153,8 @@ $results = $conn->query($sql);
                                         <tbody>
                                         <?php
                                         foreach ($results as $result) {
-                                            echo '<tr style="color:white;" data-category-id="' . $result['maincat'] . '">
-                                                    <td >
+                                            echo '<tr data-category-id="' . $result['maincat'] . '">
+                                                    <td>
                                                         <a href="categoryDelete.php?id=' . $result['ID'] . '">
                                                             <i class="fa fa-trash text-danger"></i>
                                                         </a>
@@ -173,8 +168,8 @@ $results = $conn->query($sql);
                                 </div>
 
                                 <!-- Right Section - Sub-Categories -->
-                                <div class="col-md-5 ml-2 categories-section" style="background-color: #2f3742; border:none">
-                                    <h3 class="mb-3" style="color: white;">Sub-Categories</h3>
+                                <div class="col-md-5 ml-2 categories-section">
+                                    <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
                                     <div class="mb-3 d-flex align-items-center">
                                         <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
                                             Add New Category <i class="fas fa-plus"></i>
@@ -191,7 +186,7 @@ $results = $conn->query($sql);
                                         <thead>
                                             <tr class="bg-primary text-white">
                                                 <th class="text-center" style="background-color: #313A46;">Action</th>
-                                                <th class="text-center" style="background-color: #313A46;color: white;">Sub-Category</th>
+                                                <th class="text-center" style="background-color: #313A46;">Sub-Category</th>
                                             </tr>
                                         </thead>
                                         <tbody>
