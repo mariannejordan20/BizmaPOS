@@ -22,17 +22,55 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    #warrantyTable tbody tr {
+        cursor: pointer;
+    }
+    .warranty-section {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+    margin-bottom: 20px;
+    background-color: #fff; /* Optional: Add a background color */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    }
+    #warrantyTable {
+        width: 100%  ;
+        border-spacing: 0  ;
+    }
 
+    #warrantyTable th,
+    #warrantyTable td {
+        padding: 12px  ;
+        text-align: center  ;
+    }
+
+    #warrantyTable th {
+        background-color: #3498db  ; /* Blue background for header */
+        color: #fff  ; /* White text for header */
+    }
+
+    #warrantyTable tbody tr {
+        transition: background-color 0.3s  ;
+    }
+
+    #warrantyTable tbody tr:hover {
+        background-color: #ecf0f1  ; /* Light gray background on hover */
+    }
+
+    #warrantyTable a {
+        color: #e74c3c  ; /* Red color for action links */
+    }
+
+    #warrantyTable a:hover {
+        color: #c0392b; /* Darker red on hover */
+    }
+</style>
 <?php
     include('header.php');
 ?>
 
 
-
-
-
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -43,115 +81,82 @@ session_start();
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee">
 
             <!-- Main Content -->
             <div id="content">
 
+
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <a href ="warrantyAdd.php"><button class="btn btn-primary mb-3 mt-3" >Add Warranty Duration</button> </a>
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo " ".$_SESSION['Name']." ";?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
+                <?php
+                 include('navbar.php');
+                ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     
-                       <div class="card card-outline rounded-0 card-maroon">
-    <div class="card-header">
-        <h3 class="card-title">Warranty List</h3>
-        
-    </div>
-    <div class="card-body">
-        <div class="container-fluid">
-            <div class="table-responsive">
-            <table class="table table-bordered  text-center" id="example" width="100%" cellspacing="0">
 
-                
-                <thead>
-                    <tr class="bg-primary text-white">
-                    
-                        <th class="text-center">Action</th>
-                        <th class="text-center">Warranty (Months)</th>
-                        
-                        
-                    </tr>
-                </thead>
-                <tbody>
+                            <div class="card-header" style="background-color: #eeeeee; border: none"s>
+                                <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">Warranty List</h3>
+                            </div>
 
-                <?php
-                                foreach ($results as $result) {
-                                    echo '<tr>
-                                            <td>
-
-                                           
-                                                
-
-                                                <a href = "warrantyDelete.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-trash text-danger"></i>
-                                                </a>
-
-
-                                            </td>
-                                            <td>'.$result['Warranty'].'</td>
-                                           
-                                        </tr>';
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                <div class="warranty-section">
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <a href="warrantyAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                            Add New Warranty
+                                        </a>
+                                    </div>
+                                    <table class="table text-center" id="warrantyTable" width="100%" cellspacing="0">
                                         
-                                }
+                                        <thead>
+                                            <tr class="bg-primary text-white">
+                                            
+                                                <th class="text-center" style="background-color: #313A46;">Action</th>
+                                                <th class="text-center" style="background-color: #313A46;">Warranty (Months)</th>
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody style="color: #313A46;">
 
-                            ?>
-                        </tbody>
+                                        <?php
+                                                        foreach ($results as $result) {
+                                                            echo '<tr>
+                                                                    <td>
 
-                  </div>     
-                </div>
-                <!-- /.container-fluid -->
+                                                                
+                                                                        
 
-            </div>
-            <!-- End of Main Content -->
+                                                                        <a href = "warrantyDelete.php?id='.$result['ID'].'">
+                                                                        <i class = "fa fa-trash text-danger"></i>
+                                                                        </a>
 
-            
-        </div>
-        <!-- End of Content Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+                                                                    </td>
+                                                                    <td>'.$result['Warranty'].'</td>
+                                                                
+                                                                </tr>';
+                                                                
+                                                        }
+
+                                                    ?>
+                                                </tbody>
+
+                                        </div>     
+                                        </div>
+                                        <!-- /.container-fluid -->
+
+                                    </div>
+                                    <!-- End of Main Content -->
+
+                                </div>
+                                </div>
+                                <!-- End of Content Wrapper -->
+
+                            </div>
+                            <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -194,16 +199,13 @@ session_start();
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>   
     
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
     <script src="assetsDT/js/bootstrap.bundle.min.js"></script>
     <script src="assetsDT/js/jquery-3.6.0.min.js"></script>
     <script src="assetsDT/js/pdfmake.min.js"></script>
     <script src="assetsDT/js/vfs_fonts.js"></script>
     <script src="assetsDT/js/custom.js"></script>
-    <script src="assetsDT/js/datatables.min.js"></script>
 
     <script src="js/sweetalert2.all.min.js"></script>
   <script src="js/sweetalert.min.js"></script>
