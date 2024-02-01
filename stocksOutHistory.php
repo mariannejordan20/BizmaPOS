@@ -22,7 +22,50 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    #productsTable{
+        cursor: pointer;
+    }
+    .SOH-section {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+    margin-bottom: 20px;
+    background-color: #fff; /* Optional: Add a background color */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    }
+    #productsTable {
+        width: 100%  ;
+        border-spacing: 0  ;
+    }
 
+    #productsTable th,
+    #productsTable td {
+        padding: 12px  ;
+        text-align: center  ;
+    }
+
+    #productsTable th {    
+        color: #fff  ; /* White text for header */
+    }
+
+    #productsTable tbody tr {
+        transition: background-color 0.3s  ;
+    }
+
+    #productsTable tbody tr:hover {
+        background-color: #ecf0f1  ; /* Light gray background on hover */
+    }
+
+    #productsTable a:hover {
+        color: #c0392b; /* Darker red on hover */
+    }
+    #productsTable tbody tr.active {
+        background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
+    }
+
+
+</style>
 <?php
     include('header.php');
 ?>
@@ -32,7 +75,6 @@ session_start();
 
 
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -43,70 +85,34 @@ session_start();
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
 
             <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <a href ="productsAdd.php"><button class="btn btn-primary mb-3 mt-3" >Add New Product</button> </a>
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo " ".$_SESSION['Name']." ";?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
+                <?php
+                 include('navbar.php');
+                ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     
-                       <div class="card card-outline rounded-0 card-maroon">
-    <div class="card-header">
-        <h3 class="card-title">Stock Out History</h3>
+    <div class="card-header" style="background-color: #eeeeee; border: none">
+        <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">Stock Out History</h3>
         
     </div>
     <div class="card-body">
         <div class="container-fluid">
+        <div class="SOH-section">
             <div class="table-responsive">
-            <table class="table table-bordered  text-center" id="example" width="100%" cellspacing="0">
+            <table class="table text-center" id="productsTable" width="100%" cellspacing="0">
 
                 
                 <thead>
-                    <tr class="bg-primary text-white">
+                    <tr class="text-white" style="background-color: #2D333C">
                     
                         <th class="text-center">Action</th>
                         <th class="text-center">Barcode</th>
@@ -120,20 +126,11 @@ session_start();
                         <th class="text-center">Categories</th>
                         <th class="text-center">Seller</th>
                         <th class="text-center">Supplier</th>
-                        <th class="text-center">Stock Out Date</th>
-                        
-                        
-                        
-
-
-
-                        
-
-                        
+                        <th class="text-center">Stock Out Date</th>        
                         
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="color: #313A46;">
 
                 <?php
                                 foreach ($results as $result) {
@@ -159,9 +156,7 @@ session_start();
                                             <td>'.$result['Seller'].'</td>
                                             <td>'.$result['Supplier'].'</td>
                                             <td>'.$result['Date_Registered'].'</td>
-                                            
-
-                                           
+                                     
 
                                         </tr>';
                                         echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
@@ -253,16 +248,13 @@ session_start();
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>   
     
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
     <script src="assetsDT/js/bootstrap.bundle.min.js"></script>
     <script src="assetsDT/js/jquery-3.6.0.min.js"></script>
     <script src="assetsDT/js/pdfmake.min.js"></script>
     <script src="assetsDT/js/vfs_fonts.js"></script>
     <script src="assetsDT/js/custom.js"></script>
-    <script src="assetsDT/js/datatables.min.js"></script>
 
     <script src="js/sweetalert2.all.min.js"></script>
   <script src="js/sweetalert.min.js"></script>
