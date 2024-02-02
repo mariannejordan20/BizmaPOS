@@ -25,10 +25,11 @@ AND Supplier = '$supplier'");
 
 
 if (!empty($barcode)) {
-    $query2 = mysqli_query($conn, "SELECT * FROM products WHERE Barcode = '$barcode'");
+    $query2 = mysqli_query($conn, "SELECT * FROM products WHERE Barcode = '$barcode' OR Product = '$product'");
 if (mysqli_num_rows($query2) >1 ) {
-    $_SESSION['status'] = "Student ID already Exists";
+    $_SESSION['status'] = "Product already Exists";
     $_SESSION['status_code'] = "error";
+    header("location:products.php");
     
 } else {
     $update = "Update products set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Warranty = '".$warranty."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."' 
