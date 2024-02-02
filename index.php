@@ -39,7 +39,7 @@ include('connection.php');
         ?>
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #2d333c">
+        <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee">
             
             <!-- Main Content -->
             <div id="content">
@@ -65,11 +65,11 @@ include('connection.php');
                 <!-- End of Topbar -->
             
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="background-color:#eeeeee">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between">
-                        <h1 style="font-size: 25px; font-weight: bold; font-family: sans-serif; padding-left: 10px; color: white;">DATA MONITORING AND ESTIMATES</h1>
+                        <h1 style="font-size: 25px; font-weight: bold; font-family: sans-serif; padding-left: 10px; color:#313A46;">DATA MONITORING AND ESTIMATES</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -81,7 +81,7 @@ include('connection.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: white">
                                                 TOTAL ORDER</div>
                                                 <div class="h5 mb-0 font-weight-bold text-800" style="color: white">
                                                     <?php
@@ -110,7 +110,7 @@ include('connection.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color:white">
                                                 PENDING ORDER</div>
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
@@ -141,7 +141,7 @@ include('connection.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: white">
                                                 UNFINISHED</div>
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
@@ -171,7 +171,7 @@ include('connection.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: white">
                                                 PRODUCTS</div>
                                                 <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                     <?php
@@ -200,7 +200,7 @@ include('connection.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: white">
                                                 CUSTOMERS</div>
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
@@ -231,7 +231,7 @@ include('connection.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: #ff3c00">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-3" style="color: white">
                                                 SUPPLIERS</div>
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
@@ -456,11 +456,12 @@ include('connection.php');
         labels: ['Sales', 'Revenue', 'Net PFT', 'Expense', 'Growth'],
         datasets: [{
             label: 'Target and Status Graphs',
-            backgroundColor: '#ff3c00',
+            backgroundColor: '#313A46',
             borderWidth: 1,
             data: [10, 20, 30, 20, 3]  // Replace this with your actual data
         }]
     };
+    
 
     // Get the canvas element and initialize the bar chart
     var ctx = document.getElementById('myBarChart').getContext('2d');
@@ -470,16 +471,19 @@ include('connection.php');
         options: {
             responsive: true,
             scales: {
-                x: {
-                    beginAtZero: true
-                },
+                x: [{
+                    ticks: {
+                        fontColor: '#313A46' // Set font color for x-axis labels
+                    }
+                }],
                 y: {
-                    display: false,  // Hide the y-axis
+                    display: false  // Hide the y-axis
                 }
             }
         }
     });
 </script>
+
 
 
 

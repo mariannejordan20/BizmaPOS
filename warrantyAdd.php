@@ -1,165 +1,89 @@
 <?php
-    session_start();
+session_start();
 
-    include('connection.php');
-    
-    // $haslog = (isset($_SESSION['hasLog'])?$_SESSION['hasLog']:0);
+include('connection.php');
 
-    if (isset($_SESSION['hasLog'])){
-        $haslog = $_SESSION['hasLog'];
-    }else{
-        $haslog = 0;
-    }
+if (isset($_SESSION['hasLog'])){
+    $haslog = $_SESSION['hasLog'];
+} else {
+    $haslog = 0;
+}
 
-    if (empty($haslog)){
-        header("location: login.php");
-        exit;
-    }
-
-    
-
-    
+if (empty($haslog)){
+    header("location: login.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
-<?php
-    include('header.php');
-?>
-
+<?php include('header.php'); ?>
 
 <body id="page-top">
-
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <?php
-            include ('menu.php');
-        ?>
-
-        <!-- Content Wrapper -->
+        <?php include('menu.php'); ?>
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        
-
-                        <!-- Nav Item - Alerts -->
-                        
-                        <!-- Nav Item - Messages -->
-                        
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo " ".$_SESSION['Name']." ";?></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
+                <?php include('navbar.php'); ?>
                 <div class="container-fluid">
-
-
-
-
-
-                       
-                        <form action = "warrantyAddSave.php" method="post" enctype="multipart/form-data">
-                       
-                        <h3><b><?= isset($id) ? "Update product Details" : "New Warranty Duration" ?></b></h3>
-</div>
-<div class="mx-0 py-5 px-3 mx-ns-4 bg-gradient-maroon">
-<div class="row justify-content-center" style="margin-top:-2em;">
-    <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-        <div class="card rounded-0 shadow">
-            <div class="card-body">
-                <div class="container-fluid">
-                    <form action="" id="student-form">
-                        <input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
-                            
-                        <fieldset class="border-bottom">
-                            <legend>Warranty Duration</legend>
-                            <div class="row">
-                                
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Warranty" class="control-label">Duration (Months)</label>
-                                    <input type="text" name="Warranty" class="form-control form-control-sm rounded-5"  required/>
-                                    </div>
-                                </div>
-                                
-
-                            </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="submit" class="btn btn-success" name="Save" value="Save">
+                    <div class="card-header" style="background-color: #eeeeee; border: none">
+                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">Warranty List</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="warranty-section">
+                                <!-- Add New Warranty Button -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWarrantyModal">
+                                    Add New Warranty
+                                </button>
+                                <table class="table text-center" id="warrantyTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr class="bg-primary text-white">
+                                            <th class="text-center" style="background-color: #313A46;">Action</th>
+                                            <th class="text-center" style="background-color: #313A46;">Warranty (Months)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="color: #313A46;">
+                                        <?php
+                                            foreach ($results as $result) {
+                                                echo '<tr>
+                                                        <td>
+                                                            <a href="warrantyDelete.php?id='.$result['ID'].'">
+                                                                <i class="fa fa-trash text-danger"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td>'.$result['Warranty'].'</td>
+                                                    </tr>';
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-                
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <!-- Add Warranty Modal -->
+    <div class="modal fade" id="addWarrantyModal" tabindex="-1" role="dialog" aria-labelledby="addWarrantyModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                <div class="modal-header" style="background-color: #313A46;">
+                    <h5 class="modal-title" id="addWarrantyModalLabel" style="color: white">Add New Warranty</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                <div class="modal-body">
+                    <form action="warrantyAddSave.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="Warranty">Duration (Months)</label>
+                            <input type="text" name="Warranty" class="form-control" required/>
+                        </div>
+                        <button type="submit" class="btn" style="background-color: #fe3c00; color:white" name="Save">Save</button>
+                    </form>
                 </div>
             </div>
         </div>
