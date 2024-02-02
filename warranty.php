@@ -35,12 +35,14 @@ while ($row = $result->fetch_assoc()) {
         cursor: pointer;
     }
     .warranty-section {
+    width: 50%;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
     margin-bottom: 20px;
     background-color: #fff; /* Optional: Add a background color */
     transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    
     }
     #warrantyTable {
         width: 100%  ;
@@ -72,6 +74,10 @@ while ($row = $result->fetch_assoc()) {
 
     #warrantyTable a:hover {
         color: #c0392b; /* Darker red on hover */
+    }
+    .pagination {
+        width: 50%;
+        margin-top: 20px;
     }
 </style>
 <?php
@@ -152,7 +158,7 @@ while ($row = $result->fetch_assoc()) {
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true" style="color:white">×</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -163,7 +169,6 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
     </div>
-    <?php include('warrantyAdd.php'); ?>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
