@@ -1,30 +1,22 @@
 <?php
-session_start();
-include('connection.php');
+session_start();   
 
-if (isset($_SESSION['hasLog'])) {
-    $haslog = $_SESSION['hasLog'];
-} else {
-    $haslog = 0;
-}
+    include('connection.php');
+    // $haslog = (isset($_SESSION['hasLog'])?$_SESSION['hasLog']:0);
 
-if (empty($haslog)) {
-    header("location: login.php");
-    exit;
-}
+    if (isset($_SESSION['hasLog'])){
+        $haslog = $_SESSION['hasLog'];
+    }else{
+        $haslog = 0;
+    }
 
-$page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current page number
-$rowsPerPage = 5;
-$offset = ($page - 1) * $rowsPerPage;
+    if (empty($haslog)){
+        header("location: login.php");
+        exit;
+    }
 
-$sql = "SELECT ID, Warranty FROM warranty ORDER BY Warranty ASC LIMIT $offset, $rowsPerPage";
-$result = $conn->query($sql);
-
-$results = [];
-while ($row = $result->fetch_assoc()) {
-    $results[] = $row;
-}
-
+    $sql = "select ID, Warranty from warranty order by Warranty asc";
+    $results = $conn->query($sql);
 ?>
 
 
@@ -35,14 +27,12 @@ while ($row = $result->fetch_assoc()) {
         cursor: pointer;
     }
     .warranty-section {
-    width: 50%;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
     margin-bottom: 20px;
     background-color: #fff; /* Optional: Add a background color */
     transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
-    
     }
     #warrantyTable {
         width: 100%  ;
@@ -75,10 +65,6 @@ while ($row = $result->fetch_assoc()) {
     #warrantyTable a:hover {
         color: #c0392b; /* Darker red on hover */
     }
-    .pagination {
-        width: 50%;
-        margin-top: 20px;
-    }
 </style>
 <?php
     include('header.php');
@@ -86,63 +72,90 @@ while ($row = $result->fetch_assoc()) {
 
 
 <body id="page-top">
-<div id="wrapper">
-        <?php include('menu.php'); ?>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <?php
+            include ('menu.php');
+        ?>
+
+        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee">
+
+            <!-- Main Content -->
             <div id="content">
-                <?php include('navbar.php'); ?>
+
+
+                <!-- Topbar -->
+                <?php
+                 include('navbar.php');
+                ?>
+
+                <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">Warranty List</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="container-fluid">
-                            <div class="warranty-section">
-                                <!-- Add New Warranty Button -->
-                                <button type="button" class="btn mb-3 d-flex" data-toggle="modal" data-target="#addWarrantyModal" style="background-color:#fe3c00; color:white">
-                                    Add New Warranty
-                                </button>
-                                <table class="table text-center" id="warrantyTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr class="bg-primary text-white">
-                                            <th class="text-center" style="background-color: #313A46;">Action</th>
-                                            <th class="text-center" style="background-color: #313A46;">Warranty (Months)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="color: #313A46;">
-                                        <?php
-                                        foreach ($results as $result) {
-                                            echo '<tr>
-                                                    <td>
-                                                        <a href="warrantyDelete.php?id=' . $result['ID'] . '">
-                                                            <i class="fa fa-trash text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td>' . $result['Warranty'] . '</td>
-                                                </tr>';
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
+                    
 
-                                <!-- Pagination -->
-                                <div class="pagination">
-                                    <?php
-                                    $countResult = $conn->query("SELECT COUNT(*) as total FROM warranty")->fetch_assoc();
-                                    $totalPages = ceil($countResult['total'] / $rowsPerPage);
-
-                                    for ($i = 1; $i <= $totalPages; $i++) {
-                                        echo '<a href="?page=' . $i . '">' . $i . '</a>';
-                                    }
-                                    ?>
-                                </div>
+                            <div class="card-header" style="background-color: #eeeeee; border: none">
+                                <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">Warranty List</h3>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                <div class="warranty-section">
+                                    <div class="mb-3 d-flex align-items-center">
+                                        <a href="warrantyAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                            Add New Warranty
+                                        </a>
+                                    </div>
+                                    <table class="table text-center" id="warrantyTable" width="100%" cellspacing="0">
+                                        
+                                        <thead>
+                                            <tr class="bg-primary text-white">
+                                            
+                                                <th class="text-center" style="background-color: #313A46;">Action</th>
+                                                <th class="text-center" style="background-color: #313A46;">Warranty (Months)</th>
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody style="color: #313A46;">
+
+                                        <?php
+                                                        foreach ($results as $result) {
+                                                            echo '<tr>
+                                                                    <td>
+
+                                                                
+                                                                        
+
+                                                                        <a href = "warrantyDelete.php?id='.$result['ID'].'">
+                                                                        <i class = "fa fa-trash text-danger"></i>
+                                                                        </a>
+
+
+                                                                    </td>
+                                                                    <td>'.$result['Warranty'].'</td>
+                                                                
+                                                                </tr>';
+                                                                
+                                                        }
+
+                                                    ?>
+                                                </tbody>
+
+                                        </div>     
+                                        </div>
+                                        <!-- /.container-fluid -->
+
+                                    </div>
+                                    <!-- End of Main Content -->
+
+                                </div>
+                                </div>
+                                <!-- End of Content Wrapper -->
+
+                            </div>
                             <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -158,7 +171,7 @@ while ($row = $result->fetch_assoc()) {
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" style="color:white">×</span>
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -169,6 +182,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
     </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
