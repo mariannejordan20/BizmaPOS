@@ -17,6 +17,17 @@ session_start();
 
     $sql = "select ID, Barcode, Product,Warranty,Unit,Quantity,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
     $results = $conn->query($sql);
+
+    // Add this block to handle search
+    if (isset($_GET['search'])) {
+        $searchTerm = $_GET['search'];
+        $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products WHERE Product LIKE '%$searchTerm%' ORDER BY Categories";
+        $results = $conn->query($sql);
+    } else {
+        // Default query without search
+        $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
+        $results = $conn->query($sql);
+    }
 ?>
 
 
@@ -28,7 +39,6 @@ session_start();
     }
     .products-section {
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
     margin-bottom: 20px;
     background-color: #fff; /* Optional: Add a background color */
@@ -42,11 +52,13 @@ session_start();
     #productsTable th,
     #productsTable td {
         padding: 12px  ;
-        text-align: center  ;
+        text-align: left;
     }
 
     #productsTable th {    
-        color: #fff  ; /* White text for header */
+        color: #000000  ; /* White text for header */
+        white-space: nowrap;
+        text-align: left;
     }
 
     #productsTable tbody tr {
@@ -63,6 +75,17 @@ session_start();
     #productsTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
     }
+    .custom-column-width {
+    width: 10%  ; /* Adjust the width as needed */
+    }
+    .custom-font-size td {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
 
 
 </style>
@@ -108,37 +131,42 @@ session_start();
                         
                         <div class="products-section">
                             <div class="mb-3 ml-4 d-flex align-items-center">
-                                <a href="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                <a href="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white; margin-top:1%">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>
+                            <form action="products.php" method="get" class="form-inline mb-3 ml-4 d-flex align-items-center" style="padding-top: 25px;">
+                                        <div class="form-group">
+                                            <input type="text" name="search" id="searchInput" class="form-control mr-2" placeholder="Search">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                        </div>
+                                    </form>
                             <div class="container-fluid">
                                 <div class="table-responsive">
-                                <table class="table text-center" id="productsTable" width="100%" cellspacing="0">
+                                <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
 
                 
-                                    <thead>
-                                        <tr class="text-white" style="background-color: #2D333C">
-                                        
-                                            <th class="text-center">Action</th>
-                                            <th class="text-center">ID</th>
-                                            <th class="text-center">Barcode</th>
-                                            <th class="text-center">Product Name</th>
-                                            <th class="text-center">Unit</th>
-                                            <th class="text-center">Warranty</th>
-                                            <th class="text-center">Quantity</th>
-                                            <th class="text-center">Costing</th>
-                                            <th class="text-center">Price</th>
-                                            <th class="text-center">Wholesale</th>
-                                            <th class="text-center">Promo</th>
-                                            <th class="text-center">Categories</th>
-                                            <th class="text-center">Seller</th>
-                                            <th class="text-center">Supplier</th>
-                                            <th class="text-center">Date Registered</th>
-       
-                                        </tr>
-                                    </thead>
-                                    <tbody style="color: #313A46;">
+                                <thead>
+                                    <tr class="th" style="color: #000000">
+                                        <th class="text-center custom-column-width">Action</th>
+                                        <th class="text-center custom-column-width">ID</th>
+                                        <th class="text-center custom-column-width">Barcode</th>
+                                        <th class="text-center custom-column-width" style="padding-right: 150px;">Product Name</th>
+                                        <th class="text-center custom-column-width">Unit</th>
+                                        <th class="text-center custom-column-width">Qty</th>
+                                        <th class="text-center custom-column-width">Costing</th>
+                                        <th class="text-center custom-column-width">Price</th>
+                                        <th class="text-center custom-column-width">Wholesale</th>
+                                        <th class="text-center custom-column-width">Promo</th>
+                                        <th class="text-center custom-column-width">Ctry</th>
+                                        <th class="text-center custom-column-width">Seller</th>
+                                        <th class="text-center custom-column-width">Supplier</th>
+                                        <th class="text-center custom-column-width">Wrty</th>
+                                        <th class="text-center custom-column-width">Date Registered</th>
+                                    </tr>
+                                    
+                                </thead>
+                                    <tbody class="custom-font-size" style="color: #313A46;">
 
                                     <?php
                                                     foreach ($results as $result) {
@@ -155,55 +183,49 @@ session_start();
                                                                     </a>
 
 
-                                                                </td>
-                                                                <td>'.$result['ID'].'</td>
-                                                                <td>'.$result['Barcode'].'</td>
-                                                                <td>'.$result['Product'].'</td>
-                                                                <td>'.$result['Unit'].'</td>
-                                                                <td>'.$result['Warranty'].'</td>
-                                                                <td>'.$result['Quantity'].'</td>
-                                                                <td>'.$result['Costing'].'</td>
-                                                                <td>'.$result['Price'].'</td>
-                                                                <td>'.$result['Wholesale'].'</td>
-                                                                <td>'.$result['Promo'].'</td>
-                                                                <td>'.$result['Categories'].'</td>
-                                                                <td>'.$result['Seller'].'</td>
-                                                                <td>'.$result['Supplier'].'</td>
-                                                                <td>'.$result['Date_Registered'].'</td>
+                                                                    </td>
+                                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['ID'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 150px;">' . $result['Product'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Price'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 75px;">' . $result['Categories'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Seller'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Supplier'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 75px;">' . $result['Warranty'] . '</td>
+                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Date_Registered'] . '</td>
                                                                 
 
                                                             
 
                                                             </tr>';
                                                             echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">'.$result['Product'].'</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                
-                                                <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
-                                                <p><strong>Unit:</strong> '.$result['Unit'].'</p>
-                                                <p><strong>Costing:</strong> '.$result['Costing'].'</p>
-                                                <p><strong>Price:</strong> '.$result['Price'].'</p>
-                                                <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
-                                                <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
-                                                <p><strong>Category:</strong> '.$result['Categories'].'</p>
-                                                
-                                                <p><strong>Seller:</strong> '.$result['Seller'].'</p>
-                                                <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
-                                                <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
-                                                
-                                            
-                                                
-                                                
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>';
+                                                            <div class="modal-dialog modal-dialog-centered modal-md">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" style="white-space: normal; word-wrap: break-word; max-width: 400px;">'.$result['Product'].'</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem; color: #000; opacity: 0.8; background-color: transparent; border: none;">x</button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                                                                        <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                                                                        <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                                                                        <p><strong>Price:</strong> '.$result['Price'].'</p>
+                                                                        <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                                                                        <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                                                                        <p><strong>Category:</strong> '.$result['Categories'].'</p>
+                                                                        <p><strong>Seller:</strong> '.$result['Seller'].'</p>
+                                                                        <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
+                                                                        <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>';
+                                                        
                                                     }
 
                                                 ?>
@@ -292,7 +314,29 @@ session_start();
    }
 ?>
 
+<script>
+  function searchUnits() {
+    var searchTerm = document.getElementById('searchInput').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'searchProducts.php?search=' + encodeURIComponent(searchTerm), true);
+    xhr.send();
+    xhr.onload = function () {
+        if (xhr.status != 200) {
+            console.error('Error ' + xhr.status + ': ' + xhr.statusText);
+        } else {
+            var searchResultsDiv = document.getElementById('searchResults');
+            searchResultsDiv.innerHTML = xhr.responseText;
 
+            // Set text color for search result rows
+            var searchResultRows = searchResultsDiv.getElementsByTagName('tr');
+            for (var i = 0; i < searchResultRows.length; i++) {
+                searchResultRows[i].style.color = '#313A46';
+            }
+        }
+    };
+}
+
+    </script>
 </body>
 
 </html>
