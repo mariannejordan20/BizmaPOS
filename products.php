@@ -121,6 +121,7 @@ session_start();
                                         <tr class="text-white" style="background-color: #2D333C">
                                         
                                             <th class="text-center">Action</th>
+                                            <th class="text-center">ID</th>
                                             <th class="text-center">Barcode</th>
                                             <th class="text-center">Product Name</th>
                                             <th class="text-center">Unit</th>
@@ -155,6 +156,7 @@ session_start();
 
 
                                                                 </td>
+                                                                <td>'.$result['ID'].'</td>
                                                                 <td>'.$result['Barcode'].'</td>
                                                                 <td>'.$result['Product'].'</td>
                                                                 <td>'.$result['Unit'].'</td>
