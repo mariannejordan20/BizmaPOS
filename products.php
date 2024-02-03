@@ -105,10 +105,12 @@ session_start();
                     <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Products</h3>
                 </div>        
                       
-                        <div class="card-body">
+                        
                         <div class="products-section">
-                            <div class="mb-3 d-flex align-items-center">
-                                <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">Add New Product</a>
+                            <div class="mb-3 ml-4 d-flex align-items-center">
+                                <a href="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                    <i class="fa fa-plus"></i>
+                                </a>
                             </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
@@ -213,7 +215,7 @@ session_start();
                                 <!-- End of Main Content -->
 
                                 
-                            </div>
+                            
                             <!-- End of Content Wrapper -->
                         </div>
                         </div>
