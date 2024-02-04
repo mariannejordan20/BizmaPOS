@@ -141,21 +141,7 @@
                                 </div>
                                 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                        <label for="Group" class="control-label">Group</label>
-                                        <select name="Group" class="form-control form-control-sm form-control-border rounded-5">
-                                        <option value="<?=$row['Group']?>">Select Group</option>
-                                        <option value="Arnis">Arnis</option>
-                                        <option value="Athletics">Athletics</option>
-                                        <option value="Badminton">Badminton</option>
-                                        
-                                        </select>
-                                    
-                                    
-                        
-                                    </div>
-                                </div>
+                                
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
@@ -192,12 +178,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Date_Joined" class="control-label">Datee</label>
-                                    <input type="Date" name="Date_Joined" class="form-control form-control-sm rounded-0" value="<?=$row['Date_Joined']?>">
-                                    </div>
-                                </div>
+                               
 
 
 
