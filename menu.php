@@ -122,7 +122,7 @@ include('connection.php');
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUnCaWa"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-soccer-ball-o"></i>
-            <span>UnCaWa</span>
+            <span>UnCaWaSu</span>
         </a>
         <div id="collapseUnCaWa" class="collapse" aria-labelledby="headingUtilities"
             data-parent="#accordionSidebar">
@@ -131,6 +131,7 @@ include('connection.php');
                 <a class="collapse-item" href="units.php">Units </a>
                 <a class="collapse-item" href="categories.php">Categories </a>
                 <a class="collapse-item" href="warranty.php">Warranty </a>
+                <a class="collapse-item" href="suppliers.php">Suppliers</a>
             </div>
         </div>
     </li>  

@@ -16,7 +16,7 @@ if (empty($haslog)) {
 }
 
 // SQL query to retrieve data from the 'customer' table
-$sql = "SELECT ID,Seqcode, IDNumber, Barcode, CustomerName, TermofPayment, VATTIN, ContactPerson, Loc, Contact, Date_Joined FROM customer ORDER BY CustomerName";
+$sql = "SELECT ID,Supplier_Name,Contact,Loc, Date_Added FROM suppliers ORDER BY Date_Added desc";
 
 
 // Execute the query
@@ -105,13 +105,13 @@ include('header.php');
 
 
                         <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Customers</h3>
+                        <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Suppliers</h3>
                             
                         </div>
                         <div class="card-body">
                         <div class="customers-section">
                             <div class="mb-3 d-flex align-items-center">
-                                <a href ="customeradd.php" class="btn" style="background-color: #fe3c00; color: white;">Add Customer</button> </a>
+                                <a href ="suppliersAdd.php" class="btn" style="background-color: #fe3c00; color: white;">Add Customer</button> </a>
                             </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
@@ -123,15 +123,9 @@ include('header.php');
                                             <tr class="text-white" style="background-color: #2D333C">
 
                                                 <th class="text-center">Action</th>
-                                                <th class="text-center">SeQCode</th>
-                                                <th class="text-center">ID Number</th>
-                                                <th class="text-center">Barcode</th>
-                                                <th class="text-center">Customer Name</th>
-                                                <th class="text-center">Term of Payment</th>
-                                                <th class="text-center">VAT TIN(NOS)</th>
-                                                <th class="text-center">Contact Person</th>
+                                                <th class="text-center">Supplier</th>
+                                                <th class="text-center">Contact</th>
                                                 <th class="text-center">Address</th>
-                                                <th class="text-center">Contact No.</th>
                                                 <th class="text-center">Date Registered</th>
 
 
@@ -147,61 +141,33 @@ include('header.php');
                                                     echo '<tr>
                                                         <td>
 
-                                                        <a class="mr-2" href="#?id=' . $result['ID'] . '" data-bs-toggle="modal" data-bs-target="#customersModal' . $result['ID'] . '"><i class="fa fa-eye"></i></a>
-                                                            <a class = "mr-2" href = "customersEdit.php?id=' . $result['ID'] . '">
+                                                       
+                                                            <a class = "mr-2" href = "suppliersEdit.php?id=' . $result['ID'] . '">
                                                             <i class = "fa fa-edit"></i>
                                                             </a>
 
-                                                            <a href = "customersDelete.php?id=' . $result['ID'] . '">
+                                                            <a href = "suppliersDelete.php?id=' . $result['ID'] . '">
                                                             <i class = "fa fa-trash text-danger"></i>
                                                             </a>
 
 
                                                         </td>
-                                                        <td>' . $result['Seqcode'] . '</td>
-                                                        <td>' . $result['IDNumber'] . '</td>
-                                                        <td>' . $result['Barcode'] . '</td>
-                                                        <td>' . $result['CustomerName'] . '</td>
-                                                        <td>' . $result['TermofPayment'] . '</td>
-                                                        <td>' . $result['VATTIN'] . '</td>
-                                                        <td>' . $result['ContactPerson'] . '</td>
-                                                        <td>' . $result['Loc'] . '</td>
+                                                        <td>' . $result['Supplier_Name'] . '</td>
                                                         <td>' . $result['Contact'] . '</td>
-                                                        <td>' . $result['Date_Joined'] . '</td>
+                                                        
+                                                        <td>' . $result['Loc'] . '</td>
+                                                        <td>' . $result['Date_Added'] . '</td>
+                                                     
 
 
 
                                                     </tr>';
-                                                    echo '<div class="modal fade" id="customersModal' . $result['ID'] . '" tabindex="-1" aria-labelledby="customersModal' . $result['ID'] . '" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">' . $result['CustomerName'] . '</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                        </div>
-                        <div class="modal-body">
-                            
-                            <p><strong>Seqcode:</strong> ' . $result['Seqcode'] . '</p>
-                            <p><strong>IDNumber:</strong> ' . $result['IDNumber'] . '</p>
-                            <p><strong>Barcode:</strong> ' . $result['Barcode'] . '</p>
-                            <p><strong>CustomerName:</strong> ' . $result['CustomerName'] . '</p>
-                            
-                            <p><strong>TermofPayment Price:</strong> ' . $result['TermofPayment'] . '</p>
-                            <p><strong>VATTIN:</strong> ' . $result['VATTIN'] . '</p>
-                            
-                            <p><strong>ContactPerson:</strong> ' . $result['ContactPerson'] . '</p>
-                            <p><strong>Address:</strong> ' . $result['Loc'] . '</p>
-                            <p><strong>Contact:</strong> ' . $result['Contact'] . '</p>
-                            <p><strong>Date:</strong> ' . $result['Date_Joined'] . '</p>
-                            
+                                                    
                           
                             
                             
 
-                        </div>
-                    </div>
-                </div>
-            </div>';
+                       
                                                 }
                                             } else {
                                                 echo "No records found.";
