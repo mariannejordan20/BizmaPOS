@@ -54,7 +54,10 @@ if (!$results) {
     }
 
     #customersTable th {    
-        color: #fff  ; /* White text for header */
+        color: #000000  ; 
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
 
     #customersTable tbody tr {
@@ -70,6 +73,16 @@ if (!$results) {
     }
     #customersTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
+    }
+    .custom-column-width {
+    width: 10%  ; /* Adjust the width as needed */
+    }
+    .custom-font-size td {
+    font-size: 12px;
+    white-space: nowrap;
+    }
+    .table-responsive {
+    overflow-x: auto;
     }
 
 
@@ -105,33 +118,34 @@ include('header.php');
 
 
                         <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Suppliers</h3>
-                            
+                            <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL SUPPLIERS</h3>
                         </div>
-                        <div class="card-body">
+
                         <div class="customers-section">
-                            <div class="mb-3 d-flex align-items-center">
-                                <a href ="suppliersAdd.php" class="btn" style="background-color: #fe3c00; color: white;">Add Customer</button> </a>
+                            <div class="mb-3 ml-4 d-flex align-items-center">
+                                <a href ="suppliersAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                    <i class="fa fa-plus"></i>
+                                </a>
                             </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
-                                    <table class="table text-center" id="customersTable" width="100%"
+                                    <table class="table text-center table-bordered" id="customersTable" width="100%"
                                         cellspacing="0">
 
 
                                         <thead>
-                                            <tr class="text-white" style="background-color: #2D333C">
+                                            <tr class="th" style="color: #000000">
 
-                                                <th class="text-center">Action</th>
-                                                <th class="text-center">Supplier</th>
-                                                <th class="text-center">Contact</th>
-                                                <th class="text-center">Address</th>
-                                                <th class="text-center">Date Registered</th>
+                                                <th class="text-center custom-column-width">ACTION</th>
+                                                <th class="text-center custom-column-width">SUPPLIER</th>
+                                                <th class="text-center custom-column-width">CONTACT</th>
+                                                <th class="text-center custom-column-width">ADDRESS</th>
+                                                <th class="text-center custom-column-width">DATE REGISTERED</th>
 
 
                                             </tr>
                                         </thead>
-                                        <tbody style="color: #313A46;">
+                                        <tbody class="custom-font-size" style="color: #313A46;">
 
                                             <?php
                                             // Check if there are records in the result set
@@ -152,10 +166,10 @@ include('header.php');
 
 
                                                         </td>
-                                                        <td>' . $result['Supplier_Name'] . '</td>
+                                                        <td class="text-truncate"  style="max-width: 150px;">' . strtoupper($result['Supplier_Name'])     . '</td>
                                                         <td>' . $result['Contact'] . '</td>
                                                         
-                                                        <td>' . $result['Loc'] . '</td>
+                                                        <td class="text-truncate"  style="max-width: 200px;">' . strtoupper($result['Loc']) . '</td>
                                                         <td>' . $result['Date_Added'] . '</td>
                                                      
 
