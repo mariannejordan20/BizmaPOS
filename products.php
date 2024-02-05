@@ -219,9 +219,9 @@ include('header.php');
                                                         <a class="mr-2" href="productsEdit.php?id=' . $result['ID'] . '"><i class="fa fa-edit"></i></a>
                                                         <a href="productsDelete.php?id=' . $result['ID'] . '"><i class="fa fa-trash text-danger"></i></a>
                                                     </td>
-                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['ID'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 50px;">'  .$result['ID'] . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-                                                    <td class="text-truncate" style="max-width: 150px;">' . $result['Product'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
                                                     <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
                                                     <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
@@ -229,8 +229,8 @@ include('header.php');
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
-                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Seller'] . '</td>
-                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Supplier'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
                                                     <td class="text-truncate" style="max-width: 75px;">' . (isset($result['Warranty']) ? $result['Warranty'] : '') . '</td>
                                                     <td class="text-truncate" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
                                                     <!-- Add your other table data here -->
