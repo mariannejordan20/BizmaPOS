@@ -42,11 +42,14 @@ session_start();
     #productseTable th,
     #productseTable td {
         padding: 12px  ;
-        text-align: center  ;
+        text-align: left  ;
     }
 
     #productseTable th {    
-        color: #fff  ; /* White text for header */
+        color: #000000 ; 
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
 
     #productseTable tbody tr {
@@ -63,7 +66,16 @@ session_start();
     #productseTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
     }
-
+    .custom-column-width {
+    width: 10%  ; /* Adjust the width as needed */
+    }
+    .custom-font-size td {
+    font-size: 12px;
+    white-space: nowrap;
+    }
+    .table-responsive {
+    overflow-x: auto;
+    }
 
 </style>
 <?php
@@ -103,37 +115,37 @@ session_start();
 
                     
     <div class="card-header"  style="background-color: #eeeeee; border: none">
-        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">List of all Edited Products</h3>
+        <h3 class="card-title" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL EDITED PRODUCTS</h3>
     </div>
-    <div class="card-body">
+
     <div class="productse-section">
 
         <div class="container-fluid">
             <div class="table-responsive">
-            <table class="table text-center" id="productseTable" width="100%" cellspacing="0">
+            <table class="table text-center table-bordered" id="productseTable" width="100%" cellspacing="0">
 
                 
                 <thead>
-                    <tr class="text-white" style="background-color: #2D333C">
+                    <tr class="th" style="color: #000000">
                     
-                        <th class="text-center">Action</th>
-                        <th class="text-center">Barcode</th>
-                        <th class="text-center">Product Name</th>
-                        <th class="text-center">Unit</th>
-                        <th class="text-center">Warranty</th>
-                        <th class="text-center">Quantity</th>
-                        <th class="text-center">Costing</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Wholesale</th>
-                        <th class="text-center">Promo</th>
-                        <th class="text-center">Categories</th>
-                        <th class="text-center">Seller</th>
-                        <th class="text-center">Supplier</th>
-                        <th class="text-center">Date Registered</th>
+                        <th class="text-center  custom-column-width">ACTION</th>
+                        <th class="text-center  custom-column-width">BARCODE</th>
+                        <th class="text-center  custom-column-width">PRODUCT NAME</th>
+                        <th class="text-center  custom-column-width">UNIT</th>
+                        <th class="text-center  custom-column-width">WRTY</th>
+                        <th class="text-center  custom-column-width">QTY</th>
+                        <th class="text-center  custom-column-width">COSTING</th>
+                        <th class="text-center  custom-column-width">PRICE</th>
+                        <th class="text-center  custom-column-width">WHOLESALE</th>
+                        <th class="text-center  custom-column-width">PROMO</th>
+                        <th class="text-center  custom-column-width">CATEGORIES</th>
+                        <th class="text-center  custom-column-width">SELLER</th>
+                        <th class="text-center  custom-column-width">SUPPLIER</th>
+                        <th class="text-center  custom-column-width">DATE REGISTERED</th>
                                                 
                     </tr>
                 </thead>
-                <tbody style="color: #313A46;">
+                <tbody class="custom-font-size" style="color: #313A46;">
 
                 <?php
                                 foreach ($results as $result) {
@@ -146,18 +158,18 @@ session_start();
 
                                             </td>
                                             <td>'.$result['Barcode'].'</td>
-                                            <td>'.$result['Product'].'</td>
+                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Product'].'</td>
                                             <td>'.$result['Unit'].'</td>
-                                            <td>'.$result['Warranty'].'</td>
+                                            <td >'.$result['Warranty'].'</td>
                                             <td>'.$result['Quantity'].'</td>
                                             <td>'.$result['Costing'].'</td>
                                             <td>'.$result['Price'].'</td>
                                             <td>'.$result['Wholesale'].'</td>
                                             <td>'.$result['Promo'].'</td>
-                                            <td>'.$result['Categories'].'</td>
-                                            <td>'.$result['Seller'].'</td>
-                                            <td>'.$result['Supplier'].'</td>
-                                            <td>'.$result['Date_Registered'].'</td>
+                                            <td class="text-truncate" style="max-width: 75px;">'.$result['Categories'].'</td>
+                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Seller'].'</td>
+                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Supplier'].'</td>
+                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Date_Registered'].'</td>
 
 
                                         </tr>';
