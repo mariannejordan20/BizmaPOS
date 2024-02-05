@@ -127,19 +127,19 @@ session_start();
                 <thead>
                     <tr class="th" style="color: #000000">
                     
-                        <th class="text-center">ACTION</th>
-                        <th class="text-center">BARCODE</th>
-                        <th class="text-center">PRODUCT NAME</th>
-                        <th class="text-center">UNIT</th>
-                        <th class="text-center">QTY</th>
-                        <th class="text-center">COSTING</th>
-                        <th class="text-center">PRICE</th>
-                        <th class="text-center">WHOLESALE</th>
-                        <th class="text-center">PROMO</th>
-                        <th class="text-center">CATEGORIES</th>
-                        <th class="text-center">SELLER</th>
-                        <th class="text-center">SUPPLIER</th>
-                        <th class="text-center">DATE REGISTERED</th>
+                        <th class="text-center custom-column-width">ACTION</th>
+                        <th class="text-center custom-column-width">BARCODE</th>
+                        <th class="text-center custom-column-width">PRODUCT NAME</th>
+                        <th class="text-center custom-column-width">UNIT</th>
+                        <th class="text-center custom-column-width">QTY</th>
+                        <th class="text-center custom-column-width">COSTING</th>
+                        <th class="text-center custom-column-width">PRICE</th>
+                        <th class="text-center custom-column-width">WHOLESALE</th>
+                        <th class="text-center custom-column-width">PROMO</th>
+                        <th class="text-center custom-column-width">CATEGORIES</th>
+                        <th class="text-center custom-column-width">SELLER</th>
+                        <th class="text-center custom-column-width">SUPPLIER</th>
+                        <th class="text-center custom-column-width">DATE REGISTERED</th>
  
                         
                     </tr>
