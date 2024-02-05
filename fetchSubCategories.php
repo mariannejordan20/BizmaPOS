@@ -17,7 +17,7 @@ if (isset($_GET['categoryId'])) {
     // Build HTML for sub-categories
     $subCategoriesHtml = '';
     while ($row = $result->fetch_assoc()) {
-        $subCategoriesHtml .= '<tr><td><a href="subCategoryDelete.php?id=' . $row['sub_category'] . '"><i class="fa fa-trash text-danger"></i></a></td><td>' . $row['sub_category'] . '</td></tr>';
+        $subCategoriesHtml .= '<tr><td><a href="subCategoryDelete.php?id=' . strtoupper($row['sub_category']) . '"><i class="fa fa-trash text-danger"></i></a></td><td>' . strtoupper($row['sub_category']) . '</td></tr>';
     }
 
     // Return the HTML to the client-side JavaScript

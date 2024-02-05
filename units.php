@@ -126,7 +126,7 @@ while ($row = $recentResults->fetch_assoc()) {
                                                                         <i class="fa fa-trash text-danger"></i>
                                                                     </a>
                                                                 </td>
-                                                                <td style="color: #313A46;">' . $result['unit_name'] . '</td>
+                                                                <td style="color: #313A46;">' . strtoupper($result['unit_name']) . '</td>
                                                             </tr>';
                                                     }
                                                     ?>
@@ -190,7 +190,7 @@ while ($row = $recentResults->fetch_assoc()) {
                                                     foreach ($recentUnits as $recentUnit) {
                                                         echo '<tr style="color: #313A46;">
                                                                 <td>' . $recentUnit['created_at'] . '</td>
-                                                                <td>' . $recentUnit['unit_name'] . '</td>
+                                                                <td>' . strtoupper($recentUnit['unit_name']) . '</td>
                                                             </tr>';
                                                     }
                                                     ?>
