@@ -236,7 +236,29 @@ include('header.php');
                                                     <!-- Add your other table data here -->
                                                     <!-- ... -->
                                                 </tr>';
-                                            // ... (your existing modal code)
+                                                echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-md">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" style="white-space: normal; word-wrap: break-word; max-width: 400px;">'.$result['Product'].'</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem; color: #000; opacity: 0.8; background-color: transparent; border: none;">x</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                                                            <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                                                            <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                                                            <p><strong>Price:</strong> '.$result['Price'].'</p>
+                                                            <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                                                            <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                                                            <p><strong>Category:</strong> '.$result['Categories'].'</p>
+                                                            <p><strong>Seller:</strong> '.$result['Seller'].'</p>
+                                                            <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
+                                                            <p><strong>Warranty:</strong> '.$result['Warranty'].'</p>
+                                                            <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>';
                                         }
                                         ?>
                                     </tbody>
