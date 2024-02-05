@@ -67,15 +67,15 @@
 
                         <?php
                            
-                            $sql = "select * from customer";
+                            $sql = "select * from suppliers";
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
 
                         ?>
               
-                        <form action = "customerAddSave.php" method="post" enctype="multipart/form-data">
+                        <form action = "suppliersAddSave.php" method="post" enctype="multipart/form-data">
                         <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 style="color: #313A46; margin-bottom: -10px"><b><?= isset($id) ? "Update Costumer Details" : "Register New Customer" ?></b></h3>
+                        <h3 style="color: #313A46; margin-bottom: -10px"><b><?= isset($id) ? "Update Costumer Details" : "Register New Supplier" ?></b></h3>
 </div>
 </div>
 <div class="mx-0 py-5 px-3 mx-ns-4 bg-gradient-maroon">
@@ -88,13 +88,13 @@
                         <input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
                             
                         <fieldset>
-                            <legend style="color: #313A46;">Customer Information</legend>
+                            <legend style="color: #313A46;">Supplier Information</legend>
                             <div class="row">
                                 
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Seqcode" class="control-label">SeQCode</label>
-                                    <input type="text" name="Seqcode" class="form-control form-control-sm rounded-5"  required/>
+                                    <label for="Supplier_Name" class="control-label">Supplier Name</label>
+                                    <input type="text" name="Supplier_Name" class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
 
@@ -102,65 +102,19 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="IDNumber"  class="control-label">ID Number</label>
-                                    <input type="text" name="IDNumber"  class="form-control form-control-sm rounded-5"  required/>
+                                    <label for="Contact"  class="control-label">Contact</label>
+                                    <input type="number" name="Contact"  class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Barcode" class="control-label">Barcode</label>
-                                    <input type="text" name="Barcode" class="form-control form-control-sm rounded-5"  required/>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="CustomerName" class="control-label">Customer Name</label>
-                                    <input type="text" name="CustomerName" class="form-control form-control-sm rounded-5"  required/>
-                                    </div>
-                                </div>
-                                
-                                
-
-                               
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="TermofPayment" class="control-label">Term of Payment</label>
-                                    <input type="text" name="TermofPayment" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="VATTIN" class="control-label">VAT TIN</label>
-                                    <input type="text" name="VATTIN" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="ContactPerson" class="control-label">Contact Person</label>
-                                    <input type="text" name="ContactPerson" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
-
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Loc" class="control-label">Address</label>
-                                    <input type="text" name="Loc" class="form-control form-control-sm form-control-border rounded-5" required>
+                                    <input type="text" name="Loc" class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
-
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Contact" class="control-label">Contact</label>
-                                    <input type="text" name="Contact" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </div>
-                                </div>
-
+                                
+                               
 
                                 
 

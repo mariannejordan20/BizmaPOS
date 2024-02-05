@@ -206,11 +206,25 @@
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Supplier" class="control-label">Supplier</label>
-                                    <input type="text" name="Supplier" class="form-control form-control-sm rounded-0" required/>
-                                    </div>
-                                </div>
+    <div class="form-group">
+        <label for="Supplier" class="control-label">Supplier</label>
+        <select name="Supplier" class="form-control form-control-sm rounded-5" required>
+            <?php
+            
+            $sqlSupplier = "SELECT ID, Supplier_Name FROM suppliers";
+            $resultSupplier = $conn->query($sqlSupplier);
+
+            if ($resultSupplier->num_rows > 0) {
+                while ($rowSupplier = $resultSupplier->fetch_assoc()) {
+                    echo '<option>' . $rowSupplier['Supplier_Name'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No categories available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
 
 
                                 

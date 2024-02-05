@@ -16,7 +16,8 @@ if (empty($haslog)) {
 }
 
 // SQL query to retrieve data from the 'customer' table
-$sql = "SELECT ID,Seqcode, IDNumber, Barcode, CustomerName, TermofPayment, VATTIN, ContactPerson, Loc, Contact, Date_Joined FROM customer ORDER BY CustomerName";
+$sql = "SELECT ID,Supplier_Name,Contact,Loc, Date_Added FROM suppliers ORDER BY Date_Added desc";
+
 
 // Execute the query
 $results = $conn->query($sql);
@@ -49,14 +50,11 @@ if (!$results) {
     #customersTable th,
     #customersTable td {
         padding: 12px  ;
-        text-align: left;
+        text-align: center  ;
     }
 
     #customersTable th {    
-        color: #000000  ; 
-        white-space: nowrap;
-        font-family: Segoe UI;
-        font-size: 14px;
+        color: #fff  ; /* White text for header */
     }
 
     #customersTable tbody tr {
@@ -73,17 +71,6 @@ if (!$results) {
     #customersTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
     }
-    .custom-column-width {
-    width: 10%  ; /* Adjust the width as needed */
-    }
-    .custom-font-size td {
-    font-size: 12px;
-    white-space: nowrap;
-    }
-    .table-responsive {
-    overflow-x: auto;
-    }
-
 
 
 </style>
@@ -118,41 +105,33 @@ include('header.php');
 
 
                         <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL CUSTOMERS</h3>
+                        <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Suppliers</h3>
                             
                         </div>
-
+                        <div class="card-body">
                         <div class="customers-section">
-                            <div class="mb-3 ml-4 d-flex align-items-center">
-                                <a href ="customeradd.php" class="btn" style="background-color: #fe3c00; color: white;">
-                                    <i class="fa fa-plus"></i>
-                                </a>
+                            <div class="mb-3 d-flex align-items-center">
+                                <a href ="suppliersAdd.php" class="btn" style="background-color: #fe3c00; color: white;">Add Customer</button> </a>
                             </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
-                                    <table class="table text-center table-bordered" id="customersTable" width="100%"
+                                    <table class="table text-center" id="customersTable" width="100%"
                                         cellspacing="0">
 
 
                                         <thead>
-                                            <tr class="th" style="color: #000000">
+                                            <tr class="text-white" style="background-color: #2D333C">
 
-                                                <th class="text-center custom-column-width">ACTION</th>
-                                                <th class="text-center custom-column-width">SEQCODE</th>
-                                                <th class="text-center custom-column-width">ID NUMBER</th>
-                                                <th class="text-center custom-column-width">BARCODE</th>
-                                                <th class="text-center custom-column-width">CUSTOMER NAME</th>
-                                                <th class="text-center custom-column-width">TERM OF PAYMENT</th>
-                                                <th class="text-center custom-column-width">VAT TIN(NOS)</th>
-                                                <th class="text-center custom-column-width">CONTACT PERSON</th>
-                                                <th class="text-center custom-column-width">ADDRESS</th>
-                                                <th class="text-center custom-column-width">CONTACT NO.</th>
-                                                <th class="text-center custom-column-width">DATE REGISTERED</th>
+                                                <th class="text-center">Action</th>
+                                                <th class="text-center">Supplier</th>
+                                                <th class="text-center">Contact</th>
+                                                <th class="text-center">Address</th>
+                                                <th class="text-center">Date Registered</th>
 
 
                                             </tr>
                                         </thead>
-                                        <tbody class="custom-font-size" style="color: #313A46;">
+                                        <tbody style="color: #313A46;">
 
                                             <?php
                                             // Check if there are records in the result set
@@ -162,61 +141,33 @@ include('header.php');
                                                     echo '<tr>
                                                         <td>
 
-                                                        <a class="mr-2" href="#?id=' . $result['ID'] . '" data-bs-toggle="modal" data-bs-target="#customersModal' . $result['ID'] . '"><i class="fa fa-eye"></i></a>
-                                                            <a class = "mr-2" href = "customersEdit.php?id=' . $result['ID'] . '">
+                                                       
+                                                            <a class = "mr-2" href = "suppliersEdit.php?id=' . $result['ID'] . '">
                                                             <i class = "fa fa-edit"></i>
                                                             </a>
 
-                                                            <a href = "customersDelete.php?id=' . $result['ID'] . '">
+                                                            <a href = "suppliersDelete.php?id=' . $result['ID'] . '">
                                                             <i class = "fa fa-trash text-danger"></i>
                                                             </a>
 
 
                                                         </td>
-                                                        <td class="text-truncate">' . strtoupper($result['Seqcode']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['IDNumber']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['Barcode']) . '</td>
-                                                        <td class="text-truncate"  style="max-width: 100px;">' . strtoupper($result['CustomerName']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['TermofPayment']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['VATTIN']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['ContactPerson']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['Loc']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['Contact']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['Date_Joined']) . '</td>
+                                                        <td>' . $result['Supplier_Name'] . '</td>
+                                                        <td>' . $result['Contact'] . '</td>
+                                                        
+                                                        <td>' . $result['Loc'] . '</td>
+                                                        <td>' . $result['Date_Added'] . '</td>
+                                                     
 
 
 
                                                     </tr>';
-                                                    echo '<div class="modal fade" id="customersModal' . $result['ID'] . '" tabindex="-1" aria-labelledby="customersModal' . $result['ID'] . '" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">' . $result['CustomerName'] . '</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                        </div>
-                        <div class="modal-body">
-                            
-                            <p><strong>Seqcode:</strong> ' . $result['Seqcode'] . '</p>
-                            <p><strong>IDNumber:</strong> ' . $result['IDNumber'] . '</p>
-                            <p><strong>Barcode:</strong> ' . $result['Barcode'] . '</p>
-                            <p><strong>CustomerName:</strong> ' . $result['CustomerName'] . '</p>
-                            
-                            <p><strong>TermofPayment Price:</strong> ' . $result['TermofPayment'] . '</p>
-                            <p><strong>VATTIN:</strong> ' . $result['VATTIN'] . '</p>
-                            
-                            <p><strong>ContactPerson:</strong> ' . $result['ContactPerson'] . '</p>
-                            <p><strong>Address:</strong> ' . $result['Loc'] . '</p>
-                            <p><strong>Contact:</strong> ' . $result['Contact'] . '</p>
-                            <p><strong>Date:</strong> ' . $result['Date_Joined'] . '</p>
-                            
+                                                    
                           
                             
                             
 
-                        </div>
-                    </div>
-                </div>
-            </div>';
+                       
                                                 }
                                             } else {
                                                 echo "No records found.";

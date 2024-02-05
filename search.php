@@ -8,9 +8,9 @@ if (isset($_GET['search'])) {
 
     echo '<table class="table table-bordered text-center" id="example" style="width: 100%;" cellspacing="0">
             <thead>
-                <tr class="text-white" style="background-color: #2D333C">
-                    <th class="text-center">Action</th>
-                    <th class="text-center">Units</th>
+                <tr class="text-white" style="color: #000000">
+                    <th class="text-center">ACTION</th>
+                    <th class="text-center">UNITS</th>
                 </tr>
             </thead>
             <tbody>';

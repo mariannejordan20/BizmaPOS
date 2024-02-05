@@ -90,11 +90,11 @@
 
  <?php
                             $id = $_GET['id'];
-                            $sql = "select * from customer where ID = ".$id;
+                            $sql = "select * from suppliers where ID = ".$id;
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
                         ?>
-                        <form action = "customerEditSave.php" method="post" enctype ="multipart/form-data">
+                        <form action = "suppliersEditSave.php" method="post" enctype ="multipart/form-data">
                             <input type="hidden" name="hiddenID" value="<?=$id?>">
                         <div class="row">
 
@@ -110,76 +110,30 @@
                         <input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
                             
                         <fieldset class="border-bottom">
-                            <legend>Customer Information</legend>
+                            <legend>Suppliers Information</legend>
                             <div class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Seqcode" class="control-label">SeQCode</label>
-                                    <input type="text" name="Seqcode" class="form-control form-control-sm rounded-0" value="<?=$row['Seqcode']?>">
+                                    <label for="Supplier_Name" class="control-label">Supplier Name</label>
+                                    <input type="text" name="Supplier_Name" class="form-control form-control-sm rounded-5" value="<?=$row['Supplier_Name']?>">
                                     </div>
                                 </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="IDNumber" class="control-label">ID Number</label>
-                                    <input type="text" name="IDNumber"  class="form-control form-control-sm rounded-0" value="<?=$row['IDNumber']?>">
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Barcode" class="control-label">Barcode</label>
-                                    <input type="text" name="Barcode" class="form-control form-control-sm rounded-0" value="<?=$row['Barcode']?>">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="CustomerName" class="control-label">Customer Name</label>
-                                    <input type="text" name="CustomerName" class="form-control form-control-sm rounded-0" value="<?=$row['CustomerName']?>">
-                                    </div>
-                                </div>
-                                
 
                                 
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="TermofPayment" class="control-label">TermofPayment</label>
-                                    <input type="text" name="TermofPayment" class="form-control form-control-sm rounded-0" value="<?=$row['TermofPayment']?>">
+                                    <label for="Contact"  class="control-label">Contact</label>
+                                    <input type="number" name="Contact"  class="form-control form-control-sm rounded-5"  value="<?=$row['Contact']?>">
                                     </div>
                                 </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="VATTIN" class="control-label">VATTIN</label>
-                                    <input type="number" name="VATTIN" class="form-control form-control-sm rounded-0" value="<?=$row['VATTIN']?>">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="ContactPerson" class="control-label">ContactPerson</label>
-                                    <input type="text" name="ContactPerson" class="form-control form-control-sm rounded-0" value="<?=$row['ContactPerson']?>">
-                                    </div>
-                                </div>
-
+                                
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Loc" class="control-label">Address</label>
-                                    <input type="text" name="Loc" class="form-control form-control-sm rounded-0" value="<?=$row['Loc']?>">
+                                    <input type="text" name="Loc" class="form-control form-control-sm rounded-5" value="<?=$row['Loc']?>">
                                     </div>
                                 </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Contact" class="control-label">Contact</label>
-                                    <input type="text" name="Contact" class="form-control form-control-sm rounded-0" value="<?=$row['Contact']?>">
-                                    </div>
-                                </div>
-
-                               
-
 
 
 

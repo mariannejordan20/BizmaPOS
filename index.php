@@ -86,13 +86,13 @@ include('connection.php');
                                                 <div class="h5 mb-0 font-weight-bold text-800" style="color: white">
                                                     <?php
                                                     
-                                                        $query = "select count(Student_ID) AS NumStudents FROM athletes";
+                                                        $query = "select count(ID) AS countID FROM products";
 
                                                         $result = mysqli_query( $conn, $query);
                                                         
                                                     while ($row = mysqli_fetch_assoc($result))
                                                         { 
-                                                            echo $row['NumStudents'];
+                                                            echo $row['countID'];
                                                         }
                                                         
                                                     ?>
@@ -115,13 +115,13 @@ include('connection.php');
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
                                                     
-                                                    $query = "select count(sex) AS numMale FROM athletes where sex = 'male'";
+                                                    $query = "select count(ID) AS countID FROM products";
 
                                                     $result = mysqli_query( $conn, $query);
-
+                                                    
                                                 while ($row = mysqli_fetch_assoc($result))
                                                     { 
-                                                        echo $row['numMale'];
+                                                        echo $row['countID'];
                                                     }
                                                    
 
@@ -146,13 +146,13 @@ include('connection.php');
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
                                                     
-                                                    $query = "select count(sex) AS numFemale FROM athletes where sex = 'female'";
+                                                    $query = "select count(ID) AS countID FROM products";
 
                                                     $result = mysqli_query( $conn, $query);
-
+                                                    
                                                 while ($row = mysqli_fetch_assoc($result))
                                                     { 
-                                                        echo $row['numFemale'];
+                                                        echo $row['countID'];
                                                     }
                                                    
 
@@ -176,15 +176,14 @@ include('connection.php');
                                                 <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                     <?php
                                                         
-                                                        $query = "select count(Student_ID) AS NumStudents FROM athletes";
+                                                        $query = "select count(ID) AS countID FROM products";
 
                                                         $result = mysqli_query( $conn, $query);
                                                         
                                                     while ($row = mysqli_fetch_assoc($result))
                                                         { 
-                                                            echo $row['NumStudents'];
+                                                            echo $row['countID'];
                                                         }
-                                                        
                                                     ?>
                                                     <i class='fas fa-female' style='font-size:24px; float: right;'></i>
                                                 </div>
@@ -205,14 +204,14 @@ include('connection.php');
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
                                                     
-                                                    $query = "select count(sex) AS numMale FROM athletes where sex = 'male'";
+                                                    $query = "select count(ID) AS countID FROM products";
 
-                                                    $result = mysqli_query( $conn, $query);
-
-                                                while ($row = mysqli_fetch_assoc($result))
-                                                    { 
-                                                        echo $row['numMale'];
-                                                    }
+                                                        $result = mysqli_query( $conn, $query);
+                                                        
+                                                    while ($row = mysqli_fetch_assoc($result))
+                                                        { 
+                                                            echo $row['countID'];
+                                                        }
                                                    
 
                                                     
@@ -236,14 +235,14 @@ include('connection.php');
                                             <div class="h5 mb-0 font-weight-bold text-800"  style="color: white">
                                                  <?php
                                                     
-                                                    $query = "select count(sex) AS numFemale FROM athletes where sex = 'female'";
+                                                    $query = "select count(ID) AS countID FROM products";
 
-                                                    $result = mysqli_query( $conn, $query);
-
-                                                while ($row = mysqli_fetch_assoc($result))
-                                                    { 
-                                                        echo $row['numFemale'];
-                                                    }
+                                                        $result = mysqli_query( $conn, $query);
+                                                        
+                                                    while ($row = mysqli_fetch_assoc($result))
+                                                        { 
+                                                            echo $row['countID'];
+                                                        }
                                                    
 
                                                     

@@ -8,13 +8,13 @@ $Seqcode = $_POST['Seqcode'];
 $number_id = $_POST['IDNumber'];
 $Barcode = $_POST['Barcode'];
 $CustomerName = $_POST['CustomerName'];
-$grp = $_POST['Group'];
+
 $TermofPayment = $_POST['TermofPayment'];
 $VATTIN = $_POST['VATTIN'];
 $ContactPerson = $_POST['ContactPerson'];
 $Address = $_POST['Loc'];
 $Contact = $_POST['Contact'];
-$Datee = isset($_POST['Date_Joined']) ? $_POST['Date_Joined'] : '';
+
 
 // Get the id from the form
 $id = $_POST['id']; // Adjust this according to your actual form structure
@@ -30,12 +30,12 @@ if (mysqli_num_rows($query2) > 0) {
 
 // Update query
 // Update query
-$update = "UPDATE customer SET Seqcode = '$Seqcode', IDNumber = '$number_id', Barcode = '$Barcode', CustomerName = '$CustomerName', `Group` = '$grp', TermofPayment = '$TermofPayment', VATTIN = '$VATTIN', ContactPerson = '$ContactPerson', Loc = '$Address', Contact = '$Contact', Date_Joined = '$Datee' ";
+$update = "UPDATE customer SET Seqcode = '$Seqcode', IDNumber = '$number_id', Barcode = '$Barcode', CustomerName = '$CustomerName', `Group` = '$grp', TermofPayment = '$TermofPayment', VATTIN = '$VATTIN', ContactPerson = '$ContactPerson', Loc = '$Address', Contact = '$Contact' ";
 $update .= "WHERE id = $id";
 
 
 // Check if any changes were made
-if ($Seqcode !== "" || $number_id !== "" || $Barcode !== "" || $CustomerName !== "" || $grp !== "" || $TermofPayment !== "" || $VATTIN !== "" || $ContactPerson !== "" || $Address !== "" || $Contact !== "" || $Datee !== "") {
+if ($Seqcode !== "" || $number_id !== "" || $Barcode !== "" || $CustomerName !== "" ||  $TermofPayment !== "" || $VATTIN !== "" || $ContactPerson !== "" || $Address !== "" || $Contact !== "" ) {
     $res = $conn->query($update);
 
     if ($res && mysqli_affected_rows($conn) > 0) {
