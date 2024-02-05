@@ -46,8 +46,10 @@ session_start();
     }
 
     #warrantyTable th {
-        background-color: #3498db  ; /* Blue background for header */
-        color: #fff  ; /* White text for header */
+        color: #000000  ; 
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
 
     #warrantyTable tbody tr {
@@ -64,6 +66,10 @@ session_start();
 
     #warrantyTable a:hover {
         color: #c0392b; /* Darker red on hover */
+    }
+    .custom-font-size td {
+    font-size: 12px;
+    white-space: nowrap;
     }
 </style>
 <?php
@@ -97,29 +103,29 @@ session_start();
                     
 
                             <div class="card-header" style="background-color: #eeeeee; border: none">
-                                <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">Warranty List</h3>
+                                <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">WARRANTY LIST</h3>
                             </div>
 
-                            <div class="card-body">
-                                <div class="container-fluid">
                                 <div class="warranty-section">
-                                    <div class="mb-3 d-flex align-items-center">
+                                    <div class="mb-3 ml-4 d-flex align-items-center">
                                         <a href="warrantyAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
-                                            Add New Warranty
+                                            <i class="fa fa-plus"></i>
                                         </a>
                                     </div>
-                                    <table class="table text-center" id="warrantyTable" width="100%" cellspacing="0">
+                                  <div class="container-fluid">
+                                  
+                                    <table class="table text-center table-bordered" id="warrantyTable" width="100%" cellspacing="0">
                                         
                                         <thead>
-                                            <tr class="bg-primary text-white">
+                                            <tr class="th" style="color: #000000">
                                             
-                                                <th class="text-center" style="background-color: #313A46;">Action</th>
-                                                <th class="text-center" style="background-color: #313A46;">Warranty (Months)</th>
+                                                <th class="text-center">ACTION</th>
+                                                <th class="text-center">WARRANTY (MONTHS)</th>
                                                 
                                                 
                                             </tr>
                                         </thead>
-                                        <tbody style="color: #313A46;">
+                                        <tbody class="custom-font-size" style="color: #313A46;">
 
                                         <?php
                                                         foreach ($results as $result) {
