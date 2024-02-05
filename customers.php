@@ -53,7 +53,7 @@ if (!$results) {
     }
 
     #customersTable th {    
-        color: #000000  ; /* White text for header */
+        color: #000000  ; 
         white-space: nowrap;
         font-family: Segoe UI;
         font-size: 14px;
@@ -176,7 +176,7 @@ include('header.php');
                                                         <td class="text-truncate">' . strtoupper($result['Seqcode']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['IDNumber']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['Barcode']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['CustomerName']) . '</td>
+                                                        <td class="text-truncate"  style="max-width: 100px;">' . strtoupper($result['CustomerName']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['TermofPayment']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['VATTIN']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['ContactPerson']) . '</td>
