@@ -26,6 +26,14 @@ while ($row = $recentResults->fetch_assoc()) {
 <!DOCTYPE html>
 <html lang="en">
 <style>
+    .units-section {
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+    margin-bottom: 20px;
+    background-color: #fff; /* Optional: Add a background color */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    }
     .pagination a.btn {
         color: #fff; /* Text color for pagination buttons */
     }
@@ -40,6 +48,12 @@ while ($row = $recentResults->fetch_assoc()) {
     }
     .table-bordered tbody tr.search-result-row td {
         color: #313A46 !important;
+    }
+    th, td{
+        color: #000000 ; 
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
     
 </style>
@@ -61,23 +75,27 @@ while ($row = $recentResults->fetch_assoc()) {
                 <!-- Topbar -->
                 <?php include('navbar.php'); ?>
                 <!-- End of Topbar -->
-                <div class="container-fluid" style="padding-left: 2%;">
-                    <h3 class="card-title" style="color:#313A46;">List of all Units</h3>
+                <div class="container-fluid">
+                    <h3 class="card-title" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL UNITS</h3>
                     <div class="row">
 
                         <!-- Left Content Column -->
-                        <div class="col-lg-6 mb-4">
-                            <div class="card rounded-0 card-maroon border-0">
+                        <div class="col-lg-5 ml-5 mb-4 units-section">
+                            <div class="card card-maroon border-0">
                                 <div class="card-header"
-                                    style="background-color:white; display: flex; justify-content: space-between; align-items: center;">
-                                    <button type="button" class="btn mt-3 mb-3" style="background-color: #FE3C00; color: white;"
+                                    style="background-color:white; display: flex; justify-content: space-between; align-items: center; border: none">
+                                    <button type="button" class="btn" style="background-color: #FE3C00; color: white;"
                                         data-toggle="modal" data-target="#addUnitModal">
-                                        Add Unit
+                                        <i class="fa fa-plus"></i>
                                     </button>
                                     <form action="units.php" method="get" class="form-inline">
-                                        <div class="form-group">
-                                            <input type="text" name="search" id="searchInput" class="form-control mr-2" placeholder="Search" oninput="searchUnits()">
-                                            <button type="submit" class="btn mb-3 mt-3" style="background-color: #FE3C00; color: white;">Search</button>
+                                        <div class="input-group">
+                                            <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchUnits()">
+                                            <div class="input-group-append">
+                                            <button type="submit" class="btn" style="background-color: #FE3C00; color: white;">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                            </div>
                                         </div>
                                     </form>
 
@@ -88,9 +106,9 @@ while ($row = $recentResults->fetch_assoc()) {
                                             <table class="table table-bordered text-center" id="example" style="width: 100%;"
                                                 cellspacing="0">
                                                 <thead>
-                                                    <tr class="text-white" style="background-color: #2D333C">
-                                                        <th class="text-center">Action</th>
-                                                        <th class="text-center">Units</th>
+                                                    <tr style="color: #000000">
+                                                        <th class="text-center">ACTION</th>
+                                                        <th class="text-center">UNITS</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -150,12 +168,12 @@ while ($row = $recentResults->fetch_assoc()) {
                         <!-- End Left Content Column -->
 
                         <!-- Right Content Column -->
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-6 ml-3 mb-4 units-section">
 
                             <!-- Recent Units Table -->
-                            <div class="card card-outline rounded-0 card-maroon border-0" >
-                                <div class="card-header" style="background-color:white;">
-                                    <h3 class="card-title mb-3 mt-3" style="color: #313A46;">Recent Units</h3>
+                            <div class="card card-maroon border-0" >
+                                <div class="card-header" style="background-color:white; border: none">
+                                    <h4 class="card-title" style="color: #313A46; font-family: Segoe UI; font-weight: bold">RECENT UNITS</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
@@ -163,9 +181,9 @@ while ($row = $recentResults->fetch_assoc()) {
                                             <table class="table table-bordered text-center" id="recentUnitsTable"
                                                 style="width: 100%;" cellspacing="0">
                                                 <thead>
-                                                    <tr class="text-white" style="background-color: #2D333C">
-                                                        <th class="text-center">Date</th>
-                                                        <th class="text-center">Recent Unit</th>
+                                                    <tr style="color: #000000">
+                                                        <th class="text-center">DATE</th>
+                                                        <th class="text-center">RECENT UNIT</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
