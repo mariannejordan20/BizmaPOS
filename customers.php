@@ -18,7 +18,6 @@ if (empty($haslog)) {
 // SQL query to retrieve data from the 'customer' table
 $sql = "SELECT ID,Seqcode, IDNumber, Barcode, CustomerName, TermofPayment, VATTIN, ContactPerson, Loc, Contact, Date_Joined FROM customer ORDER BY CustomerName";
 
-
 // Execute the query
 $results = $conn->query($sql);
 
@@ -50,11 +49,14 @@ if (!$results) {
     #customersTable th,
     #customersTable td {
         padding: 12px  ;
-        text-align: center  ;
+        text-align: left;
     }
 
     #customersTable th {    
-        color: #fff  ; /* White text for header */
+        color: #000000  ; /* White text for header */
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
 
     #customersTable tbody tr {
@@ -71,6 +73,17 @@ if (!$results) {
     #customersTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
     }
+    .custom-column-width {
+    width: 10%  ; /* Adjust the width as needed */
+    }
+    .custom-font-size td {
+    font-size: 12px;
+    white-space: nowrap;
+    }
+    .table-responsive {
+    overflow-x: auto;
+    }
+
 
 
 </style>
@@ -105,39 +118,41 @@ include('header.php');
 
 
                         <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Customers</h3>
+                        <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL CUSTOMERS</h3>
                             
                         </div>
-                        <div class="card-body">
+
                         <div class="customers-section">
-                            <div class="mb-3 d-flex align-items-center">
-                                <a href ="customeradd.php" class="btn" style="background-color: #fe3c00; color: white;">Add Customer</button> </a>
+                            <div class="mb-3 ml-4 d-flex align-items-center">
+                                <a href ="customeradd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                    <i class="fa fa-plus"></i>
+                                </a>
                             </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
-                                    <table class="table text-center" id="customersTable" width="100%"
+                                    <table class="table text-center table-bordered" id="customersTable" width="100%"
                                         cellspacing="0">
 
 
                                         <thead>
-                                            <tr class="text-white" style="background-color: #2D333C">
+                                            <tr class="th" style="color: #000000">
 
-                                                <th class="text-center">Action</th>
-                                                <th class="text-center">SeQCode</th>
-                                                <th class="text-center">ID Number</th>
-                                                <th class="text-center">Barcode</th>
-                                                <th class="text-center">Customer Name</th>
-                                                <th class="text-center">Term of Payment</th>
-                                                <th class="text-center">VAT TIN(NOS)</th>
-                                                <th class="text-center">Contact Person</th>
-                                                <th class="text-center">Address</th>
-                                                <th class="text-center">Contact No.</th>
-                                                <th class="text-center">Date Registered</th>
+                                                <th class="text-center custom-column-width">ACTION</th>
+                                                <th class="text-center custom-column-width">SEQCODE</th>
+                                                <th class="text-center custom-column-width">ID NUMBER</th>
+                                                <th class="text-center custom-column-width">BARCODE</th>
+                                                <th class="text-center custom-column-width">CUSTOMER NAME</th>
+                                                <th class="text-center custom-column-width">TERM OF PAYMENT</th>
+                                                <th class="text-center custom-column-width">VAT TIN(NOS)</th>
+                                                <th class="text-center custom-column-width">CONTACT PERSON</th>
+                                                <th class="text-center custom-column-width">ADDRESS</th>
+                                                <th class="text-center custom-column-width">CONTACT NO.</th>
+                                                <th class="text-center custom-column-width">DATE REGISTERED</th>
 
 
                                             </tr>
                                         </thead>
-                                        <tbody style="color: #313A46;">
+                                        <tbody class="custom-font-size" style="color: #313A46;">
 
                                             <?php
                                             // Check if there are records in the result set
@@ -158,16 +173,16 @@ include('header.php');
 
 
                                                         </td>
-                                                        <td>' . $result['Seqcode'] . '</td>
-                                                        <td>' . $result['IDNumber'] . '</td>
-                                                        <td>' . $result['Barcode'] . '</td>
-                                                        <td>' . $result['CustomerName'] . '</td>
-                                                        <td>' . $result['TermofPayment'] . '</td>
-                                                        <td>' . $result['VATTIN'] . '</td>
-                                                        <td>' . $result['ContactPerson'] . '</td>
-                                                        <td>' . $result['Loc'] . '</td>
-                                                        <td>' . $result['Contact'] . '</td>
-                                                        <td>' . $result['Date_Joined'] . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['Seqcode']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['IDNumber']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['Barcode']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['CustomerName']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['TermofPayment']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['VATTIN']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['ContactPerson']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['Loc']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['Contact']) . '</td>
+                                                        <td class="text-truncate">' . strtoupper($result['Date_Joined']) . '</td>
 
 
 
