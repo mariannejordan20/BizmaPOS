@@ -128,20 +128,20 @@ session_start();
                 <thead>
                     <tr class="th" style="color: #000000">
                     
-                        <th class="text-center  custom-column-width">ACTION</th>
-                        <th class="text-center  custom-column-width">BARCODE</th>
-                        <th class="text-center  custom-column-width">PRODUCT NAME</th>
-                        <th class="text-center  custom-column-width">UNIT</th>
-                        <th class="text-center  custom-column-width">WRTY</th>
-                        <th class="text-center  custom-column-width">QTY</th>
-                        <th class="text-center  custom-column-width">COSTING</th>
-                        <th class="text-center  custom-column-width">PRICE</th>
-                        <th class="text-center  custom-column-width">WHOLESALE</th>
-                        <th class="text-center  custom-column-width">PROMO</th>
-                        <th class="text-center  custom-column-width">CATEGORIES</th>
-                        <th class="text-center  custom-column-width">SELLER</th>
-                        <th class="text-center  custom-column-width">SUPPLIER</th>
-                        <th class="text-center  custom-column-width">DATE REGISTERED</th>
+                        <th class="text-center custom-column-width">ACTION</th>
+                        <th class="text-center custom-column-width">BARCODE</th>
+                        <th class="text-center custom-column-width">PRODUCT NAME</th>
+                        <th class="text-center custom-column-width">UNIT</th>
+                        <th class="text-center custom-column-width">WRTY</th>
+                        <th class="text-center custom-column-width">QTY</th>
+                        <th class="text-center custom-column-width">COSTING</th>
+                        <th class="text-center custom-column-width">PRICE</th>
+                        <th class="text-center custom-column-width">WHOLESALE</th>
+                        <th class="text-center custom-column-width">PROMO</th>
+                        <th class="text-center custom-column-width">CATEGORIES</th>
+                        <th class="text-center custom-column-width">SELLER</th>
+                        <th class="text-center custom-column-width">SUPPLIER</th>
+                        <th class="text-center custom-column-width">DATE REGISTERED</th>
                                                 
                     </tr>
                 </thead>
@@ -157,19 +157,19 @@ session_start();
                                                 </a>
 
                                             </td>
-                                            <td>'.$result['Barcode'].'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Product'].'</td>
-                                            <td>'.$result['Unit'].'</td>
-                                            <td >'.$result['Warranty'].'</td>
-                                            <td>'.$result['Quantity'].'</td>
-                                            <td>'.$result['Costing'].'</td>
-                                            <td>'.$result['Price'].'</td>
-                                            <td>'.$result['Wholesale'].'</td>
-                                            <td>'.$result['Promo'].'</td>
-                                            <td class="text-truncate" style="max-width: 75px;">'.$result['Categories'].'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Seller'].'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Supplier'].'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.$result['Date_Registered'].'</td>
+                                            <td>'.strtoupper($result['Barcode']).'</td>
+                                            <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
+                                            <td>'.strtoupper($result['Unit']).'</td>
+                                            <td >'.strtoupper($result['Warranty']).'</td>
+                                            <td>'.strtoupper($result['Quantity']).'</td>
+                                            <td>'.strtoupper($result['Costing']).'</td>
+                                            <td>'.strtoupper($result['Price']).'</td>
+                                            <td>'.strtoupper($result['Wholesale']).'</td>
+                                            <td>'.strtoupper($result['Promo']).'</td>
+                                            <td class="text-truncate" style="max-width: 75px;">'.strtoupper($result['Categories']).'</td>
+                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Seller']).'</td>
+                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Supplier']).'</td>
+                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Date_Registered']).'</td>
 
 
                                         </tr>';
@@ -193,9 +193,6 @@ session_start();
                             <p><strong>Seller:</strong> '.$result['Seller'].'</p>
                             <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
                             <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
-                            
-                          
-                            
                             
 
                         </div>
