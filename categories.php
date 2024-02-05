@@ -51,8 +51,10 @@ $results = $conn->query($sql);
     }
 
     #categoriesTable th {
-        background-color: #3498db  ; /* Blue background for header */
-        color: #fff  ; /* White text for header */
+        color: #000000 ; 
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
 
     #categoriesTable tbody tr {
@@ -82,8 +84,10 @@ $results = $conn->query($sql);
     }
 
     #subCategoriesTable th {
-        background-color: #3498db  ; /* Blue background for header */
-        color: #fff  ; /* White text for header */
+        color: #000000 ; 
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
 
     #subCategoriesTable tbody tr {
@@ -100,6 +104,12 @@ $results = $conn->query($sql);
 
     #subCategoriesTable a:hover {
         color: #c0392b; /* Darker red on hover */
+    }
+    th, td{
+        color: #000000 ; 
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
     }
 </style>
 
@@ -122,32 +132,33 @@ $results = $conn->query($sql);
 
                 <div class="container-fluid">
 
-                        <div class="card-header" style="background-color: #eeeeee; border: none">
-                            <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Categories</h3>
-                        </div>
+                      
+                            <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL CATEGORIES</h3>
 
-                        <div class="card-body">
+
                         <div class="container-fluid" style="background-color: #eeeeee">
                             <div class="row">
                                 <!-- Left Section - Categories -->
                                 <div class="col-md-6 ml-4 mr-3 categories-section">
-                                <h3 class="mb-3" style="color: #313A46;">Categories</h3>
+                                <h4 class="mb-3 ml-3" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">CATEGORIES</h4>
                                     <div class="mb-3 d-flex align-items-center">
                                         <a href="categoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
                                             Add New Category
                                         </a>
-                                        <div class="input-group ml-2" style="max-width: 60%;"> <!-- Adjusted max-width for a shorter search bar -->
+                                        <div class="input-group ml-5" style="max-width: 57%;"> <!-- Adjusted max-width for a shorter search bar -->
                                             <input type="text" id="searchInput" class="form-control" placeholder="Search Category">
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">Search</button>
+                                                <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <table class="table  text-center" id="categoriesTable" width="100%" cellspacing="0">
+                                    <table class="table text-center table-bordered" id="categoriesTable" width="100%" cellspacing="0">
                                         <thead>
-                                            <tr class="text-white" style="color: #313A46;">
-                                                <th class="text-center" style="background-color: #313A46;">Action</th>
-                                                <th class="text-center" style="background-color: #313A46;">Category</th>
+                                            <tr style="color: #000000">
+                                                <th class="text-center">ACTION</th>
+                                                <th class="text-center">CATEGORY</th>
                                             </tr>
                                         </thead>
                                         <tbody style="color: #313A46;">
@@ -168,25 +179,28 @@ $results = $conn->query($sql);
                                 </div>
 
                                 <!-- Right Section - Sub-Categories -->
-                                <div class="col-md-5 ml-3 categories-section">
-                                    <h3 class="mb-3" style="color: #313A46;">Sub-Categories</h3>
+                                <div class="col-md-5 ml-1 categories-section">
+                                    <h4
+                                     class="mb-3 ml-3" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">SUB-CATEGORIES</h4>
                                     <div class="mb-3 d-flex align-items-center">
                                         <a href="subCategoryAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
-                                            Add New Sub-category 
+                                            Add Sub-category 
                                         </a>
-                                        <div class="input-group ml-2" style="max-width: 43%;"> <!-- Adjusted max-width for a shorter search bar -->
+                                        <div class="input-group ml-5" style="max-width: 50%;"> <!-- Adjusted max-width for a shorter search bar -->
                                             <input type="text" id="searchInput" class="form-control" placeholder="Search Sub-Category">
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">Search</button>
+                                                <button class="btn btn-outline-secondary" type="button" onclick="searchTable()">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <table class="table text-center" id="subCategoriesTable" width="100%" cellspacing="0">
+                                    <table class="table text-center table-bordered" id="subCategoriesTable" width="100%" cellspacing="0">
                                         <thead>
-                                            <tr class="bg-primary text-white">
-                                                <th class="text-center" style="background-color: #313A46;">Action</th>
-                                                <th class="text-center" style="background-color: #313A46;">Sub-Category</th>
+                                            <tr>
+                                                <th class="text-center">ACTION</th>
+                                                <th class="text-center">SUB-CATEGORY</th>
                                             </tr>
                                         </thead>
                                         <tbody style="color: #313A46;">
