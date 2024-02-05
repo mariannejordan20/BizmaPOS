@@ -1,39 +1,57 @@
 <?php
-session_start();   
+session_start();
 
-    include('connection.php');
-    // $haslog = (isset($_SESSION['hasLog'])?$_SESSION['hasLog']:0);
+include('connection.php');
 
-    if (isset($_SESSION['hasLog'])){
-        $haslog = $_SESSION['hasLog'];
-    }else{
-        $haslog = 0;
-    }
+$recordsPerPage = 10; // Adjust the number of records per page as needed
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($page - 1) * $recordsPerPage;
 
-    if (empty($haslog)){
-        header("location: login.php");
-        exit;
-    }
+if (isset($_SESSION['hasLog'])) {
+    $haslog = $_SESSION['hasLog'];
+} else {
+    $haslog = 0;
+}
 
-    $sql = "select ID, Barcode, Product,Warranty,Unit,Quantity,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
+if (empty($haslog)) {
+    header("location: login.php");
+    exit;
+}
+
+// Handle pagination
+$sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
+$results = $conn->query($sql);
+
+// Add this block to handle search
+if (isset($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products WHERE Product LIKE '%$searchTerm%' ORDER BY Categories LIMIT $offset, $recordsPerPage";
     $results = $conn->query($sql);
+} else {
+    // Default query without search
+    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
+    $results = $conn->query($sql);
+}
 
-    // Add this block to handle search
-    if (isset($_GET['search'])) {
-        $searchTerm = $_GET['search'];
-        $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products WHERE Product LIKE '%$searchTerm%' ORDER BY Categories";
-        $results = $conn->query($sql);
-    } else {
-        // Default query without search
-        $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
-        $results = $conn->query($sql);
-    }
+$totalRecordsQuery = "SELECT COUNT(*) as totalRecords FROM products";
+$totalRecordsResult = $conn->query($totalRecordsQuery);
+$totalRecords = $totalRecordsResult->fetch_assoc()['totalRecords'];
+
+$totalPages = ceil($totalRecords / $recordsPerPage);
+
+include('header.php');
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 <style>
+    body {
+            font-family: 'Rubik', sans-serif;
+        }
+    .card-title {
+            font-weight: 400;
+        }
     #productsTable{
         cursor: pointer;
     }
@@ -59,6 +77,7 @@ session_start();
         color: #000000  ; /* White text for header */
         white-space: nowrap;
         text-align: left;
+        font-size: 14px;
     }
 
     #productsTable tbody tr {
@@ -86,6 +105,29 @@ session_start();
 .table-responsive {
     overflow-x: auto;
 }
+.btn {
+    padding-left: 1000px;
+}
+.pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        .pagination a {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            background-color: #f1f1f1;
+            color: #333;
+            margin: 0 4px;
+            border-radius: 4px;
+        }
+
+        .pagination a.active {
+            background-color: #fe3c00;
+            color: #fff;
+        }
 
 
 </style>
@@ -125,119 +167,96 @@ session_start();
                 <div class="container-fluid" style="padding-left: 2%;">
 
                 <div class="card-header" style="background-color: #eeeeee; border: none">
-                    <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">List of all Products</h3>
+                    <h3 class="card-title"  style="color: #313A46; margin-bottom: -10px">LIST OF ALL PRODUCTS</h3>
                 </div>        
                       
                         
-                        <div class="products-section">
-                            <div class="mb-3 ml-4 d-flex align-items-center">
-                                <a href="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white; margin-top:1%">
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                            </div>
-                            <form action="products.php" method="get" class="form-inline mb-3 ml-4 d-flex align-items-center" style="padding-top: 25px;">
-                                        <div class="form-group">
-                                            <input type="text" name="search" id="searchInput" class="form-control mr-2" placeholder="Search">
-                                            <button type="submit" class="btn btn-primary">Search</button>
-                                        </div>
-                                    </form>
-                            <div class="container-fluid">
-                                <div class="table-responsive">
+                <div class="products-section">
+                        <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                            <form action="products.php" method="get" class="form-inline mt-3 mb-3">
+                                <div class="form-group">
+                                    <input type="text" name="search" id="searchInput" class="form-control mr-2" placeholder="Search" oninput="searchProducts()">
+                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
+                                </div>
+                            </form>
+                            <a href="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="table-responsive" id="searchResults">
                                 <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
-
-                
-                                <thead>
-                                    <tr class="th" style="color: #000000">
-                                        <th class="text-center custom-column-width">Action</th>
-                                        <th class="text-center custom-column-width">ID</th>
-                                        <th class="text-center custom-column-width">Barcode</th>
-                                        <th class="text-center custom-column-width" style="padding-right: 150px;">Product Name</th>
-                                        <th class="text-center custom-column-width">Unit</th>
-                                        <th class="text-center custom-column-width">Qty</th>
-                                        <th class="text-center custom-column-width">Costing</th>
-                                        <th class="text-center custom-column-width">Price</th>
-                                        <th class="text-center custom-column-width">Wholesale</th>
-                                        <th class="text-center custom-column-width">Promo</th>
-                                        <th class="text-center custom-column-width">Ctry</th>
-                                        <th class="text-center custom-column-width">Seller</th>
-                                        <th class="text-center custom-column-width">Supplier</th>
-                                        <th class="text-center custom-column-width">Wrty</th>
-                                        <th class="text-center custom-column-width">Date Registered</th>
-                                    </tr>
-                                    
-                                </thead>
+                                    <thead>
+                                        <tr class="th" style="color: #000000">
+                                            <th class="text-center custom-column-width">ACTION</th>
+                                            <th class="text-center custom-column-width">ID</th>
+                                            <th class="text-center custom-column-width">BARCODE</th>
+                                            <th class="text-center custom-column-width" style="padding-right: 150px;">PRODUCT NAME</th>
+                                            <th class="text-center custom-column-width">UNIT</th>
+                                            <th class="text-center custom-column-width">QTY</th>
+                                            <th class="text-center custom-column-width">COSTING</th>
+                                            <th class="text-center custom-column-width">PRICE</th>
+                                            <th class="text-center custom-column-width">WHOLESALE</th>
+                                            <th class="text-center custom-column-width">PROMO</th>
+                                            <th class="text-center custom-column-width">CTRY</th>
+                                            <th class="text-center custom-column-width">SELLER</th>
+                                            <th class="text-center custom-column-width">SUPPLIER</th>
+                                            <th class="text-center custom-column-width">WRTY</th>
+                                            <th class="text-center custom-column-width">DATE REGISTERED</th>
+                                            <!-- Add your other table headers here -->
+                                            <!-- ... -->
+                                        </tr>
+                                    </thead>
                                     <tbody class="custom-font-size" style="color: #313A46;">
+                                        <?php
+                                        foreach ($results as $result) {
+                                            echo '<tr>
+                                                    <td>
+                                                        <a class="mr-2" href="#?id=' . $result['ID'] . '" data-bs-toggle="modal" data-bs-target="#productsModal' . $result['ID'] . '"><i class="fa fa-eye"></i></a>
+                                                        <a class="mr-2" href="productsEdit.php?id=' . $result['ID'] . '"><i class="fa fa-edit"></i></a>
+                                                        <a href="productsDelete.php?id=' . $result['ID'] . '"><i class="fa fa-trash text-danger"></i></a>
+                                                    </td>
+                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['ID'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 150px;">' . $result['Product'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Price'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Seller'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Supplier'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 75px;">' . (isset($result['Warranty']) ? $result['Warranty'] : '') . '</td>
+                                                    <td class="text-truncate" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+                                                    <!-- Add your other table data here -->
+                                                    <!-- ... -->
+                                                </tr>';
+                                            // ... (your existing modal code)
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
 
-                                    <?php
-                                                    foreach ($results as $result) {
-                                                        echo '<tr>
-                                                                <td>
+                                <!-- Pagination links -->
 
-                                                                <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
-                                                                    <a class = "mr-2" href = "productsEdit.php?id='.$result['ID'].'">
-                                                                    <i class = "fa fa-edit"></i>
-                                                                    </a>
-
-                                                                    <a href = "productsDelete.php?id='.$result['ID'].'">
-                                                                    <i class = "fa fa-trash text-danger"></i>
-                                                                    </a>
-
-
-                                                                    </td>
-                                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['ID'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 150px;">' . $result['Product'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Price'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 75px;">' . $result['Categories'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Seller'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Supplier'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 75px;">' . $result['Warranty'] . '</td>
-                                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['Date_Registered'] . '</td>
-                                                                
-
-                                                            
-
-                                                            </tr>';
-                                                            echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-md">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" style="white-space: normal; word-wrap: break-word; max-width: 400px;">'.$result['Product'].'</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem; color: #000; opacity: 0.8; background-color: transparent; border: none;">x</button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
-                                                                        <p><strong>Unit:</strong> '.$result['Unit'].'</p>
-                                                                        <p><strong>Costing:</strong> '.$result['Costing'].'</p>
-                                                                        <p><strong>Price:</strong> '.$result['Price'].'</p>
-                                                                        <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
-                                                                        <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
-                                                                        <p><strong>Category:</strong> '.$result['Categories'].'</p>
-                                                                        <p><strong>Seller:</strong> '.$result['Seller'].'</p>
-                                                                        <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
-                                                                        <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>';
-                                                        
-                                                    }
-
-                                                ?>
-                                            </tbody>
-
-                                    </div>     
-                                    </div>
+                            </div>
+                        </div>
                                     <!-- /.container-fluid -->
 
                                 </div>
                                 <!-- End of Main Content -->
-
+                                <div class="d-flex justify-content-end mt-3">
+                                    <ul class="pagination">
+                                        <?php
+                                        for ($i = 1; $i <= $totalPages; $i++) {
+                                            echo '<li class="page-item"><a class="page-link ' . ($i === $page ? 'active' : '') . '" href="?page=' . $i . '">' . $i . '</a></li>';
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
                                 
                             
                             <!-- End of Content Wrapper -->
@@ -315,28 +334,33 @@ session_start();
 ?>
 
 <script>
-  function searchUnits() {
+function searchProducts() {
     var searchTerm = document.getElementById('searchInput').value;
     var xhr = new XMLHttpRequest();
+    
+    // If the search term is empty, set it to a placeholder value
+    searchTerm = searchTerm.trim() === '' ? 'all_products' : searchTerm;
+
     xhr.open('GET', 'searchProducts.php?search=' + encodeURIComponent(searchTerm), true);
     xhr.send();
+    
     xhr.onload = function () {
         if (xhr.status != 200) {
             console.error('Error ' + xhr.status + ': ' + xhr.statusText);
         } else {
-            var searchResultsDiv = document.getElementById('searchResults');
-            searchResultsDiv.innerHTML = xhr.responseText;
+            var productSearchResultsDiv = document.getElementById('searchResults');
+            productSearchResultsDiv.innerHTML = xhr.responseText;
 
             // Set text color for search result rows
-            var searchResultRows = searchResultsDiv.getElementsByTagName('tr');
-            for (var i = 0; i < searchResultRows.length; i++) {
-                searchResultRows[i].style.color = '#313A46';
+            var productSearchResultRows = productSearchResultsDiv.getElementsByTagName('tr');
+            for (var i = 0; i < productSearchResultRows.length; i++) {
+                productSearchResultRows[i].style.color = '#313A46';
             }
         }
     };
 }
+</script>
 
-    </script>
 </body>
 
 </html>
