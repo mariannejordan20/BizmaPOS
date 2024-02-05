@@ -82,20 +82,19 @@ while ($row = $recentResults->fetch_assoc()) {
                         <!-- Left Content Column -->
                         <div class="col-lg-5 ml-5 mb-4 units-section">
                             <div class="card card-maroon border-0">
-                                <div class="card-header"
-                                    style="background-color:white; display: flex; justify-content: space-between; align-items: center; border: none">
-                                    <button type="button" class="btn" style="background-color: #FE3C00; color: white;"
+                                <div style="background-color:white; display: flex; justify-content: space-between; align-items: center; border: none">
+                                    <button type="button" class="btn ml-5" style="background-color: #FE3C00; color: white;"
                                         data-toggle="modal" data-target="#addUnitModal">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                     <form action="units.php" method="get" class="form-inline">
-                                        <div class="input-group">
+                                        <div class="input-group" style="max-width: 83%;">
                                             <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchUnits()">
                                             <div class="input-group-append">
                                             <button type="submit" class="btn" style="background-color: #FE3C00; color: white;">
                                                 <i class="fa fa-search"></i>
                                             </button>
-                                            </div>
+                                        </div>
                                         </div>
                                     </form>
 
@@ -172,8 +171,8 @@ while ($row = $recentResults->fetch_assoc()) {
 
                             <!-- Recent Units Table -->
                             <div class="card card-maroon border-0" >
-                                <div class="card-header" style="background-color:white; border: none">
-                                    <h4 class="card-title" style="color: #313A46; font-family: Segoe UI; font-weight: bold">RECENT UNITS</h4>
+                                <div style="background-color:white; border: none">
+                                    <h4 class="card-title ml-4" style="color: #313A46; font-family: Segoe UI; font-weight: bold">RECENT UNITS</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="container-fluid">
