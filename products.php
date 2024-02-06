@@ -359,33 +359,35 @@ include('header.php');
 ?>
 
 <script>
-function searchProducts() {
-    var searchTerm = document.getElementById('searchInput').value;
-    var xhr = new XMLHttpRequest();
-    
-    // If the search term is empty, set it to a placeholder value
-    searchTerm = searchTerm.trim() === '' ? 'all_products' : searchTerm;
-
-    xhr.open('GET', 'searchProducts.php?search=' + encodeURIComponent(searchTerm), true);
-    xhr.send();
-    
-    xhr.onload = function () {
-        if (xhr.status != 200) {
-            console.error('Error ' + xhr.status + ': ' + xhr.statusText);
+$(document).ready(function() {
+    $('#searchInput').on('keyup', function() {
+        var searchTerm = $(this).val().trim();
+        if (searchTerm !== '') {
+            searchProducts(searchTerm);
         } else {
-            var productSearchResultsDiv = document.getElementById('searchResults');
-            productSearchResultsDiv.innerHTML = xhr.responseText;
+            // Clear the search results if the search term is empty
+            $('#searchResults').html('');
+        }
+    });
+});
+
+function searchProducts(searchTerm) {
+    $.ajax({
+        url: 'searchProductscat.php',
+        type: 'GET',
+        data: { search: searchTerm },
+        success: function(response) {
+            $('#searchResults').html(response);
 
             // Set text color for search result rows
-            var productSearchResultRows = productSearchResultsDiv.getElementsByTagName('tr');
-            for (var i = 0; i < productSearchResultRows.length; i++) {
-                productSearchResultRows[i].style.color = '#313A46';
-            }
+            $('#searchResults tr').css('color', '#313A46');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
         }
-    };
+    });
 }
 </script>
-
 </body>
 
 </html>
