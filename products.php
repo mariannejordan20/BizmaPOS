@@ -19,17 +19,17 @@ if (empty($haslog)) {
 }
 
 // Handle pagination
-$sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
+$sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
 $results = $conn->query($sql);
 
 // Add this block to handle search
 if (isset($_GET['search'])) {
     $searchTerm = $_GET['search'];
-    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products WHERE Product LIKE '%$searchTerm%' ORDER BY Categories LIMIT $offset, $recordsPerPage";
+    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories,SubCategory,  Seller, Supplier, Date_Registered FROM products WHERE Product LIKE '%$searchTerm%' ORDER BY Categories LIMIT $offset, $recordsPerPage";
     $results = $conn->query($sql);
 } else {
     // Default query without search
-    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
+    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories,SubCategory,  Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
     $results = $conn->query($sql);
 }
 
@@ -201,7 +201,8 @@ include('header.php');
                                             <th class="text-center custom-column-width">PRICE</th>
                                             <th class="text-center custom-column-width">WHOLESALE</th>
                                             <th class="text-center custom-column-width">PROMO</th>
-                                            <th class="text-center custom-column-width">CTRY</th>
+                                            <th class="text-center custom-column-width">CAT</th>
+                                            <th class="text-center custom-column-width">S-CAT</th>
                                             <th class="text-center custom-column-width">SELLER</th>
                                             <th class="text-center custom-column-width">SUPPLIER</th>
                                             <th class="text-center custom-column-width">WRTY</th>
@@ -229,6 +230,7 @@ include('header.php');
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
+                                                    <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
                                                     <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
                                                     <td class="text-truncate" style="max-width: 75px;">' . (isset($result['Warranty']) ? $result['Warranty'] : '') . '</td>
