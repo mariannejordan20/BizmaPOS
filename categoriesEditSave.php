@@ -13,7 +13,7 @@ if (!empty($categories)) {
     $query2 = mysqli_query($conn, "SELECT * FROM categories WHERE  main_category = '$categories'");
 
 if (mysqli_num_rows($query2) >1 ) {
-    $_SESSION['status'] = "Supplier already Exists";
+    $_SESSION['status'] = "Category already Exists";
     $_SESSION['status_code'] = "error";
     header("location:suppliers.php");
     
