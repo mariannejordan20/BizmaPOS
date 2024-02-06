@@ -22,7 +22,7 @@ if (isset($_GET['search'])) {
                         <i class="fa fa-trash text-danger"></i>
                     </a>
                 </td>
-                <td>' . $result['unit_name'] . '</td>
+                <td>' . strtoupper($result['unit_name']) . '</td>
             </tr>';
     }
 

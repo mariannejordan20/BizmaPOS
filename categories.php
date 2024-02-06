@@ -170,7 +170,7 @@ $results = $conn->query($sql);
                                                             <i class="fa fa-trash text-danger"></i>
                                                         </a>
                                                     </td>
-                                                    <td>' . $result['maincat'] . '</td>
+                                                    <td>' . strtoupper($result['maincat']) . '</td>
                                                 </tr>';
                                         }
                                         ?>
