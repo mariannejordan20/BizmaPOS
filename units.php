@@ -122,6 +122,7 @@ while ($row = $recentResults->fetch_assoc()) {
                                                     foreach ($results as $result) {
                                                         echo '<tr class="search-result-row">
                                                                 <td>
+                                                                <a class="mr-2" href="unitsEdit.php?id=' . $result['ID'] . '"><i class="fa fa-edit text-primary"></i></a>
                                                                     <a href="unitsDelete.php?id=' . $result['ID'] . '">
                                                                         <i class="fa fa-trash text-danger"></i>
                                                                     </a>

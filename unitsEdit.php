@@ -90,15 +90,15 @@
 
  <?php
                             $id = $_GET['id'];
-                            $sql = "select * from categories where ID = ".$id;
+                            $sql = "select * from units where ID = ".$id;
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
                         ?>
-                        <form action = "categoriesEditSave.php" method="post" enctype ="multipart/form-data">
+                        <form action = "unitsEditSave.php" method="post" enctype ="multipart/form-data">
                             <input type="hidden" name="hiddenID" value="<?=$id?>">
                         <div class="row">
 
-                            <h3><b><?= isset($id) ? "Edit Category" : "Edit Category" ?></b></h3>
+                            <h3><b><?= isset($id) ? "Edit Unit" : "Edit Unit" ?></b></h3>
 </div>
 <div class="mx-0 py-5 px-3 mx-ns-4 bg-gradient-maroon">
 <div class="row justify-content-center" style="margin-top:-2em;">
@@ -110,19 +110,19 @@
                         <input type="hidden" name ="id" value="<?php echo isset($id) ? $id : '' ?>">
                             
                         <fieldset class="border-bottom">
-                            <legend>Category</legend>
+                           
                             <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Categories" class="control-label">Category</label>
-                                    <input type="text" name="Categories" class="form-control form-control-sm rounded-5" value="<?=$row['main_category']?>">
+                                    <label for="unit_name" class="control-label">Unit</label>
+                                    <input type="text" name="unit_name" class="form-control form-control-sm rounded-5" value="<?=$row['unit_name']?>">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="form-group" style="display: none;">
-        <label for="Categories2" class="control-label">Category</label>
-        <input type="hidden" name="Categories2" value="<?=$row['main_category']?>">
+        <label for="unit_name2" class="control-label">Unit</label>
+        <input type="hidden" name="unit_name2" value="<?=$row['unit_name']?>">
     </div>
 </div>
 
@@ -149,7 +149,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        
+                       
                     </div>
                 </div>
             </footer>

@@ -22,14 +22,15 @@ if (mysqli_num_rows($query2) >1 ) {
 
     $update .= "where id = ".$id;
 
-    $updateRows = "UPDATE products SET Categories = '$categories' WHERE Categories = '$oldcategory'";
-    
+    $updateProductCategory = "UPDATE products SET Categories = '$categories' WHERE Categories = '$oldcategory'";
+    $updateSubCategory = "UPDATE subcategories SET main_category = '$categories' WHERE main_category = '$oldcategory'";
     
     
 
     if ($categories !== "" ) {
         $res = $conn->query($update);
-        $res = $conn->query($updateRows);
+        $res2 = $conn->query($updateProductCategory);
+        $res3 = $conn->query($updateSubCategory);
         if ($res && mysqli_affected_rows($conn) > 0) {
             $_SESSION['status'] = "Edit Successful";
             $_SESSION['status_code'] = "success";
