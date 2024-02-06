@@ -152,26 +152,73 @@
 </div>
 
                                 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                          
+ <!-- Category Dropdown -->
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="form-group">
         <label for="Categories" class="control-label">Category</label>
-        <select name="Categories" class="form-control form-control-sm rounded-5" required>
-            <?php
-            
-            $sqlCategories = "SELECT ID, main_category FROM categories";
-            $resultCategories = $conn->query($sqlCategories);
+        <div id="categoriesDropdownContainer">
+            <select name="Categories" id="Categories" class="form-control form-control-sm rounded-5" >
+            <option value="<?=$row['Categories']?>"></option>
 
-            if ($resultCategories->num_rows > 0) {
-                while ($rowCategory = $resultCategories->fetch_assoc()) {
-                    echo '<option>' . $rowCategory['main_category'] . '</option>';
+
+                <?php
+                // Populate categories dropdown
+                $sqlCategories = "SELECT ID, main_category FROM categories";
+                $resultCategories = $conn->query($sqlCategories);
+
+                if ($resultCategories->num_rows > 0) {
+                    while ($rowCategory = $resultCategories->fetch_assoc()) {
+                        echo '<option value="' . $rowCategory['main_category'] . '">' . $rowCategory['main_category'] . '</option>';
+                    }
+                } else {
+                    echo '<option value="" disabled>No categories available</option>';
                 }
-            } else {
-                echo '<option value="" disabled>No categories available</option>';
-            }
-            ?>
+                ?>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Sub-Category Dropdown -->
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="form-group">
+        <label for="SubCategories" class="control-label">Sub-Category</label>
+        <select name="SubCategories" id="SubCategories" class="form-control form-control-sm rounded-5" >
+            <!-- Placeholder option for subcategories -->
+            <option value="<?=$row['SubCategory']?>"></option>
         </select>
     </div>
 </div>
+
+<script>
+    // Add JavaScript to dynamically update subcategories based on selected category
+    document.getElementById('Categories').addEventListener('change', function() {
+        var selectedCategory = this.value;
+        var subCategoriesDropdown = document.getElementById('SubCategories');
+
+        // Clear existing options
+        subCategoriesDropdown.innerHTML = '<option value="" disabled>Select a category first</option>';
+
+        // Populate subcategories based on the selected category
+        <?php
+        $sqlSubCategories = "SELECT sc.sub_category, c.main_category FROM subcategories as sc RIGHT JOIN categories as c ON c.main_category = sc.main_category";
+        $resultSubCategories = $conn->query($sqlSubCategories);
+
+        if ($resultSubCategories->num_rows > 0) {
+            while ($rowSubCategory = $resultSubCategories->fetch_assoc()) {
+                echo 'if ("' . $rowSubCategory['main_category'] . '" === selectedCategory || selectedCategory === "") {';
+                echo 'var option = document.createElement("option");';
+                echo 'option.value = "' . $rowSubCategory['sub_category'] . '";';
+                echo 'option.text = "' . $rowSubCategory['sub_category'] . '";';
+                echo 'subCategoriesDropdown.add(option);';
+                echo '}';
+            }
+        }
+        ?>
+    });
+</script>
+
 
 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="form-group">

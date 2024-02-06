@@ -381,7 +381,7 @@
                 <div id="alert-container"></div>
                     <label>Unit Name: </label>
                     <input type="text" class="form-control form-control-user"
-                        id="unitName" name="unitName" style="border-radius: 8px;" required>
+                        id="unitName" name="unitName" style="border-radius: 8px;" maxlength="3"required>
                 </div>
             </div>
             <div class="modal-footer">
