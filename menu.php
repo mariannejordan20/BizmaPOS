@@ -87,11 +87,10 @@ include('connection.php');
             <div id="collapseStock" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <!-- <h6 class="collapse-header">List of Sports:</h6> -->
-                    <a class="collapse-item" href="productsEditHistory.php">Product Edit History </a>
-                    <a class="collapse-item" href="stocksInHistory.php">Stock In History</a>
+                    
+                    
                     <a class="collapse-item" href="stocksIn.php">Stock In +</a>
-                    <a class="collapse-item" href="stocksOutHistory.php">Stock Out History </a>
+                   
                     <a class="collapse-item" href="stocksOut.php">Stock out - </a>
                     <a class="collapse-item" href="products.php">Inventory List </a>
                     
@@ -118,6 +117,26 @@ include('connection.php');
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+
+    <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHistory"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-soccer-ball-o"></i>
+                <span>History</span>
+            </a>
+            <div id="collapseHistory" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    
+                    <a class="collapse-item" href="productsEditHistory.php">Product Edit History </a>
+                    <a class="collapse-item" href="stocksInHistory.php">Stock In + History</a>
+                    <a class="collapse-item" href="stocksOutHistory.php">Stock Out - History </a>
+                    
+                </div>
+            </div>
+        </li>  
+
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUnCaWa"
             aria-expanded="true" aria-controls="collapseUtilities">

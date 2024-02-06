@@ -141,7 +141,7 @@ session_start();
                         <th class="text-center custom-column-width">CATEGORIES</th>
                         <th class="text-center custom-column-width">SELLER</th>
                         <th class="text-center custom-column-width">SUPPLIER</th>
-                        <th class="text-center custom-column-width">DATE REGISTERED</th>
+                        <th class="text-center custom-column-width">DATE EDITED</th>
                                                 
                     </tr>
                 </thead>
