@@ -10,8 +10,8 @@ if (isset($_GET['search'])) {
         $sql = "SELECT * FROM products ORDER BY Product";
         $results = $conn->query($sql);
     } else {
-        // Perform search based on the provided search term
-        $sql = "SELECT * FROM products WHERE Product LIKE '%$searchTerm%' ORDER BY Product";
+        // Perform search based on the provided search term (product name or barcode)
+        $sql = "SELECT * FROM products WHERE Product LIKE '%$searchTerm%' OR Barcode LIKE '%$searchTerm%' ORDER BY Product";
         $results = $conn->query($sql);
     }
     echo '<table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
@@ -43,9 +43,9 @@ if (isset($_GET['search'])) {
                     <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
                     <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
                 </td>
-                <td class="text-truncate" style="max-width: 50px;">' . $result['ID'] . '</td>
+                <td class="text-truncate" style="max-width: 50px;">'  .$result['ID'] . '</td>
                 <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-                <td class="text-truncate" style="max-width: 150px;">' . $result['Product'] . '</td>
+                <td class="text-truncate" style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
                 <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
                 <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
                 <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
@@ -53,8 +53,8 @@ if (isset($_GET['search'])) {
                 <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
                 <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
                 <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
-                <td class="text-truncate" style="max-width: 100px;">' . $result['Seller'] . '</td>
-                <td class="text-truncate" style="max-width: 100px;">' . $result['Supplier'] . '</td>
+                <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
+                <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
                 <td class="text-truncate" style="max-width: 75px;">' . (isset($result['warranty']) ? $result['warranty'] : '') . '</td>
                 <td class="text-truncate" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
                 <!-- Add more columns here based on your product structure -->
