@@ -118,35 +118,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-    <div class="form-group">
-        <label for="Unit" class="control-label">Unit</label>
-        
-        <!-- Add new unit modal trigger -->
-        <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
-            </span>
-        </a>
-        
-        <!-- Unit dropdown -->
-        <select name="Unit" class="form-control form-control-sm rounded-5" required>
-            <?php
-           
-            $sqlUnitOptions = "SELECT unit_name FROM units";
-            $resultUnitOptions = $conn->query($sqlUnitOptions);
-
-            if ($resultUnitOptions->num_rows > 0) {
-                while ($rowUnit = $resultUnitOptions->fetch_assoc()) {
-                    echo '<option>' . $rowUnit['unit_name'] . '</option>';
-                }
-            } else {
-                echo '<option value="" disabled>No unit options available</option>';
-            }
-            ?>
-        </select>
-    </div>
-</div>
+                                
 
 
 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -234,6 +206,59 @@
 </script>
 
 
+<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+    <div class="form-group">
+        <label for="Unit" class="control-label">Unit</label>
+        
+        <!-- Add new unit modal trigger -->
+        <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
+            </span>
+        </a>
+        
+        <!-- Unit dropdown -->
+        <select name="Unit" class="form-control form-control-sm rounded-5" required>
+            <?php
+           
+            $sqlUnitOptions = "SELECT unit_name FROM units";
+            $resultUnitOptions = $conn->query($sqlUnitOptions);
+
+            if ($resultUnitOptions->num_rows > 0) {
+                while ($rowUnit = $resultUnitOptions->fetch_assoc()) {
+                    echo '<option>' . $rowUnit['unit_name'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No unit options available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
+
+
+<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+    <div class="form-group">
+        <label for="Warranty" class="control-label">Warranty(Months)</label>
+        <select name="Warranty" class="form-control form-control-sm form-control-border rounded-5" required>
+            <?php
+            
+            $sqlWarrantyOptions = "SELECT Warranty FROM warranty";
+            $resultWarrantyOptions = $conn->query($sqlWarrantyOptions);
+
+            if ($resultWarrantyOptions->num_rows > 0) {
+                while ($rowWarranty = $resultWarrantyOptions->fetch_assoc()) {
+                    echo '<option>' . $rowWarranty['Warranty'] . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>No warranty options available</option>';
+            }
+            ?>
+        </select>
+    </div>
+</div>
+
+
 
 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
@@ -305,26 +330,7 @@
 
                                 
 
-<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-    <div class="form-group">
-        <label for="Warranty" class="control-label">Warranty</label>
-        <select name="Warranty" class="form-control form-control-sm form-control-border rounded-5" required>
-            <?php
-            
-            $sqlWarrantyOptions = "SELECT Warranty FROM warranty";
-            $resultWarrantyOptions = $conn->query($sqlWarrantyOptions);
 
-            if ($resultWarrantyOptions->num_rows > 0) {
-                while ($rowWarranty = $resultWarrantyOptions->fetch_assoc()) {
-                    echo '<option>' . $rowWarranty['Warranty'] . '</option>';
-                }
-            } else {
-                echo '<option value="" disabled>No warranty options available</option>';
-            }
-            ?>
-        </select>
-    </div>
-</div>
 
 
 

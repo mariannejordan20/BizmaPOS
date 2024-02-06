@@ -166,6 +166,7 @@ $results = $conn->query($sql);
                                         foreach ($results as $result) {
                                             echo '<tr data-category-id="' . $result['maincat'] . '">
                                                     <td>
+                                                        <a class="mr-2" href="categoriesEdit.php?id=' . $result['ID'] . '"><i class="fa fa-edit text-primary"></i></a>
                                                         <a href="categoryDelete.php?id=' . $result['ID'] . '">
                                                             <i class="fa fa-trash text-danger"></i>
                                                         </a>
