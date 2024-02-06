@@ -4,7 +4,7 @@ session_start();
 include('connection.php');
 $id = $_POST['hiddenID'];
 $categories = $_POST['Categories'];
-
+$oldcategory = $_POST['Categories2'];
 
 $query = mysqli_query($conn, "SELECT * FROM categories WHERE main_category = '$categories'");
 
@@ -21,13 +21,15 @@ if (mysqli_num_rows($query2) >1 ) {
     $update = "Update categories set main_category = '".$categories."'";
 
     $update .= "where id = ".$id;
+
+    $updateRows = "UPDATE products SET Categories = '$categories' WHERE Categories = '$oldcategory'";
     
     
     
 
     if ($categories !== "" ) {
         $res = $conn->query($update);
-
+        $res = $conn->query($updateRows);
         if ($res && mysqli_affected_rows($conn) > 0) {
             $_SESSION['status'] = "Edit Successful";
             $_SESSION['status_code'] = "success";

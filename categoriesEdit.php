@@ -119,6 +119,14 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="form-group" style="display: none;">
+        <label for="Categories2" class="control-label">Category</label>
+        <input type="hidden" name="Categories2" value="<?=$row['main_category']?>">
+    </div>
+</div>
+
+
                             </div>
 
 
