@@ -122,15 +122,17 @@
                                 </div>
                                 
                                 
-
-                               
-
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="TermofPayment" class="control-label">Term of Payment</label>
-                                    <input type="text" name="TermofPayment" class="form-control form-control-sm form-control-border rounded-5" required>
+                                        <div class="form-group">
+                                            <label for="TermofPayment" class="control-label">Term of Payment</label>
+                                            <select name="TermofPayment" class="form-control form-control-sm form-control-border rounded-5" required>
+                                                <option value="">Select Term of Payment</option>
+                                                <option value="term1">Term 1</option>
+                                                <option value="term2">Term 2</option>
+                                                <!-- Add more options as needed -->
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">

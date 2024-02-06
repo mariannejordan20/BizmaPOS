@@ -15,8 +15,18 @@ if (empty($haslog)) {
     exit;
 }
 
-// SQL query to retrieve data from the 'customer' table
-$sql = "SELECT ID,Seqcode, IDNumber, Barcode, CustomerName, TermofPayment, VATTIN, ContactPerson, Loc, Contact, Date_Joined FROM customer ORDER BY CustomerName";
+// Define pagination variables
+$recordsPerPage = 10; // Number of records per page
+$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
+$offset = ($page - 1) * $recordsPerPage; // Offset for SQL query
+
+$sql = "SELECT ID, Seqcode, IDNumber, Barcode, CustomerName, TermofPayment, VATTIN, ContactPerson, Loc, Contact, Date_Joined FROM customer ORDER BY Seqcode LIMIT $offset, $recordsPerPage";
+
+// Add this block to handle search
+if (isset($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $sql = "SELECT ID, Seqcode, IDNumber, Barcode, CustomerName, TermofPayment, VATTIN, ContactPerson, Loc, Contact, Date_Joined FROM customer WHERE CustomerName LIKE '%$searchTerm%' ORDER BY Seqcode LIMIT $offset, $recordsPerPage";
+}
 
 // Execute the query
 $results = $conn->query($sql);
@@ -25,68 +35,83 @@ $results = $conn->query($sql);
 if (!$results) {
     die("Error in SQL query: " . $conn->error);
 }
+
+// Get total number of records
+$totalRecordsQuery = "SELECT COUNT(*) AS total FROM customer";
+$totalRecordsResult = $conn->query($totalRecordsQuery);
+$totalRecords = $totalRecordsResult->fetch_assoc()['total'];
+
+// Calculate total pages
+$totalPages = ceil($totalRecords / $recordsPerPage);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    #customersTable{
+    #customersTable {
         cursor: pointer;
     }
+
     .customers-section {
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
-    margin-bottom: 20px;
-    background-color: #fff; /* Optional: Add a background color */
-    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+        border-radius: 8px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+        margin-bottom: 20px;
+        background-color: #fff; /* Optional: Add a background color */
+        transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
     }
+
     #customersTable {
-        width: 100%  ;
-        border-spacing: 0  ;
+        width: auto;
+        border-spacing: 0;
     }
 
     #customersTable th,
     #customersTable td {
-        padding: 12px  ;
         text-align: left;
     }
 
-    #customersTable th {    
-        color: #000000  ; 
+    #customersTable th {
+        color: #656565;
         white-space: nowrap;
         font-family: Segoe UI;
         font-size: 14px;
+        /* Aligning column names to the left */
+        text-align: left;
     }
 
     #customersTable tbody tr {
-        transition: background-color 0.3s  ;
+        transition: background-color 0.3s;
     }
 
     #customersTable tbody tr:hover {
-        background-color: #ecf0f1  ; /* Light gray background on hover */
+        background-color: #ecf0f1; /* Light gray background on hover */
     }
 
     #customersTable a:hover {
         color: #c0392b; /* Darker red on hover */
     }
+
     #customersTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
     }
+
     .custom-column-width {
-    width: 10%  ; /* Adjust the width as needed */
+        width: 10%; /* Adjust the width as needed */
+        text-align: left;
     }
+
     .custom-font-size td {
-    font-size: 12px;
-    white-space: nowrap;
+        font-size: 12px;
+        white-space: nowrap;
     }
+
     .table-responsive {
-    overflow-x: auto;
+        overflow-x: auto;
     }
-
-
-
 </style>
+
 <?php
 include('header.php');
 ?>
@@ -118,12 +143,20 @@ include('header.php');
 
 
                         <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL CUSTOMERS</h3>
+                        <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold; margin-bottom: -1px; margin-top:-20px">LIST OF ALL CUSTOMERS</h3>
                             
                         </div>
 
                         <div class="customers-section">
-                            <div class="mb-3 ml-4 d-flex align-items-center">
+                            <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                            <form action="customers.php" method="get" class="form-inline mt-3 mb-3">
+                            <div class="input-group">
+                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
+                                </div>
+                            </div>
+                        </form>
                                 <a href ="customeradd.php" class="btn" style="background-color: #fe3c00; color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
@@ -131,12 +164,11 @@ include('header.php');
                             <div class="container-fluid">
                                 <div class="table-responsive">
                                     <table class="table text-center table-bordered" id="customersTable" width="100%"
-                                        cellspacing="0">
+                                        cellspacing="0" style="text-align: left;">
 
 
                                         <thead>
-                                            <tr class="th" style="color: #000000">
-
+                                            <tr class="th" style="text-align: left;">
                                                 <th class="text-center custom-column-width">ACTION</th>
                                                 <th class="text-center custom-column-width">SEQCODE</th>
                                                 <th class="text-center custom-column-width">ID NUMBER</th>
@@ -148,8 +180,6 @@ include('header.php');
                                                 <th class="text-center custom-column-width">ADDRESS</th>
                                                 <th class="text-center custom-column-width">CONTACT NO.</th>
                                                 <th class="text-center custom-column-width">DATE REGISTERED</th>
-
-
                                             </tr>
                                         </thead>
                                         <tbody class="custom-font-size" style="color: #313A46;">
@@ -170,48 +200,38 @@ include('header.php');
                                                             <a href = "customersDelete.php?id=' . $result['ID'] . '">
                                                             <i class = "fa fa-trash text-danger"></i>
                                                             </a>
-
-
                                                         </td>
                                                         <td class="text-truncate">' . strtoupper($result['Seqcode']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['IDNumber']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['Barcode']) . '</td>
-                                                        <td class="text-truncate"  style="max-width: 100px;">' . strtoupper($result['CustomerName']) . '</td>
+                                                        <td class="text-truncate"  style="max-width: 150px;">' . strtoupper($result['CustomerName']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['TermofPayment']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['VATTIN']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['ContactPerson']) . '</td>
-                                                        <td class="text-truncate">' . strtoupper($result['Loc']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . strtoupper($result['Loc']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['Contact']) . '</td>
                                                         <td class="text-truncate">' . strtoupper($result['Date_Joined']) . '</td>
 
-
-
                                                     </tr>';
                                                     echo '<div class="modal fade" id="customersModal' . $result['ID'] . '" tabindex="-1" aria-labelledby="customersModal' . $result['ID'] . '" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">' . $result['CustomerName'] . '</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                        </div>
-                        <div class="modal-body">
-                            
-                            <p><strong>Seqcode:</strong> ' . $result['Seqcode'] . '</p>
-                            <p><strong>IDNumber:</strong> ' . $result['IDNumber'] . '</p>
-                            <p><strong>Barcode:</strong> ' . $result['Barcode'] . '</p>
-                            <p><strong>CustomerName:</strong> ' . $result['CustomerName'] . '</p>
-                            
-                            <p><strong>TermofPayment Price:</strong> ' . $result['TermofPayment'] . '</p>
-                            <p><strong>VATTIN:</strong> ' . $result['VATTIN'] . '</p>
-                            
-                            <p><strong>ContactPerson:</strong> ' . $result['ContactPerson'] . '</p>
-                            <p><strong>Address:</strong> ' . $result['Loc'] . '</p>
-                            <p><strong>Contact:</strong> ' . $result['Contact'] . '</p>
-                            <p><strong>Date:</strong> ' . $result['Date_Joined'] . '</p>
-                            
-                          
-                            
-                            
+                                                            <div class="modal-dialog modal-dialog-centered modal-md">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">' . $result['CustomerName'] . '</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        
+                                                                        <p><strong>Seqcode:</strong> ' . $result['Seqcode'] . '</p>
+                                                                        <p><strong>IDNumber:</strong> ' . $result['IDNumber'] . '</p>
+                                                                        <p><strong>Barcode:</strong> ' . $result['Barcode'] . '</p>
+                                                                        <p><strong>CustomerName:</strong> ' . $result['CustomerName'] . '</p>
+                                                                        <p><strong>TermofPayment Price:</strong> ' . $result['TermofPayment'] . '</p>
+                                                                        <p><strong>VATTIN:</strong> ' . $result['VATTIN'] . '</p>
+                                                                        <p><strong>ContactPerson:</strong> ' . $result['ContactPerson'] . '</p>
+                                                                        <p><strong>Address:</strong> ' . $result['Loc'] . '</p>
+                                                                        <p><strong>Contact:</strong> ' . $result['Contact'] . '</p>
+                                                                        <p><strong>Date:</strong> ' . $result['Date_Joined'] . '</p>
 
                         </div>
                     </div>
@@ -232,6 +252,15 @@ include('header.php');
                                         </div>
                         </div>
                         <!-- End of Main Content -->
+                        <div class="d-flex justify-content-end mt-3">
+                                    <ul class="pagination">
+                                        <?php
+                                        for ($i = 1; $i <= $totalPages; $i++) {
+                                            echo '<li class="page-item ' . ($i == $page ? 'active' : '') . '"><a class="page-link" style="background-color: ' . ($i == $page ? '#fe3c00' : '') . ';" href="?page=' . $i . '">' . $i . '</a></li>';
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
                         </div>
 
                     </div>
@@ -313,7 +342,52 @@ include('header.php');
             }
             ?>
 
+<script>
+$(document).ready(function() {
+    $('#searchInput').on('keyup', function() {
+        var searchTerm = $(this).val().trim();
+        if (searchTerm !== '') {
+            searchProducts(searchTerm);
+        } else {
+            // If the search term is empty, load all products
+            loadAllProducts();
+        }
+    });
+});
 
+function searchProducts(searchTerm) {
+    $.ajax({
+        url: 'searchcus.php',
+        type: 'GET',
+        data: { search: searchTerm },
+        success: function(response) {
+            $('#searchResults').html(response);
+
+            // Set text color for search result rows
+            $('#searchResults tr').css('color', '#313A46');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+function loadAllProducts() {
+    $.ajax({
+        url: 'searchcus.php',
+        type: 'GET',
+        success: function(response) {
+            $('#searchResults').html(response);
+
+            // Set text color for search result rows
+            $('#searchResults tr').css('color', '#313A46');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+}
+</script>
 </body>
 
 </html>
