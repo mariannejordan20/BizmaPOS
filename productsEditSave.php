@@ -13,6 +13,7 @@ $price = $_POST['Price'];
 $wholesale = $_POST['Wholesale'];
 $promo = $_POST['Promo'];
 $categories = $_POST['Categories'];
+$subcategories = $_POST['SubCategories'];
 $seller = $_POST['Seller'];
 $supplier = $_POST['Supplier'];
 
@@ -20,7 +21,7 @@ $supplier = $_POST['Supplier'];
 
 
 $query = mysqli_query($conn, "SELECT * FROM products WHERE Barcode = '$barcode' AND Product = '$product' AND Unit = '$unit' AND Warranty = '$warranty' AND Costing = '$costing' AND Price = '$price' AND Wholesale = '$wholesale'
-AND Promo = '$promo' AND Categories = '$categories' AND Seller = '$seller' 
+AND Promo = '$promo' AND Categories = '$categories' AND SubCategory = '$subcategories' AND Seller = '$seller' 
 AND Supplier = '$supplier'");
 
 
@@ -32,12 +33,12 @@ if (mysqli_num_rows($query2) >1 ) {
     header("location:products.php");
     
 } else {
-    $update = "Update products set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Warranty = '".$warranty."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."' 
+    $update = "Update products set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Warranty = '".$warranty."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."',SubCategory = '".$subcategories."', Seller = '".$seller."' 
 	, Supplier = '".$supplier."' ";
 
     $update .= "where id = ".$id;
     
-    $add = "insert into productsedithistory set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Quantity = '".$quantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."' 
+    $add = "insert into productsedithistory set Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Quantity = '".$quantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."',SubCategory = '".$subcategories."', Seller = '".$seller."' 
     ,Supplier = '".$supplier."', Warranty = '".$warranty."'";
     
     $res = $conn->query($add);
