@@ -10,7 +10,7 @@ if (isset($_GET['search'])) {
 
     // If the search term is not empty, modify the SQL query to search for products
     if (!empty($searchTerm)) {
-        $sql = "SELECT * FROM products WHERE Product LIKE '%$searchTerm%' OR Barcode LIKE '%$searchTerm%' ORDER BY Product";
+        $sql = "SELECT * FROM products WHERE Product LIKE '%$searchTerm%' OR Barcode LIKE '%$searchTerm%' ORDER BY Categories desc";
     }
 }
 

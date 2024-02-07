@@ -10,7 +10,7 @@ if (isset($_GET['search'])) {
 
     // If the search term is not empty, modify the SQL query to search for customers
     if (!empty($searchTerm)) {
-        $sql = "SELECT * FROM customer WHERE CustomerName LIKE '%$searchTerm%' OR IDNumber LIKE '%$searchTerm%' ORDER BY Seqcode";
+        $sql = "SELECT * FROM customer WHERE CustomerName LIKE '%$searchTerm%' OR IDNumber LIKE '%$searchTerm%' ORDER BY Seqcode desc";
     }
 }
 
