@@ -46,10 +46,11 @@ session_start();
     }
 
     #stocksinTable th {    
-        color: #000000 ; 
+        color: #656565 ; 
         white-space: nowrap;
         font-family: Segoe UI;
         font-size: 14px;
+        text-align: left;
     }
 
     #stocksinTable tbody tr {
@@ -116,6 +117,19 @@ session_start();
     </div>
 
     <div class="stocksin-section">
+    <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                    <form action="products.php" method="get" class="form-inline mt-3 mb-3">
+                            <div class="input-group">
+                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
+                                </div>
+                            </div>
+                        </form>
+            <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
     <div class="mb-3 d-flex align-items-center">
         <div class="container-fluid">
             <div class="table-responsive">
