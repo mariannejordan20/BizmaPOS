@@ -23,6 +23,12 @@
 
     <link rel="stylesheet" href="style2.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<style>
+    .sidebartrans {
+        z-index: 99;
+        transition: all 0.5s ease;
+    }
+    
+</style>
 
 </head>

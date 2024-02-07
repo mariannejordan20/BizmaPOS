@@ -1,11 +1,11 @@
 <?php
 // Include the database connection
 include('connection.php');
-
+include('header.php');
 ?>
 
 <!-- Sidebar -->
-<ul class="navbar-nav sidebar sidebar-dark accordion shadow" id="accordionSidebar" style="background-color: #313a46;">
+<ul class="sidebartrans navbar-nav sidebar sidebar-dark accordion shadow" id="accordionSidebar" style="background-color: #313a46;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
@@ -34,14 +34,14 @@ include('connection.php');
     </div>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="products.php">
+        <a class="nav-link " href="products.php">
             <i class="fas fa-shopping-cart"></i>
             <span>Sales</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="products.php">
+        <a class="nav-link " href="products.php">
             <i class="fas fa-fw fa-cube"></i>
             <span>Products</span>
         </a>
@@ -79,7 +79,7 @@ include('connection.php');
 
 
          <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock"
+            <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseStock"
                 aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-soccer-ball-o"></i>
                 <span>Stock</span>
@@ -109,7 +109,7 @@ include('connection.php');
 
     
     <li class="nav-item">
-        <a class="nav-link collapsed" href="products.php">
+        <a class="nav-link " href="products.php">
             <i class="fas fa-fw fa-users"></i>
             <span>Expenses</span>
         </a>
@@ -138,7 +138,7 @@ include('connection.php');
 
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUnCaWa"
+        <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseUnCaWa"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-soccer-ball-o"></i>
             <span>UnCaWaSu</span>
@@ -163,3 +163,12 @@ include('connection.php');
     <!-- Sidebar Message -->
 </ul>
 <!-- End of Sidebar -->
+<!-- Add this script at the end of your HTML body -->
+<script>
+    // Wait for the DOM to be ready
+    document.addEventListener("DOMContentLoaded", function() {
+        // Uncomment the line below if you want to toggle the sidebar to open initially
+        document.getElementById('sidebarToggle').click();
+    });
+</script>
+
