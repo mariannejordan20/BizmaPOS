@@ -1,8 +1,6 @@
 <?php
 session_start();
-
 include('connection.php');
-include('header.php');
 ?>
 
 
@@ -11,12 +9,6 @@ include('header.php');
 <?php
     include('header.php');
 ?>
-
-
-
-
-
-
 <body id="page-top">
 
     <!-- Page Wrapper -->

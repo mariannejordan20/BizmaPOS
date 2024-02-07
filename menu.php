@@ -34,7 +34,7 @@ include('header.php');
     </div>
 
     <li class="nav-item">
-        <a class="nav-link " href="products.php">
+        <a class="nav-link " href="sales.php">
             <i class="fas fa-shopping-cart"></i>
             <span>Sales</span>
         </a>
