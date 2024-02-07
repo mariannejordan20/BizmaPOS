@@ -110,6 +110,27 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     .table-responsive {
         overflow-x: auto;
     }
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding-right: 3%;
+    }
+
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #333;
+        margin: 0 4px;
+        border-radius: 4px;
+    }
+
+    .pagination a.active,
+    .pagination a:active,
+    .pagination a:hover {
+        background-color: #fe3c00;
+        color: #fff;
+    }
 </style>
 
 <?php
@@ -256,7 +277,7 @@ include('header.php');
                                     <ul class="pagination">
                                         <?php
                                         for ($i = 1; $i <= $totalPages; $i++) {
-                                            echo '<li class="page-item ' . ($i == $page ? 'active' : '') . '"><a class="page-link" style="background-color: ' . ($i == $page ? '#fe3c00' : '') . ';" href="?page=' . $i . '">' . $i . '</a></li>';
+                                            echo '<li class="' . ($i == $page ? 'active' : '') . '"><a class="page-link" style="background-color: ' . ($i == $page ? '#fe3c00; color: white;' : '') . '" href="?page=' . $i . '">' . $i . '</a></li>';
                                         }
                                         ?>
                                     </ul>

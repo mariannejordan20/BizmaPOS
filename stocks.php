@@ -13,6 +13,10 @@ if (empty($haslog)) {
     header("location: login.php");
     exit;
 }
+// Define pagination variables
+$recordsPerPage = 10; // Number of records per page
+$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
+$offset = ($page - 1) * $recordsPerPage; // Offset for SQL query
 
 $categoryName = ''; // Initialize $cate variable
 
@@ -44,6 +48,14 @@ if (isset($_GET['category'])) {
 }
 
 $results = $conn->query($sql);
+
+// Get total number of records
+$totalRecordsQuery = "SELECT COUNT(*) AS total FROM customer";
+$totalRecordsResult = $conn->query($totalRecordsQuery);
+$totalRecords = $totalRecordsResult->fetch_assoc()['total'];
+
+// Calculate total pages
+$totalPages = ceil($totalRecords / $recordsPerPage);
 ?>
 
 <!DOCTYPE html>
@@ -72,10 +84,11 @@ $results = $conn->query($sql);
     }
 
     #stocksTable th {    
-        color: #000000 ; 
+        color: #656565 ; 
         white-space: nowrap;
         font-family: Segoe UI;
         font-size: 14px;
+        text-align: left;
     }
 
     #stocksTable tbody tr {
@@ -101,6 +114,27 @@ $results = $conn->query($sql);
     }
     .table-responsive {
     overflow-x: auto;
+    }
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding-right: 3%;
+    }
+
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #333;
+        margin: 0 4px;
+        border-radius: 4px;
+    }
+
+    .pagination a.active,
+    .pagination a:active,
+    .pagination a:hover {
+        background-color: #fe3c00;
+        color: #fff;
     }
 
 
@@ -259,16 +293,12 @@ $results = $conn->query($sql);
                        
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
