@@ -28,23 +28,25 @@ include('header.php');
     <hr class="sidebar-divider">
 
     <!-- Heading -->
+
     <div class="sidebar-heading">
         Main
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="sales.php">
+        <a class="nav-link " href="sales.php">
             <i class="fas fa-shopping-cart"></i>
             <span>Sales</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="products.php">
+        <a class="nav-link " href="products.php">
             <i class="fas fa-fw fa-cube"></i>
             <span>Products</span>
         </a>
     </li>
+
 
     <?php
     // Fetch distinct categories from the products table
@@ -74,31 +76,40 @@ include('header.php');
     }
     ?>
 
-    <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseStock"
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-soccer-ball-o"></i>
-            <span>Stock</span>
-        </a>
-        <div id="collapseStock" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="stocksIn.php">Stock In +</a>
-                <a class="collapse-item" href="stocksOut.php">Stock out - </a>
-                <a class="collapse-item" href="products.php">Inventory List </a>
-            </div>
-        </div>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="customers.php">
+
+         <li class="nav-item">
+            <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseStock"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-soccer-ball-o"></i>
+                <span>Stock</span>
+            </a>
+            <div id="collapseStock" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    
+                    
+                    <a class="collapse-item" href="stocksIn.php">Stock In +</a>
+                   
+                    <a class="collapse-item" href="stocksOut.php">Stock out - </a>
+                    <a class="collapse-item" href="products.php">Inventory List </a>
+                    
+                </div>
+            </div>
+        </li>  
+
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="customers.php">
+
             <i class="fas fa-fw fa-users"></i>
             <span>Customers</span>
         </a>
+   
     </li>
 
+    
     <li class="nav-item">
-        <a class="nav-link" href="products.php">
+        <a class="nav-link " href="products.php">
             <i class="fas fa-fw fa-users"></i>
             <span>Expenses</span>
         </a>
@@ -108,23 +119,26 @@ include('header.php');
     <hr class="sidebar-divider d-none d-md-block">
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHistory"
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-soccer-ball-o"></i>
-            <span>History</span>
-        </a>
-        <div id="collapseHistory" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="productsEditHistory.php">Product Edit History </a>
-                <a class="collapse-item" href="stocksInHistory.php">Stock In + History</a>
-                <a class="collapse-item" href="stocksOutHistory.php">Stock Out - History </a>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHistory"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-soccer-ball-o"></i>
+                <span>History</span>
+            </a>
+            <div id="collapseHistory" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    
+                    <a class="collapse-item" href="productsEditHistory.php">Product Edit History </a>
+                    <a class="collapse-item" href="stocksInHistory.php">Stock In + History</a>
+                    <a class="collapse-item" href="stocksOutHistory.php">Stock Out - History </a>
+                    
+                </div>
             </div>
-        </div>
-    </li>
+        </li>  
+
 
     <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUnCaWa"
+        <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseUnCaWa"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-soccer-ball-o"></i>
             <span>UnCaWaSu</span>
@@ -132,13 +146,15 @@ include('header.php');
         <div id="collapseUnCaWa" class="collapse" aria-labelledby="headingUtilities"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <!-- <h6 class="collapse-header">List of Sports:</h6> -->
                 <a class="collapse-item" href="units.php">Units </a>
                 <a class="collapse-item" href="categories.php">Categories </a>
                 <a class="collapse-item" href="warranty.php">Warranty </a>
                 <a class="collapse-item" href="suppliers.php">Suppliers</a>
             </div>
         </div>
-    </li>
+    </li>  
+    
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
@@ -152,6 +168,7 @@ include('header.php');
     // Wait for the DOM to be ready
     document.addEventListener("DOMContentLoaded", function() {
         // Uncomment the line below if you want to toggle the sidebar to open initially
-        // document.getElementById('sidebarToggle').click();
+        document.getElementById('sidebarToggle').click();
     });
 </script>
+
