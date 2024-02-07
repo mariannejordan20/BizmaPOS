@@ -3,6 +3,31 @@ session_start();
 
 include('connection.php');
 
+// Fetch distinct units
+$sqlUnits = "SELECT DISTINCT unit_name FROM units";
+$resultUnits = $conn->query($sqlUnits);
+$units = array();
+while ($row = $resultUnits->fetch_assoc()) {
+    $units[] = $row['unit_name'];
+}
+
+// Fetch distinct categories
+$sqlCategories = "SELECT DISTINCT Categories FROM products";
+$resultCategories = $conn->query($sqlCategories);
+$categories = array();
+while ($row = $resultCategories->fetch_assoc()) {
+    $categories[] = $row['Categories'];
+}
+
+// Fetch distinct subcategories
+$sqlSubcategories = "SELECT DISTINCT SubCategory FROM products";
+$resultSubcategories = $conn->query($sqlSubcategories);
+$subcategories = array();
+while ($row = $resultSubcategories->fetch_assoc()) {
+    $subcategories[] = $row['SubCategory'];
+}
+
+// Handle pagination
 $recordsPerPage = 10; // Adjust the number of records per page as needed
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $recordsPerPage;
@@ -19,31 +44,21 @@ if (empty($haslog)) {
 }
 
 // Handle pagination
-$filter_conditions = [];
-
-if (!empty($_GET['unit']) && $_GET['unit'] != 'all') {
-    $filter_conditions[] = "Unit = '" . $_GET['unit'] . "'";
-}
-
-if (!empty($_GET['category']) && $_GET['category'] != 'all') {
-    $filter_conditions[] = "Categories = '" . $_GET['category'] . "'";
-}
-
-if (!empty($_GET['subcategory']) && $_GET['subcategory'] != 'all') {
-    $filter_conditions[] = "SubCategory = '" . $_GET['subcategory'] . "'";
-}
-
-// Construct the WHERE clause
-$where_clause = '';
-if (!empty($filter_conditions)) {
-    $where_clause = ' WHERE ' . implode(' AND ', $filter_conditions);
-}
-
-// Modify your main SQL query to include the WHERE clause
-$sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products" . $where_clause . " ORDER BY Categories LIMIT $offset, $recordsPerPage";
+$sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
 $results = $conn->query($sql);
 
-$totalRecordsQuery = "SELECT COUNT(*) as totalRecords FROM products" . $where_clause;
+// Add this block to handle search
+if (isset($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products WHERE Product LIKE '%$searchTerm%' ORDER BY Categories LIMIT $offset, $recordsPerPage";
+    $results = $conn->query($sql);
+} else {
+    // Default query without search
+    $sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories LIMIT $offset, $recordsPerPage";
+    $results = $conn->query($sql);
+}
+
+$totalRecordsQuery = "SELECT COUNT(*) as totalRecords FROM products";
 $totalRecordsResult = $conn->query($totalRecordsQuery);
 $totalRecords = $totalRecordsResult->fetch_assoc()['totalRecords'];
 
@@ -51,6 +66,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
 include('header.php');
 ?>
+
 
 
 <!DOCTYPE html>
@@ -142,12 +158,15 @@ include('header.php');
     }
 
 </style>
-<script src="js/filter.js"></script>
 
 
 <?php
     include('header.php');
 ?>
+
+
+
+
 
 
 <body id="page-top">
@@ -203,51 +222,27 @@ include('header.php');
                                             <th class="text-center custom-column-width">ID</th>
                                             <th class="text-center custom-column-width">BARCODE</th>
                                             <th class="text-center custom-column-width" style="padding-right: 150px;">PRODUCT NAME</th>
-                                            <th class="text-center custom-column-width">UNIT
-    <select class="table-filter" name="unit" onchange="filter_rows()">
-        <option value="all">All</option>
-        <?php
-        // Query unique unit values from your database
-        $sql = "SELECT DISTINCT Unit FROM products";
-        $result = $conn->query($sql);
-        while ($row = $result->fetch_assoc()) {
-            echo '<option value="' . $row['Unit'] . '">' . $row['Unit'] . '</option>';
-        }
-        ?>
-    </select>
-</th>   
+                                            <th class="text-center custom-column-width"> 
+                                            <form class="form-inline mt-3 mb-3">
+                                            <div class="dropdown mr-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="unitDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Unit
+        </button>
+        <div class="dropdown-menu" aria-labelledby="unitDropdown">
+            <?php foreach ($units as $unit): ?>
+                <a class="dropdown-item" href="#" onclick="selectOptionAndSearch('unit', '<?php echo $unit; ?>')"><?php echo $unit; ?></a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    </form></th>
                                             <th class="text-center custom-column-width">QTY</th>
                                             <th class="text-center custom-column-width">COSTING</th>
                                             <th class="text-center custom-column-width">PRICE</th>
                                             <th class="text-center custom-column-width">WHOLESALE</th>
                                             <th class="text-center custom-column-width">PROMO</th>
-                                            <th class="text-center custom-column-width">CAT
-    <select class="table-filter" name="category" onchange="filter_rows()">
-        <option value="all">All</option>
-        <?php
-        // Query unique category values from your database
-        $sql = "SELECT DISTINCT Categories FROM products";
-        $result = $conn->query($sql);
-        while ($row = $result->fetch_assoc()) {
-            echo '<option value="' . $row['Categories'] . '">' . $row['Categories'] . '</option>';
-        }
-        ?>
-    </select>
-</th>
-
-<th class="text-center custom-column-width">S-CAT
-    <select class="table-filter" name="subcategory" onchange="filter_rows()">
-        <option value="all">All</option>
-        <?php
-        // Query unique subcategory values from your database
-        $sql = "SELECT DISTINCT SubCategory FROM products";
-        $result = $conn->query($sql);
-        while ($row = $result->fetch_assoc()) {
-            echo '<option value="' . $row['SubCategory'] . '">' . $row['SubCategory'] . '</option>';
-        }
-        ?>
-    </select>
-</th>
+                                            <th class="text-center custom-column-width">CAT</th>
+                                            <th class="text-center custom-column-width">S-CAT</th>
                                             <th class="text-center custom-column-width">SELLER</th>
                                             <th class="text-center custom-column-width">SUPPLIER</th>
                                             <th class="text-center custom-column-width">WRTY</th>
@@ -459,3 +454,35 @@ function loadAllProducts() {
 </body>
 
 </html>
+
+<script>
+    function selectOptionAndSearch(inputName, value) {
+        // Update the hidden input field with the selected value
+        document.getElementById(inputName).value = value;
+
+        // Call the searchProducts function passing the selected value
+        searchProducts();
+    }
+
+    function searchProducts() {
+        // Get the search term from the input field
+        var searchTerm = document.getElementById('searchInput').value.trim();
+
+        // Send an AJAX request to searchProducts.php passing the search term
+        $.ajax({
+            url: 'searchProducts.php',
+            type: 'GET',
+            data: { search: searchTerm },
+            success: function(response) {
+                // Update the search results section with the response
+                $('#searchResults').html(response);
+
+                // Set text color for search result rows
+                $('#searchResults tr').css('color', '#313A46');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+</script>
