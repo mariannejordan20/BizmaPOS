@@ -85,11 +85,27 @@
                         <fieldset>
                             <legend style="color: #313A46;">Product Information</legend>
                             <div class="row">
+
+                            <?php
+
+    $sqlMaxID = "SELECT MAX(ID) AS maxID FROM products";
+    $resultMaxID = $conn->query($sqlMaxID);
+    $rowMaxID = $resultMaxID->fetch_assoc();
+    $nextID = $rowMaxID['maxID'] + 1;
+?>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                    <label for="ID" class="control-label">ID</label>
+                                   <input type="number" name="ID" class="form-control form-control-sm rounded-5" readonly value="<?= $nextID ?>"/>
+
+                                    </div>
+                                </div>
                                 
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Barcode" class="control-label">Barcode</label>
-                                    <input type="text" name="Barcode" class="form-control form-control-sm rounded-5"  required/>
+                                    <input type="number" name="Barcode" class="form-control form-control-sm rounded-5"/>
                                     </div>
                                 </div>
 
