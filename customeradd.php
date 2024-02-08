@@ -158,7 +158,7 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Contact" class="control-label">Contact</label>
+                                    <label for="number" class="control-label">Contact</label>
                                     <input type="text" name="Contact" class="form-control form-control-sm form-control-border rounded-5" required>
                                     </div>
                                 </div>

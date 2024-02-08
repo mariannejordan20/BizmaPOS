@@ -22,6 +22,21 @@ include('connection.php');
     .table-responsive::-webkit-scrollbar-track {
         background-color: #eeeeee; /* Set the color of the scrollbar track */
     }
+    .custom-font-size td {
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    #salesTable th {
+        color: white;
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
+        /* Aligning column names to the left */
+        text-align: left;
+    }
 </style>
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -40,15 +55,15 @@ include('connection.php');
                             <div class="card">
                                 <div class="card-body">
                                     <!-- Your sales charts or data representation -->
-                                    <h5 class="card-title mb-3">Product Information</h5>
-                                    <input type="text" id="liveSearchInput" class="form-control" placeholder="Search Product">
+                                    <h2 class="card-title mb-3 text-dark" style="font-weight: bold;">Sales</h2>
+                                    <input type="text" id="productSearchInput" class="form-control mb-3" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 5px;">
                                     <div class="table-responsive" style="height: 400px; overflow-x: hidden;" onmouseover="showScrollbar(this)" onmouseout="hideScrollbar(this)">
-                                        <table class="table text-sm" style="font-size: 12px;">
+                                        <table class="table text-sm" style="font-size: 12px;" id="salesTable">
                                             <thead style="background-color: #313a46; color: #fff;">
                                                 <tr class="table-bordered">
                                                     <th>ID</th>
                                                     <th>Barcode</th>
-                                                    <th>Product</th>
+                                                    <th style="padding-right: 150px;">Product</th>
                                                     <th>Unit</th>
                                                     <th>Quantity</th>
                                                     <th>Costing</th>
@@ -60,7 +75,7 @@ include('connection.php');
                                                     <th>Supplier</th>
                                                     <th>Warranty</th>
                                                     <th>SubCategory</th>
-                                                    <th>Date_Registered</th>
+                                                    <th>Date Registered</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -135,12 +150,35 @@ include('connection.php');
                         });
                         </script>
                         <div class="col-md-4">
-                            <!-- Additional Sales Information or Widgets -->
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <!-- Small Digital Number Display -->
-                                    <h5 class="mb-3 text-left">Amount</h5>
-                                    <p class="display-4" style="color: black; font-weight:bold">000.00</p>
+                        <!-- First card with shadow -->
+                        <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                            <div class="card-body p-0">
+                                <!-- Additional Sales Information or Widgets -->
+                                <div class="card" style="border: none;">
+                                    <div class="card-body text-center">
+                                        <!-- Small Digital Number Display -->
+                                        <h6 class="font-weight-bold mb-3 text-left text-dark" style="background-color:#eeeeee; border-top: 1px solid gray; border-bottom: 1px solid gray; margin: 0; padding: 10px;">Amount:</h6>
+                                        <p class="display-4" style="color: black; font-weight: bold; border-bottom: 1px solid gray; margin: 0; padding: 10px;">000.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second card below the amount card -->
+                        <div class="card mt-3" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                            <div class="card-body p-0">
+                                <!-- Additional content for the second card -->
+                                <div class="card" style="border: none;">
+                                    <div class="card-body text-center">
+                                        <h6 class="font-weight-bold mb-3 text-left text-dark" style="background-color:#eeeeee; border-top: 1px solid gray; border-bottom: 1px solid gray; margin: 0; padding: 10px;">Details Pannel:</h6>
+                                        <!-- Additional content for the second card goes here -->
+                                        <p class="font-weight-bold mb-3 text-left text-dark" style="  margin: 0; padding: px;">Site Location:</p>
+                                        <p class="font-weight-bold mb-3 text-left text-dark" style="  margin: 0; padding: px;">Customer:</p>
+                                        <p class="font-weight-bold mb-3 text-left text-dark" style="  margin: 0; padding: px;">Sales Man:</p>
+                                        
+                                        <!-- Button for processing order payment -->
+                                        <button class="btn btn-secondary" style="width:100%; margin-top: 10px;">Process Order Payment</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
