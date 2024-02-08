@@ -16,7 +16,7 @@ if (empty($haslog)) {
 }
 
 // Define pagination variables
-$recordsPerPage = 10; // Number of records per page
+$recordsPerPage = 5; // Number of records per page
 $page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
 $offset = ($page - 1) * $recordsPerPage; // Offset for SQL query
 
@@ -365,12 +365,11 @@ include('header.php');
 
 <script>
 $(document).ready(function() {
-    $('#searchInput').on('keyup', function() {
+    $('#searchInput').on('input', function() {
         var searchTerm = $(this).val().trim();
         if (searchTerm !== '') {
             searchProducts(searchTerm);
         } else {
-            // If the search term is empty, load all products
             loadAllProducts();
         }
     });
@@ -382,10 +381,7 @@ function searchProducts(searchTerm) {
         type: 'GET',
         data: { search: searchTerm },
         success: function(response) {
-            $('#searchResults').html(response);
-
-            // Set text color for search result rows
-            $('#searchResults tr').css('color', '#313A46');
+            $('#customersTable tbody').html(response);
         },
         error: function(xhr, status, error) {
             console.error('Error:', error);
@@ -398,16 +394,19 @@ function loadAllProducts() {
         url: 'searchcus.php',
         type: 'GET',
         success: function(response) {
-            $('#searchResults').html(response);
-
-            // Set text color for search result rows
-            $('#searchResults tr').css('color', '#313A46');
+            $('#customersTable tbody').html(response);
         },
         error: function(xhr, status, error) {
             console.error('Error:', error);
         }
     });
 }
+
+// Initial loading of all products when the page loads
+$(document).ready(function() {
+    loadAllProducts();
+});
+
 </script>
 </body>
 
