@@ -164,11 +164,5 @@ include('header.php');
 </ul>
 <!-- End of Sidebar -->
 <!-- Add this script at the end of your HTML body -->
-<script>
-    // Wait for the DOM to be ready
-    document.addEventListener("DOMContentLoaded", function() {
-        // Uncomment the line below if you want to toggle the sidebar to open initially
-        document.getElementById('sidebarToggle').click();
-    });
-</script>
+
 
