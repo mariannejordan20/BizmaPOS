@@ -22,6 +22,21 @@ include('connection.php');
     .table-responsive::-webkit-scrollbar-track {
         background-color: #eeeeee; /* Set the color of the scrollbar track */
     }
+    .custom-font-size td {
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    #salesTable th {
+        color: white;
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 14px;
+        /* Aligning column names to the left */
+        text-align: left;
+    }
 </style>
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -43,12 +58,12 @@ include('connection.php');
                                     <h2 class="card-title mb-3 text-dark" style="font-weight: bold;">Sales</h2>
                                     <input type="text" id="productSearchInput" class="form-control mb-3" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 5px;">
                                     <div class="table-responsive" style="height: 400px; overflow-x: hidden;" onmouseover="showScrollbar(this)" onmouseout="hideScrollbar(this)">
-                                        <table class="table text-sm" style="font-size: 12px;">
+                                        <table class="table text-sm" style="font-size: 12px;" id="salesTable">
                                             <thead style="background-color: #313a46; color: #fff;">
                                                 <tr class="table-bordered">
                                                     <th>ID</th>
                                                     <th>Barcode</th>
-                                                    <th>Product</th>
+                                                    <th style="padding-right: 150px;">Product</th>
                                                     <th>Unit</th>
                                                     <th>Quantity</th>
                                                     <th>Costing</th>
@@ -60,7 +75,7 @@ include('connection.php');
                                                     <th>Supplier</th>
                                                     <th>Warranty</th>
                                                     <th>SubCategory</th>
-                                                    <th>Date_Registered</th>
+                                                    <th>Date Registered</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
