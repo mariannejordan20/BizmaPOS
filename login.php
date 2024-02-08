@@ -4,7 +4,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bizmatech POS</title>
+  <title>SLSU Athlete Management System</title>
     <link rel="shortcut icon" href="Sogod.png">
 
   <!-- Link to Bootstrap CSS file -->
@@ -112,10 +112,11 @@ border-bottom-right-radius: .3rem;
   
  
 <script type="text/javascript">
-    
-    function submitForm() {
+    $("#btnLogin").click(function(){
         var uname = $("#username").val();
         var pword = $("#password").val();
+
+
 
         if (uname == "") {
             swal({
@@ -138,7 +139,7 @@ border-bottom-right-radius: .3rem;
         }
 
         $.ajax({
-            url: "processLogin.php",
+            url:"processLogin.php",
             method: "post",
             data: { "username": uname, "password": pword },
             success: function(res) {
@@ -154,23 +155,7 @@ border-bottom-right-radius: .3rem;
                 }
             }
         });
-    }
-
-   
-    $(document).keypress(function (e) {
-        
-        if (e.which == 13) {
-           
-            submitForm();
-        }
-    });
-
-   
-    $("#btnLogin").click(function() {
-       
-        submitForm();
     });
 </script>
-
 
     

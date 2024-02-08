@@ -16,25 +16,23 @@ $supplier = $_POST['Supplier'];
 $date = $_POST['Date_Registered'];
 $subcategories = $_POST['SubCategories'];
 
+$query = mysqli_query($conn,"SELECT * FROM products WHERE Barcode = '$barcode'");
 
-$query = mysqli_query($conn, "SELECT * FROM products WHERE Barcode = '$barcode' OR Product =  '$product'");
+$msg = "";
+ 
 
 
+if (mysqli_num_rows($query)>0)
 
-if (mysqli_num_rows($query) > 0) {
-    $_SESSION['status'] = "Product already exists!";
+{
+
+	$_SESSION['status'] = "Product already exists!";
     $_SESSION['status_code'] = "error";
-    header("location:products.php");
-} else {
+	header("location:products.php");
+}
 
-    if (empty($barcode)) {
-        if (mysqli_num_rows($query) > 0) {
-            $_SESSION['status'] = "Product already exists!";
-            $_SESSION['status_code'] = "error";
-            header("location:products.php");
-        }
-        else{
-
+else{
+    
 
         $add2 = "insert into products set ID ='$id', Barcode = '$id', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
         $res2 = $conn->query($add2);
@@ -48,19 +46,31 @@ if (mysqli_num_rows($query) > 0) {
 
     $add = "insert into products set ID ='$id', Barcode = '$barcode', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
 
-    $res = $conn->query($add);
+$res = $conn->query($add);
 
-    if ($res) {
-        $_SESSION['status'] = "Product Information Saved";
+
+
+	if ($res){
+
+		$_SESSION['status'] = "Product Information Saved";
         $_SESSION['status_code'] = "success";
         header("location: products.php");
-    }
-    else{
-        $_SESSION['status'] = "Couldn't add product!";
-    $_SESSION['status_code'] = "error";
-    header("location:products.php");
-    }
+    
+
+		
+	
 }
 }
 
+
+
+
 ?>
+
+
+
+
+
+
+
+
