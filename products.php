@@ -98,7 +98,7 @@ $results = $conn->query($sql);
                         <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
                             <form action="customers.php" method="get" class="form-inline mt-3 mb-3">
                             <div class="input-group">
-                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
+                                <input style="width: 500px;" type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
                             </div>
                         </form>
                                 <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
@@ -121,10 +121,10 @@ $results = $conn->query($sql);
                                                         </select>
                                                 </th>
                                                 <th class="text-center">QTY</th>
-                                                <th class="text-center">CSTNG</th>
-                                                <th class="text-center">PRICE</th>
+                                                <th class="text-center" style="padding-right: 30px">COSTING</th>
+                                                <th class="text-center" style="padding-right: 47px">PRICE</th>
                                                 <th class="text-center">WHOLESALE</th>
-                                                <th class="text-center">PROMO</th>
+                                                <th class="text-center" style="padding-right: 33px">PROMO</th>
                                                 <th class="text-center">
                                                     <select id="categoryFilter" style="border: none; font-weight: bold; color:#656565;">
                                                         <option value="">CATEGORIES</option>
