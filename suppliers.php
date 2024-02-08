@@ -53,11 +53,13 @@ if (!$results) {
         text-align: center  ;
     }
 
-    #customersTable th {    
-        color: #000000  ; 
+    #customersTable th {
+        color: #656565;
         white-space: nowrap;
         font-family: Segoe UI;
-        font-size: 14px;
+        font-size: 12px;
+        /* Aligning column names to the left */
+        text-align: left;
     }
 
     #customersTable tbody tr {
@@ -76,10 +78,12 @@ if (!$results) {
     }
     .custom-column-width {
     width: 10%  ; /* Adjust the width as needed */
+    text-align: left;
     }
     .custom-font-size td {
     font-size: 12px;
     white-space: nowrap;
+    text-align: left;
     }
     .table-responsive {
     overflow-x: auto;
@@ -122,25 +126,30 @@ include('header.php');
                         </div>
 
                         <div class="customers-section">
-                            <div class="mb-3 ml-4 d-flex align-items-center">
+                        <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                            <form action="customers.php" method="get" class="form-inline mt-3 mb-3">
+                            <div class="input-group">
+                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
+                            </div>
+                        </form>
                                 <a href ="suppliersAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>
+                            
                             <div class="container-fluid">
                                 <div class="table-responsive">
-                                    <table class="table text-center table-bordered" id="customersTable" width="100%"
-                                        cellspacing="0">
+                                <table class="table text-center table-bordered" id="customersTable" width="100%" cellspacing="0">
 
 
                                         <thead>
                                             <tr class="th" style="color: #000000">
 
-                                                <th class="text-center custom-column-width">ACTION</th>
-                                                <th class="text-center custom-column-width">SUPPLIER</th>
-                                                <th class="text-center custom-column-width">CONTACT</th>
-                                                <th class="text-center custom-column-width">ADDRESS</th>
-                                                <th class="text-center custom-column-width">DATE REGISTERED</th>
+                                                <th class="custom-column-width">ACTION</th>
+                                                <th class="custom-column-width">SUPPLIER</th>
+                                                <th class="custom-column-width">CONTACT</th>
+                                                <th class="custom-column-width">ADDRESS</th>
+                                                <th class="custom-column-width">DATE REGISTERED</th>
 
 
                                             </tr>
@@ -166,11 +175,12 @@ include('header.php');
 
 
                                                         </td>
-                                                        <td class="text-truncate"  style="max-width: 150px;">' . strtoupper($result['Supplier_Name'])     . '</td>
-                                                        <td>' . $result['Contact'] . '</td>
+                                                        <td class="text-truncate text-left"   style="max-width: 150px;">' . strtoupper($result['Supplier_Name'])     . '</td>
+                                                        <td class="text-truncate text-left" >' . $result['Contact'] . '</td>
                                                         
-                                                        <td class="text-truncate"  style="max-width: 200px;">' . strtoupper($result['Loc']) . '</td>
-                                                        <td>' . $result['Date_Added'] . '</td>
+                                                        <td class="text-truncate text-left"  style="max-width: 200px;">' . strtoupper($result['Loc']) . '</td>
+                                                        
+                                                        <td class="text-truncate text-left"> ' . $result['Date_Added'] . '</td>
                                                      
 
 
@@ -277,7 +287,21 @@ include('header.php');
                 unset($_SESSION['status']);
             }
             ?>
-
+<script>
+        $(document).ready(function() {
+            $('#searchInput').on('keyup', function() {
+                var searchText = $(this).val().toLowerCase();
+                $('#customersTable tbody tr').each(function() {
+                    var rowData = $(this).find('td').text().toLowerCase();
+                    if (rowData.includes(searchText)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

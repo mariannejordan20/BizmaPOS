@@ -50,15 +50,16 @@ include('connection.php');
                 
                
                 <!-- Sales Content Goes Here -->
-                    <div class="row m-2">
-                        <div class="col-md-8">
+                    <div class="row m-2 " >
+                        <div class="col-md-8 " >
                             <div class="card">
-                                <div class="card-body">
+                                <div class="table-responsive">
+                                <div class="card-body " >
                                     <!-- Your sales charts or data representation -->
                                     <h2 class="card-title mb-3 text-dark" style="font-weight: bold;">Sales</h2>
                                     <input type="text" id="productSearchInput" class="form-control mb-3" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 1px;">
                                     <div class="table-responsive" style="height: 400px; overflow-x: hidden;" onmouseover="showScrollbar(this)" onmouseout="hideScrollbar(this)">
-                                        <table class="table text-sm" style="font-size: 12px;" id="salesTable">
+                                        <table class="table text-sm " style="font-size: 12px;" id="salesTable">
                                             <thead style="background-color: #313a46; color: #fff;">
                                                 <tr class="table-bordered">
                                                     <th>ID</th>
@@ -78,7 +79,7 @@ include('connection.php');
                                                     <th style="padding-right: 150px;">Date Registered</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="custom-font-size">
                                                 <?php
                                                 // Include your database connection code
                                                 include('connection.php');
@@ -90,21 +91,21 @@ include('connection.php');
                                                 if ($result->num_rows > 0) {
                                                     while ($row = $result->fetch_assoc()) {
                                                         echo '<tr>
-                                                                <td>' . $row['ID'] . '</td>
-                                                                <td class="text-center">' . $row['Barcode'] . '</td>
-                                                                <td>' . $row['Product'] . '</td>
-                                                                <td>' . $row['Unit'] . '</td>
-                                                                <td class="text-right">' . $row['Quantity'] . '</td>
-                                                                <td class="text-right">' . $row['Costing'] . '</td>
-                                                                <td class="text-right">' . $row['Price'] . '</td>
-                                                                <td class="text-right">' . $row['Wholesale'] . '</td>
-                                                                <td class="text-right">' . $row['Promo'] . '</td>
-                                                                <td class="text-center">' . $row['Categories'] . '</td>
-                                                                <td>' . $row['Seller'] . '</td>
-                                                                <td class="text-right">' . $row['Supplier'] . '</td>
-                                                                <td class="text-right">' . $row['Warranty'] . '</td>
-                                                                <td class="text-center">' . $row['SubCategory'] . '</td>
-                                                                <td class="text-right">' . $row['Date_Registered'] . '</td>
+                                                                <td class="text-truncate">' . $row['ID'] . '</td>
+                                                                <td class="text-truncate" class="text-center">' . $row['Barcode'] . '</td>
+                                                                <td class="text-truncate">' . $row['Product'] . '</td>
+                                                                <td class="text-truncate">' . $row['Unit'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Quantity'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Costing'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Price'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Wholesale'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Promo'] . '</td>
+                                                                <td class="text-truncate" class="text-center">' . $row['Categories'] . '</td>
+                                                                <td class="text-truncate">' . $row['Seller'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Supplier'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Warranty'] . '</td>
+                                                                <td class="text-truncate" class="text-center">' . $row['SubCategory'] . '</td>
+                                                                <td class="text-truncate" class="text-right">' . $row['Date_Registered'] . '</td>
                                                             </tr>';
                                                     }
                                                 } else {
@@ -117,6 +118,7 @@ include('connection.php');
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
