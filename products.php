@@ -14,7 +14,7 @@ if (empty($haslog)){
     exit;
 }
 
-$sql = "SELECT ID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
+$sql = "SELECT ID,ProductID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
 $results = $conn->query($sql);
 ?>
 
@@ -148,7 +148,7 @@ $results = $conn->query($sql);
                                                                 <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
                                                                 <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
                                                                 </td>
-                                                                <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ID'] . '</td>
+                                                                <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
                                                                 <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
                                                                 <td class="text-truncate"  style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
                                                                 <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>

@@ -2,6 +2,7 @@
 session_start();
 include('connection.php');
 $id = $_POST['ID'];
+$productid = $_POST['ProductID'];
 $barcode = $_POST['Barcode'];
 $product = $_POST['Product'];
 $unit = $_POST['Unit'];
@@ -36,7 +37,7 @@ if (mysqli_num_rows($query) > 0) {
         else{
 
 
-        $add2 = "insert into products set ID ='$id', Barcode = '$id', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
+        $add2 = "insert into products set ID ='$id', ProductID = '$productid', Barcode = '$productid', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
         $res2 = $conn->query($add2);
         if ($res2) {
             $_SESSION['status'] = "Product Information Saved";
@@ -46,7 +47,7 @@ if (mysqli_num_rows($query) > 0) {
     }
     }else{
 
-    $add = "insert into products set ID ='$id', Barcode = '$barcode', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
+    $add = "insert into products set ID ='$id',ProductID = '$productid', Barcode = '$barcode', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
 
     $res = $conn->query($add);
 
