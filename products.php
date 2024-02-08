@@ -24,7 +24,7 @@ $results = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
-    <style>
+<style>
             .products-section {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
@@ -71,17 +71,17 @@ $results = $conn->query($sql);
     .custom-font-size td {
     font-size: 12px;
     white-space: nowrap;
-}
+    }
 
-.table-responsive {
-    overflow-x: auto;
-}
-.btn {
-    padding-left: 1000px;
-}
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .btn {
+        padding-left: 1000px;
+    }
 
 
-    </style>
+</style>
 </head>
 <body>
     <?php include('header.php'); ?>
@@ -92,7 +92,7 @@ $results = $conn->query($sql);
                 <?php include('navbar.php'); ?>
                 <div class="container-fluid" style="padding-left: 2%;">
                     <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">List of all Products</h3>
+                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">Product List</h3>
                     </div>
                     <div class="card-body">
                         <div class="products-section">
@@ -148,21 +148,21 @@ $results = $conn->query($sql);
                                                                 <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
                                                                 <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
                                                                 </td>
-                                                                <td class="text-truncate" style="max-width: 50px;">'  .$result['ID'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
+                                                                <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ID'] . '</td>
+                                                                <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+                                                                <td class="text-truncate"  style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
                                                                 <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' . $result['Price'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
+                                                                <td class="text-truncate text-right" style="max-width: 50px;">' . $result['Quantity'] . '</td>
+                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Costing'] . '</td>
+                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Price'] . '</td>
+                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
+                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Promo'] . '</td>
                                                                 <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
                                                                 <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
                                                                 <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
                                                                 <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
-                                                                <td class="text-truncate" style="max-width: 75px;">' . $result['Warranty'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+                                                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Warranty'] . '</td>
+                                                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
                                                             </tr>';
                                                     echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered modal-md">
