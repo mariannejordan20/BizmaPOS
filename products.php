@@ -196,13 +196,23 @@ include('header.php');
                                             <th class="text-center custom-column-width">ID</th>
                                             <th class="text-center custom-column-width">BARCODE</th>
                                             <th class="text-center custom-column-width" style="padding-right: 150px;">PRODUCT NAME</th>
-                                            <th class="text-center custom-column-width">UNIT</th>
+                                            <th class="text-center custom-column-width">
+                                                <div class="mb-3 d-flex align-items-center">
+                                                <select id="unitFilter">
+                                                <option value="">Unit</option>
+                                                <!-- Add options dynamically if needed -->
+                                            </select></th>
                                             <th class="text-center custom-column-width">QTY</th>
                                             <th class="text-center custom-column-width">COSTING</th>
                                             <th class="text-center custom-column-width">PRICE</th>
                                             <th class="text-center custom-column-width">WHOLESALE</th>
                                             <th class="text-center custom-column-width">PROMO</th>
-                                            <th class="text-center custom-column-width">CAT</th>
+                                            <th class="text-center custom-column-width">
+                                                <select id="categoryFilter">
+        <option value="">Category</option>
+        <!-- Add options dynamically if needed -->
+    </select>
+</div></th>
                                             <th class="text-center custom-column-width">S-CAT</th>
                                             <th class="text-center custom-column-width">SELLER</th>
                                             <th class="text-center custom-column-width">SUPPLIER</th>
@@ -412,6 +422,61 @@ function loadAllProducts() {
     });
 }
 </script>
+
+<script>
+    // Populate dropdown options based on table data
+    document.addEventListener("DOMContentLoaded", function() {
+        populateDropdown("unitFilter", 4); // Index of Unit column
+        populateDropdown("categoryFilter", 10); // Index of Category column
+    });
+
+    // Function to populate dropdown options
+    function populateDropdown(selectId, columnIndex) {
+        var select = document.getElementById(selectId);
+        var options = [];
+        var table = document.getElementById("productsTable");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 1; i < rows.length; i++) {
+            var cell = rows[i].getElementsByTagName("td")[columnIndex];
+            var value = cell.textContent || cell.innerText;
+            if (!options.includes(value)) {
+                options.push(value);
+                var option = document.createElement("option");
+                option.text = value;
+                select.add(option);
+            }
+        }
+    }
+
+    // Filter function
+    function filterTable() {
+        var selectUnit = document.getElementById("unitFilter");
+        var selectCategory = document.getElementById("categoryFilter");
+        var filterUnit = selectUnit.value.toUpperCase();
+        var filterCategory = selectCategory.value.toUpperCase();
+        var table = document.getElementById("productsTable");
+        var tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the filter
+        for (var i = 1; i < tr.length; i++) {
+            var tdUnit = tr[i].getElementsByTagName("td")[4]; // Index of Unit column
+            var tdCategory = tr[i].getElementsByTagName("td")[10]; // Index of Category column
+            if (tdUnit && tdCategory) {
+                if ((filterUnit === '' || tdUnit.textContent.toUpperCase() === filterUnit) &&
+                    (filterCategory === '' || tdCategory.textContent.toUpperCase() === filterCategory)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // Add event listeners for dropdowns
+    document.getElementById("unitFilter").addEventListener("change", filterTable);
+    document.getElementById("categoryFilter").addEventListener("change", filterTable);
+</script>
+
 </body>
 
 </html>
