@@ -56,7 +56,7 @@ include('connection.php');
                                 <div class="card-body">
                                     <!-- Your sales charts or data representation -->
                                     <h2 class="card-title mb-3 text-dark" style="font-weight: bold;">Sales</h2>
-                                    <input type="text" id="productSearchInput" class="form-control mb-3" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 5px;">
+                                    <input type="text" id="productSearchInput" class="form-control mb-3" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 1px;">
                                     <div class="table-responsive" style="height: 400px; overflow-x: hidden;" onmouseover="showScrollbar(this)" onmouseout="hideScrollbar(this)">
                                         <table class="table text-sm" style="font-size: 12px;" id="salesTable">
                                             <thead style="background-color: #313a46; color: #fff;">
@@ -65,17 +65,17 @@ include('connection.php');
                                                     <th>Barcode</th>
                                                     <th style="padding-right: 150px;">Product</th>
                                                     <th>Unit</th>
-                                                    <th>Quantity</th>
+                                                    <th>Qty</th>
                                                     <th>Costing</th>
                                                     <th>Price</th>
                                                     <th>Wholesale</th>
                                                     <th>Promo</th>
                                                     <th>Categories</th>
-                                                    <th>Seller</th>
+                                                    <th style="padding-right: 50px;">Seller</th>
                                                     <th>Supplier</th>
                                                     <th>Warranty</th>
                                                     <th>SubCategory</th>
-                                                    <th>Date Registered</th>
+                                                    <th style="padding-right: 150px;">Date Registered</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -91,20 +91,20 @@ include('connection.php');
                                                     while ($row = $result->fetch_assoc()) {
                                                         echo '<tr>
                                                                 <td>' . $row['ID'] . '</td>
-                                                                <td>' . $row['Barcode'] . '</td>
+                                                                <td class="text-center">' . $row['Barcode'] . '</td>
                                                                 <td>' . $row['Product'] . '</td>
                                                                 <td>' . $row['Unit'] . '</td>
-                                                                <td>' . $row['Quantity'] . '</td>
-                                                                <td>' . $row['Costing'] . '</td>
-                                                                <td>' . $row['Price'] . '</td>
-                                                                <td>' . $row['Wholesale'] . '</td>
-                                                                <td>' . $row['Promo'] . '</td>
-                                                                <td>' . $row['Categories'] . '</td>
+                                                                <td class="text-right">' . $row['Quantity'] . '</td>
+                                                                <td class="text-right">' . $row['Costing'] . '</td>
+                                                                <td class="text-right">' . $row['Price'] . '</td>
+                                                                <td class="text-right">' . $row['Wholesale'] . '</td>
+                                                                <td class="text-right">' . $row['Promo'] . '</td>
+                                                                <td class="text-center">' . $row['Categories'] . '</td>
                                                                 <td>' . $row['Seller'] . '</td>
-                                                                <td>' . $row['Supplier'] . '</td>
-                                                                <td>' . $row['Warranty'] . '</td>
-                                                                <td>' . $row['SubCategory'] . '</td>
-                                                                <td>' . $row['Date_Registered'] . '</td>
+                                                                <td class="text-right">' . $row['Supplier'] . '</td>
+                                                                <td class="text-right">' . $row['Warranty'] . '</td>
+                                                                <td class="text-center">' . $row['SubCategory'] . '</td>
+                                                                <td class="text-right">' . $row['Date_Registered'] . '</td>
                                                             </tr>';
                                                     }
                                                 } else {
