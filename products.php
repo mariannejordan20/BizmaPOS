@@ -47,7 +47,6 @@ $results = $conn->query($sql);
         color: #656565  ; /* White text for header */
         white-space: nowrap;
         font-family: Segoe UI;
-        text-align: left;
         font-size: 12px;
     }
 
@@ -111,8 +110,8 @@ $results = $conn->query($sql);
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white">
-                                            <th class="text-center">ACTION</th>
-                                            <th class="text-center">ID</th>
+                                                <th class="text-center">ACTION</th>
+                                                <th class="text-right" style="padding-right: 50px">ID</th>
                                                 <th class="text-center">BARCODE</th>
                                                 <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
                                                 <th class="text-center">
