@@ -213,62 +213,62 @@ include('header.php');
                                         </tr>
                                     </thead>
                                     <tbody class="custom-font-size" style="color: #313A46;">
-    <?php
-    if (!empty($results) && (is_array($results) || is_object($results))) {
-        foreach ($results as $result) {
-            echo '<tr>
-                    <td>
-                        <a class="mr-2" href="#?id=' . $result['ID'] . '" data-bs-toggle="modal" data-bs-target="#productsModal' . $result['ID'] . '"><i class="fa fa-eye"></i></a>
-                        <a class="mr-2" href="productsEdit.php?id=' . $result['ID'] . '"><i class="fa fa-edit"></i></a>
-                        <a href="productsDelete.php?id=' . $result['ID'] . '"><i class="fa fa-trash text-danger"></i></a>
-                    </td>
-                    <td class="text-truncate" style="max-width: 50px;">'  .$result['ID'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-                    <td class="text-truncate" style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
-                    <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
-                    <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' . $result['Price'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
-                    <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
-                    <td class="text-truncate" style="max-width: 75px;">' . (isset($result['Warranty']) ? $result['Warranty'] : '') . '</td>
-                    <td class="text-truncate" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
-                </tr>';
-            // Output the modal code for each result
-            echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-md">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" style="white-space: normal; word-wrap: break-word; max-width: 400px;">'.$result['Product'].'</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem; color: #000; opacity: 0.8; background-color: transparent; border: none;">x</button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
-                                <p><strong>Unit:</strong> '.$result['Unit'].'</p>
-                                <p><strong>Costing:</strong> '.$result['Costing'].'</p>
-                                <p><strong>Price:</strong> '.$result['Price'].'</p>
-                                <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
-                                <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
-                                <p><strong>Category:</strong> '.$result['Categories'].'</p>
-                                <p><strong>Seller:</strong> '.$result['Seller'].'</p>
-                                <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
-                                <p><strong>Warranty:</strong> '.$result['Warranty'].'</p>
-                                <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>';
-        }
-    } else {
-        // Handle the case when $results is empty or not an array/object
-        echo '<tr><td colspan="16" class="text-center">No records found</td></tr>';
-    }
-    ?>
-</tbody>
+                                        <?php
+                                        if (!empty($results) && (is_array($results) || is_object($results))) {
+                                            foreach ($results as $result) {
+                                                echo '<tr>
+                                                        <td>
+                                                            <a class="mr-2" href="#?id=' . $result['ID'] . '" data-bs-toggle="modal" data-bs-target="#productsModal' . $result['ID'] . '"><i class="fa fa-eye"></i></a>
+                                                            <a class="mr-2" href="productsEdit.php?id=' . $result['ID'] . '"><i class="fa fa-edit"></i></a>
+                                                            <a href="productsDelete.php?id=' . $result['ID'] . '"><i class="fa fa-trash text-danger"></i></a>
+                                                        </td>
+                                                        <td class="text-truncate" style="max-width: 50px;">'  .$result['ID'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 50px;">' . $result['Quantity'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Costing'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Price'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Promo'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 75px;">' . (isset($result['Warranty']) ? $result['Warranty'] : '') . '</td>
+                                                        <td class="text-truncate" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+                                                    </tr>';
+                                                // Output the modal code for each result
+                                                echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-md">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" style="white-space: normal; word-wrap: break-word; max-width: 400px;">'.$result['Product'].'</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 1.5rem; color: #000; opacity: 0.8; background-color: transparent; border: none;">x</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                                                                    <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                                                                    <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                                                                    <p><strong>Price:</strong> '.$result['Price'].'</p>
+                                                                    <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                                                                    <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                                                                    <p><strong>Category:</strong> '.$result['Categories'].'</p>
+                                                                    <p><strong>Seller:</strong> '.$result['Seller'].'</p>
+                                                                    <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
+                                                                    <p><strong>Warranty:</strong> '.$result['Warranty'].'</p>
+                                                                    <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>';
+                                            }
+                                        } else {
+                                            // Handle the case when $results is empty or not an array/object
+                                            echo '<tr><td colspan="16" class="text-center">No records found</td></tr>';
+                                        }
+                                        ?>
+                                    </tbody>
 
                                 </table>
 
