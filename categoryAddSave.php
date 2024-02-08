@@ -2,6 +2,8 @@
 session_start();
 	include('connection.php');
     $maincategory = $_POST['main_category'];
+	$maincategory = strtoupper($maincategory);
+
     
 $query = mysqli_query($conn,"SELECT * FROM categories WHERE main_category = '$maincategory'");
 $msg = "";

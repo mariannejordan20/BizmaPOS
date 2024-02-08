@@ -18,6 +18,18 @@ $date = $_POST['Date_Registered'];
 $subcategories = $_POST['SubCategories'];
 
 
+
+
+$productid = strtoupper($productid);
+$barcode = strtoupper($barcode);
+$product = strtoupper($product);
+$unit = strtoupper($unit);
+$categories = strtoupper($categories);
+$seller = strtoupper($seller);
+$supplier = strtoupper($supplier);
+$subcategories = strtoupper($subcategories);
+
+
 $query = mysqli_query($conn, "SELECT * FROM products WHERE Barcode = '$barcode' OR Product =  '$product'");
 
 
