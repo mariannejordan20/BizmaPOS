@@ -8,6 +8,24 @@ include('connection.php');
 <html lang="en">
 <?php include('header.php'); ?>
 <style>
+    .table-responsive {
+        overflow-y: hidden; /* Hide the vertical scrollbar */
+        overflow-x: auto;   /* Allow horizontal scrolling */
+    }
+
+    .table-responsive::-webkit-scrollbar {
+        width: 8px; /* Set the width of the scrollbar */
+        height: 8px;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: #313a46; /* Set the color of the scrollbar thumb */
+        border-radius: 8px; /* Make the scrollbar thumb rounded */
+    }
+
+    .table-responsive::-webkit-scrollbar-track {
+        background-color: #eeeeee; /* Set the color of the scrollbar track */
+    }
     /* Add this style block to your HTML or include it in your existing stylesheet */
     .table-responsive::-webkit-scrollbar {
         width: 8px; /* Set the width of the scrollbar */
@@ -35,7 +53,6 @@ include('connection.php');
         font-family: Segoe UI;
         font-size: 14px;
         /* Aligning column names to the left */
-        text-align: left;
     }
 </style>
 <body id="page-top">
@@ -76,7 +93,7 @@ include('connection.php');
                                                     <th>Supplier</th>
                                                     <th>Warranty</th>
                                                     <th>SubCategory</th>
-                                                    <th style="padding-right: 150px;">Date Registered</th>
+                                                    <th style="padding-right: 60px;">Date Registered</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="custom-font-size">

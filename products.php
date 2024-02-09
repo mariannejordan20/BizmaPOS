@@ -78,7 +78,39 @@ $results = $conn->query($sql);
     .btn {
         padding-left: 1000px;
     }
+    /* Default styles for the search bar */
+    .input-group {
+        margin-bottom: 15px;
+    }
 
+    #searchInput {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Responsive styles using media queries */
+    @media (min-width: 576px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+        }
+    }
+    @media (min-width: 614px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+        }
+    }
+
+    @media (min-width: 1000px) {
+        /* Adjust styles for PCs and larger screens */
+        .searchAdjust {
+            max-width: 480px;  /* Set a specific max-width for PCs */
+            width: 100%;      /* Allow it to take full width if needed */
+        }
+    }
 
 </style>
 </head>
@@ -96,15 +128,15 @@ $results = $conn->query($sql);
                     <div class="card-body">
                         <div class="products-section">
                         <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                            <form action="customers.php" method="get" class="form-inline mt-3 mb-3">
-                            <div class="input-group">
-                                <input style="width: 500px;" type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
-                            </div>
-                        </form>
-                                <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                            <form action="customers.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                                <div class=" searchAdjust">
+                                    <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
+                                </div>
+                            </form>
+                                <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
-                            </div>
+                        </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
