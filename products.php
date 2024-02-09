@@ -128,7 +128,7 @@ $results = $conn->query($sql);
                     <div class="card-body">
                         <div class="products-section">
                         <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                            <form action="customers.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                            <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
                                 <div class=" searchAdjust">
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                                 </div>
