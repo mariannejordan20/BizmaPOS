@@ -37,12 +37,21 @@ $results = $conn->query($sql);
         border-spacing: 0  ;
     }
 
+    
+
     #productsTable th,
     #productsTable td {
         padding: 10px  ;
         text-align: left;
     }
 
+    .copy-button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
     #productsTable th {    
         color: #656565  ; /* White text for header */
         white-space: nowrap;
@@ -70,6 +79,7 @@ $results = $conn->query($sql);
     .custom-font-size td {
     font-size: 12px;
     white-space: nowrap;
+    
     }
 
     .table-responsive {
@@ -154,7 +164,7 @@ $results = $conn->query($sql);
                                                 </th>
                                                 <th class="text-center">QTY</th>
                                                 <th class="text-center" style="padding-right: 30px">COSTING</th>
-                                                <th class="text-center" style="padding-right: 47px">PRICE</th>
+                                                <th class="text-center" style="padding-right: 30px">REG-PRICE</th>
                                                 <th class="text-center">WHOLESALE</th>
                                                 <th class="text-center" style="padding-right: 33px">PROMO</th>
                                                 <th class="text-center">
@@ -172,29 +182,32 @@ $results = $conn->query($sql);
                                         </thead>
                                         <tbody class="custom-font-size" style="color: #313A46;">
                                             <?php
-                                                foreach ($results as $result) {
-                                                    echo '<tr>
-                                                            <td>
-                                                                <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
-                                                                <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-                                                                <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
-                                                                </td>
-                                                                <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
-                                                                <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-                                                                <td class="text-truncate"  style="max-width: 150px;">' .strtoupper ($result['Product']) . '</td>
-                                                                <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
-                                                                <td class="text-truncate text-right" style="max-width: 50px;">' . $result['Quantity'] . '</td>
-                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Costing'] . '</td>
-                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Price'] . '</td>
-                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Wholesale'] . '</td>
-                                                                <td class="text-truncate text-right" style="max-width: 100px;">' . $result['Promo'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
-                                                                <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
-                                                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Warranty'] . '</td>
-                                                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
-                                                            </tr>';
+foreach ($results as $result) {
+    echo '<tr>
+            <td>
+                <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
+                <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
+                <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
+            </td>
+            <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
+            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+            <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn btn-sm btn-outline-secondary  copy-button" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-copy"></i></button>' .strtoupper ($result['Product']) . '</td>
+            <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
+            <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Wholesale']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Promo']) . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Warranty'] . '</td>
+            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+        </tr>';
+
+
+
                                                     echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered modal-md">
                                                                 <div class="modal-content">
@@ -243,6 +256,21 @@ $results = $conn->query($sql);
     <script src="js/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="js/delete.js"></script>
+
+
+    <script>
+    function copyToClipboard(text) {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Text copied to clipboard: " + text);
+    }
+</script>
+
+
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         populateDropdown("unitFilter", 4); // Index of Unit column

@@ -121,7 +121,7 @@
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Barcode" class="control-label">Barcode</label>
-                                    <input type="number" name="Barcode" class="form-control form-control-sm rounded-5"/>
+                                    <input type="number" name="Barcode" class="form-control form-control-sm rounded-5" />
                                     </div>
                                 </div>
 
@@ -291,28 +291,28 @@
 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Costing" class="control-label">Costing</label>
-                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="1" min="1" required/>
+                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Price" class="control-label">Price</label>
-                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="1" min="1" required/>
+                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Wholesale" class="control-label">Wholesale</label>
-                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" value="1" min="1" required/>
+                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                     <label for="Promo" class="control-label">Promo</label>
-                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" value="1" min="1" required/>
+                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
