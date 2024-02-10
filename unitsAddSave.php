@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $unit_name = strtoupper($_POST['unit_name']);
 
     // Check if the unit already exists
-    $sqlCheckExist = "SELECT ID FROM units WHERE unit_name = '$unit_name'";
+    $sqlCheckExist = "SELECT * FROM units WHERE unit_name = '$unit_name'";
     $resultExist = $conn->query($sqlCheckExist);
 
     if ($resultExist->num_rows > 0) {
