@@ -4,7 +4,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SLSU Athlete Management System</title>
+  <title>BIZMATECH POS</title>
     <link rel="shortcut icon" href="Sogod.png">
 
   <!-- Link to Bootstrap CSS file -->

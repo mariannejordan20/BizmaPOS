@@ -191,7 +191,7 @@ foreach ($results as $result) {
             </td>
             <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
             <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-            <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn btn-sm btn-outline-secondary  copy-button" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-copy"></i></button>' .strtoupper ($result['Product']) . '</td>
+            <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-copy"></i></button>' .strtoupper ($result['Product']) . '</td>
             <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
             <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
             <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
