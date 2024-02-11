@@ -14,7 +14,7 @@ if (empty($haslog)){
     exit;
 }
 
-$sql = "SELECT ID,ProductID, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
+$sql = "SELECT ID,ProductID,SerialCode, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
 $results = $conn->query($sql);
 ?>
 
@@ -155,6 +155,7 @@ $results = $conn->query($sql);
                                                 <th class="text-center">ACTION</th>
                                                 <th class="text-right" style="padding-right: 50px">ID</th>
                                                 <th class="text-center">BARCODE</th>
+                                                
                                                 <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
                                                 <th class="text-center">
                                                         <select id="unitFilter" style="border: none; font-weight: bold; color:#656565;">

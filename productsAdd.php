@@ -32,6 +32,10 @@
     background-color: #fff; /* Optional: Add a background color */
     transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
     }
+
+    .hidden {
+        display: none;
+    }
     label{
     color: #313A46;
     }
@@ -109,21 +113,23 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
-    <div class="form-group">
-        <label for="ProductID" class="control-label">Product ID</label>
-        <input type="hidden" name="ProductID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
-    </div>
-</div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
+                            <div class="form-group">
+                                <label for="ProductID" class="control-label">Product ID</label>
+                                <input type="hidden" name="ProductID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
+                            </div>
+                        </div>
 
 
                                 
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Barcode" class="control-label">Barcode</label>
+                                    <label for="Barcode" class="control-label">Barcode <button id="toggleButton">Add Serial</button></label>
                                     <input type="number" name="Barcode" class="form-control form-control-sm rounded-5" />
                                     </div>
                                 </div>
+
+                        
 
                                 
 
@@ -137,7 +143,7 @@
                                 
 
 
-<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
     <div class="form-group">
         <label for="Categories" class="control-label">Category</label>
         <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
@@ -188,7 +194,7 @@
 
 
 
-<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
     <div class="form-group">
         <label for="SubCategories" class="control-label">Sub-Category</label>
         <!-- Add new unit modal trigger -->
@@ -197,7 +203,7 @@
                 <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
             </span>
         </a>
-        <select name="SubCategories" id="SubCategories" class="form-control form-control-sm rounded-5" required>
+        <select name="SubCategories" id="SubCategories" class="form-control form-control-sm rounded-5" >
             <!-- Placeholder option for subcategories -->
             <option value="" disabled>Select a category first</option>
         </select>
@@ -288,28 +294,28 @@
 
 
 
-<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
                                     <label for="Costing" class="control-label">Costing</label>
                                     <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
                                     <label for="Price" class="control-label">Price</label>
                                     <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
                                     <label for="Wholesale" class="control-label">Wholesale</label>
                                     <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
                                     <label for="Promo" class="control-label">Promo</label>
                                     <input type="number" name="Promo" class="form-control form-control-sm rounded-0" value="1" min="1" max="1000000000" required/>
@@ -327,6 +333,7 @@
     <div class="form-group">
         <label for="Supplier" class="control-label">Supplier</label>
         <select name="Supplier" class="form-control form-control-sm rounded-5" required>
+            
             <?php
             
             $sqlSupplier = "SELECT ID, Supplier_Name FROM suppliers";
@@ -337,7 +344,7 @@
                     echo '<option>' . $rowSupplier['Supplier_Name'] . '</option>';
                 }
             } else {
-                echo '<option value="" disabled>No categories available</option>';
+                echo '<option value="" disabled>No Suplliers available</option>';
             }
             ?>
         </select>
@@ -346,18 +353,17 @@
 
 
                                 
-                                
-                                
-
-
-                                
-
-                                
-
-                                
-
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+   
+   <div id="serialInput" class="hidden form-group">
+       <label for="SerialCode" class="control-label">Serial</label>
+       <input type="text" name="SerialCode" class="form-control form-control-sm rounded-5"/>
+   </div>
+</div>                       
                                 
 
+
+            
 
 
 
@@ -474,6 +480,23 @@
         });
     }
     </script>
+
+
+<script>
+    document.getElementById('toggleButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent form submission
+        
+        var serialInput = document.getElementById('serialInput');
+        if (serialInput.classList.contains('hidden')) {
+            serialInput.classList.remove('hidden');
+            this.textContent = 'No Serial';
+        } else {
+            serialInput.classList.add('hidden');
+            this.textContent = 'Add Serial';
+        }
+    });
+</script>
+
 </body>
 
 </html>
