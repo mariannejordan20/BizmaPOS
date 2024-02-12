@@ -14,7 +14,7 @@ if (empty($haslog)){
     exit;
 }
 
-$sql = "SELECT ID,ProductID,SerialCode, Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
+$sql = "SELECT ID,ProductID,Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
 $results = $conn->query($sql);
 ?>
 

@@ -124,7 +124,7 @@
                                 
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Barcode" class="control-label">Barcode <button id="toggleButton">Add Serial</button></label>
+                                    <label for="Barcode" class="control-label">Barcode </label>
                                     <input type="number" name="Barcode" class="form-control form-control-sm rounded-5" />
                                     </div>
                                 </div>
@@ -353,14 +353,7 @@
 
 
                                 
-<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-   
-   <div id="serialInput" class="hidden form-group">
-       <label for="SerialCode" class="control-label">Serial</label>
-       <input type="text" name="SerialCode" class="form-control form-control-sm rounded-5"/>
-   </div>
-</div>                       
-                                
+                    
 
 
             
@@ -482,20 +475,7 @@
     </script>
 
 
-<script>
-    document.getElementById('toggleButton').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent form submission
-        
-        var serialInput = document.getElementById('serialInput');
-        if (serialInput.classList.contains('hidden')) {
-            serialInput.classList.remove('hidden');
-            this.textContent = 'No Serial';
-        } else {
-            serialInput.classList.add('hidden');
-            this.textContent = 'Add Serial';
-        }
-    });
-</script>
+
 
 </body>
 
