@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, Barcode,Quantity, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
+    $sql = "select ID, Barcode,Quantity,ItemType, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
     $results = $conn->query($sql);
 ?>
 
@@ -142,6 +142,7 @@ session_start();
                         <th class="text-center custom-column-width">ACTION</th>
                         <th class="text-center custom-column-width">BARCODE</th>
                         <th class="text-center custom-column-width">PRODUCT NAME</th>
+                        <th class="text-center custom-column-width">Type</th>
                         <th class="text-center custom-column-width">UNIT</th>
                         <th class="text-center custom-column-width">QTY</th>
                         <th class="text-center custom-column-width">COSTING</th>
@@ -161,34 +162,38 @@ session_start();
                 <?php
                                 foreach ($results as $result) {
                                     echo '<tr>
-                                            <td>
+    <td>';
+// Check if the item's type is "W/ Serial"
+if ($result['ItemType'] == 'W/ SERIAL') {
+    // Change the link to "stocksInSerial.php"
+    echo '<a class="mr-2" href="stocksInSerial.php?id='.$result['ID'].'">
+            <i class="fa fa-edit"></i>
+          </a>';
+} else {
+    // Use the default link "stocksInEdit.php"
+    echo '<a class="mr-2" href="stocksInEdit.php?id='.$result['ID'].'">
+            <i class="fa fa-edit"></i>
+          </a>';
+}
+echo '</td>
+    <td>'.strtoupper($result['Barcode']).'</td>
+    <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
+    <td>'.strtoupper($result['ItemType']).'</td>
+    <td>'.strtoupper($result['Unit']).'</td>
+    <td>'.strtoupper($result['Quantity']).'</td>
+    <td>'.strtoupper($result['Costing']).'</td>
+    <td>'.strtoupper($result['Price']).'</td>
+    <td>'.strtoupper($result['Wholesale']).'</td>
+    <td>'.strtoupper($result['Promo']).'</td>
+    <td class="text-truncate" style="max-width: 75px;">'.strtoupper($result['Categories']).'</td>
+    <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Seller']).'</td>
+    <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Supplier']).'</td>
+    <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Date_Registered']).'</td>';
 
-                                            
-                                                <a class = "mr-2" href = "stocksInEdit.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-edit"></i>
-                                                </a>
-
-                                                
 
 
-                                            </td>
-                                            <td>'.strtoupper($result['Barcode']).'</td>
-                                            <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
-                                            <td>'.strtoupper($result['Unit']).'</td>
-                                            <td>'.strtoupper($result['Quantity']).'</td>
-                                            <td>'.strtoupper($result['Costing']).'</td>
-                                            <td>'.strtoupper($result['Price']).'</td>
-                                            <td>'.strtoupper($result['Wholesale']).'</td>
-                                            <td>'.strtoupper($result['Promo']).'</td>
-                                            <td class="text-truncate" style="max-width: 75px;">'.strtoupper($result['Categories']).'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Seller']).'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Supplier']).'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Date_Registered']).'</td>
-                                            
+    '</tr>';
 
-                                           
-
-                                        </tr>';
                                         echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-md">
                     <div class="modal-content">
