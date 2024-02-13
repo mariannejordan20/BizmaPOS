@@ -14,7 +14,7 @@ if (empty($haslog)){
     exit;
 }
 
-$sql = "SELECT ID,ProductID,Barcode, Product, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
+$sql = "SELECT ID,ProductID,Barcode, Product,ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
 $results = $conn->query($sql);
 ?>
 
@@ -175,6 +175,7 @@ $results = $conn->query($sql);
                                                     </select>
                                                 </th>
                                                 <th class="text-center">S-CAT</th>
+                                                <th class="text-center" style="padding-right: 50px">Type</th>
                                                 <th class="text-center">SELLER</th>
                                                 <th class="text-center">SUPPLIER</th>
                                                 <th class="text-center">WRNTY</th>
@@ -201,6 +202,7 @@ foreach ($results as $result) {
             <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Promo']) . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' . $result['ItemType'] . '</td>
             <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
             <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
             <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Warranty'] . '</td>

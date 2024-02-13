@@ -105,13 +105,30 @@
     // Format the ID to be six digits long
     $next_IDcode = sprintf("%06d", $nextID);
 ?>
-                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
                                     <label for="ID" class="control-label">ID</label>
                                    <input type="number" name="ID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
 
                                     </div>
                                 </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                                    <div class="form-group">
+                                        <label for="ItemType" class="control-label">Type</label>
+                                        <select name="ItemType" class="form-control form-control-sm form-control-border rounded-5" required>
+                                        <option value="">Select Type</option>
+                                        <option value="W/ SERIAL">W/ Serial</option>
+                                        <option value="No SERIAL">No Serial</option>
+                                        <option value="W/ EXPIRY">W/ Expiry</option>
+                                       
+                                        </select>
+                                    
+                                    
+                        
+                                    </div>
+
+</div>
 
                                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
                             <div class="form-group">
