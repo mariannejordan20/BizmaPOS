@@ -155,7 +155,7 @@ $results = $conn->query($sql);
                                                 <th class="text-center">ACTION</th>
                                                 <th class="text-right" style="padding-right: 50px">ID</th>
                                                 <th class="text-center">BARCODE</th>
-                                                <th class="text-center">Type</th>
+                                                <th class="text-center">TYPE</th>
                                                 
                                                 <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
                                                 <th class="text-center">

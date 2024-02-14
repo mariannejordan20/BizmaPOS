@@ -19,6 +19,7 @@ $price = $_POST['Price'];
 $wholesale = $_POST['Wholesale'];
 $promo = $_POST['Promo'];
 $categories = $_POST['Categories'];
+$subcategory = $_POST['SubCategory'];
 $seller = $_POST['Seller'];
 $supplier = $_POST['Supplier'];
 
@@ -50,12 +51,12 @@ if ($result && $result->num_rows > 0) {
     $update = "UPDATE products SET Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Quantity = '".$additionalQuantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."', Supplier = '".$supplier."' ";
     $update .= "WHERE id = ".$id;
 
-    $stockInHistory = "INSERT INTO stockinhistory (Barcode,ProductID,DeliveryNumber,Shipper,Receiver, Product,BatchNumber, Unit, Quantity, Costing, Price, Wholesale, Promo,Warranty, Categories, Seller, Supplier) VALUES ";
-    $stockInHistory .= "('".$barcode."','".$productid."','".$deliverynumber."','".$shipper."','".$receiver."', '".$product."','".$batchnumber."', '".$unit."', '".$quantityadded."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."','".$warranty."', '".$categories."', '".$seller."', '".$supplier."')";
+    $stockInHistory = "INSERT INTO stockinhistory (Barcode,ProductID,DeliveryNumber,Shipper,Receiver, Product,BatchNumber, Unit, Quantity, Costing, Price, Wholesale, Promo,Warranty, Categories,SubCategory, Seller, Supplier) VALUES ";
+    $stockInHistory .= "('".$barcode."','".$productid."','".$deliverynumber."','".$shipper."','".$receiver."', '".$product."','".$batchnumber."', '".$unit."', '".$quantityadded."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."','".$warranty."', '".$categories."','".$subcategory."' ,'".$seller."', '".$supplier."')";
 
 
-    $stockInExpiry = "INSERT INTO productsexpiry (Barcode,ProductID,DeliveryNumber,Shipper,Receiver, Product,BatchNumber,Unit, Quantity, Costing, Price, Wholesale, Promo,Warranty, Categories, Seller, Supplier) VALUES ";
-    $stockInExpiry .= "('".$barcode."', '".$productid."','".$deliverynumber."','".$shipper."','".$receiver."','".$product."','".$batchnumber."', '".$unit."', '".$quantityadded."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."','".$warranty."', '".$categories."', '".$seller."', '".$supplier."')";
+    $stockInExpiry = "INSERT INTO productsexpiry (Barcode,ProductID,DeliveryNumber,Shipper,Receiver, Product,BatchNumber,Unit, Quantity, Costing, Price, Wholesale, Promo,Warranty, Categories,SubCategory, Seller, Supplier) VALUES ";
+    $stockInExpiry .= "('".$barcode."', '".$productid."','".$deliverynumber."','".$shipper."','".$receiver."','".$product."','".$batchnumber."', '".$unit."', '".$quantityadded."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."','".$warranty."', '".$categories."','".$subcategory."' , '".$seller."', '".$supplier."')";
 
     if ($barcode !== "" || $product !== "" || $unit !== "" || $additionalQuantity !== "" || $costing !== "" || $price !== "" || $wholesale !== "" || $promo !== "" || $categories !== "" || $seller !== "" || $supplier !== "") {
         $res = $conn->query($update);

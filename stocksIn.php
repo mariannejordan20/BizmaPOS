@@ -142,7 +142,7 @@ session_start();
                         <th class="text-center custom-column-width">ACTION</th>
                         <th class="text-center custom-column-width">BARCODE</th>
                         <th class="text-center custom-column-width">PRODUCT NAME</th>
-                        <th class="text-center custom-column-width">Type</th>
+                        <th class="text-center custom-column-width">TYPE</th>
                         <th class="text-center custom-column-width">UNIT</th>
                         <th class="text-center custom-column-width">QTY</th>
                         <th class="text-center custom-column-width">COSTING</th>

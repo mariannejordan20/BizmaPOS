@@ -6,6 +6,11 @@ include('connection.php');
 $id = $_POST['hiddenID'];
 $barcode = $_POST['Barcode'];
 $product = $_POST['Product'];
+$productid = $_POST['ProductID'];
+$shipper = $_POST['Shipper'];
+$warranty = $_POST['Warranty'];
+$receiver = $_POST['Receiver'];
+$deliverynumber = $_POST['DeliveryNumber'];
 $serial = $_POST['ItemSerial'];
 $unit = $_POST['Unit'];
 $additionalQuantity = $_POST['Quantity']; 
@@ -14,6 +19,7 @@ $price = $_POST['Price'];
 $wholesale = $_POST['Wholesale'];
 $promo = $_POST['Promo'];
 $categories = $_POST['Categories'];
+$subcategory = $_POST['SubCategory'];
 $seller = $_POST['Seller'];
 $supplier = $_POST['Supplier'];
 
@@ -45,12 +51,12 @@ if ($result && $result->num_rows > 0) {
     $update = "UPDATE products SET Barcode = '".$barcode."', Product = '".$product."', Unit = '".$unit."', Quantity = '".$additionalQuantity."', Costing = '".$costing."', Price = '".$price."', Wholesale = '".$wholesale."', Promo = '".$promo."', Categories = '".$categories."', Seller = '".$seller."', Supplier = '".$supplier."' ";
     $update .= "WHERE id = ".$id;
 
-    $stockInHistory = "INSERT INTO stockinhistory (Barcode, Product,ItemSerial, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier) VALUES ";
-    $stockInHistory .= "('".$barcode."', '".$product."','".$serial."', '".$unit."', '".$additionalQuantity."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."', '".$categories."', '".$seller."', '".$supplier."')";
+    $stockInHistory = "INSERT INTO stockinhistory (Barcode,ProductID,DeliveryNumber,Shipper,Receiver, Product,ItemSerial, Unit, Quantity, Costing, Price, Wholesale, Promo,Warranty, Categories,SubCategory, Seller, Supplier) VALUES ";
+    $stockInHistory .= "('".$barcode."','".$productid."','".$deliverynumber."','".$shipper."','".$receiver."', '".$product."','".$serial."', '".$unit."', '".$serialQuantity."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."','".$warranty."', '".$categories."','".$subcategory."' ,'".$seller."', '".$supplier."')";
 
 
-    $stockInSerial = "INSERT INTO productsws (Barcode, Product,ItemSerial,Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier) VALUES ";
-    $stockInSerial .= "('".$barcode."', '".$product."','".$serial."', '".$unit."', '".$serialQuantity."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."', '".$categories."', '".$seller."', '".$supplier."')";
+    $stockInSerial = "INSERT INTO productsws (Barcode,ProductID,DeliveryNumber,Shipper,Receiver, Product,ItemSerial,Unit, Quantity, Costing, Price, Wholesale, Promo,Warranty, Categories,SubCategory, Seller, Supplier) VALUES ";
+    $stockInSerial .= "('".$barcode."', '".$productid."','".$deliverynumber."','".$shipper."','".$receiver."','".$product."','".$serial."', '".$unit."', '".$serialQuantity."', '".$costing."', '".$price."', '".$wholesale."', '".$promo."','".$warranty."', '".$categories."','".$subcategory."' , '".$seller."', '".$supplier."')";
 
     if ($barcode !== "" || $product !== "" || $unit !== "" || $additionalQuantity !== "" || $costing !== "" || $price !== "" || $wholesale !== "" || $promo !== "" || $categories !== "" || $seller !== "" || $supplier !== "") {
         $res = $conn->query($update);
@@ -58,7 +64,6 @@ if ($result && $result->num_rows > 0) {
         $res3 = $conn->query($stockInSerial);
 
 
-        
 
         if ($res && $res2) {
             $_SESSION['status'] = "Stock In Successful";

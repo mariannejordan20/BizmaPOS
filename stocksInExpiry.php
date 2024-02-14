@@ -175,6 +175,13 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="Display: none">
+                                    <div class="form-group">
+                                    <label for="SubCategory" class="control-label">Sub-Categories</label>
+                                    <input type="text" name="SubCategory" class="form-control form-control-sm rounded-0" value="<?=$row['SubCategory']?>"readonly>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
             <div class="form-group">
                 <label for="Quantity" class="control-label">Quantity</label>
