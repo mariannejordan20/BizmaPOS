@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, Barcode,Quantity, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
+    $sql = "select ID, Barcode,Quantity,ItemType, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
     $results = $conn->query($sql);
 ?>
 
@@ -144,6 +144,7 @@ session_start();
                         <th class="text-center custom-column-width">ACTION</th>
                         <th class="text-center custom-column-width">BARCODE</th>
                         <th class="text-center custom-column-width">PRODUCT NAME</th>
+                        <th class="text-center custom-column-width">TYPE</th>
                         <th class="text-center custom-column-width">UNIT</th>
                         <th class="text-center custom-column-width">QTY</th>
                         <th class="text-center custom-column-width">COSTING</th>
@@ -173,6 +174,7 @@ session_start();
                                             </td>
                                             <td>'.strtoupper($result['Barcode']).'</td>
                                             <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
+                                            <td>'.strtoupper($result['ItemType']).'</td>
                                             <td>'.strtoupper($result['Unit']).'</td>
                                             <td>'.strtoupper($result['Quantity']).'</td>
                                             <td>'.strtoupper($result['Costing']).'</td>

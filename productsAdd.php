@@ -119,7 +119,7 @@
                                         <select name="ItemType" class="form-control form-control-sm form-control-border rounded-5" required>
                                         <option value="">Select Type</option>
                                         <option value="W/ SERIAL">W/ Serial</option>
-                                        <option value="No SERIAL">No Serial</option>
+                                        <option value="NO SERIAL">No Serial</option>
                                         <option value="W/ EXPIRY">W/ Expiry</option>
                                        
                                         </select>

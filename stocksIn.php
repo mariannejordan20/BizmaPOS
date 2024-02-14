@@ -169,6 +169,11 @@ if ($result['ItemType'] == 'W/ SERIAL') {
     echo '<a class="mr-2" href="stocksInSerial.php?id='.$result['ID'].'">
             <i class="fa fa-edit"></i>
           </a>';
+}elseif ($result['ItemType'] == 'W/ EXPIRY') {
+    echo '<a class="mr-2" href="stocksInExpiry.php?id='.$result['ID'].'">
+            <i class="fa fa-edit"></i>
+          </a>';
+
 } else {
     // Use the default link "stocksInEdit.php"
     echo '<a class="mr-2" href="stocksInEdit.php?id='.$result['ID'].'">
