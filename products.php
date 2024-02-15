@@ -14,8 +14,31 @@ if (empty($haslog)){
     exit;
 }
 
-$sql = "SELECT ID,ProductID,Barcode, Product,ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
+$recordsPerPage = 7; // Number of records per page
+$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
+$offset = ($page - 1) * $recordsPerPage; // Offset for SQL query
+
+$sql = "SELECT ID, ProductID, Barcode, Product, ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered 
+        FROM products 
+        ORDER BY Categories
+        LIMIT $offset, $recordsPerPage";
 $results = $conn->query($sql);
+
+// Get total number of records
+$totalRecordsQuery = "SELECT COUNT(*) AS total FROM products"; // Fixed table name
+$totalRecordsResult = $conn->query($totalRecordsQuery);
+$totalRecords = $totalRecordsResult->fetch_assoc()['total'];
+
+// Calculate total pages
+$totalPages = ceil($totalRecords / $recordsPerPage);
+
+// Ensure $page is within valid range
+if ($page < 1) {
+    $page = 1;
+} elseif ($page > $totalPages) {
+    $page = $totalPages;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +144,28 @@ $results = $conn->query($sql);
             width: 100%;      /* Allow it to take full width if needed */
         }
     }
+    
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding-right: 3%;
+    }
 
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #333;
+        margin: 0 4px;
+        border-radius: 4px;
+    }
+
+    .pagination a.active,
+    .pagination a:active,
+    .pagination a:hover {
+        background-color: #fe3c00;
+        color: #fff;
+    }
 </style>
 </head>
 <body>
@@ -185,31 +229,31 @@ $results = $conn->query($sql);
                                         </thead>
                                         <tbody class="custom-font-size" style="color: #313A46;">
                                             <?php
-foreach ($results as $result) {
-    echo '<tr>
-            <td>
-                <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
-                <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-                <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
-            </td>
-            <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
-            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['ItemType'] . '</td>
-            <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
-            <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
-            <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Wholesale']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Promo']) . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' . $result['ItemType'] . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Warranty'] . '</td>
-            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
-        </tr>';
+                                            foreach ($results as $result) {
+                                                echo '<tr>
+                                                        <td>
+                                                            <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
+                                                            <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
+                                                            <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
+                                                        </td>
+                                                        <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
+                                                        <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+                                                        <td class="text-truncate text-center" style="max-width: 100px;">' . $result['ItemType'] . '</td>
+                                                        <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Wholesale']) . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Promo']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['ItemType'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Warranty'] . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+                                                    </tr>';
 
 
 
@@ -243,6 +287,15 @@ foreach ($results as $result) {
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-3">
+                        <ul class="pagination">
+                                <?php
+                                for ($i = 1; $i <= $totalPages; $i++) {
+                                    echo '<li class="' . ($i == $page ? 'active' : '') . '"><a class="page-link" style="background-color: ' . ($i == $page ? '#fe3c00; color: white;' : '') . '" href="?page=' . $i . '">' . $i . '</a></li>';
+                                }
+                                ?>
+                            </ul>
                         </div>
                     </div>
                 </div>
