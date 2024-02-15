@@ -150,16 +150,44 @@
 </div>
 
 
-                                
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                    <div class="form-group">
+                                    <label for="Costing" class="control-label">Costing</label>
+                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Costing']?>"required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                    <div class="form-group">
+                                    <label for="Price" class="control-label">Price</label>
+                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Price']?>"required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                    <div class="form-group">
+                                    <label for="Wholesale" class="control-label">Wholesale</label>
+                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Wholesale']?>"required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                    <div class="form-group">
+                                    <label for="Promo" class="control-label">Promo</label>
+                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Promo']?>"required>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
                                     <div class="form-group">
                                     <label for="Seller" class="control-label">Seller</label>
                                     <input type="text" name="Seller" class="form-control form-control-sm rounded-0" value="<?=$row['Seller']?>"required>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
                                     <div class="form-group">
                                     <label for="Supplier" class="control-label">Supplier</label>
                                     <input type="text" name="Supplier" class="form-control form-control-sm rounded-0" value="<?=$row['Supplier']?>"required>
