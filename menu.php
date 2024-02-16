@@ -41,11 +41,11 @@ include('header.php');
     </li>
 
     <li class="nav-item">
-        <a class="nav-link " href="products.php">
-            <i class="fas fa-fw fa-cube"></i>
-            <span>Products</span>
-        </a>
-    </li>
+    <a class="nav-link" id="productsLink" href="products.php">
+        <i class="fas fa-fw fa-cube"></i>
+        <span>Products</span>
+    </a>
+</li>
 
 
     <?php
@@ -163,6 +163,18 @@ include('header.php');
     <!-- Sidebar Message -->
 </ul>
 <!-- End of Sidebar -->
-<!-- Add this script at the end of your HTML body -->
+<script>
+    // Function to redirect users to a different link if using a mobile device
+    function redirectForMobile(event) {
+        var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        if (screenWidth <= 768) { // Adjust the threshold as needed
+            event.preventDefault(); // Prevent the default behavior of link click
+            window.location.href = "productsMobile.php"; // Redirect link for mobile devices
+        }
+    }
 
+    // Add an event listener for the "Products" link
+    var productsLink = document.getElementById("productsLink");
+    productsLink.addEventListener("click", redirectForMobile);
+</script>
 

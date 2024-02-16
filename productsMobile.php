@@ -188,72 +188,34 @@ if ($page < 1) {
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                                 </div>
                             </form>
-                                <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
-                                    <i class="fa fa-plus"></i>
-                                </a>
+                                
                         </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white">
-                                                <th class="text-center">ACTION</th>
-                                                <th class="text-right" style="padding-right: 50px">ID</th>
-                                                <th class="text-center">BARCODE</th>
-                                              
-                                                
-                                                <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
-                                                <th class="text-center">
-                                                        <select id="unitFilter" style="border: none; font-weight: bold; color:#656565;">
-                                                            <option value="">UNIT</option>
-                                                            <!-- Add options dynamically if needed -->
-                                                        </select>
-                                                </th>
-                                                <th class="text-center">QTY</th>
+                                                <th class="text-center" style="padding-right: 70px;">PRODUCT NAME</th>
                                                 <th class="text-center" style="padding-right: 30px">COSTING</th>
                                                 <th class="text-center" style="padding-right: 30px">REG-PRICE</th>
-                                                <th class="text-center">WHOLESALE</th>
-                                                <th class="text-center" style="padding-right: 33px">PROMO</th>
-                                                <th class="text-center">
-                                                    <select id="categoryFilter" style="border: none; font-weight: bold; color:#656565;">
-                                                        <option value="">CATEGORIES</option>
-                                                        <!-- Add options dynamically if needed -->
-                                                    </select>
-                                                </th>
-                                                <th class="text-center">S-CAT</th>
-                                                <th class="text-center" style="padding-right: 50px">Type</th>
-                                                <th class="text-center">SELLER</th>
-                                                <th class="text-center">SUPPLIER</th>
-                                                <th class="text-center">WRNTY</th>
-                                                <th class="text-center">DATE REGISTERED</th>
+                                                
+                                                
+                                                
                                             </tr>
                                         </thead>
                                         <tbody class="custom-font-size" style="color: #313A46;">
                                             <?php
                                             foreach ($results as $result) {
                                                 echo '<tr>
-                                                        <td>
-                                                            <a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>
-                                                            <a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-                                                            <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>
-                                                        </td>
-                                                        <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
-                                                        <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+                                                        
+                                                           
                                                        
                                                         <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
-                                                        <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
+                                                        
                                                         <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
                                                         <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Wholesale']) . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Promo']) . '</td>
-                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['Categories'] . '</td>
-                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['SubCategory'] . '</td>
-                                                        <td class="text-truncate" style="max-width: 100px;">' . $result['ItemType'] . '</td>
-                                                        <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Seller']) . '</td>
-                                                        <td class="text-truncate" style="max-width: 100px;">' .strtoupper ($result['Supplier']) . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Warranty'] . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+                                                        
+                                                    
                                                     </tr>';
 
 
@@ -332,49 +294,17 @@ if ($page < 1) {
 </script>
 
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        populateDropdown("unitFilter", 4); // Index of Unit column
-        populateDropdown("categoryFilter", 10); // Index of Category column
-    });
-
-function populateDropdown(selectId, columnIndex) {
-    var select = document.getElementById(selectId);
-    var options = [];
-    var table = document.getElementById("productsTable");
-    var rows = table.getElementsByTagName("tr");
-    for (var i = 1; i < rows.length; i++) {
-        var cell = rows[i].getElementsByTagName("td")[columnIndex];
-        var value = cell.textContent || cell.innerText;
-        if (!options.includes(value)) {
-            options.push(value);
-            var option = document.createElement("option");
-            option.text = value;
-            select.add(option);
-        }
-    }
-}
-
+<script>
     function filterTable() {
-        var selectUnit = document.getElementById("unitFilter");
-        var selectCategory = document.getElementById("categoryFilter");
-        var filterUnit = selectUnit.value.toUpperCase();
-        var filterCategory = selectCategory.value.toUpperCase();
         var searchInput = document.getElementById("searchInput").value.toUpperCase();
         var table = document.getElementById("productsTable");
         var tr = table.getElementsByTagName("tr");
 
         for (var i = 1; i < tr.length; i++) {
-            var tdUnit = tr[i].getElementsByTagName("td")[4]; // Index of Unit column
-            var tdCategory = tr[i].getElementsByTagName("td")[10]; // Index of Category column
-            var tdProductName = tr[i].getElementsByTagName("td")[3]; // Index of Product Name column
-            var tdBarcode = tr[i].getElementsByTagName("td")[2]; // Index of Barcode column
-            if (tdUnit && tdCategory && tdProductName && tdBarcode) {
-                var unitMatch = filterUnit === '' || tdUnit.textContent.toUpperCase() === filterUnit;
-                var categoryMatch = filterCategory === '' || tdCategory.textContent.toUpperCase() === filterCategory;
+            var tdProductName = tr[i].getElementsByTagName("td")[0]; // Index of Product Name column
+            if (tdProductName) {
                 var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
-                var barcodeMatch = tdBarcode.textContent.toUpperCase().indexOf(searchInput) > -1;
-                if ((unitMatch && categoryMatch) && (productNameMatch || barcodeMatch)) {
+                if (productNameMatch) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -383,10 +313,9 @@ function populateDropdown(selectId, columnIndex) {
         }
     }
 
-    document.getElementById("unitFilter").addEventListener("change", filterTable);
-    document.getElementById("categoryFilter").addEventListener("change", filterTable);
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
 </script>
+
 
     <?php
        if(isset($_SESSION['status']) && $_SESSION['status'] !=''){
