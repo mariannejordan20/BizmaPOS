@@ -200,14 +200,12 @@ if ($page < 1) {
                                                 <th class="text-center">ACTION</th>
                                                 <th class="text-right" style="padding-right: 50px">ID</th>
                                                 <th class="text-center">BARCODE</th>
-                                              
-                                                
                                                 <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
                                                 <th class="text-center">
-                                                        <select id="unitFilter" style="border: none; font-weight: bold; color:#656565;">
-                                                            <option value="">UNIT</option>
-                                                            <!-- Add options dynamically if needed -->
-                                                        </select>
+                                                    <select id="unitFilter" style="border: none; font-weight: bold; color:#656565;">
+                                                        <option value="">UNIT</option>
+                                                        <!-- Add options dynamically if needed -->
+                                                    </select>
                                                 </th>
                                                 <th class="text-center">QTY</th>
                                                 <th class="text-center" style="padding-right: 30px">COSTING</th>
