@@ -199,7 +199,7 @@ if ($page < 1) {
                                                 <th class="text-center">ACTION</th>
                                                 <th class="text-right" style="padding-right: 50px">ID</th>
                                                 <th class="text-center">BARCODE</th>
-                                                <th class="text-center">TYPE</th>
+                                              
                                                 
                                                 <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
                                                 <th class="text-center">
@@ -238,7 +238,7 @@ if ($page < 1) {
                                                         </td>
                                                         <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ProductID'] . '</td>
                                                         <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-                                                        <td class="text-truncate text-center" style="max-width: 100px;">' . $result['ItemType'] . '</td>
+                                                       
                                                         <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
                                                         <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
                                                         <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
@@ -333,8 +333,8 @@ if ($page < 1) {
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-        populateDropdown("unitFilter", 5); // Index of Unit column
-        populateDropdown("categoryFilter", 11); // Index of Category column
+        populateDropdown("unitFilter", 4); // Index of Unit column
+        populateDropdown("categoryFilter", 10); // Index of Category column
     });
 
 function populateDropdown(selectId, columnIndex) {
@@ -364,9 +364,9 @@ function populateDropdown(selectId, columnIndex) {
         var tr = table.getElementsByTagName("tr");
 
         for (var i = 1; i < tr.length; i++) {
-            var tdUnit = tr[i].getElementsByTagName("td")[5]; // Index of Unit column
-            var tdCategory = tr[i].getElementsByTagName("td")[11]; // Index of Category column
-            var tdProductName = tr[i].getElementsByTagName("td")[4]; // Index of Product Name column
+            var tdUnit = tr[i].getElementsByTagName("td")[4]; // Index of Unit column
+            var tdCategory = tr[i].getElementsByTagName("td")[10]; // Index of Category column
+            var tdProductName = tr[i].getElementsByTagName("td")[3]; // Index of Product Name column
             var tdBarcode = tr[i].getElementsByTagName("td")[2]; // Index of Barcode column
             if (tdUnit && tdCategory && tdProductName && tdBarcode) {
                 var unitMatch = filterUnit === '' || tdUnit.textContent.toUpperCase() === filterUnit;

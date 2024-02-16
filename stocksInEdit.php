@@ -94,7 +94,7 @@
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
                         ?>
-                        <form action = "stocksInEditSave.php" method="post" enctype ="multipart/form-data">
+                        <form action = "stocksInSerialSave.php" method="post" enctype ="multipart/form-data">
                             <input type="hidden" name="hiddenID" value="<?=$id?>">
                         <div class="row">
 
@@ -113,12 +113,36 @@
                             <legend>Product Information</legend>
 
                             <div class="row">
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="Display: none">
                                     <div class="form-group">
                                     <label for="Barcode" class="control-label">Barcode</label>
                                     <input type="text" name="Barcode" class="form-control form-control-sm rounded-0" value="<?=$row['Barcode']?>"readonly>
                                     </div>
                                 </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="Display: none">
+                                    <div class="form-group">
+                                    <label for="ProductID" class="control-label">Product ID</label>
+                                    <input type="text" name="ProductID" class="form-control form-control-sm rounded-0" value="<?=$row['ProductID']?>"readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                    <label for="DeliveryNumber" class="control-label">Delivery Number</label>
+                                    <input type="text" name="DeliveryNumber"  class="form-control form-control-sm rounded-0">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                    <label for="Shipper" class="control-label">Shipper</label>
+                                    <input type="text" name="Shipper"  class="form-control form-control-sm rounded-0">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="form-group">
+        <label for="Receiver" class="control-label">Receiver</label>
+        <input type="text" name="Receiver" class="form-control form-control-sm rounded-0" value="<?php echo isset($_SESSION['Name']) ? $_SESSION['Name'] : ''; ?>"readonly>
+    </div>
+</div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
@@ -126,8 +150,10 @@
                                     <input type="text" name="Product"  class="form-control form-control-sm rounded-0" value="<?=$row['Product']?>"readonly>
                                     </div>
                                 </div>
+
                                 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display: none">
                                     <div class="form-group">
                                     <label for="Unit" class="control-label">Unit</label>
                                     <input type="text" name="Unit" class="form-control form-control-sm rounded-0" value="<?=$row['Unit']?>"readonly>
@@ -135,62 +161,79 @@
                                 </div>
                                 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="Display: none">
                                     <div class="form-group">
                                     <label for="Categories" class="control-label">Categories</label>
                                     <input type="text" name="Categories" class="form-control form-control-sm rounded-0" value="<?=$row['Categories']?>"readonly>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-    <div class="form-group">
-        <label for="Quantity" class="control-label">Quantity</label>
-        <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" min="1" value="0"required>
-    </div>
-</div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="Display: none">
+                                    <div class="form-group">
+                                    <label for="SubCategory" class="control-label">Sub-Categories</label>
+                                    <input type="text" name="SubCategory" class="form-control form-control-sm rounded-0" value="<?=$row['SubCategory']?>"readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
+            <div class="form-group">
+                <label for="Quantity" class="control-label">Quantity</label>
+                <input type="number" name="Quantity" class="form-control form-control-sm rounded-0"  required>
+            </div>
+        </div>
 
 
 
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6" style="Display: none">
                                     <div class="form-group">
                                     <label for="Costing" class="control-label">Costing</label>
-                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Costing']?>"required>
+                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Costing']?>">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6" style="Display: none">
                                     <div class="form-group">
                                     <label for="Price" class="control-label">Price</label>
-                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Price']?>"required>
+                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Price']?>">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6" style="Display: none">
                                     <div class="form-group">
                                     <label for="Wholesale" class="control-label">Wholesale</label>
-                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Wholesale']?>"required>
+                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Wholesale']?>">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6" style="Display: none">
                                     <div class="form-group">
                                     <label for="Promo" class="control-label">Promo</label>
-                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Promo']?>"required>
+                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" min= "1" value="<?=$row['Promo']?>">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display: none">
+                                    <div class="form-group">
+                                    <label for="Warranty" class="control-label">Warranty</label>
+                                    <input type="text" name="Warranty" class="form-control form-control-sm rounded-0" value="<?=$row['Warranty']?>"readonly>
+                                    </div>
+                                </div>
+                                
+                                
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display: none">
                                     <div class="form-group">
                                     <label for="Seller" class="control-label">Seller</label>
-                                    <input type="text" name="Seller" class="form-control form-control-sm rounded-0" value="<?=$row['Seller']?>"required>
+                                    <input type="text" name="Seller" class="form-control form-control-sm rounded-0" value="<?=$row['Seller']?>"readonly>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display:none">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display: none">
                                     <div class="form-group">
                                     <label for="Supplier" class="control-label">Supplier</label>
-                                    <input type="text" name="Supplier" class="form-control form-control-sm rounded-0" value="<?=$row['Supplier']?>"required>
+                                    <input type="text" name="Supplier" class="form-control form-control-sm rounded-0" value="<?=$row['Supplier']?>"readonly>
                                     </div>
                                 </div>
 
@@ -223,11 +266,7 @@
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
+                
             </footer>
             <!-- End of Footer -->
 
