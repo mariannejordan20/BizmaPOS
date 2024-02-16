@@ -14,9 +14,26 @@ session_start();
         header("location: login.php");
         exit;
     }
+    $recordsPerPage = 7; // Number of records per page
+    $page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
+    $offset = ($page - 1) * $recordsPerPage; // Offset for SQL query
 
-    $sql = "select ID, Barcode,Quantity,ItemType, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories";
+    $sql = "select ID, Barcode,Quantity,ItemType, Product,Unit,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from products order by Categories LIMIT $offset, $recordsPerPage";
     $results = $conn->query($sql);
+
+    $totalRecordsQuery = "SELECT COUNT(*) AS total FROM products"; // Fixed table name
+    $totalRecordsResult = $conn->query($totalRecordsQuery);
+    $totalRecords = $totalRecordsResult->fetch_assoc()['total'];
+
+    // Calculate total pages
+    $totalPages = ceil($totalRecords / $recordsPerPage);
+
+    // Ensure $page is within valid range
+    if ($page < 1) {
+        $page = 1;
+    } elseif ($page > $totalPages) {
+        $page = $totalPages;
+    }
 ?>
 
 
@@ -77,60 +94,87 @@ session_start();
     .table-responsive {
     overflow-x: auto;
     }
+        /* Default styles for the search bar */
+        .input-group {
+        margin-bottom: 15px;
+    }
 
+    #searchInput {
+        max-width: 100%;
+        width: 100%;
+    }
+
+        /* Responsive styles using media queries */
+        @media (min-width: 576px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+        }
+    }
+    @media (min-width: 614px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+        }
+    }
+
+    @media (min-width: 1000px) {
+        /* Adjust styles for PCs and larger screens */
+        .searchAdjust {
+            max-width: 480px;  /* Set a specific max-width for PCs */
+            width: 100%;      /* Allow it to take full width if needed */
+        }
+    }
+
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding-right: 3%;
+    }
+
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #333;
+        margin: 0 4px;
+        border-radius: 4px;
+    }
+
+    .pagination a.active,
+    .pagination a:active,
+    .pagination a:hover {
+        background-color: #fe3c00;
+        color: #fff;
+    }
 
 
 </style>
-<?php
-    include('header.php');
-?>
-
-
-
+<?php include('header.php'); ?>
 <body id="page-top">
-
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <?php
-            include ('menu.php');
-        ?>
-
-        <!-- Content Wrapper -->
+        <?php include ('menu.php'); ?>
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
-                <?php
-                 include('navbar.php');
-                ?>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
+                <?php include('navbar.php'); ?>
                 <div class="container-fluid">
-
-                    
-    <div class="card-header" style="background-color: #eeeeee; border: none">
-        <h3 class="card-title" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">STOCK IN</h3>
-    </div>
-
-    <div class="stocksin-section">
-    <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                    <form action="products.php" method="get" class="form-inline mt-3 mb-3">
-                            <div class="input-group">
-                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
-                                </div>
+                    <div class="card-header" style="background-color: #eeeeee; border: none">
+                        <h3 class="card-title" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">STOCK IN</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="stocksin-section">
+                        <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                            <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                            <div class=" searchAdjust">
+                            <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                             </div>
                         </form>
             <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
                 <i class="fa fa-plus"></i>
             </a>
         </div>
-    <div class="mb-3 d-flex align-items-center">
         <div class="container-fluid">
             <div class="table-responsive">
             <table class="table text-center table-bordered" id="stocksinTable" width="100%" cellspacing="0">
@@ -162,89 +206,98 @@ session_start();
                 <?php
                                 foreach ($results as $result) {
                                     echo '<tr>
-    <td>';
-// Check if the item's type is "W/ Serial"
-if ($result['ItemType'] == 'W/ SERIAL') {
-    // Change the link to "stocksInSerial.php"
-    echo '<a class="mr-2" href="stocksInSerial.php?id='.$result['ID'].'">
-            <i class="fa fa-edit"></i>
-          </a>';
-}elseif ($result['ItemType'] == 'W/ EXPIRY') {
-    echo '<a class="mr-2" href="stocksInExpiry.php?id='.$result['ID'].'">
-            <i class="fa fa-edit"></i>
-          </a>';
+                            <td>';
+                        // Check if the item's type is "W/ Serial"
+                        if ($result['ItemType'] == 'W/ SERIAL') {
+                            // Change the link to "stocksInSerial.php"
+                            echo '<a class="mr-2" href="stocksInSerial.php?id='.$result['ID'].'">
+                                    <i class="fa fa-edit"></i>
+                                </a>';
+                        }elseif ($result['ItemType'] == 'W/ EXPIRY') {
+                            echo '<a class="mr-2" href="stocksInExpiry.php?id='.$result['ID'].'">
+                                    <i class="fa fa-edit"></i>
+                                </a>';
 
-} else {
-    // Use the default link "stocksInEdit.php"
-    echo '<a class="mr-2" href="stocksInEdit.php?id='.$result['ID'].'">
-            <i class="fa fa-edit"></i>
-          </a>';
-}
-echo '</td>
-    <td>'.strtoupper($result['Barcode']).'</td>
-    <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
-    <td>'.strtoupper($result['ItemType']).'</td>
-    <td>'.strtoupper($result['Unit']).'</td>
-    <td>'.strtoupper($result['Quantity']).'</td>
-    <td>'.strtoupper($result['Costing']).'</td>
-    <td>'.strtoupper($result['Price']).'</td>
-    <td>'.strtoupper($result['Wholesale']).'</td>
-    <td>'.strtoupper($result['Promo']).'</td>
-    <td class="text-truncate" style="max-width: 75px;">'.strtoupper($result['Categories']).'</td>
-    <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Seller']).'</td>
-    <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Supplier']).'</td>
-    <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Date_Registered']).'</td>';
+                        } else {
+                            // Use the default link "stocksInEdit.php"
+                            echo '<a class="mr-2" href="stocksInEdit.php?id='.$result['ID'].'">
+                                    <i class="fa fa-edit"></i>
+                                </a>';
+                        }
+                        echo '</td>
+                            <td>'.strtoupper($result['Barcode']).'</td>
+                            <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
+                            <td>'.strtoupper($result['ItemType']).'</td>
+                            <td>'.strtoupper($result['Unit']).'</td>
+                            <td>'.strtoupper($result['Quantity']).'</td>
+                            <td>'.strtoupper($result['Costing']).'</td>
+                            <td>'.strtoupper($result['Price']).'</td>
+                            <td>'.strtoupper($result['Wholesale']).'</td>
+                            <td>'.strtoupper($result['Promo']).'</td>
+                            <td class="text-truncate" style="max-width: 75px;">'.strtoupper($result['Categories']).'</td>
+                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Seller']).'</td>
+                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Supplier']).'</td>
+                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Date_Registered']).'</td>';
 
 
 
-    '</tr>';
+                            '</tr>';
 
-                                        echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">'.$result['Product'].'</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                        </div>
-                        <div class="modal-body">
-                            
-                            <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
-                            <p><strong>Unit:</strong> '.$result['Unit'].'</p>
-                            <p><strong>Costing:</strong> '.$result['Costing'].'</p>
-                            <p><strong>Price:</strong> '.$result['Price'].'</p>
-                            <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
-                            <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
-                            <p><strong>Category:</strong> '.$result['Categories'].'</p>
-                            
-                            <p><strong>Seller:</strong> '.$result['Seller'].'</p>
-                            <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
-                            <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
-                            
-                          
-                            
-                            
+                                                                echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-md">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">'.$result['Product'].'</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    
+                                                    <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                                                    <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                                                    <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                                                    <p><strong>Price:</strong> '.$result['Price'].'</p>
+                                                    <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                                                    <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                                                    <p><strong>Category:</strong> '.$result['Categories'].'</p>
+                                                    
+                                                    <p><strong>Seller:</strong> '.$result['Seller'].'</p>
+                                                    <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
+                                                    <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
+                                                    
+                                                
+                                                    
+                                                    
 
-                        </div>
-                    </div>
-                </div>
-            </div>';
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> ';
+
+                                    
                                 }
+                                
 
                             ?>
                         </tbody>
                             </div>
-                  </div>     
+                        </div>     
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                            <ul class="pagination">
+                                <?php
+                                for ($i = 1; $i <= $totalPages; $i++) {
+                                    echo '<li class="' . ($i == $page ? 'active' : '') . '"><a class="page-link" style="background-color: ' . ($i == $page ? '#fe3c00; color: white;' : '') . '" href="?page=' . $i . '">' . $i . '</a></li>';
+                                }
+                                ?>
+                            </ul>
+                        </div>
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
 
-            
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
+</div>
+    
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
@@ -315,6 +368,47 @@ echo '</td>
       unset($_SESSION['status']);
    }
 ?>
+
+<!-- Include this script at the bottom of your HTML, before the closing </body> tag -->
+<script>
+    // Function to filter the table rows based on user input
+    function searchProducts() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("stocksinTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows
+        for (i = 0; i < tr.length; i++) {
+            // Assuming product name is in the third column, barcode in the second column, and date in the last column
+            var productName = tr[i].getElementsByTagName("td")[2];
+            var barcode = tr[i].getElementsByTagName("td")[1];
+            var date = tr[i].getElementsByTagName("td")[13];
+
+            if (productName || barcode || date) {
+                var productNameValue = productName.textContent || productName.innerText;
+                var barcodeValue = barcode.textContent || barcode.innerText;
+                var dateValue = date.textContent || date.innerText;
+                
+                // Check if any of the values match the filter
+                if (productNameValue.toUpperCase().indexOf(filter) > -1 || 
+                    barcodeValue.toUpperCase().indexOf(filter) > -1 ||
+                    dateValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // Add event listener to the search input field
+    document.getElementById("searchInput").addEventListener("input", searchProducts);
+</script>
+
+
+
 
 
 </body>
