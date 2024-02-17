@@ -279,25 +279,37 @@ session_start();
 
                             ?>
                         </tbody>
+                        <div class="pagination">
+    <?php
+    // Previous page button
+    if ($page > 1) {
+        echo '<a href="?page=' . ($page - 1) . '">Previous</a>';
+    }
+
+    // Page numbers
+    for ($i = 1; $i <= $totalPages; $i++) {
+        echo '<a href="?page=' . $i . '" ';
+        if ($page == $i) {
+            echo 'class="active"';
+        }
+        echo '>' . $i . '</a>';
+    }
+
+    // Next page button
+    if ($page < $totalPages) {
+        echo '<a href="?page=' . ($page + 1) . '">Next</a>';
+    }
+    ?>
+</div>
                             </div>
                         </div>     
                     </div>
-                    <div class="d-flex justify-content-end mt-3">
-                            <ul class="pagination">
-                                <?php
-                                for ($i = 1; $i <= $totalPages; $i++) {
-                                    echo '<li class="' . ($i == $page ? 'active' : '') . '"><a class="page-link" style="background-color: ' . ($i == $page ? '#fe3c00; color: white;' : '') . '" href="?page=' . $i . '">' . $i . '</a></li>';
-                                }
-                                ?>
-                            </ul>
-                        </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-    
+
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->

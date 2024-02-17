@@ -22,16 +22,17 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
 <style>
-            .products-section {
+    .products-section {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     background-color: #fff; /* Optional: Add a background color */
     transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
     }
     #productsTable {
         width: 100%  ;
         border-spacing: 0  ;
+        padding-top: 0;
     }
 
     
@@ -87,12 +88,15 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
     }
     /* Default styles for the search bar */
     .input-group {
-        margin-bottom: 15px;
+        margin-bottom: 0px;
+        padding-bottom: -10px;
     }
 
     #searchInput {
         max-width: 100%;
         width: 100%;
+        margin-bottom: 0px;
+        padding-bottom: -10px;
     }
 
     /* Responsive styles using media queries */
@@ -149,34 +153,17 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
        
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
             <div id="content">
-            <nav class="navbar navbar-expand navbar-light  topbar static-top shadow" style="background-color: white">
-    
+            <nav class="navbar navbar-expand na vbar-light  topbar static-top shadow" style="background-color: white">
+            <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">BizMaTech Products</h3>
 
     <ul class="navbar-nav ml-auto">
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo " " . $_SESSION['Name'] . " "; ?></span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="logout.php">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
         </li>
     </ul>
 </nav>
                 <div >
-                    <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">Product List</h3>
-                    </div>
                     <div>
                         <div class="products-section">
                         <div class="mb-3 d-flex justify-content-between align-items-center ml-1 mr-1">
@@ -185,7 +172,7 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                                 </div>
                             </form>
-                                
+                            <div id="searchResultInfo"></div>
                         </div>
                             <div >
                                 <div class="table-responsive">
@@ -272,6 +259,33 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
 </script>
 
+<script>
+    function filterTable() {
+        var searchInput = document.getElementById("searchInput").value.toUpperCase();
+        var table = document.getElementById("productsTable");
+        var tr = table.getElementsByTagName("tr");
+        var searchCount = 0;
+
+        for (var i = 1; i < tr.length; i++) {
+            var tdProductName = tr[i].getElementsByTagName("td")[0]; // Index of Product Name column
+            if (tdProductName) {
+                var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
+                if (productNameMatch) {
+                    tr[i].style.display = "";
+                    searchCount++;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+        var totalCount = tr.length - 1; // Excluding the header row
+        document.getElementById("searchResultInfo").innerText = " " + searchCount + " out of " + totalCount + " products";
+    }
+
+    document.getElementById("searchInput").addEventListener("keyup", filterTable);
+</script>
+
 
     <?php
        if(isset($_SESSION['status']) && $_SESSION['status'] !=''){
@@ -282,6 +296,7 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
             icon: "<?php echo $_SESSION['status_code'];?>",
         });
     </script>
+
     <?php
         unset($_SESSION['status']);
     }
