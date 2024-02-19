@@ -55,6 +55,7 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
         white-space: nowrap;
         font-family: Segoe UI;
         font-size: 12px;
+        text-align: left;
     }
 
     #productsTable tbody tr {
@@ -179,7 +180,7 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white">
-                                                <th class="text-center" style="padding-right: 40px;">PRODUCT NAME</th>
+                                                <th class="text-left" style="padding-right: 40px;">PRODUCT NAME</th>
                                                 <th class="text-center" style="padding-right: 20px">COST</th>
                                                 <th class="text-center" style="padding-right: 20px">SRP</th>
                                             </tr>
