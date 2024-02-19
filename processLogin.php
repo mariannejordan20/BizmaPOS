@@ -1,31 +1,24 @@
 <?php
-	session_start();
-	include('connection.php');
+    session_start();
+    include('connection.php');
 
-	$Username = $_POST['username'];
-	$Password = $_POST['password'];
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
+	$type = $_POST['role'];
 
-	$sql = "select * from users where UserName ='".$Username."' and Password ='".$Password."'";
-	$res = $conn -> query($sql);
-                  
-        $res = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM users WHERE Username = '".$user."' AND Password = '".$pass."' AND Type = '".$type."' ";
+	
+    $res = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($res);
 
-       if(mysqli_num_rows($res) > 0)
-{
-            if($row = mysqli_fetch_array($res))
-            {
-            	$_SESSION['hasLog'] = 1;
-                $_SESSION['Name'] = $row['Name'];
-            	echo "1";
-            	exit();
-            }
-        }
-            else{
-				$_SESSION['hasLog'] = 0;
-				echo"0";
-				
-
-				
-
-			}
+    if ($row) {
+        $_SESSION['hasLog'] = 1;
+        $_SESSION['Type'] = $row['Type']; 
+        $_SESSION['Name'] = $row['Name'];
+        echo "1";
+        exit();
+    } else {
+        $_SESSION['hasLog'] = 0;
+        echo "0";
+    }
 ?>

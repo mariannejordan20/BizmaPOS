@@ -15,7 +15,7 @@ include('header.php');
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-
+    
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="index.php">
@@ -32,13 +32,14 @@ include('header.php');
     <div class="sidebar-heading">
         Main
     </div>
-
+    <?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
     <li class="nav-item">
         <a class="nav-link " href="sales.php">
             <i class="fas fa-shopping-cart"></i>
             <span>Sales</span>
         </a>
     </li>
+    <?php } ?>
 
     <li class="nav-item">
     <a class="nav-link" id="productsLink" href="products.php">
@@ -47,7 +48,7 @@ include('header.php');
     </a>
 </li>
 
-
+<?php if ($_SESSION['Type'] == 'Admin') { ?>
     <?php
     // Fetch distinct categories from the products table
     $query = "SELECT DISTINCT Categories FROM products";
@@ -154,6 +155,7 @@ include('header.php');
             </div>
         </div>
     </li>  
+    <?php } ?>
     
 
     <!-- Sidebar Toggler (Sidebar) -->

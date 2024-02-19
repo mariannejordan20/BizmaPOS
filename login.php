@@ -56,6 +56,13 @@ border-bottom-right-radius: .3rem;
                 <form action="#">
 				  <div class="form-outline mb-2">
 
+          <label class="form-label" style="font-size: 10px; font-weight:bold; color:gray" for="form2Example22">ROLE</label>
+                    <select class="form-control form-control-sm" name="role" id="role">
+						<option value="">Select Role</option>
+						<option value="Admin">Admin</option>
+						<option value="Staff">Staff</option>
+					</select>
+
                   </div>
                   <div class="form-outline mb-2">
 				  	<label class="form-label" style="font-size: 10px; font-weight:bold; color:gray" for="form2Example22">USERNAME</label>
@@ -115,7 +122,18 @@ border-bottom-right-radius: .3rem;
     $("#btnLogin").click(function(){
         var uname = $("#username").val();
         var pword = $("#password").val();
+        var role = $("#role").val();
 
+
+        if (role == "") {
+            swal({
+                title: "Error",
+                text: "Please select a role!",
+                icon: "error",
+                button: "OK",
+            });
+            return false;
+        }
 
 
         if (uname == "") {
@@ -141,7 +159,7 @@ border-bottom-right-radius: .3rem;
         $.ajax({
             url:"processLogin.php",
             method: "post",
-            data: { "username": uname, "password": pword },
+            data: { "username": uname, "password": pword, "role": role },
             success: function(res) {
                 if (res == "1") {
                     window.location = "index.php";
@@ -157,5 +175,6 @@ border-bottom-right-radius: .3rem;
         });
     });
 </script>
+
 
     
