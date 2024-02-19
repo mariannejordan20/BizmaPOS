@@ -77,6 +77,7 @@ border-bottom-right-radius: .3rem;
 				<div class="text-center mb-1">
 					<button id="btnLogin" value="Login" class="btn btn-block fa-lg" type="button" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;"> LOG
 					IN</button>
+          <button id="btnSignUp" class="btn btn-block fa-lg" type="button" data-bs-toggle="modal" data-bs-target="#signupModal" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;"> SIGN UP</button>
 				</div>
                 </form>
 
@@ -93,6 +94,45 @@ border-bottom-right-radius: .3rem;
       </div>
     </div>
   </div>
+  <!-- Sign Up Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Sign Up Form -->
+        <form id="signupForm">
+          <div class="mb-3">
+            <label for="signupUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="signupUsername" name="signupUsername">
+          </div>
+          <div class="mb-3">
+            <label for="signupPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="signupPassword" name="signupPassword">
+          </div>
+          <div class="mb-3">
+            <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
+            <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
+          </div>
+          <div class="mb-3">
+            <label for="signupRole" class="form-label">Role</label>
+            <select class="form-select" id="signupRole" name="signupRole">
+              <option value="" selected disabled>Choose Role</option>
+              <option value="admin">Admin</option>
+              <option value="staff">Staff</option>
+            </select>
+          </div>
+          <!-- Add more fields as needed -->
+          <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 </section>
      <!-- Link to Bootstrap JavaScript file -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
