@@ -5,11 +5,11 @@ include('connection.php');
 
 
 
-$sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
-            FROM products 
-            ORDER BY Categories";
-            
-    $results = $conn->query($sql);
+$sql = "SELECT ID, ProductID, Barcode, Product, ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered 
+        FROM products 
+        ORDER BY Categories";
+        
+$results = $conn->query($sql);
 
     
 
@@ -186,16 +186,47 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
                                             </tr>
                                         </thead>
                                         <tbody class="custom-font-size" style="color: #313A46;">
-                                            <?php
-                                            foreach ($results as $result) {
-                                                echo '<tr>
-                                                        <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
-                                                    </tr>';
+                                        <?php
+foreach ($results as $result) {
+    echo '<tr data-product-id="' . $result['ID'] . '">
+            <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
+        </tr>';
+
+
+                                                    
                                                     
                                                 }
                                             ?>
+
+<?php
+foreach ($results as $result) {
+    echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">'.$result['Product'].'</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                            <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                            <p><strong>Quantity:</strong> '.$result['Quantity'].'</p>
+                            <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                            <p><strong>SRP</strong> '.$result['Price'].'</p>
+                            <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                            <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                            <p><strong>Warranty(Months):</strong> '.$result['Warranty'].'</p>
+                            <p><strong>Category:</strong> '.$result['Categories'].'</p>
+                            <p><strong>Sub-Category:</strong> '.$result['SubCategory'].'</p>
+                            <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+}
+?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -236,6 +267,22 @@ $sql = "SELECT ID, ProductID, Barcode, Product, Costing, Price
         alert("Text copied to clipboard: " + text);
     }
 </script>
+<script>
+        // Function to open the modal with the specified ID
+        function openModal(productId) {
+            var modalId = 'productsModal' + productId;
+            $('#' + modalId).modal('show');
+        }
+
+        // Attach click event listener to each row to open the modal
+        $(document).ready(function() {
+            $('#productsTable tbody tr').click(function() {
+                // Get the product ID from the row's data attribute
+                var productId = $(this).data('product-id');
+                openModal(productId);
+            });
+        });
+    </script>
 
 
 <script>
