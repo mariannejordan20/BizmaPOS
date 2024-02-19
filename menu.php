@@ -48,7 +48,7 @@ include('header.php');
     </a>
 </li>
 
-<?php if ($_SESSION['Type'] == 'Admin') { ?>
+<?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
     <?php
     // Fetch distinct categories from the products table
     $query = "SELECT DISTINCT Categories FROM products";
