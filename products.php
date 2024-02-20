@@ -188,9 +188,11 @@ if ($page < 1) {
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                                 </div>
                             </form>
+                            <?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
                                 <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
+                                <?php } ?>
                         </div>
                             <div class="container-fluid">
                                 <div class="table-responsive">

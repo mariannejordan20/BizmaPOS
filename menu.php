@@ -40,13 +40,24 @@ include('header.php');
         </a>
     </li>
     <?php } ?>
-
+ <?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
     <li class="nav-item">
+    <a class="nav-link" href="products.php">
+        <i class="fas fa-fw fa-cube"></i>
+        <span>Products</span>
+    </a>
+</li>
+
+<?php } ?>
+<?php if ($_SESSION['Type'] == 'Staff') { ?>
+<li class="nav-item">
     <a class="nav-link" id="productsLink" href="products.php">
         <i class="fas fa-fw fa-cube"></i>
         <span>Products</span>
     </a>
 </li>
+<?php } ?>
+
 
 <?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
     <?php
