@@ -1,24 +1,32 @@
 <?php
-    session_start();
-    include('connection.php');
+session_start();
+include('connection.php');
 
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
-	$type = $_POST['role'];
+$user = $_POST['username'];
+$pass = $_POST['password'];
+$type = $_POST['role'];
 
-    $sql = "SELECT * FROM users WHERE Username = '".$user."' AND Password = '".$pass."' AND Type = '".$type."' ";
-	
-    $res = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($res);
+// Get the full IP address of the device
+ $ipaddress = getenv("REMOTE_ADDR") ;
 
-    if ($row) {
-        $_SESSION['hasLog'] = 1;
-        $_SESSION['Type'] = $row['Type']; 
-        $_SESSION['Name'] = $row['Name'];
-        echo "1";
-        exit();
-    } else {
-        $_SESSION['hasLog'] = 0;
-        echo "0";
-    }
+$sql = "SELECT ID, Username, Pword, NameOfUser, UserType FROM users WHERE Username = '".$user."' AND Pword = '".$pass."' AND UserType = '".$type."' ";
+
+$res = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($res);
+
+$nameofuser = $row['NameOfUser'];
+
+if ($row) {
+    $_SESSION['hasLog'] = 1;
+    $_SESSION['Type'] = $row['UserType']; 
+    $_SESSION['Name'] = $row['NameOfUser'];
+
+    $loginhistory = "INSERT INTO userlogs SET NameOfUser = '$nameofuser', TypeOfUser = '$type', IP_add = '$ipaddress'";
+    $res2 = mysqli_query($conn, $loginhistory);
+    echo "1";
+    exit();
+} else {
+    $_SESSION['hasLog'] = 0;
+    echo "0";
+}
 ?>
