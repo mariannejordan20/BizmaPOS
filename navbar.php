@@ -76,4 +76,34 @@
   </div>
 </div>
 
+<script>
+  document.getElementById('signupForm').addEventListener('submit', function(event) {
+    // Prevent form submission
+    event.preventDefault();
+
+    // Get form fields
+    var username = document.getElementById('signupUsername').value.trim();
+    var password = document.getElementById('signupPassword').value.trim();
+    var confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+    var name = document.getElementById('NameOfUser').value.trim();
+    var role = document.getElementById('signupRole').value;
+
+    // Check if any field is empty
+    if (!username || !password || !confirmPassword || !name || !role) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    // If all checks pass, submit the form
+    this.submit();
+  });
+</script>
+
+
 

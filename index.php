@@ -437,10 +437,12 @@ include('connection.php');
     <script src="assetsDT/js/pdfmake.min.js"></script>
     <script src="assetsDT/js/vfs_fonts.js"></script>
     <script src="assetsDT/js/custom.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="js/sweetalert2.all.min.js"></script>
   <script src="js/sweetalert.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+  
 
 <script src="js/delete.js"></script>
 
