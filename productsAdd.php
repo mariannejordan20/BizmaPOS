@@ -69,12 +69,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-left: 2%;">
-                       
-                        <form action = "productsAddSave.php" method="post" enctype="multipart/form-data">
-                        <div class="card-header" style="background-color: #eeeeee; border: none">
+                    <form action = "productsAddSave.php" method="post" enctype="multipart/form-data">
+                    <div class="card-header" style="background-color: #eeeeee; border: none">
                         <h3 style="color: #313A46; margin-bottom: -10px"><b><?= isset($id) ? "Update product Details" : "Register New Product" ?></b></h3>
-</div>
-</div>      
+                    </div>
+                </div>      
 <div class="section">
 <div class="mx-0 py-5 px-3 mx-ns-4 bg-gradient-maroon">
 <div class="row justify-content-center" style="margin-top:-2em;">
@@ -91,20 +90,17 @@
                             <div class="row">
 
                            <?php
-  
+                                $sqlMaxID = "SELECT MAX(ID) AS maxID FROM products";
+                                $resultMaxID = $conn->query($sqlMaxID);
+                                $rowMaxID = $resultMaxID->fetch_assoc();
+                                $maxID = $rowMaxID['maxID'];
 
-   
-    $sqlMaxID = "SELECT MAX(ID) AS maxID FROM products";
-    $resultMaxID = $conn->query($sqlMaxID);
-    $rowMaxID = $resultMaxID->fetch_assoc();
-    $maxID = $rowMaxID['maxID'];
+                                
+                                $nextID = $maxID + 1;
 
-    
-    $nextID = $maxID + 1;
-
-    // Format the ID to be six digits long
-    $next_IDcode = sprintf("%06d", $nextID);
-?>
+                                // Format the ID to be six digits long
+                                $next_IDcode = sprintf("%06d", $nextID);
+                            ?>
                                  <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
                                     <label for="ID" class="control-label">ID</label>
@@ -127,15 +123,14 @@
                                     
                         
                                     </div>
+                                </div>
 
-</div>
-
-                                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
-                            <div class="form-group">
-                                <label for="ProductID" class="control-label">Product ID</label>
-                                <input type="hidden" name="ProductID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
-                            </div>
-                        </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="ProductID" class="control-label">Product ID</label>
+                                        <input type="hidden" name="ProductID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
+                                    </div>
+                                </div>
 
 
                                 

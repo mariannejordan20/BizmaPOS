@@ -102,7 +102,7 @@ include('header.php');
                                 </div>
                                 <div class="modal-body">
                                     <!-- Add your form for adding new units here -->
-                                    <form action="unitsAddSave.php" method="post" enctype="multipart/form-data">
+                                <form action="unitsAddSave.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="unit_name">Unit Name</label>
                                         <input type="text" name="unit_name" class="form-control form-control-sm rounded-5 text-uppercase" maxlength="3" required/>
