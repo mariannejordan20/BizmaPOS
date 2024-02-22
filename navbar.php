@@ -44,7 +44,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
       </div>
       <div class="modal-body">
         <!-- Sign Up Form -->
@@ -74,7 +74,7 @@
               <option value="staff">Staff</option>
             </select>
           </div>
-          <!-- Add more fields as needed -->
+         
           <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
         </form>
       </div>
@@ -84,10 +84,10 @@
 
 <script>
   document.getElementById('signupForm').addEventListener('submit', function(event) {
-    // Prevent form submission
+    
     event.preventDefault();
 
-    // Get form fields
+  
     var username = document.getElementById('signupUsername').value.trim();
     var password = document.getElementById('signupPassword').value.trim();
     var confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
