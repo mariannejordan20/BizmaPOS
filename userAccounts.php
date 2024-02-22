@@ -174,7 +174,7 @@ $results = $conn->query($sql);
                                 </div>
                             </form>
                             <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
-                                <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
+                                <a href ="createUser.php" class="btn btn-success" style="color: white; " data-bs-toggle="modal" data-bs-target="#signupModal">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <?php } ?>
@@ -203,7 +203,7 @@ foreach ($results as $result) {
   
     if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
         echo '<a class="mr-2" href="userAccountsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-        <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+        <a href="userAccountsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
     }
     echo '</td>';
 
@@ -216,6 +216,48 @@ foreach ($results as $result) {
    
 }
 ?>
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
+      </div>
+      <div class="modal-body">
+        <!-- Sign Up Form -->
+        <form id="signupForm" action="createUser.php" method="POST">
+          <div class="mb-3">
+            <label for="signupUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="signupUsername" name="signupUsername">
+          </div>
+          <div class="mb-3">
+            <label for="signupPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="signupPassword" name="signupPassword">
+          </div>
+          <div class="mb-3">
+            <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
+            <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
+          </div>
+          <div class="mb-3">
+            <label for="NameOfUser" class="form-label">Name</label>
+            <input type="text" class="form-control" id="NameOfUser" name="NameOfUser">
+          </div>
+
+          <div class="mb-3">
+            <label for="signupRole" class="form-label">Role</label>
+            <select class="form-select" id="signupRole" name="signupRole">
+              <option value="" selected disabled>Choose Role</option>
+              <option value="admin">Admin</option>
+              <option value="staff">Staff</option>
+            </select>
+          </div>
+         
+          <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
                                         </tbody>
                                     </table>
@@ -315,6 +357,34 @@ function populateDropdown(selectId, columnIndex) {
     document.getElementById("unitFilter").addEventListener("change", filterTable);
     document.getElementById("categoryFilter").addEventListener("change", filterTable);
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
+</script>
+<script>
+  document.getElementById('signupForm').addEventListener('submit', function(event) {
+    
+    event.preventDefault();
+
+  
+    var username = document.getElementById('signupUsername').value.trim();
+    var password = document.getElementById('signupPassword').value.trim();
+    var confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+    var name = document.getElementById('NameOfUser').value.trim();
+    var role = document.getElementById('signupRole').value;
+
+    // Check if any field is empty
+    if (!username || !password || !confirmPassword || !name || !role) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    // If all checks pass, submit the form
+    this.submit();
+  });
 </script>
 
     <?php
