@@ -22,7 +22,7 @@ if (mysqli_num_rows($query)>0)
 
 else{
     
-    $sql = "INSERT INTO users (Username, Pword, NameOfUser, TypeOfUser) VALUES ('$username', '$password', '$nameOfUser', '$userType')";
+    $sql = "INSERT INTO users (Username, Pword, NameOfUser, TypeOfUser,Date_Registered) VALUES ('$username', '$password', '$nameOfUser', '$userType',CURRENT_TIMESTAMP)";
     $result = mysqli_query($conn, $sql);
     
     if ($result){

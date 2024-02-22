@@ -173,7 +173,7 @@ $results = $conn->query($sql);
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                                 </div>
                             </form>
-                            <?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
+                            <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
                                 <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
@@ -201,8 +201,8 @@ foreach ($results as $result) {
 
     echo '<td>';
   
-    if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') {
-        echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
+    if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
+        echo '<a class="mr-2" href="userAccountsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
         <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
     }
     echo '</td>';
