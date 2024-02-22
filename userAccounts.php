@@ -14,16 +14,10 @@ if (empty($haslog)){
     exit;
 }
 
-
-
 $sql = "SELECT ID, Username, Pword, TypeOfUser,NameOfUser, Date_Registered
         FROM users";
         
 $results = $conn->query($sql);
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -196,68 +190,104 @@ $results = $conn->query($sql);
                                         </thead>
                                         <tbody class="custom-font-size" style="color: #313A46;">
                                         <?php
-foreach ($results as $result) {
-    echo '<tr>';
+                                            foreach ($results as $result) {
+                                                echo '<tr>';
+                                            
+                                                echo '<td>';
+                                                if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
+                                                    echo '<a class="mr-2" href="#" data-bs-toggle="modal" data-bs-target="#editUserModal'.$result['ID'].'"><i class="fa fa-edit"></i></a>
+                                                    <a href="userAccountsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+                                                }
+                                                echo '</td>';
+                                            
+                                                echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ID'] . '</td>
+                                                        <td class="text-truncate text-center" style="max-width: 100px;">' . $result['NameOfUser'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 50px;">' . $result['TypeOfUser'] . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+                                                    </tr>';
+                                            
+                                                // Modal for editing user
+                                                echo '<div class="modal fade" id="editUserModal'.$result['ID'].'" tabindex="-1" aria-labelledby="editUserModalLabel'.$result['ID'].'" aria-hidden="true">';
+                                                echo '<div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <h5 class="modal-title" id="editUserModalLabel'.$result['ID'].'">Edit User</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        <!-- Edit User Form -->
+                                                        <form action="editUser.php" method="POST">
+                                                          <input type="hidden" name="userID" value="'.$result['ID'].'">
+                                                          <div class="mb-3">
+                                                            <label for="editUsername" class="form-label">Username</label>
+                                                            <input type="text" class="form-control" id="editUsername" name="editUsername" value="'.$result['Username'].'">
+                                                          </div>
+                                                          <div class="mb-3">
+                                                            <label for="editPassword" class="form-label">Password</label>
+                                                            <input type="password" class="form-control" id="editPassword" name="editPassword" placeholder="Enter new password">
+                                                        </div>
+                                                          <div class="mb-3">
+                                                            <label for="editNameOfUser" class="form-label">Name</label>
+                                                            <input type="text" class="form-control" id="editNameOfUser" name="editNameOfUser" value="'.$result['NameOfUser'].'">
+                                                          </div>
+                                                          <div class="mb-3">
+                                                            <label for="editRole" class="form-label">Role</label>
+                                                            <select class="form-select" id="editRole" name="editRole">
+                                                              <option value="admin" '.($result['TypeOfUser'] == 'ADMIN' ? 'selected' : '').'>ADMIN</option>
+                                                              <option value="staff" '.($result['TypeOfUser'] == 'STAFF' ? 'selected' : '').'>ADMIN</option>
+                                                            </select>
+                                                          </div>
+                                                          <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                        </form>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>';
+                                            }
+                                            
+                                            ?>
+                                            <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Sign Up Form -->
+                                                    <form id="signupForm" action="createUser.php" method="POST">
+                                                    <div class="mb-3">
+                                                        <label for="signupUsername" class="form-label">Username</label>
+                                                        <input type="text" class="form-control" id="signupUsername" name="signupUsername">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="signupPassword" class="form-label">Password</label>
+                                                        <input type="password" class="form-control" id="signupPassword" name="signupPassword">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
+                                                        <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="NameOfUser" class="form-label">Name</label>
+                                                        <input type="text" class="form-control" id="NameOfUser" name="NameOfUser">
+                                                    </div>
 
-    echo '<td>';
-  
-    if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
-        echo '<a class="mr-2" href="userAccountsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-        <a href="userAccountsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
-    }
-    echo '</td>';
-
-    echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ID'] . '</td>
-            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['NameOfUser'] . '</td>
-            <td class="text-truncate" style="max-width: 50px;">' . $result['TypeOfUser'] . '</td>
-            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
-        </tr>';
-
-   
-}
-?>
-<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
-      </div>
-      <div class="modal-body">
-        <!-- Sign Up Form -->
-        <form id="signupForm" action="createUser.php" method="POST">
-          <div class="mb-3">
-            <label for="signupUsername" class="form-label">Username</label>
-            <input type="text" class="form-control" id="signupUsername" name="signupUsername">
-          </div>
-          <div class="mb-3">
-            <label for="signupPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" id="signupPassword" name="signupPassword">
-          </div>
-          <div class="mb-3">
-            <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
-            <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
-          </div>
-          <div class="mb-3">
-            <label for="NameOfUser" class="form-label">Name</label>
-            <input type="text" class="form-control" id="NameOfUser" name="NameOfUser">
-          </div>
-
-          <div class="mb-3">
-            <label for="signupRole" class="form-label">Role</label>
-            <select class="form-select" id="signupRole" name="signupRole">
-              <option value="" selected disabled>Choose Role</option>
-              <option value="admin">Admin</option>
-              <option value="staff">Staff</option>
-            </select>
-          </div>
-         
-          <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+                                                    <div class="mb-3">
+                                                        <label for="signupRole" class="form-label">Role</label>
+                                                        <select class="form-select" id="signupRole" name="signupRole">
+                                                        <option value="" selected disabled>Choose Role</option>
+                                                        <option value="admin">Admin</option>
+                                                        <option value="staff">Staff</option>
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
+                                                    </form>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
 
                                         </tbody>
                                     </table>
