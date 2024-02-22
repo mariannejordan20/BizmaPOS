@@ -21,13 +21,13 @@
     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
     User accounts
     </a>
-    <?php } ?>
+  
 
                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">
     <i class="fas fa-user-plus fa-sm fa-fw mr-2 text-gray-400"></i>
     Add User
 </a>
-
+<?php } ?>
                 <a class="dropdown-item" href="logout.php">
     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
     Logout
