@@ -16,6 +16,12 @@
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
                 <div class="dropdown-divider"></div>
+                <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
+                <a class="dropdown-item" href="userAccounts.php">
+    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+    User accounts
+    </a>
+    <?php } ?>
 
                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">
     <i class="fas fa-user-plus fa-sm fa-fw mr-2 text-gray-400"></i>

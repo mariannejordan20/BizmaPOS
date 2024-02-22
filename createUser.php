@@ -8,7 +8,7 @@ $confirmPassword = $_POST['signupConfirmPassword'];
 $nameOfUser = $_POST['NameOfUser'];
 $userType = $_POST['signupRole'];
 
-
+$userType = strtoupper($userType);
 $query = mysqli_query($conn,"SELECT * FROM users WHERE Username = '$username' ");
 
 if (mysqli_num_rows($query)>0)
@@ -17,17 +17,19 @@ if (mysqli_num_rows($query)>0)
 
 	$_SESSION['status'] = "User already exists!";
     $_SESSION['status_code'] = "error";
-	$referer = $_SERVER['HTTP_REFERER'];
-    header("Location: $referer");
+    header("Location: userAccounts.php");
 }
 
 else{
-    // Insert user data into the database
-    $sql = "INSERT INTO users (Username, Pword, NameOfUser, UserType) VALUES ('$username', '$password', '$nameOfUser', '$userType')";
+    
+    $sql = "INSERT INTO users (Username, Pword, NameOfUser, TypeOfUser) VALUES ('$username', '$password', '$nameOfUser', '$userType')";
     $result = mysqli_query($conn, $sql);
     
     if ($result){
-        
+        $_SESSION['status'] = "User Registered!";
+    $_SESSION['status_code'] = "success";
+
+    header("Location: userAccounts.php ");
    
     }
 

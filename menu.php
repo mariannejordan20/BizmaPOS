@@ -32,7 +32,7 @@ include('header.php');
     <div class="sidebar-heading">
         Main
     </div>
-    <?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
+    <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
     <li class="nav-item">
         <a class="nav-link " href="sales.php">
             <i class="fas fa-shopping-cart"></i>
@@ -40,7 +40,7 @@ include('header.php');
         </a>
     </li>
     <?php } ?>
- <?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
+ <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
     <li class="nav-item">
     <a class="nav-link" href="products.php">
         <i class="fas fa-fw fa-cube"></i>
@@ -49,7 +49,8 @@ include('header.php');
 </li>
 
 <?php } ?>
-<?php if ($_SESSION['Type'] == 'Staff') { ?>
+
+<?php if ($_SESSION['Type'] == 'STAFF') { ?>
 <li class="nav-item">
     <a class="nav-link" id="productsLink" href="products.php">
         <i class="fas fa-fw fa-cube"></i>
@@ -59,7 +60,7 @@ include('header.php');
 <?php } ?>
 
 
-<?php if ($_SESSION['Type'] == 'Admin' || $_SESSION['Type'] == 'Manager') { ?>
+<?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
     <?php
     // Fetch distinct categories from the products table
     $query = "SELECT DISTINCT Categories FROM products";
