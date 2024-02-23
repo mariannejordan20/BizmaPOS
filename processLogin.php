@@ -10,7 +10,7 @@ $type = $_POST['role'];
 // Get the full IP address of the device
  $ipaddress = getenv("REMOTE_ADDR") ;
 
-$sql = "SELECT ID, Username, Pword, NameOfUser, TypeOfUser FROM users WHERE Username = '".$user."' AND Pword = '".$pass."' AND TypeOfUser = '".$type."' ";
+$sql = "SELECT ID, Username, Pword, NameOfUser, TypeOfUser FROM posusers WHERE Username = '".$user."' AND Pword = '".$pass."' AND TypeOfUser = '".$type."' ";
 
 $res = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($res);
