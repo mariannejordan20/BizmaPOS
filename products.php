@@ -216,12 +216,44 @@ if ($page < 1) {
                             <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
                                 <div class=" searchAdjust">
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
-                                            <button type="button" class="btn note">
-                                                <i class="fa fa-copy"></i>
-                                            </button>
+                                    <button type="button" class="btn note" data-toggle="modal" data-target="#NoteModal" onclick="editNote()">
+    <i class="fa fa-sticky-note-o"></i>
+</button>
                                         
                                 </div>
+                                <a href="notes.php" class="btn note">
+    <i class="fa fa-sticky-note-o"></i>
+</a>
                             </form>
+<!-- Note MODAL -->
+<div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-labelledby="NoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="NoteModalLabel">NOTE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Note Form -->
+                <form id="noteForm">
+                    <div class="form-group">
+                        <label for="noteContent">Note Content:</label>
+                        <textarea class="form-control" id="noteContent" name="noteContent" rows="6" style="resize: vertical;" required></textarea> <!-- Change rows attribute value to 6 for larger initial size -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="updateNote()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
                             <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
                                 <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
                                     <i class="fa fa-plus"></i>
@@ -424,6 +456,67 @@ function populateDropdown(selectId, columnIndex) {
     document.getElementById("unitFilter").addEventListener("change", filterTable);
     document.getElementById("categoryFilter").addEventListener("change", filterTable);
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
+</script>
+
+<script>
+    function editNote() {
+        // Fetch current note content from database
+        $.ajax({
+            url: "fetchNote.php", // Your PHP script to fetch note content
+            type: 'get',
+            success: function(data, status) {
+                // Populate modal with fetched data
+                document.getElementById('noteContent').value = data;
+            },
+            error: function(xhr, status, error) {
+                // Handle error, if needed
+                console.error("Failed to fetch note");
+            }
+        });
+    }
+
+    function updateNote() {
+    // Get updated note content from form
+    var noteContent = document.getElementById('noteContent').value;
+
+    // Perform AJAX request to update note
+    $.ajax({
+        url: "updateNote.php", // Your PHP script to update note content
+        type: 'post',
+        data: {
+            noteContent: noteContent
+        },
+        success: function(data, status) {
+            // Handle success
+            console.log("Success: " + data);
+            // Optionally, show a success message using sweetalert
+            Swal.fire({
+                icon: 'success',
+                title: 'Note updated successfully',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Close the modal after a delay
+            setTimeout(function() {
+                $('#NoteModal').modal('hide');
+            }, 1500); // Adjust the delay as needed
+        },
+        error: function(xhr, status, error) {
+            // Handle error
+            console.error("Error: " + error);
+            // Optionally, show an error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            });
+        }
+    });
+}
+
+
+
+
 </script>
 
     <?php
