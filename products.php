@@ -128,6 +128,8 @@ if ($page < 1) {
             max-width: 400px;  /* Set a specific max-width for phones */
             width: 100%;  
                 /* Allow it to take full width if needed */
+                display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
         }
     }
     @media (min-width: 614px) {
@@ -135,6 +137,8 @@ if ($page < 1) {
         .searchAdjust {
             max-width: 400px;  /* Set a specific max-width for phones */
             width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
         }
     }
 
@@ -143,6 +147,8 @@ if ($page < 1) {
         .searchAdjust {
             max-width: 480px;  /* Set a specific max-width for PCs */
             width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
         }
     }
     
@@ -167,6 +173,15 @@ if ($page < 1) {
         background-color: #fe3c00;
         color: #fff;
     }
+
+.searchInput {
+    flex: 1; /* Allow the input to grow and fill available space */
+    margin-right: 5px; /* Add some spacing between input and button */
+}
+
+.note {
+    flex-shrink: 0; /* Prevent the button from shrinking */
+}
 </style>
 </head>
 <body>
@@ -186,6 +201,10 @@ if ($page < 1) {
                             <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
                                 <div class=" searchAdjust">
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
+                                            <button type="button" class="btn note">
+                                                <i class="fa fa-copy"></i>
+                                            </button>
+                                        
                                 </div>
                             </form>
                             <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
