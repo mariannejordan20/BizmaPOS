@@ -121,17 +121,22 @@ if ($page < 1) {
         width: 100%;
     }
 
-    /* Responsive styles using media queries */
-    @media (min-width: 576px) {
-        /* Adjust styles for phones and larger screens */
-        .searchAdjust {
-            max-width: 400px;  /* Set a specific max-width for phones */
-            width: 100%;  
-                /* Allow it to take full width if needed */
-                display: flex; /* Use flexbox layout */
-    align-items: center; /* Center items vertically */
-        }
+/* Responsive styles using media queries */
+@media (max-width: 576px) {
+    /* Adjust styles for phones */
+    .searchAdjust {
+        max-width: 300px; /* Set a specific max-width for phones */
+        width: 100%; /* Allow it to take full width if needed */
+        display: flex; /* Use flexbox layout */
+        align-items: center; /* Center items vertically */
     }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+    }
+}
+
+
     @media (min-width: 614px) {
         /* Adjust styles for phones and larger screens */
         .searchAdjust {
@@ -173,15 +178,25 @@ if ($page < 1) {
         background-color: #fe3c00;
         color: #fff;
     }
-
-.searchInput {
-    flex: 1; /* Allow the input to grow and fill available space */
-    margin-right: 5px; /* Add some spacing between input and button */
+    .note {
+    display: inline-block; /* Display the button inline */
+    margin-left: 5px; /* Add some spacing between input and button */
 }
 
-.note {
-    flex-shrink: 0; /* Prevent the button from shrinking */
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .searchAdjust {
+        flex-direction: row; /* Keep elements in a row on smaller screens */
+        align-items: center; /* Center items vertically */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+        margin-top: 0; /* Reset margin top */
+    }
 }
+
+
 </style>
 </head>
 <body>
