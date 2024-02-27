@@ -274,8 +274,8 @@ $results = $conn->query($sql);
                                 <div class=" searchAdjust">
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                                     <button type="button" class="btn note" data-toggle="modal" data-target="#NoteModal" onclick="editNote()">
-    <i class="fa fa-sticky-note-o"></i>
-</button>
+                            <i class="fa fa-sticky-note-o"></i>
+                        </button>
                                         
                                 </div>
                                 

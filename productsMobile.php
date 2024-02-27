@@ -8,7 +8,6 @@ include('connection.php');
 $sql = "SELECT ID, ProductID, Barcode, Product, ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered 
         FROM products 
         ORDER BY Categories";
-        
 $results = $conn->query($sql);
 
     
@@ -101,51 +100,46 @@ $results = $conn->query($sql);
     }
 
     /* Responsive styles using media queries */
-    @media (min-width: 576px) {
-        /* Adjust styles for phones and larger screens */
-        .searchAdjust {
-            max-width: 400px;  /* Set a specific max-width for phones */
-            width: 100%;  
-                /* Allow it to take full width if needed */
-        }
-    }
-    @media (min-width: 614px) {
-        /* Adjust styles for phones and larger screens */
-        .searchAdjust {
-            max-width: 400px;  /* Set a specific max-width for phones */
-            width: 100%;      /* Allow it to take full width if needed */
-        }
-    }
 
-    @media (min-width: 1000px) {
-        /* Adjust styles for PCs and larger screens */
-        .searchAdjust {
-            max-width: 480px;  /* Set a specific max-width for PCs */
-            width: 100%;      /* Allow it to take full width if needed */
-        }
+        /* Adjust styles for phones and larger screens */
+        .modal-dialog {
+        margin: 0;
+        width: 100vw; /* Full width of the viewport */
+        max-width: none; /* Remove any maximum width */
+        height: 100vh; /* Full height of the viewport */
+        max-height: none; /* Remove any maximum height */
     }
     
-    .pagination {
-        display: flex;
-        list-style: none;
-        padding-right: 3%;
+    
+
+    .modal-content {
+        height: 80%; /* Full height of the modal content */
     }
 
-    .pagination a {
-        display: inline-block;
-        padding: 8px 16px;
-        text-decoration: none;
-        color: #333;
-        margin: 0 4px;
-        border-radius: 4px;
+    .modal-body {
+        max-height: calc(100vh - 56px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
     }
 
-    .pagination a.active,
-    .pagination a:active,
-    .pagination a:hover {
-        background-color: #fe3c00;
-        color: #fff;
+    .modal-body #noteContent {
+        width: 100%;
+        height: calc(100vh - 200px); /* Adjust as needed */
     }
+
+    .searchAdjust {
+        max-width: 300px; /* Set a specific max-width for phones */
+        width: 100%; /* Allow it to take full width if needed */
+        display: flex; /* Use flexbox layout */
+        align-items: center; /* Center items vertically */
+    }
+
+    .note {
+        margin-left: 10px;
+        
+    }
+
+    
+
 </style>
 </head>
 <body>
@@ -167,15 +161,20 @@ $results = $conn->query($sql);
                 <div >
                     <div>
                         <div class="products-section">
-                        <div class="mb-3 d-flex justify-content-between align-items-center ml-1 mr-1">
-                            <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
-                                <div class=" searchAdjust">
-                                    <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
-                                </div>
-                            </form>
-                            <div id="searchResultInfo"></div>
-                        </div>
+                        <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+    <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+        <div class="searchAdjust">
+            <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
+            <!-- Note Button -->
+            <button type="button" class="btn note" data-toggle="modal" data-target="#NoteModal" onclick="editNote()">
+                <i class="fa fa-sticky-note-o"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
                             <div >
+                            <div id="searchResultInfo"></div>
                                 <div class="table-responsive">
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
@@ -227,6 +226,31 @@ foreach ($results as $result) {
             </div>';
 }
 ?>
+<div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-labelledby="NoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="NoteModalLabel">NOTE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Note Form -->
+                <form id="noteForm">
+                    <div class="form-group">
+                        <label for="noteContent" style= "overflow: hidden;">Note Content:</label>
+                        <textarea class="form-control" id="noteContent" name="noteContent" rows="6" style="resize: vertical;" readonly></textarea> <!-- Change rows attribute value to 6 for larger initial size -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
                                         </tbody>
                                     </table>
                                 </div>
@@ -332,6 +356,31 @@ foreach ($results as $result) {
     }
 
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
+</script>
+
+
+<script>
+    function editNote() {
+        // Fetch current note content from database
+        $.ajax({
+            url: "fetchNote.php", // Your PHP script to fetch note content
+            type: 'get',
+            success: function(data, status) {
+                
+                document.getElementById('noteContent').value = data;
+            },
+            error: function(xhr, status, error) {
+               
+                console.error("Failed to fetch note");
+            }
+        });
+    }
+
+    
+
+
+
+
 </script>
 
 
