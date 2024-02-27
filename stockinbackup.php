@@ -235,175 +235,22 @@ $results = $conn->query($sql);
     this.submit();
   });
 </script>
+
+
+
+
+
                         <div class="stocksin-section">
                         <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                        <input type="text" id="productSearchInput" class="form-control mb-3" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 1px;">
-        
-                    </div>
-                    <div class="section">
-                <div class="container-fluid">
-                    <form action="" id="student-form"> 
-                        <fieldset>
-                            
-                            <div class="row">
-                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                    <label for="ID" class="control-label">ID</label>
-                                   <input type="number" name="ID" class="form-control form-control-sm rounded-5"/>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                        <label for="ItemType" class="control-label">Type</label>
-                                        <select name="ItemType" class="form-control form-control-sm form-control-border rounded-5" required>
-                                        <option value="">Select Type</option>
-                                        <option value="W/ SERIAL">W/ Serial</option>
-                                        <option value="NO SERIAL">No Serial</option>
-                                        <option value="W/ EXPIRY">W/ Expiry</option>
-                                       
-                                        </select>
-                                    
-                                    
-                        
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="ProductID" class="control-label">Product ID</label>
-                                        <input type="hidden" name="ProductID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
-                                    </div>
-                                </div>
-
-
-                                
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Barcode" class="control-label">Barcode </label>
-                                    <input type="number" name="Barcode" class="form-control form-control-sm rounded-5" />
-                                    </div>
-                                </div>
-
-                        
-
-                                
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <div class="form-group">
-                                    <label for="Product" class="control-label">Product Name</label>
-                                    <input type="text" name="Product"  class="form-control form-control-sm rounded-5"  required/>
-                                    </div>
-                                </div>
-                                
-
-
-                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                <div class="form-group">
-                                    <label for="Categories" class="control-label">Category</label>
-                                    <div id="categoriesDropdownContainer">
-                                        <select name="Categories" id="Categories" class="form-control form-control-sm rounded-5" required>
-                                            <option value="" selected disabled>Select a category</option>
-                                        </select>
-                                    </div>
-                                </div>
+                            <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                            <div class=" searchAdjust">
+                            <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
                             </div>
-
-
-                    <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                        <div class="form-group">
-                            <label for="SubCategories" class="control-label">Sub-Category</label>
-                            <select name="SubCategories" id="SubCategories" class="form-control form-control-sm rounded-5" >
-                                <!-- Placeholder option for subcategories -->
-                                <option value="" disabled>Select a category first</option>
-                            </select>
-                        </div>
-                    </div>
-
-                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                <div class="form-group">
-                                    <label for="Unit" class="control-label">Unit</label>
-                                    <select name="Unit" class="form-control form-control-sm rounded-5" required>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                <div class="form-group">
-                                    <label for="Warranty" class="control-label">Warranty(Months)</label>
-                                    <select name="Warranty" class="form-control form-control-sm form-control-border rounded-5" required>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                    <label for="Costing" class="control-label">Costing</label>
-                                    <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                    <label for="Price" class="control-label">Price</label>
-                                    <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                    <label for="Wholesale" class="control-label">Wholesale</label>
-                                    <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                    <label for="Promo" class="control-label">Promo</label>
-                                    <input type="number" name="Promo" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                        <label for="Costing" class="control-label">Quantity</label>
-                                        <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
-                                        </div>
-                                        </div>
-
-                                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                        <label for="Price" class="control-label">Staff</label>
-                                        <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
-                                    </div>
-                            </div>
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                                    <div class="form-group">
-                                    <label for="Seller" class="control-label">Seller</label>
-                                    <input type="text" name="Seller" class="form-control form-control-sm rounded-0" />
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                            <div class="form-group">
-                                <label for="Supplier" class="control-label">Supplier</label>
-                                <select name="Supplier" class="form-control form-control-sm rounded-5" required>
-                                </select> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input type="submit" class="btn btn-success" name="Save" value="Save" style="margin-bottom: 20px;">
-                        </div>
-                    </div>
-
-                    </form>
-                </div>
-
+                        </form>
+            <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
         <div class="">
             <div class="table-responsive">
             <table class="table text-center table-bordered" id="stocksinTable" width="100%" cellspacing="0">
@@ -430,6 +277,84 @@ $results = $conn->query($sql);
                         
                     </tr>
                 </thead>
+                <tbody class="custom-font-size" style="color: #313A46;">
+
+                <?php
+                                foreach ($results as $result) {
+                                    echo '<tr>
+                            <td>';
+                        // Check if the item's type is "W/ Serial"
+                        if ($result['ItemType'] == 'W/ SERIAL') {
+                            // Change the link to "stocksInSerial.php"
+                            echo '<a class="mr-2" href="stocksInSerial.php?id='.$result['ID'].'">
+                                    <i class="fa fa-edit"></i>
+                                </a>';
+                        }elseif ($result['ItemType'] == 'W/ EXPIRY') {
+                            echo '<a class="mr-2" href="stocksInExpiry.php?id='.$result['ID'].'">
+                                    <i class="fa fa-edit"></i>
+                                </a>';
+
+                        } else {
+                            // Use the default link "stocksInEdit.php"
+                            echo '<a class="mr-2" href="stocksInEdit.php?id='.$result['ID'].'">
+                                    <i class="fa fa-edit"></i>
+                                </a>';
+                        }
+                        echo '</td>
+                            <td>'.strtoupper($result['Barcode']).'</td>
+                            <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
+                            <td>'.strtoupper($result['ItemType']).'</td>
+                            <td>'.strtoupper($result['Unit']).'</td>
+                            <td>'.strtoupper($result['Quantity']).'</td>
+                            <td>'.strtoupper($result['Costing']).'</td>
+                            <td>'.strtoupper($result['Price']).'</td>
+                            <td>'.strtoupper($result['Wholesale']).'</td>
+                            <td>'.strtoupper($result['Promo']).'</td>
+                            <td class="text-truncate" style="max-width: 75px;">'.strtoupper($result['Categories']).'</td>
+                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Seller']).'</td>
+                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Supplier']).'</td>
+                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Date_Registered']).'</td>';
+
+
+
+                            '</tr>';
+
+                                                                echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-md">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">'.$result['Product'].'</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    
+                                                    <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                                                    <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                                                    <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                                                    <p><strong>Price:</strong> '.$result['Price'].'</p>
+                                                    <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                                                    <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                                                    <p><strong>Category:</strong> '.$result['Categories'].'</p>
+                                                    
+                                                    <p><strong>Seller:</strong> '.$result['Seller'].'</p>
+                                                    <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
+                                                    <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
+                                                    
+                                                
+                                                    
+                                                    
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> ';
+
+                                    
+                                }
+                                
+
+                            ?>
+                        </tbody>
                             </div>
                         </div>     
                     </div>
@@ -509,6 +434,48 @@ $results = $conn->query($sql);
       unset($_SESSION['status']);
    }
 ?>
+
+<!-- Include this script at the bottom of your HTML, before the closing </body> tag -->
+<script>
+    // Function to filter the table rows based on user input
+    function searchProducts() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("stocksinTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows
+        for (i = 0; i < tr.length; i++) {
+            // Assuming product name is in the third column, barcode in the second column, and date in the last column
+            var productName = tr[i].getElementsByTagName("td")[2];
+            var barcode = tr[i].getElementsByTagName("td")[1];
+            var date = tr[i].getElementsByTagName("td")[13];
+
+            if (productName || barcode || date) {
+                var productNameValue = productName.textContent || productName.innerText;
+                var barcodeValue = barcode.textContent || barcode.innerText;
+                var dateValue = date.textContent || date.innerText;
+                
+                // Check if any of the values match the filter
+                if (productNameValue.toUpperCase().indexOf(filter) > -1 || 
+                    barcodeValue.toUpperCase().indexOf(filter) > -1 ||
+                    dateValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // Add event listener to the search input field
+    document.getElementById("searchInput").addEventListener("input", searchProducts);
+</script>
+
+
+
+
 
 </body>
 
