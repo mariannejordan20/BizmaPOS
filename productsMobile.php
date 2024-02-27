@@ -174,8 +174,9 @@ $results = $conn->query($sql);
 </div>
 
                             <div >
-                            <div id="searchResultInfo"></div>
-                                <div class="table-responsive">
+                            <div id="searchResultInfo" style= "margin: 10px"></div>
+                            <div class="table-responsive" style="max-height: 100vh; overflow-y: auto;">
+
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white">
