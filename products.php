@@ -21,13 +21,7 @@ $sql = "SELECT ID, ProductID, Barcode, Product, ItemType, Warranty, Unit, Quanti
         ORDER BY Categories";
 $results = $conn->query($sql);
 
-// Get total number of records
 
-
-// Calculate total pages
-
-
-// Ensure $page is within valid range
 
 
 ?>
