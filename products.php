@@ -14,30 +14,21 @@ if (empty($haslog)){
     exit;
 }
 
-$recordsPerPage = 7; // Number of records per page
-$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
-$offset = ($page - 1) * $recordsPerPage; // Offset for SQL query
+
 
 $sql = "SELECT ID, ProductID, Barcode, Product, ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered 
         FROM products 
-        ORDER BY Categories
-        LIMIT $offset, $recordsPerPage";
+        ORDER BY Categories";
 $results = $conn->query($sql);
 
 // Get total number of records
-$totalRecordsQuery = "SELECT COUNT(*) AS total FROM products"; // Fixed table name
-$totalRecordsResult = $conn->query($totalRecordsQuery);
-$totalRecords = $totalRecordsResult->fetch_assoc()['total'];
+
 
 // Calculate total pages
-$totalPages = ceil($totalRecords / $recordsPerPage);
+
 
 // Ensure $page is within valid range
-if ($page < 1) {
-    $page = 1;
-} elseif ($page > $totalPages) {
-    $page = $totalPages;
-}
+
 
 ?>
 
@@ -59,6 +50,37 @@ if ($page < 1) {
         width: 100%  ;
         border-spacing: 0  ;
     }
+    #productsTable th {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        /* Add this style for the table container */
+        .table-container {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container th, .table-container td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container tbody tr:hover {
+            background-color: #f2f2f2;
+        }
 
     
 
@@ -124,6 +146,30 @@ if ($page < 1) {
 /* Responsive styles using media queries */
 @media (max-width: 576px) {
     /* Adjust styles for phones */
+    .modal-dialog {
+        margin: 0;
+        width: 100vw; /* Full width of the viewport */
+        max-width: none; /* Remove any maximum width */
+        height: 100vh; /* Full height of the viewport */
+        max-height: none; /* Remove any maximum height */
+    }
+    
+    
+
+    .modal-content {
+        height: 80%; /* Full height of the modal content */
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 56px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+
+    .modal-body #noteContent {
+        width: 100%;
+        height: calc(100vh - 200px); /* Adjust as needed */
+    }
+
     .searchAdjust {
         max-width: 300px; /* Set a specific max-width for phones */
         width: 100%; /* Allow it to take full width if needed */
@@ -137,6 +183,7 @@ if ($page < 1) {
 }
 
 
+
     @media (min-width: 614px) {
         /* Adjust styles for phones and larger screens */
         .searchAdjust {
@@ -148,6 +195,14 @@ if ($page < 1) {
     }
 
     @media (min-width: 1000px) {
+
+        .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
         /* Adjust styles for PCs and larger screens */
         .searchAdjust {
             max-width: 480px;  /* Set a specific max-width for PCs */
@@ -189,12 +244,20 @@ if ($page < 1) {
         flex-direction: row; /* Keep elements in a row on smaller screens */
         align-items: center; /* Center items vertically */
     }
+    .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
 
     .note {
         margin-left: 10px; /* Adjust margin for the button */
         margin-top: 0; /* Reset margin top */
     }
 }
+
 
 
 </style>
@@ -221,9 +284,7 @@ if ($page < 1) {
 </button>
                                         
                                 </div>
-                                <a href="notes.php" class="btn note">
-    <i class="fa fa-sticky-note-o"></i>
-</a>
+                                
                             </form>
 <!-- Note MODAL -->
 <div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-labelledby="NoteModalLabel" aria-hidden="true">
@@ -239,7 +300,7 @@ if ($page < 1) {
                 <!-- Note Form -->
                 <form id="noteForm">
                     <div class="form-group">
-                        <label for="noteContent">Note Content:</label>
+                        <label for="noteContent" style= "overflow: hidden;">Note Content:</label>
                         <textarea class="form-control" id="noteContent" name="noteContent" rows="6" style="resize: vertical;" required></textarea> <!-- Change rows attribute value to 6 for larger initial size -->
                     </div>
                 </form>
@@ -261,13 +322,13 @@ if ($page < 1) {
                                 <?php } ?>
                         </div>
                             <div class="container-fluid">
-                                <div class="table-responsive">
+                            <div class="header-fixed">
+                                <div class="table-responsive"  style="max-height: 340px; overflow-y: scroll;">
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white">
                                             
                                                 <th class="text-center">ACTION</th>
-                                                   
                                                 <th class="text-right" style="padding-right: 50px">ID</th>
                                                 <th class="text-center">BARCODE</th>
                                                 <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
@@ -296,6 +357,7 @@ if ($page < 1) {
                                                 <th class="text-center">DATE REGISTERED</th>
                                             </tr>
                                         </thead>
+                            </div>
                                         <tbody class="custom-font-size" style="color: #313A46;">
                                         <?php
 foreach ($results as $result) {
@@ -361,11 +423,7 @@ foreach ($results as $result) {
                         </div>
                         <div class="d-flex justify-content-end mt-3">
                         <ul class="pagination">
-                                <?php
-                                for ($i = 1; $i <= $totalPages; $i++) {
-                                    echo '<li class="' . ($i == $page ? 'active' : '') . '"><a class="page-link" style="background-color: ' . ($i == $page ? '#fe3c00; color: white;' : '') . '" href="?page=' . $i . '">' . $i . '</a></li>';
-                                }
-                                ?>
+                                
                             </ul>
                         </div>
                     </div>
@@ -455,7 +513,7 @@ function populateDropdown(selectId, columnIndex) {
 
     document.getElementById("unitFilter").addEventListener("change", filterTable);
     document.getElementById("categoryFilter").addEventListener("change", filterTable);
-    document.getElementById("searchInput").addEventListener("keyup", filterTable);
+    document.getElementById("searchInput").addEventListener("input", filterTable);
 </script>
 
 <script>
