@@ -273,39 +273,39 @@ $results = $conn->query($sql);
                             <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
                                 <div class=" searchAdjust">
                                     <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
-                                    <button type="button" class="btn note" data-toggle="modal" data-target="#NoteModal" onclick="editNote()">
-                            <i class="fa fa-sticky-note-o"></i>
+                                    <button type="button" class="btn note btn-success" data-toggle="modal" data-target="#NoteModal" onclick="editNote()">
+                            <i class="fa fa-sticky-note-o danger"></i>
                         </button>
                                         
                                 </div>
                                 
                             </form>
-<!-- Note MODAL -->
-<div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-labelledby="NoteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="NoteModalLabel">NOTE</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Note Form -->
-                <form id="noteForm">
-                    <div class="form-group">
-                        <label for="noteContent" style= "overflow: hidden;">Note Content:</label>
-                        <textarea class="form-control" id="noteContent" name="noteContent" rows="6" style="resize: vertical;" required></textarea> <!-- Change rows attribute value to 6 for larger initial size -->
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="updateNote()">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+                            <!-- Note MODAL -->
+                            <div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-labelledby="NoteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="NoteModalLabel">NOTE</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Note Form -->
+                                            <form id="noteForm">
+                                                <div class="form-group">
+                                                    <label for="noteContent" style= "overflow: hidden;">Note Content:</label>
+                                                    <textarea class="form-control" id="noteContent" name="noteContent" rows="6" style="resize: vertical;" required></textarea> <!-- Change rows attribute value to 6 for larger initial size -->
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" onclick="updateNote()">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 

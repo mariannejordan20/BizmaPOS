@@ -164,77 +164,8 @@ $results = $conn->query($sql);
     </ul>
 </nav>
 
-<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
-      </div>
-      <div class="modal-body">
-        <!-- Sign Up Form -->
-        <form id="signupForm" action="createUser.php" method="POST">
-          <div class="mb-3">
-            <label for="signupUsername" class="form-label">Username</label>
-            <input type="text" class="form-control" id="signupUsername" name="signupUsername">
-          </div>
-          <div class="mb-3">
-            <label for="signupPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" id="signupPassword" name="signupPassword">
-          </div>
-          <div class="mb-3">
-            <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
-            <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
-          </div>
-          <div class="mb-3">
-            <label for="NameOfUser" class="form-label">Name</label>
-            <input type="text" class="form-control" id="NameOfUser" name="NameOfUser">
-          </div>
 
-          <div class="mb-3">
-            <label for="signupRole" class="form-label">Role</label>
-            <select class="form-select" id="signupRole" name="signupRole">
-              <option value="" selected disabled>Choose Role</option>
-              <option value="admin">Admin</option>
-              <option value="staff">Staff</option>
-            </select>
-          </div>
-         
-          <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
-<script>
-  document.getElementById('signupForm').addEventListener('submit', function(event) {
-    
-    event.preventDefault();
-
-  
-    var username = document.getElementById('signupUsername').value.trim();
-    var password = document.getElementById('signupPassword').value.trim();
-    var confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
-    var name = document.getElementById('NameOfUser').value.trim();
-    var role = document.getElementById('signupRole').value;
-
-    // Check if any field is empty
-    if (!username || !password || !confirmPassword || !name || !role) {
-      alert('Please fill in all fields.');
-      return;
-    }
-
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-
-    // If all checks pass, submit the form
-    this.submit();
-  });
-</script>
                         <div class="stocksin-section">
                         <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
                         <input type="text" id="productSearchInput" class="form-control mb-3" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 1px;">
@@ -248,7 +179,7 @@ $results = $conn->query($sql);
                             <div class="row">
                                  <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                    <label for="ID" class="control-label">ID</label>
+                                    <label for="ID" class="control-label" style="font-weight: bold;">ID</label>
                                    <input type="number" name="ID" class="form-control form-control-sm rounded-5"/>
 
                                     </div>
@@ -256,7 +187,7 @@ $results = $conn->query($sql);
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                        <label for="ItemType" class="control-label">Type</label>
+                                        <label for="ItemType" class="control-label" style="font-weight: bold;">Type</label>
                                         <select name="ItemType" class="form-control form-control-sm form-control-border rounded-5" required>
                                         <option value="">Select Type</option>
                                         <option value="W/ SERIAL">W/ Serial</option>
@@ -272,7 +203,7 @@ $results = $conn->query($sql);
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
                                     <div class="form-group">
-                                        <label for="ProductID" class="control-label">Product ID</label>
+                                        <label for="ProductID" class="control-label" style="font-weight: bold;">Product ID</label>
                                         <input type="hidden" name="ProductID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
                                     </div>
                                 </div>
@@ -281,7 +212,7 @@ $results = $conn->query($sql);
                                 
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Barcode" class="control-label">Barcode </label>
+                                    <label for="Barcode" class="control-label" style="font-weight: bold;">Barcode </label>
                                     <input type="number" name="Barcode" class="form-control form-control-sm rounded-5" />
                                     </div>
                                 </div>
@@ -292,7 +223,7 @@ $results = $conn->query($sql);
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                    <label for="Product" class="control-label">Product Name</label>
+                                    <label for="Product" class="control-label" style="font-weight: bold;">Product Name</label>
                                     <input type="text" name="Product"  class="form-control form-control-sm rounded-5"  required/>
                                     </div>
                                 </div>
@@ -301,10 +232,10 @@ $results = $conn->query($sql);
 
                             <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                 <div class="form-group">
-                                    <label for="Categories" class="control-label">Category</label>
+                                    <label for="Categories" class="control-label" style="font-weight: bold;">Category</label>
                                     <div id="categoriesDropdownContainer">
                                         <select name="Categories" id="Categories" class="form-control form-control-sm rounded-5" required>
-                                            <option value="" selected disabled>Select a category</option>
+                                            <option value="" selected disabled></option>
                                         </select>
                                     </div>
                                 </div>
@@ -313,7 +244,7 @@ $results = $conn->query($sql);
 
                     <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                         <div class="form-group">
-                            <label for="SubCategories" class="control-label">Sub-Category</label>
+                            <label for="SubCategories" class="control-label" style="font-weight: bold;">Sub-Category</label>
                             <select name="SubCategories" id="SubCategories" class="form-control form-control-sm rounded-5" >
                                 <!-- Placeholder option for subcategories -->
                                 <option value="" disabled>Select a category first</option>
@@ -323,7 +254,7 @@ $results = $conn->query($sql);
 
                             <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                 <div class="form-group">
-                                    <label for="Unit" class="control-label">Unit</label>
+                                    <label for="Unit" class="control-label" style="font-weight: bold;">Unit</label>
                                     <select name="Unit" class="form-control form-control-sm rounded-5" required>
                                     </select>
                                 </div>
@@ -332,7 +263,7 @@ $results = $conn->query($sql);
 
                             <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                 <div class="form-group">
-                                    <label for="Warranty" class="control-label">Warranty(Months)</label>
+                                    <label for="Warranty" class="control-label" style="font-weight: bold;">Warranty(Months)</label>
                                     <select name="Warranty" class="form-control form-control-sm form-control-border rounded-5" required>
                                     </select>
                                 </div>
@@ -342,54 +273,54 @@ $results = $conn->query($sql);
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                    <label for="Costing" class="control-label">Costing</label>
+                                    <label for="Costing" class="control-label" style="font-weight: bold;">Costing</label>
                                     <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                    <label for="Price" class="control-label">Price</label>
+                                    <label for="Price" class="control-label" style="font-weight: bold;">Price</label>
                                     <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                    <label for="Wholesale" class="control-label">Wholesale</label>
+                                    <label for="Wholesale" class="control-label" style="font-weight: bold;">Wholesale</label>
                                     <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                    <label for="Promo" class="control-label">Promo</label>
+                                    <label for="Promo" class="control-label" style="font-weight: bold;">Promo</label>
                                     <input type="number" name="Promo" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                        <label for="Costing" class="control-label">Quantity</label>
+                                        <label for="Costing" class="control-label" style="font-weight: bold;">Quantity</label>
                                         <input type="number" name="Costing" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
                                         </div>
                                         </div>
 
                                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                         <div class="form-group">
-                                        <label for="Price" class="control-label">Staff</label>
+                                        <label for="Price" class="control-label" style="font-weight: bold;">Staff</label>
                                         <input type="number" name="Price" class="form-control form-control-sm rounded-0" value="" min="1" max="1000000000" required/>
                                     </div>
                             </div>
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
-                                    <label for="Seller" class="control-label">Seller</label>
+                                    <label for="Seller" class="control-label" style="font-weight: bold;">Seller</label>
                                     <input type="text" name="Seller" class="form-control form-control-sm rounded-0" />
                                     </div>
                                 </div>
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                             <div class="form-group">
-                                <label for="Supplier" class="control-label">Supplier</label>
+                                <label for="Supplier" class="control-label" style="font-weight: bold;">Supplier</label>
                                 <select name="Supplier" class="form-control form-control-sm rounded-5" required>
                                 </select> 
                             </div>
