@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Make sure to hash the password before storing it
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         // Include the password update in the SQL query
-        $sql = "UPDATE users SET Username = '$username', NameOfUser = '$nameOfUser', TypeOfUser = '$typeOfUser', Pword = '$hashedPassword' WHERE ID = $userID";
+        $sql = "UPDATE posusers SET Username = '$username', NameOfUser = '$nameOfUser', TypeOfUser = '$typeOfUser', Pword = '$hashedPassword' WHERE ID = $userID";
     } else {
         // If no new password is provided, update user information excluding the password
-        $sql = "UPDATE users SET Username = '$username', NameOfUser = '$nameOfUser', TypeOfUser = '$typeOfUser' WHERE ID = $userID";
+        $sql = "UPDATE posusers SET Username = '$username', NameOfUser = '$nameOfUser', TypeOfUser = '$typeOfUser' WHERE ID = $userID";
     }
 
     // Execute the SQL query

@@ -14,8 +14,8 @@ if (empty($haslog)){
     exit;
 }
 
-$sql = "SELECT ID, Username, Pword, TypeOfUser,NameOfUser, Date_Registered
-        FROM posusers";
+$sql = "SELECT ID, ip_address,branch
+        FROM allowed_ips";
         
 $results = $conn->query($sql);
 ?>
@@ -157,7 +157,7 @@ $results = $conn->query($sql);
                 <?php include('navbar.php'); ?>
                 <div class="container-fluid" style="padding-left: 2%;">
                     <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">User Accounts</h3>
+                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">IP Addresses</h3>
                     </div>
                     <div class="card-body">
                         <div class="products-section">
@@ -168,7 +168,7 @@ $results = $conn->query($sql);
                                 </div>
                             </form>
                             <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
-                                <a href ="createUser.php" class="btn btn-success" style="color: white; " data-bs-toggle="modal" data-bs-target="#signupModal">
+                                <a href ="ipAdd.php" class="btn btn-success" style="color: white; " data-bs-toggle="modal" data-bs-target="#addIPModal">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <?php } ?>
@@ -181,11 +181,11 @@ $results = $conn->query($sql);
                                             
                                                 <th class="text-center">ACTION</th>
                                                    
-                                               
                                                 
-                                                <th class="text-center" style="padding-right: 150px;">NAME</th>
-                                                <th class="text-center">Type</th>
-                                                <th class="text-center">DATE REGISTERED</th>
+                                                
+                                                <th class="text-center" style="padding-right: 150px;">IP ADDRESS</th>
+                                                <th class="text-right" style="padding-right: 50px">Branch/Location</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody class="custom-font-size" style="color: #313A46;">
@@ -195,48 +195,39 @@ $results = $conn->query($sql);
                                             
                                                 echo '<td>';
                                                 if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
-                                                    echo '<a class="mr-2" href="#" data-bs-toggle="modal" data-bs-target="#editUserModal'.$result['ID'].'"><i class="fa fa-edit"></i></a>
-                                                    <a href="userAccountsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+                                                    echo '<a class="mr-2" href="#" data-bs-toggle="modal" data-bs-target="#editIPModal'.$result['ID'].'"><i class="fa fa-edit"></i></a>
+                                                    <a href="ipDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
                                                 }
                                                 echo '</td>';
                                             
-                                                echo '
-                                                        <td class="text-truncate text-center" style="max-width: 100px;">' . $result['NameOfUser'] . '</td>
-                                                        <td class="text-truncate" style="max-width: 50px;">' . $result['TypeOfUser'] . '</td>
-                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
+                                                echo '<td class="text-truncate text-center" style="max-width: 100px;">' . $result['ip_address'] . '</td>
+                                                        <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['branch'] . '</td>
+                                                        
                                                     </tr>';
                                             
-                                                // Modal for editing user
-                                                echo '<div class="modal fade" id="editUserModal'.$result['ID'].'" tabindex="-1" aria-labelledby="editUserModalLabel'.$result['ID'].'" aria-hidden="true">';
+                                                // Modal for editing ip
+                                                echo '<div class="modal fade" id="editIPModal'.$result['ID'].'" tabindex="-1" aria-labelledby="editIPModalLabel'.$result['ID'].'" aria-hidden="true">';
                                                 echo '<div class="modal-dialog">
                                                     <div class="modal-content">
                                                       <div class="modal-header">
-                                                        <h5 class="modal-title" id="editUserModalLabel'.$result['ID'].'">Edit User</h5>
+                                                        <h5 class="modal-title" id="editIPModalLabel'.$result['ID'].'">Edit IP Address</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                                                       </div>
                                                       <div class="modal-body">
                                                         <!-- Edit User Form -->
-                                                        <form action="editUser.php" method="POST">
-                                                          <input type="hidden" name="userID" value="'.$result['ID'].'">
+                                                        <form action="ipEdit.php" method="POST">
+                                                          <input type="hidden" name="IP_ID" value="'.$result['ID'].'">
                                                           <div class="mb-3">
-                                                            <label for="editUsername" class="form-label">Username</label>
-                                                            <input type="text" class="form-control" id="editUsername" name="editUsername" value="'.$result['Username'].'">
+                                                            <label for="editIP" class="form-label">IP Address</label>
+                                                            <input type="text" class="form-control" id="editIP" name="editIP" value="'.$result['ip_address'].'">
                                                           </div>
                                                           <div class="mb-3">
-                                                            <label for="editPassword" class="form-label">Password</label>
-                                                            <input type="password" class="form-control" id="editPassword" name="editPassword" placeholder="Enter new password">
-                                                        </div>
-                                                          <div class="mb-3">
-                                                            <label for="editNameOfUser" class="form-label">Name</label>
-                                                            <input type="text" class="form-control" id="editNameOfUser" name="editNameOfUser" value="'.$result['NameOfUser'].'">
+                                                            <label for="editLocation" class="form-label">Location/Branch</label>
+                                                            <input type="text" class="form-control" id="editLocation" name="editLocation" value="'.$result['branch'].'">
                                                           </div>
-                                                          <div class="mb-3">
-                                                            <label for="editRole" class="form-label">Role</label>
-                                                            <select class="form-select" id="editRole" name="editRole">
-                                                              <option value="admin" '.($result['TypeOfUser'] == 'ADMIN' ? 'selected' : '').'>ADMIN</option>
-                                                              <option value="staff" '.($result['TypeOfUser'] == 'STAFF' ? 'selected' : '').'>ADMIN</option>
-                                                            </select>
-                                                          </div>
+                                                          
+                                                         
+                                                          
                                                           <button type="submit" class="btn btn-primary">Save Changes</button>
                                                         </form>
                                                       </div>
@@ -246,43 +237,27 @@ $results = $conn->query($sql);
                                             }
                                             
                                             ?>
-                                            <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="addIPModal" tabindex="-1" aria-labelledby="addIPModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                                                    <h5 class="modal-title" id="addIPModalLabel">Register IP</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Sign Up Form -->
-                                                    <form id="signupForm" action="createUser.php" method="POST">
+                                                    <form id="addIP" action="ipAdd.php" method="POST">
                                                     <div class="mb-3">
-                                                        <label for="signupUsername" class="form-label">Username</label>
-                                                        <input type="text" class="form-control" id="signupUsername" name="signupUsername">
+                                                        <label for="ipAdd" class="form-label">IP Address</label>
+                                                        <input type="text" class="form-control" id="ipAdd" name="ipAdd">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="signupPassword" class="form-label">Password</label>
-                                                        <input type="password" class="form-control" id="signupPassword" name="signupPassword">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
-                                                        <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="NameOfUser" class="form-label">Name</label>
-                                                        <input type="text" class="form-control" id="NameOfUser" name="NameOfUser">
+                                                        <label for="ipLocation" class="form-label">Location/Branch</label>
+                                                        <input type="text" class="form-control" id="ipLocation" name="ipLocation">
                                                     </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="signupRole" class="form-label">Role</label>
-                                                        <select class="form-select" id="signupRole" name="signupRole">
-                                                        <option value="" selected disabled>Choose Role</option>
-                                                        <option value="admin">Admin</option>
-                                                        <option value="staff">Staff</option>
-                                                        </select>
-                                                    </div>
-                                                    
-                                                    <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
+
+                                                    <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Register</button>
                                                     </form>
                                                 </div>
                                                 </div>
@@ -333,18 +308,49 @@ $results = $conn->query($sql);
 </script>
 
 
-    
-<script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        populateDropdown("unitFilter", 4); 
+        populateDropdown("categoryFilter", 10); 
+    });
+
+function populateDropdown(selectId, columnIndex) {
+    var select = document.getElementById(selectId);
+    var options = [];
+    var table = document.getElementById("productsTable");
+    var rows = table.getElementsByTagName("tr");
+    for (var i = 1; i < rows.length; i++) {
+        var cell = rows[i].getElementsByTagName("td")[columnIndex];
+        var value = cell.textContent || cell.innerText;
+        if (!options.includes(value)) {
+            options.push(value);
+            var option = document.createElement("option");
+            option.text = value;
+            select.add(option);
+        }
+    }
+}
+
     function filterTable() {
+        var selectUnit = document.getElementById("unitFilter");
+        var selectCategory = document.getElementById("categoryFilter");
+        var filterUnit = selectUnit.value.toUpperCase();
+        var filterCategory = selectCategory.value.toUpperCase();
         var searchInput = document.getElementById("searchInput").value.toUpperCase();
         var table = document.getElementById("productsTable");
         var tr = table.getElementsByTagName("tr");
 
         for (var i = 1; i < tr.length; i++) {
-            var tdProductName = tr[i].getElementsByTagName("td")[1,2]; // Index of Product Name column
-            if (tdProductName) {
+            var tdUnit = tr[i].getElementsByTagName("td")[4]; // Index of Unit column
+            var tdCategory = tr[i].getElementsByTagName("td")[10]; // Index of Category column
+            var tdProductName = tr[i].getElementsByTagName("td")[3]; // Index of Product Name column
+            var tdBarcode = tr[i].getElementsByTagName("td")[2]; // Index of Barcode column
+            if (tdUnit && tdCategory && tdProductName && tdBarcode) {
+                var unitMatch = filterUnit === '' || tdUnit.textContent.toUpperCase() === filterUnit;
+                var categoryMatch = filterCategory === '' || tdCategory.textContent.toUpperCase() === filterCategory;
                 var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
-                if (productNameMatch) {
+                var barcodeMatch = tdBarcode.textContent.toUpperCase().indexOf(searchInput) > -1;
+                if ((unitMatch && categoryMatch) && (productNameMatch || barcodeMatch)) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -353,38 +359,10 @@ $results = $conn->query($sql);
         }
     }
 
+    document.getElementById("unitFilter").addEventListener("change", filterTable);
+    document.getElementById("categoryFilter").addEventListener("change", filterTable);
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
 </script>
-
-<script>
-    
-    function filterTable() {
-        var searchInput = document.getElementById("searchInput").value.toUpperCase();
-        var table = document.getElementById("productsTable");
-        var tr = table.getElementsByTagName("tr");
-        var searchCount = 0;
-
-        for (var i = 1; i < tr.length; i++) {
-            var tdProductName = tr[i].getElementsByTagName("td")[1,2]; // Index of Product Name column
-            if (tdProductName) {
-                var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
-                if (productNameMatch) {
-                    tr[i].style.display = "";
-                    searchCount++;
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-
-        var totalCount = tr.length - 1; // Excluding the header row
-        document.getElementById("searchResultInfo").innerText = " " + searchCount + " out of " + totalCount + " products";
-    }
-
-    document.getElementById("searchInput").addEventListener("keyup", filterTable);
-</script>
-
-
 <script>
   document.getElementById('signupForm').addEventListener('submit', function(event) {
     

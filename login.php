@@ -1,3 +1,52 @@
+<?php
+include 'connection.php';
+
+// Check if the connection is successful
+if (!$conn) {
+    echo "Error connecting to the database: " . mysqli_connect_error();
+    exit;
+}
+
+// Fetch allowed IP addresses from the database
+$sql = "SELECT ip_address FROM allowed_ips";
+$result = mysqli_query($conn, $sql);
+
+// Check if the query was successful
+if (!$result) {
+    echo "Error fetching allowed IP addresses: " . mysqli_error($conn);
+    exit;
+}
+
+// Check if there are results
+if (mysqli_num_rows($result) > 0) {
+    $allowedIpAddresses = array();
+
+    // Fetch IP addresses into an array
+    while ($row = mysqli_fetch_assoc($result)) {
+        $allowedIpAddresses[] = $row['ip_address'];
+    }
+
+    // Get the visitor's IP address
+    $visitorIpAddress = $_SERVER['REMOTE_ADDR'];
+
+    // Check if the visitor's IP address is in the allowed IP addresses array
+    if (!in_array($visitorIpAddress, $allowedIpAddresses)) {
+        http_response_code(403);
+        include 'denied.php';
+        exit;
+    }
+} else {
+    // No allowed IP addresses found in the database
+    http_response_code(403);
+    echo "Access denied: No allowed IP addresses configured.";
+    exit;
+}
+
+// Include other necessary files or perform further actions
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

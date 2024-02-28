@@ -5,8 +5,8 @@ include('connection.php');
 $username = $_POST['signupUsername'];
 $password = $_POST['signupPassword'];
 $confirmPassword = $_POST['signupConfirmPassword'];
-$nameOfUser = $_POST['NameOfUser'];
-$userType = $_POST['signupRole'];
+$nameOfUser = strtoupper($_POST['NameOfUser']);
+$userType = strtoupper($_POST['signupRole']);
 
 $userType = strtoupper($userType);
 $query = mysqli_query($conn,"SELECT * FROM users WHERE Username = '$username' ");
