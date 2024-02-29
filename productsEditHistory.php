@@ -23,48 +23,83 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    #productseTable{
-        cursor: pointer;
-    }
-    .productse-section {
+            .products-section {
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
     margin-bottom: 20px;
     background-color: #fff; /* Optional: Add a background color */
     transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
     }
-    #productseTable {
+    #productsTable {
         width: 100%  ;
         border-spacing: 0  ;
     }
+    #productsTable th {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
 
-    #productseTable th,
-    #productseTable td {
-        padding: 12px  ;
-        text-align: left  ;
-    }
+        /* Add this style for the table container */
+        .table-container {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
 
-    #productseTable th {    
-        color: #656565 ; 
-        white-space: nowrap;
-        font-family: Segoe UI;
-        font-size: 12px;
+        /* Add this style for the container of the table */
+        .table-container table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container th, .table-container td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+    
+
+    #productsTable th,
+    #productsTable td {
+        padding: 10px  ;
         text-align: left;
     }
 
-    #productseTable tbody tr {
+    .copy-button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    #productsTable th {    
+        color: #656565  ; /* White text for header */
+        white-space: nowrap;
+        font-family: Segoe UI;
+        font-size: 12px;
+    }
+
+    #productsTable tbody tr {
         transition: background-color 0.3s  ;
     }
 
-    #productseTable tbody tr:hover {
+    #productsTable tbody tr:hover {
         background-color: #ecf0f1  ; /* Light gray background on hover */
     }
 
-    #productseTable a:hover {
+    #productsTable a:hover {
         color: #c0392b; /* Darker red on hover */
     }
-    #productseTable tbody tr.active {
+    #productsTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
     }
     .custom-column-width {
@@ -73,10 +108,141 @@ session_start();
     .custom-font-size td {
     font-size: 12px;
     white-space: nowrap;
+    
     }
+
     .table-responsive {
-    overflow-x: auto;
+        overflow-x: auto;
     }
+    .btn {
+        padding-left: 1000px;
+    }
+    /* Default styles for the search bar */
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    #searchInput {
+        max-width: 100%;
+        width: 100%;
+    }
+
+/* Responsive styles using media queries */
+@media (max-width: 576px) {
+    /* Adjust styles for phones */
+    .modal-dialog {
+        margin: 0;
+        width: 100vw; /* Full width of the viewport */
+        max-width: none; /* Remove any maximum width */
+        height: 100vh; /* Full height of the viewport */
+        max-height: none; /* Remove any maximum height */
+    }
+    
+    
+
+    .modal-content {
+        height: 80%; /* Full height of the modal content */
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 56px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+
+    .modal-body #noteContent {
+        width: 100%;
+        height: calc(100vh - 200px); /* Adjust as needed */
+    }
+
+    .searchAdjust {
+        max-width: 300px; /* Set a specific max-width for phones */
+        width: 100%; /* Allow it to take full width if needed */
+        display: flex; /* Use flexbox layout */
+        align-items: center; /* Center items vertically */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+    }
+}
+
+
+
+    @media (min-width: 614px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+
+    @media (min-width: 1000px) {
+
+        .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+        /* Adjust styles for PCs and larger screens */
+        .searchAdjust {
+            max-width: 480px;  /* Set a specific max-width for PCs */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+    
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding-right: 3%;
+    }
+
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #333;
+        margin: 0 4px;
+        border-radius: 4px;
+    }
+
+    .pagination a.active,
+    .pagination a:active,
+    .pagination a:hover {
+        background-color: #fe3c00;
+        color: #fff;
+    }
+    .note {
+    display: inline-block; /* Display the button inline */
+    margin-left: 5px; /* Add some spacing between input and button */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .searchAdjust {
+        flex-direction: row; /* Keep elements in a row on smaller screens */
+        align-items: center; /* Center items vertically */
+    }
+    .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+        margin-top: 0; /* Reset margin top */
+    }
+}
+
+
 
 </style>
 <?php
@@ -88,62 +254,42 @@ session_start();
 
 
 
-<body id="page-top">
+<body>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <?php
             include ('menu.php');
         ?>
-
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
                 <?php
                  include('navbar.php');
                 ?>
-                <!-- End of Topbar -->
-
-
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-left: 2%;">
+                <div class="card-header"  style="background-color: #eeeeee; border: none">
+                    <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">LIST OF ALL EDITED PRODUCTS</h3>
+                </div>
 
-                    
-    <div class="card-header"  style="background-color: #eeeeee; border: none">
-        <h3 class="card-title" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">LIST OF ALL EDITED PRODUCTS</h3>
-    </div>
-
-    <div class="productse-section">
-    <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                    <form action="products.php" method="get" class="form-inline mt-3 mb-3">
-                            <div class="input-group">
-                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
-                                </div>
-                            </div>
+                <div class="products-section">
+                    <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                        <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                            <div class=" searchAdjust">
+                                <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">      
+                            </div>   
                         </form>
-            <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
-                <i class="fa fa-plus"></i>
-            </a>
-        </div>
+                            <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                    </div>
         <div class="container-fluid">
-            <div class="table-responsive">
-            <table class="table text-center table-bordered" id="productseTable" width="100%" cellspacing="0">
-
-                
+            <div class="table-responsive" style="max-height: 340px; overflow-y: scroll;">
+            <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                 <thead>
                     <tr class="th" style="color: #000000">
-                    
                         <th class="text-center custom-column-width">ACTION</th>
                         <th class="text-center custom-column-width">BARCODE</th>
-                        <th class="text-center custom-column-width">PRODUCT NAME</th>
+                        <th class="text-center custom-column-width" style="padding-right: 150px;">PRODUCT NAME</th>
                         <th class="text-center custom-column-width">UNIT</th>
                         <th class="text-center custom-column-width">WRTY</th>
                         <th class="text-center custom-column-width">QTY</th>
@@ -154,8 +300,7 @@ session_start();
                         <th class="text-center custom-column-width">CATEGORIES</th>
                         <th class="text-center custom-column-width">SELLER</th>
                         <th class="text-center custom-column-width">SUPPLIER</th>
-                        <th class="text-center custom-column-width">DATE EDITED</th>
-                                                
+                        <th class="text-center custom-column-width">DATE EDITED</th>            
                     </tr>
                 </thead>
                 <tbody class="custom-font-size" style="color: #313A46;">

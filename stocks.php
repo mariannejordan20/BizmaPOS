@@ -61,12 +61,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    #stocksTable{
-        cursor: pointer;
-    }
     .stocks-section {
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
     margin-bottom: 20px;
     background-color: #fff; /* Optional: Add a background color */
@@ -76,19 +72,58 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         width: 100%  ;
         border-spacing: 0  ;
     }
+    #stocksTable th {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        /* Add this style for the table container */
+        .table-container {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container th, .table-container td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+    
 
     #stocksTable th,
     #stocksTable td {
-        padding: 12px  ;
+        padding: 10px  ;
         text-align: left;
     }
 
+    .copy-button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
     #stocksTable th {    
-        color: #656565 ; 
+        color: #656565  ; /* White text for header */
         white-space: nowrap;
         font-family: Segoe UI;
-        font-size: 14px;
-        text-align: left;
+        font-size: 12px;
     }
 
     #stocksTable tbody tr {
@@ -111,10 +146,94 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     .custom-font-size td {
     font-size: 12px;
     white-space: nowrap;
+    
     }
+
     .table-responsive {
-    overflow-x: auto;
+        overflow-x: auto;
     }
+    .btn {
+        padding-left: 1000px;
+    }
+    /* Default styles for the search bar */
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    #searchInput {
+        max-width: 100%;
+        width: 100%;
+    }
+
+/* Responsive styles using media queries */
+@media (max-width: 576px) {
+    /* Adjust styles for phones */
+    .modal-dialog {
+        margin: 0;
+        width: 100vw; /* Full width of the viewport */
+        max-width: none; /* Remove any maximum width */
+        height: 100vh; /* Full height of the viewport */
+        max-height: none; /* Remove any maximum height */
+    }
+    
+    
+
+    .modal-content {
+        height: 80%; /* Full height of the modal content */
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 56px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+
+    .modal-body #noteContent {
+        width: 100%;
+        height: calc(100vh - 200px); /* Adjust as needed */
+    }
+
+    .searchAdjust {
+        max-width: 300px; /* Set a specific max-width for phones */
+        width: 100%; /* Allow it to take full width if needed */
+        display: flex; /* Use flexbox layout */
+        align-items: center; /* Center items vertically */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+    }
+}
+
+
+
+    @media (min-width: 614px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+
+    @media (min-width: 1000px) {
+
+        .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+        /* Adjust styles for PCs and larger screens */
+        .searchAdjust {
+            max-width: 480px;  /* Set a specific max-width for PCs */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+    
     .pagination {
         display: flex;
         list-style: none;
@@ -136,6 +255,30 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         background-color: #fe3c00;
         color: #fff;
     }
+    .note {
+    display: inline-block; /* Display the button inline */
+    margin-left: 5px; /* Add some spacing between input and button */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .searchAdjust {
+        flex-direction: row; /* Keep elements in a row on smaller screens */
+        align-items: center; /* Center items vertically */
+    }
+    .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+        margin-top: 0; /* Reset margin top */
+    }
+}
 
 
 
@@ -182,21 +325,23 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
     <div class="stocks-section">
     <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                    <form action="products.php" method="get" class="form-inline mt-3 mb-3">
-                            <div class="input-group">
-                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
+                            <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                                <div class=" searchAdjust">
+                                    <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
+                                    <button type="button" class="btn note btn-success" data-toggle="modal" data-target="#NoteModal" onclick="editNote()">
+                            <i class="fa fa-sticky-note-o danger"></i>
+                        </button>
+                                        
                                 </div>
-                            </div>
-                        </form>
-            <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                
+                            </form>
+            <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
                 <i class="fa fa-plus"></i>
             </a>
         </div>
-
+        <div class="card-body">
         <div class="container-fluid">
-            <div class="table-responsive">
+            <div class="table-responsive" style="max-height: 340px; overflow-y: scroll;">
                 <table class="table text-center table-bordered" id="stocksTable" width="100%" cellspacing="0">
 
                 
@@ -289,11 +434,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 }
 
                             ?>
-
-                       
+                        </tbody>
+                    </table>
+                    </div>
                 </div>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+        <ul class="pagination">
+                </div>
+                
                 <!-- /.container-fluid -->
             </div>
+            
             <!-- End of Main Content -->
         </div>
         <!-- End of Content Wrapper -->

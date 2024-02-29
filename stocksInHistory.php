@@ -23,12 +23,8 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    #productsTable{
-        cursor: pointer;
-    }
-    .stockH-section {
+            .products-section {
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
     margin-bottom: 20px;
     background-color: #fff; /* Optional: Add a background color */
@@ -38,19 +34,58 @@ session_start();
         width: 100%  ;
         border-spacing: 0  ;
     }
+    #productsTable th {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        /* Add this style for the table container */
+        .table-container {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container th, .table-container td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+    
 
     #productsTable th,
     #productsTable td {
-        padding: 12px  ;
+        padding: 10px  ;
         text-align: left;
     }
 
+    .copy-button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
     #productsTable th {    
-        color: #656565 ; 
+        color: #656565  ; /* White text for header */
         white-space: nowrap;
         font-family: Segoe UI;
         font-size: 12px;
-        text-align: left;
     }
 
     #productsTable tbody tr {
@@ -73,11 +108,139 @@ session_start();
     .custom-font-size td {
     font-size: 12px;
     white-space: nowrap;
-    }
-    .table-responsive {
-    overflow-x: auto;
+    
     }
 
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .btn {
+        padding-left: 1000px;
+    }
+    /* Default styles for the search bar */
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    #searchInput {
+        max-width: 100%;
+        width: 100%;
+    }
+
+/* Responsive styles using media queries */
+@media (max-width: 576px) {
+    /* Adjust styles for phones */
+    .modal-dialog {
+        margin: 0;
+        width: 100vw; /* Full width of the viewport */
+        max-width: none; /* Remove any maximum width */
+        height: 100vh; /* Full height of the viewport */
+        max-height: none; /* Remove any maximum height */
+    }
+    
+    
+
+    .modal-content {
+        height: 80%; /* Full height of the modal content */
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 56px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+
+    .modal-body #noteContent {
+        width: 100%;
+        height: calc(100vh - 200px); /* Adjust as needed */
+    }
+
+    .searchAdjust {
+        max-width: 300px; /* Set a specific max-width for phones */
+        width: 100%; /* Allow it to take full width if needed */
+        display: flex; /* Use flexbox layout */
+        align-items: center; /* Center items vertically */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+    }
+}
+
+
+
+    @media (min-width: 614px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+
+    @media (min-width: 1000px) {
+
+        .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+        /* Adjust styles for PCs and larger screens */
+        .searchAdjust {
+            max-width: 480px;  /* Set a specific max-width for PCs */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+    
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding-right: 3%;
+    }
+
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #333;
+        margin: 0 4px;
+        border-radius: 4px;
+    }
+
+    .pagination a.active,
+    .pagination a:active,
+    .pagination a:hover {
+        background-color: #fe3c00;
+        color: #fff;
+    }
+    .note {
+    display: inline-block; /* Display the button inline */
+    margin-left: 5px; /* Add some spacing between input and button */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .searchAdjust {
+        flex-direction: row; /* Keep elements in a row on smaller screens */
+        align-items: center; /* Center items vertically */
+    }
+    .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+        margin-top: 0; /* Reset margin top */
+    }
+}
 
 </style>
 <?php
@@ -89,31 +252,18 @@ session_start();
 
 
 
-<body id="page-top">
+<body>
 
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
         <?php
             include ('menu.php');
         ?>
-
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
                 <?php
                  include('navbar.php');
                 ?>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-left: 2%;">
-
-                    
     <div class="card-header" style="background-color: #eeeeee; border: none">
         <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">STOCK IN HISTORY</h3>
         

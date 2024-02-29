@@ -50,66 +50,179 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 <!DOCTYPE html>
 <html lang="en">
 <style>
+            .customers-section {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
+    margin-bottom: 20px;
+    background-color: #fff; /* Optional: Add a background color */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+    }
     #customersTable {
-        cursor: pointer;
+        width: 100%  ;
+        border-spacing: 0  ;
     }
+    #customersTable th {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
 
-    .customers-section {
-        border-radius: 8px; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow for depth */
-        margin-bottom: 20px;
-        background-color: #fff; /* Optional: Add a background color */
-        transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
-    }
+        /* Add this style for the table container */
+        .table-container {
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
 
-    #customersTable {
-        width: auto;
-        border-spacing: 0;
-    }
+        /* Add this style for the container of the table */
+        .table-container table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container th, .table-container td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Add this style for the container of the table */
+        .table-container tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+    
 
     #customersTable th,
     #customersTable td {
+        padding: 10px  ;
         text-align: left;
     }
 
-    #customersTable th {
-        color: #656565;
+    .copy-button {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    #customersTable th {    
+        color: #656565  ; /* White text for header */
         white-space: nowrap;
         font-family: Segoe UI;
-        font-size: 14px;
-        /* Aligning column names to the left */
-        text-align: left;
+        font-size: 12px;
     }
 
     #customersTable tbody tr {
-        transition: background-color 0.3s;
+        transition: background-color 0.3s  ;
     }
 
     #customersTable tbody tr:hover {
-        background-color: #ecf0f1; /* Light gray background on hover */
+        background-color: #ecf0f1  ; /* Light gray background on hover */
     }
 
     #customersTable a:hover {
         color: #c0392b; /* Darker red on hover */
     }
-
     #customersTable tbody tr.active {
         background-color: rgba(254, 60, 0, 0.3); /* Adjust the last value (alpha) for opacity */
     }
-
     .custom-column-width {
-        width: 10%; /* Adjust the width as needed */
-        text-align: left;
+    width: 10%  ; /* Adjust the width as needed */
     }
-
     .custom-font-size td {
-        font-size: 12px;
-        white-space: nowrap;
+    font-size: 12px;
+    white-space: nowrap;
+    
     }
 
     .table-responsive {
         overflow-x: auto;
     }
+    .btn {
+        padding-left: 1000px;
+    }
+    /* Default styles for the search bar */
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    #searchInput {
+        max-width: 100%;
+        width: 100%;
+    }
+
+/* Responsive styles using media queries */
+@media (max-width: 576px) {
+    /* Adjust styles for phones */
+    .modal-dialog {
+        margin: 0;
+        width: 100vw; /* Full width of the viewport */
+        max-width: none; /* Remove any maximum width */
+        height: 100vh; /* Full height of the viewport */
+        max-height: none; /* Remove any maximum height */
+    }
+    
+    
+
+    .modal-content {
+        height: 80%; /* Full height of the modal content */
+    }
+
+    .modal-body {
+        max-height: calc(100vh - 56px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+
+    .modal-body #noteContent {
+        width: 100%;
+        height: calc(100vh - 200px); /* Adjust as needed */
+    }
+
+    .searchAdjust {
+        max-width: 300px; /* Set a specific max-width for phones */
+        width: 100%; /* Allow it to take full width if needed */
+        display: flex; /* Use flexbox layout */
+        align-items: center; /* Center items vertically */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+    }
+}
+
+
+
+    @media (min-width: 614px) {
+        /* Adjust styles for phones and larger screens */
+        .searchAdjust {
+            max-width: 400px;  /* Set a specific max-width for phones */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+
+    @media (min-width: 1000px) {
+
+        .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+        /* Adjust styles for PCs and larger screens */
+        .searchAdjust {
+            max-width: 480px;  /* Set a specific max-width for PCs */
+            width: 100%;      /* Allow it to take full width if needed */
+            display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+        }
+    }
+    
     .pagination {
         display: flex;
         list-style: none;
@@ -131,6 +244,31 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         background-color: #fe3c00;
         color: #fff;
     }
+    .note {
+    display: inline-block; /* Display the button inline */
+    margin-left: 5px; /* Add some spacing between input and button */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .searchAdjust {
+        flex-direction: row; /* Keep elements in a row on smaller screens */
+        align-items: center; /* Center items vertically */
+    }
+    .modal-body {
+        max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
+        overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+    }
+    .modal-body #noteContent {
+        height: calc(100vh - 280px); /* Adjust as needed */
+    }
+
+    .note {
+        margin-left: 10px; /* Adjust margin for the button */
+        margin-top: 0; /* Reset margin top */
+    }
+}
+
 </style>
 
 <?php
@@ -152,38 +290,31 @@ include('header.php');
 
             <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
+            <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
                 <?php
                  include('navbar.php');
                 ?>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-left: 2%;">
-
-
-                        <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold; margin-bottom: -1px; margin-top:-20px">LIST OF ALL CUSTOMERS</h3>
-                            
+                    <div class="card-header" style="background-color: #eeeeee; border: none">
+                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">LIST OF ALL CUSTOMERS</h3>
                         </div>
 
+                        <div class="card-body">
                         <div class="customers-section">
                             <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                            <form action="customers.php" method="get" class="form-inline mt-3 mb-3">
-                            <div class="input-group">
-                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
+                            <form action="customers.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                                <div class=" searchAdjust">
+                                    <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()"> 
                                 </div>
-                            </div>
-                        </form>
-                                <a href ="customeradd.php" class="btn" style="background-color: #fe3c00; color: white;">
+                                
+                            </form>
+                                <a href ="customeradd.php" class="btn btn-success" style="color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>
                             <div class="container-fluid">
-                                <div class="table-responsive">
+                            <div class="header-fixed">
+                                <div class="table-responsive"  style="max-height: 340px; overflow-y: scroll;">
                                     <table class="table text-center table-bordered" id="customersTable" width="100%"
                                         cellspacing="0" style="text-align: left;">
 
