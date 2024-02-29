@@ -29,7 +29,7 @@
                          aria-labelledby="configDropdown">
                         <a class="dropdown-item" href="userAccounts.php">User accounts</a>
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Add User</a>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addIPModal">Register IP</a>
+                        <a class="dropdown-item" href="ipAddressList.php">IP Addresses</a>
                         
                     </div>
                   

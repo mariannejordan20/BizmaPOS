@@ -183,8 +183,13 @@ $results = $conn->query($sql);
                                                    
                                                 
                                                 
-                                                <th class="text-center" style="padding-right: 150px;">IP ADDRESS</th>
-                                                <th class="text-right" style="padding-right: 50px">Branch/Location</th>
+                                                <th class="text-center">IP ADDRESS</th>
+                                                <th class="text-center">
+                                                    <select id="branchFilter" style="border: none; font-weight: bold; color:#656565;">
+                                                        <option value="">Branch/Location</option>
+                                                        <!-- Add options dynamically if needed -->
+                                                    </select>
+                                                </th>
                                                 
                                             </tr>
                                         </thead>
@@ -308,49 +313,42 @@ $results = $conn->query($sql);
 </script>
 
 
-    <script>
+<script>
     document.addEventListener("DOMContentLoaded", function() {
-        populateDropdown("unitFilter", 4); 
-        populateDropdown("categoryFilter", 10); 
+        populateDropdown("branchFilter");
     });
 
-function populateDropdown(selectId, columnIndex) {
-    var select = document.getElementById(selectId);
-    var options = [];
-    var table = document.getElementById("productsTable");
-    var rows = table.getElementsByTagName("tr");
-    for (var i = 1; i < rows.length; i++) {
-        var cell = rows[i].getElementsByTagName("td")[columnIndex];
-        var value = cell.textContent || cell.innerText;
-        if (!options.includes(value)) {
-            options.push(value);
-            var option = document.createElement("option");
-            option.text = value;
-            select.add(option);
+    function populateDropdown(selectId) {
+        var select = document.getElementById(selectId);
+        var options = [];
+        var table = document.getElementById("productsTable");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 1; i < rows.length; i++) {
+            var cell = rows[i].getElementsByTagName("td")[2]; // Index of Branch/Location column
+            var value = cell.textContent || cell.innerText;
+            if (!options.includes(value)) {
+                options.push(value);
+                var option = document.createElement("option");
+                option.text = value;
+                select.add(option);
+            }
         }
     }
-}
 
     function filterTable() {
-        var selectUnit = document.getElementById("unitFilter");
-        var selectCategory = document.getElementById("categoryFilter");
-        var filterUnit = selectUnit.value.toUpperCase();
-        var filterCategory = selectCategory.value.toUpperCase();
+        var selectBranch = document.getElementById("branchFilter");
+        var filterBranch = selectBranch.value.toUpperCase();
         var searchInput = document.getElementById("searchInput").value.toUpperCase();
         var table = document.getElementById("productsTable");
         var tr = table.getElementsByTagName("tr");
 
         for (var i = 1; i < tr.length; i++) {
-            var tdUnit = tr[i].getElementsByTagName("td")[4]; // Index of Unit column
-            var tdCategory = tr[i].getElementsByTagName("td")[10]; // Index of Category column
-            var tdProductName = tr[i].getElementsByTagName("td")[3]; // Index of Product Name column
-            var tdBarcode = tr[i].getElementsByTagName("td")[2]; // Index of Barcode column
-            if (tdUnit && tdCategory && tdProductName && tdBarcode) {
-                var unitMatch = filterUnit === '' || tdUnit.textContent.toUpperCase() === filterUnit;
-                var categoryMatch = filterCategory === '' || tdCategory.textContent.toUpperCase() === filterCategory;
-                var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
-                var barcodeMatch = tdBarcode.textContent.toUpperCase().indexOf(searchInput) > -1;
-                if ((unitMatch && categoryMatch) && (productNameMatch || barcodeMatch)) {
+            var tdBranch = tr[i].getElementsByTagName("td")[2]; // Index of Branch/Location column
+            var tdIPAddress = tr[i].getElementsByTagName("td")[1]; // Index of IP Address column
+            if (tdBranch && tdIPAddress) {
+                var branchMatch = filterBranch === '' || tdBranch.textContent.toUpperCase() === filterBranch;
+                var ipAddressMatch = tdIPAddress.textContent.toUpperCase().indexOf(searchInput) > -1;
+                if (branchMatch && ipAddressMatch) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -359,10 +357,10 @@ function populateDropdown(selectId, columnIndex) {
         }
     }
 
-    document.getElementById("unitFilter").addEventListener("change", filterTable);
-    document.getElementById("categoryFilter").addEventListener("change", filterTable);
+    document.getElementById("branchFilter").addEventListener("change", filterTable);
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
 </script>
+
 <script>
   document.getElementById('signupForm').addEventListener('submit', function(event) {
     

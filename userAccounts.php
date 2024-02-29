@@ -183,8 +183,13 @@ $results = $conn->query($sql);
                                                    
                                                
                                                 
-                                                <th class="text-center" style="padding-right: 150px;">NAME</th>
-                                                <th class="text-center">Type</th>
+                                                <th class="text-center">NAME</th>
+                                                <th class="text-center">
+                                                    <select id="typeFilter" style="border: none; font-weight: bold; color:#656565;">
+                                                        <option value="">TYPE</option>
+                                                        <!-- Add options dynamically if needed -->
+                                                    </select>
+                                                </th>
                                                 <th class="text-center">DATE REGISTERED</th>
                                             </tr>
                                         </thead>
@@ -202,7 +207,7 @@ $results = $conn->query($sql);
                                             
                                                 echo '
                                                         <td class="text-truncate text-center" style="max-width: 100px;">' . $result['NameOfUser'] . '</td>
-                                                        <td class="text-truncate" style="max-width: 50px;">' . $result['TypeOfUser'] . '</td>
+                                                        <td class="text-truncate text-center" style="max-width: 50px;">' . $result['TypeOfUser'] . '</td>
                                                         <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Date_Registered'] . '</td>
                                                     </tr>';
                                             
@@ -234,7 +239,7 @@ $results = $conn->query($sql);
                                                             <label for="editRole" class="form-label">Role</label>
                                                             <select class="form-select" id="editRole" name="editRole">
                                                               <option value="admin" '.($result['TypeOfUser'] == 'ADMIN' ? 'selected' : '').'>ADMIN</option>
-                                                              <option value="staff" '.($result['TypeOfUser'] == 'STAFF' ? 'selected' : '').'>ADMIN</option>
+                                                              <option value="staff" '.($result['TypeOfUser'] == 'STAFF' ? 'selected' : '').'>STAFF</option>
                                                             </select>
                                                           </div>
                                                           <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -333,18 +338,42 @@ $results = $conn->query($sql);
 </script>
 
 
-    
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        populateDropdown("typeFilter");
+    });
+
+    function populateDropdown(selectId) {
+        var select = document.getElementById(selectId);
+        var options = [];
+        var table = document.getElementById("productsTable");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 1; i < rows.length; i++) {
+            var cell = rows[i].getElementsByTagName("td")[2]; // Index of Branch/Location column
+            var value = cell.textContent || cell.innerText;
+            if (!options.includes(value)) {
+                options.push(value);
+                var option = document.createElement("option");
+                option.text = value;
+                select.add(option);
+            }
+        }
+    }
+
     function filterTable() {
+        var selectBranch = document.getElementById("typeFilter");
+        var filterBranch = selectBranch.value.toUpperCase();
         var searchInput = document.getElementById("searchInput").value.toUpperCase();
         var table = document.getElementById("productsTable");
         var tr = table.getElementsByTagName("tr");
 
         for (var i = 1; i < tr.length; i++) {
-            var tdProductName = tr[i].getElementsByTagName("td")[1,2]; // Index of Product Name column
-            if (tdProductName) {
-                var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
-                if (productNameMatch) {
+            var tdBranch = tr[i].getElementsByTagName("td")[2]; // Index of Branch/Location column
+            var tdIPAddress = tr[i].getElementsByTagName("td")[1]; // Index of IP Address column
+            if (tdBranch && tdIPAddress) {
+                var branchMatch = filterBranch === '' || tdBranch.textContent.toUpperCase() === filterBranch;
+                var ipAddressMatch = tdIPAddress.textContent.toUpperCase().indexOf(searchInput) > -1;
+                if (branchMatch && ipAddressMatch) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -353,34 +382,7 @@ $results = $conn->query($sql);
         }
     }
 
-    document.getElementById("searchInput").addEventListener("keyup", filterTable);
-</script>
-
-<script>
-    
-    function filterTable() {
-        var searchInput = document.getElementById("searchInput").value.toUpperCase();
-        var table = document.getElementById("productsTable");
-        var tr = table.getElementsByTagName("tr");
-        var searchCount = 0;
-
-        for (var i = 1; i < tr.length; i++) {
-            var tdProductName = tr[i].getElementsByTagName("td")[1,2]; // Index of Product Name column
-            if (tdProductName) {
-                var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
-                if (productNameMatch) {
-                    tr[i].style.display = "";
-                    searchCount++;
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-
-        var totalCount = tr.length - 1; // Excluding the header row
-        document.getElementById("searchResultInfo").innerText = " " + searchCount + " out of " + totalCount + " products";
-    }
-
+    document.getElementById("typeFilter").addEventListener("change", filterTable);
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
 </script>
 
