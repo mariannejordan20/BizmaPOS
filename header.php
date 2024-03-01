@@ -32,10 +32,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="css/AdminLTE.css">
- 
-  <link rel="stylesheet" href="css/skin-green.css">
   
   	<!-- JS -->
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -55,7 +51,6 @@
 	<link rel="stylesheet" href="css/bootstrap.datetimepicker.css">
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 	<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
-	<link rel="stylesheet" href="css/styles.css">
 <style>
     .sidebartrans {
         z-index: 99;

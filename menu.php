@@ -140,7 +140,7 @@ include('header.php');
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     
-                    <a class="collapse-item" href="invoice-list.php">Order </a>
+                    <a class="collapse-item" href="order.php">Order </a>
                     
                 </div>
             </div>
