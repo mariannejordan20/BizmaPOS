@@ -214,7 +214,7 @@ $results = $conn->query($sql);
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Quantity" class="control-label">Quantity</label>
-            <input type="text" name="Quantity" class="form-control form-control-sm rounded-0" required>
+            <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" required>
         </div>
     </div>
 

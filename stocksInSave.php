@@ -11,12 +11,12 @@ if(isset($_POST['products'])) {
     foreach($products as $product) {
         $barcode = $product['barcode'];
         $productName = $product['product'];
-        $type = $product['type'];
+        $itemSerial = $product['type']; // Assuming this is the correct column name in your table
         $unit = $product['unit'];
         $quantity = $product['quantity'];
 
         // Bind parameters and execute the statement for each product
-        $stmt->bind_param("ssssi", $barcode, $productName, $type, $unit, $quantity);
+        $stmt->bind_param("ssssi", $barcode, $productName, $itemSerial, $unit, $quantity);
         if ($stmt->execute()) {
             // Product successfully inserted
             $insertValues[] = true;
