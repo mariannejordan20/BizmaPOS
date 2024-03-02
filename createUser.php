@@ -9,7 +9,7 @@ $nameOfUser = strtoupper($_POST['NameOfUser']);
 $userType = strtoupper($_POST['signupRole']);
 
 $userType = strtoupper($userType);
-$query = mysqli_query($conn,"SELECT * FROM users WHERE Username = '$username' ");
+$query = mysqli_query($conn,"SELECT * FROM posusers WHERE Username = '$username' ");
 
 if (mysqli_num_rows($query)>0)
 

@@ -3,7 +3,7 @@ session_start();
 	include('connection.php');
 	$id = $_GET['id'];
 
-	$delete = "Delete from users where ID = ".$id;
+	$delete = "Delete from posusers where ID = ".$id;
 	$res = $conn->query($delete);
 
 	if ($res){

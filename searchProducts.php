@@ -1,44 +1,19 @@
 <?php
+// Connect to your database
 include('connection.php');
 
-// Check if searchTerm is set and not empty
-if(isset($_POST['searchTerm']) && !empty($_POST['searchTerm'])) {
-    $searchTerm = $_POST['searchTerm'];
+$searchText = $_POST['searchText'];
 
-    // Prepare the SQL statement with a placeholder for the search term
-    $sql = "SELECT ID, Barcode, Quantity, ItemType, Product, Unit, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products WHERE Product LIKE ? ORDER BY Categories";
-    
-    // Prepare the statement
-    $stmt = $conn->prepare($sql);
-    
-    // Bind the search term to the placeholder in the SQL statement
-    $stmt->bind_param("s", $searchTermParam);
-    
-    // Set the search term parameter
-    $searchTermParam = '%' . $searchTerm . '%';
-    
-    // Execute the statement
-    $stmt->execute();
-    
-    // Get the result set
-    $result = $stmt->get_result();
-    
-    // Initialize an empty array to store the products
-    $products = array();
-    
-    // Fetch the rows from the result set
-    while ($row = $result->fetch_assoc()) {
-        // Add each row to the products array
-        $products[] = $row;
+$sql = "SELECT ID, Barcode, Product, ItemType, Unit, Costing, Price, Wholesale, Promo, Warranty, Categories, SubCategory, Seller, Supplier FROM products WHERE Product LIKE '%$searchText%' ORDER BY Categories";
+$results = $conn->query($sql);
+
+if ($results->num_rows > 0) {
+    while ($row = $results->fetch_assoc()) {
+        echo '<a class="dropdown-item product-item" data-product-id="' . $row['ID'] . '" data-barcode="' . $row['Barcode'] . '" data-product="' . $row['Product'] . '" data-type="' . $row['ItemType'] . '" data-unit="' . $row['Unit'] . '" data-costing="' . $row['Costing'] . '" data-price="' . $row['Price'] . '" data-wholesale="' . $row['Wholesale'] . '" data-promo="' . $row['Promo'] . '" data-warranty="' . $row['Warranty'] . '" data-categories="' . $row['Categories'] . '" data-subcategories="' . $row['SubCategory'] . '" data-seller="' . $row['Seller'] . '" data-supplier="' . $row['Supplier'] . '">' . $row['ID'] . ' - ' . $row['Barcode'] . ' - ' . $row['Product'] . ' - ' . $row['ItemType'] . ' - ' . $row['Unit'] . '</a>';
     }
-    
-    // Close the statement
-    $stmt->close();
-    
-    // Output the products array as JSON
-    echo json_encode($products);
 } else {
-    // If searchTerm is not set or empty, return an empty array
-    echo json_encode(array());
+    echo '<a class="dropdown-item">No products found</a>';
 }
+
+$conn->close();
 ?>
