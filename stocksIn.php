@@ -276,6 +276,11 @@ $results = $conn->query($sql);
                     <th>Type</th>
                     <th>Unit</th>
                     <th>Quantity</th>
+                    <th>Costing</th>
+                    <th>Price</th>
+                    <th>Wholesale</th>
+                    <th>Promo</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -357,14 +362,19 @@ $(document).ready(function(){
     });
 
     // Function to update the products to be stocked table
-    function updateStockInList(productId, barcode, product, type, unit, quantity) {
+    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo) {
         var newRow = "<tr>" +
-        "<td><button type='button' class='btn btn-danger btn-sm remove-product'>Remove</button></td>" + // Add remove button
+            "<td><button type='button' class='btn btn-danger btn-sm remove-product'><i class='fas fa-trash'></i></button>" + // Remove button with trash icon
+            "<button type='button' class='btn btn-primary btn-sm edit-product'><i class='fas fa-edit'></i></button></td>" + // Edit button with edit icon
             "<td>" + barcode + "</td>" +
             "<td>" + product + "</td>" +
             "<td>" + type + "</td>" +
             "<td>" + unit + "</td>" +
             "<td>" + quantity + "</td>" +
+            "<td>" + costing + "</td>" +
+            "<td>" + price + "</td>" +
+            "<td>" + wholesale + "</td>" +
+            "<td>" + promo + "</td>" +
             "</tr>";
 
         // Append the new row to the table body
@@ -375,6 +385,35 @@ $(document).ready(function(){
     function removeProductFromList(row) {
         row.remove(); // Remove the row from the table
     }
+
+    // Event delegation for handling click event on edit buttons
+    $('#stockInListTable').on('click', '.edit-product', function() {
+        var row = $(this).closest('tr'); // Get the closest row
+        // Retrieve the product details from the row and populate the input fields
+        var barcode = row.find('td:eq(1)').text();
+        var product = row.find('td:eq(2)').text();
+        var type = row.find('td:eq(3)').text();
+        var unit = row.find('td:eq(4)').text();
+        var quantity = row.find('td:eq(5)').text();
+        var costing = row.find('td:eq(6)').text();
+        var price = row.find('td:eq(7)').text();
+        var wholesale = row.find('td:eq(8)').text();
+        var promo = row.find('td:eq(9)').text();
+
+        // Update input fields with product details
+        $('input[name="Barcode"]').val(barcode);
+        $('input[name="Product"]').val(product);
+        $('input[name="Type"]').val(type);
+        $('input[name="Unit"]').val(unit);
+        $('input[name="Quantity"]').val(quantity);
+        $('input[name="Costing"]').val(costing);
+        $('input[name="Price"]').val(price);
+        $('input[name="Wholesale"]').val(wholesale);
+        $('input[name="Promo"]').val(promo);
+
+        // Remove the row from the table
+        row.remove();
+    });
 
     // Event delegation for handling click event on remove buttons
     $('#stockInListTable').on('click', '.remove-product', function() {
@@ -420,66 +459,91 @@ $(document).ready(function(){
     });
 
     // Event handler when clicking the Add button
-    $('button[name="Save"]').click(function(){
-        // Get the values from the form fields
-        var productId = $('input[name="ID"]').val();
-        var barcode = $('input[name="Barcode"]').val();
-        var product = $('input[name="Product"]').val();
-        var type = $('input[name="Type"]').val();
-        var unit = $('input[name="Unit"]').val();
-        var quantity = $('input[name="Quantity"]').val();
+   // Event handler when clicking the Add button
+$('button[name="Save"]').click(function(){
+    // Get the values from the form fields
+    var productId = $('input[name="ID"]').val();
+    var barcode = $('input[name="Barcode"]').val();
+    var product = $('input[name="Product"]').val();
+    var type = $('input[name="Type"]').val();
+    var unit = $('input[name="Unit"]').val();
+    var quantity = $('input[name="Quantity"]').val();
+    var costing = $('input[name="Costing"]').val();
+    var price = $('input[name="Price"]').val();
+    var wholesale = $('input[name="Wholesale"]').val();
+    var promo = $('input[name="Promo"]').val();
 
-        // Update the products to be stocked table
-        updateStockInList(productId, barcode, product, type, unit, quantity);
-    });
+    // Check if quantity is not empty
+    if(quantity.trim() === "") {
+        // Show an alert or message indicating that quantity is required
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Quantity field is required.',
+        });
+        return; // Exit the function to prevent further execution
+    }
+
+    // Update the products to be stocked table
+    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo);
+});
+
 
     // Event handler when clicking the Stock In button
     $('#stockInButton').click(function() {
         var productsToStockIn = [];
         $('#stockInListTable tbody tr').each(function() {
             var row = $(this);
-            var barcode = row.find('td:eq(0)').text();
-            var product = row.find('td:eq(1)').text();
-            var type = row.find('td:eq(2)').text();
-            var unit = row.find('td:eq(3)').text();
-            var quantity = row.find('td:eq(4)').text();
+            var barcode = row.find('td:eq(1)').text();
+            var product = row.find('td:eq(2)').text();
+            var type = row.find('td:eq(3)').text();
+            var unit = row.find('td:eq(4)').text();
+            var quantity = row.find('td:eq(5)').text();
+            var costing = row.find('td:eq(6)').text();
+            var price = row.find('td:eq(7)').text();
+            var wholesale = row.find('td:eq(8)').text();
+            var promo = row.find('td:eq(9)').text();
             productsToStockIn.push({
                 barcode: barcode,
                 product: product,
                 type: type,
                 unit: unit,
-                quantity: quantity
+                quantity: quantity,
+                costing: costing,
+                price: price,
+                wholesale: wholesale,
+                promo: promo
             });
         });
 
         // Send all products to the server for insertion
         $.ajax({
-    url: 'stocksInSave.php',
-    type: 'POST',
-    data: { products: JSON.stringify(productsToStockIn) },
-    success: function(response) {
-        // Handle the response from the server
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: response,
-            showConfirmButton: false,
-            timer: 1500 // Close the alert after 1.5 seconds
+            url: 'stocksInSave.php',
+            type: 'POST',
+            data: { products: JSON.stringify(productsToStockIn) },
+            success: function(response) {
+                // Handle the response from the server
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: response,
+                    showConfirmButton: false,
+                    timer: 1500 // Close the alert after 1.5 seconds
+                });
+            },
+            error: function(xhr, status, error) {
+                // Handle errors
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'An error occurred while stocking in products.',
+                    footer: '<pre>' + xhr.responseText + '</pre>' // Display the error message
+                });
+            }
         });
-    },
-    error: function(xhr, status, error) {
-        // Handle errors
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'An error occurred while stocking in products.',
-            footer: '<pre>' + xhr.responseText + '</pre>' // Display the error message
-        });
-    }
-});
-
     });
 });
+
 </script>
 
 

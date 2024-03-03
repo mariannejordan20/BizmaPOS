@@ -6,7 +6,7 @@ if(isset($_POST['products'])) {
     $products = json_decode($_POST['products'], true);
 
     $insertValues = [];
-    $stmt = $conn->prepare("INSERT INTO stockinhistory (Barcode, Product, ItemSerial, Unit, Quantity) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemSerial, Unit, Quantity,Costing,Price,Wholesale,Promo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     foreach($products as $product) {
         $barcode = $product['barcode'];
@@ -14,9 +14,13 @@ if(isset($_POST['products'])) {
         $itemSerial = $product['type']; // Assuming this is the correct column name in your table
         $unit = $product['unit'];
         $quantity = $product['quantity'];
+        $costing = $product['costing'];
+        $price = $product['price'];
+        $wholesale = $product['wholesale'];
+        $promo = $product['promo'];
 
         // Bind parameters and execute the statement for each product
-        $stmt->bind_param("ssssi", $barcode, $productName, $itemSerial, $unit, $quantity);
+        $stmt->bind_param("ssssiiiii", $barcode, $productName, $itemSerial, $unit, $quantity, $costing,$price,$wholesale,$promo);
         if ($stmt->execute()) {
             // Product successfully inserted
             $insertValues[] = true;
@@ -24,6 +28,13 @@ if(isset($_POST['products'])) {
             // Error inserting product
             $insertValues[] = false;
         }
+
+        // Update quantity in the products table
+        $updateQuantityQuery = "UPDATE products SET Quantity = Quantity + ? WHERE Barcode = ?";
+        $updateStmt = $conn->prepare($updateQuantityQuery);
+        $updateStmt->bind_param("is", $quantity, $barcode);
+        $updateStmt->execute();
+        $updateStmt->close();
     }
     
     $stmt->close();
@@ -38,6 +49,7 @@ if(isset($_POST['products'])) {
         $_SESSION['status'] = "Error stocking in products.";
         $_SESSION['status_code'] = "error";
     }
+
 } else {
     $_SESSION['status'] = "No products data received.";
     $_SESSION['status_code'] = "error";
