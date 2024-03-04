@@ -13,35 +13,7 @@ if (empty($haslog)) {
     header("location: login.php");
     exit;
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the products array is set in the POST data
-    if (isset($_POST['products'])) {
-        // Decode the JSON data sent via AJAX
-        $productsToStockIn = json_decode($_POST['products'], true);
 
-        // Prepare and execute the SQL insert statements for each product
-        $stmt = $conn->prepare("INSERT INTO productsstocks (Barcode, ProductName, ItemSerial, Unit, Quantity) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi", $barcode, $product, $type, $unit, $quantity);
-        
-        foreach ($productsToStockIn as $product) {
-            $barcode = $product['barcode'];
-            $product = $product['product'];
-            $type = $product['type'];
-            $unit = $product['unit'];
-            $quantity = $product['quantity'];
-            $stmt->execute();
-        }
-        $stmt->close();
-
-        // Send a success response back to the client
-        echo "Products successfully stocked in.";
-    } else {
-        // Send an error response back to the client
-        http_response_code(400);
-        echo "No products data received.";
-    }
-    exit;
-}
 
 $sql = "SELECT ID, Barcode, Quantity, ItemType, Product, Unit, Costing, Price, Wholesale, Promo, Categories, Seller, Supplier, Date_Registered FROM products ORDER BY Categories";
 $results = $conn->query($sql);
@@ -159,6 +131,7 @@ $results = $conn->query($sql);
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
             <div id="content">
             <nav class="navbar navbar-expand navbar-light topbar static-top shadow" style="background-color: white">
+            <h3 class="card-title mb-0" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">STOCK IN</h3>
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
     </button>
@@ -203,15 +176,7 @@ $results = $conn->query($sql);
 
 
                 
-            <nav class="navbar navbar-expand navbar-light  topbar static-top shadow" style="background-color: white">
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-        <i class="fa fa-bars"></i>
-    </button>
-    <div class="card-header d-flex justify-content-start align-items-left" style="background-color: white; border: none">
-    <h3 class="card-title mb-0" style="color: #313A46; font-family: Segoe UI; font-weight: bold;">STOCK IN</h3>
-</div>
-    
-</nav>
+            
 
 
 
@@ -219,48 +184,7 @@ $results = $conn->query($sql);
 
 <div class="container-fluid">
     
-<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
-      </div>
-      <div class="modal-body">
-        <!-- Sign Up Form -->
-        <form id="signupForm" action="createUser.php" method="POST">
-          <div class="mb-3">
-            <label for="signupUsername" class="form-label">Username</label>
-            <input type="text" class="form-control" id="signupUsername" name="signupUsername">
-          </div>
-          <div class="mb-3">
-            <label for="signupPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" id="signupPassword" name="signupPassword">
-          </div>
-          <div class="mb-3">
-            <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
-            <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
-          </div>
-          <div class="mb-3">
-            <label for="NameOfUser" class="form-label">Name</label>
-            <input type="text" class="form-control" id="NameOfUser" name="NameOfUser">
-          </div>
 
-          <div class="mb-3">
-            <label for="signupRole" class="form-label">Role</label>
-            <select class="form-select" id="signupRole" name="signupRole">
-              <option value="" selected disabled>Choose Role</option>
-              <option value="admin">Admin</option>
-              <option value="staff">Staff</option>
-            </select>
-          </div>
-         
-          <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
     
         <div class="dropdown">
             <input type="text" class="form-control dropdown-toggle" id="productSearchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Product">
@@ -318,12 +242,7 @@ $results = $conn->query($sql);
             <input type="text" name="Type" class="form-control form-control-sm rounded-0" readonly>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="serialNumberField" style="display: none;">
-    <div class="form-group">
-        <label for="ItemSerial" class="control-label">Serial</label>
-        <input type="text" name="ItemSerial" class="form-control form-control-sm rounded-0">
-    </div>
-</div>
+    
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
@@ -365,6 +284,12 @@ $results = $conn->query($sql);
             <input type="number" name="Promo" class="form-control form-control-sm rounded-0">
         </div>
     </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="serialNumberField" style="display: none;">
+    <div class="form-group">
+        <label for="ItemSerial" class="control-label">Serial</label>
+        <input type="text" name="ItemSerial" class="form-control form-control-sm rounded-0">
+    </div>
+</div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display: None;">
         <div class="form-group">
             <label for="DeliveryNumber" class="control-label">Delivery Number</label>
@@ -580,10 +505,20 @@ $(document).ready(function(){
 
     // Show/hide serial number field based on product type
     if(type === 'W/ SERIAL') {
+        // Set quantity to 1
+        $('input[name="Quantity"]').val(1);
+        // Make quantity input field read-only
+        $('input[name="Quantity"]').prop('readonly', true);
+        
         $('#serialNumberField').show();
     } else {
+        $('input[name="Quantity"]').val(quantity); // Set quantity to original value
+        // Make quantity input field editable
+        $('input[name="Quantity"]').prop('readonly', false);
         $('#serialNumberField').hide();
     }
+
+    
 });
 
 
@@ -615,6 +550,15 @@ $('button[name="Save"]').click(function(){
         });
         return; // Exit the function to prevent further execution
     }
+    if(type === 'W/ SERIAL' && $('input[name="ItemSerial"]').val().trim() === "") {
+    // Show an alert or message indicating that ItemSerial is required
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Serial Number field is required for products with type W/ SERIAL.',
+    });
+    return; // Exit the function to prevent further execution
+}
 
     // Update the products to be stocked table
     updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum,supplier,receiver);
@@ -684,34 +628,7 @@ $('button[name="Save"]').click(function(){
 
 </script>
 
-<script>
-  document.getElementById('signupForm').addEventListener('submit', function(event) {
-    
-    event.preventDefault();
 
-  
-    var username = document.getElementById('signupUsername').value.trim();
-    var password = document.getElementById('signupPassword').value.trim();
-    var confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
-    var name = document.getElementById('NameOfUser').value.trim();
-    var role = document.getElementById('signupRole').value;
-
-    // Check if any field is empty
-    if (!username || !password || !confirmPassword || !name || !role) {
-      alert('Please fill in all fields.');
-      return;
-    }
-
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-
-    // If all checks pass, submit the form
-    this.submit();
-  });
-</script>
 
 
 
