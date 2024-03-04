@@ -185,7 +185,7 @@ $results = $conn->query($sql);
 <div class="container-fluid">
     
 
-    
+<form action="">
         <div class="dropdown">
             <input type="text" class="form-control dropdown-toggle" id="productSearchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Product">
             <div id="searchResults" class="dropdown-menu" aria-labelledby="productSearchInput">
@@ -193,7 +193,7 @@ $results = $conn->query($sql);
             </div>
         </div>
     </div>
-    <form action="">
+   
     <div class="row">
 
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -555,75 +555,79 @@ $('button[name="Save"]').click(function(){
     Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: 'Serial Number field is required for products with type W/ SERIAL.',
+        text: 'Serial Number field is required.',
     });
     return; // Exit the function to prevent further execution
 }
 
     // Update the products to be stocked table
     updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum,supplier,receiver);
+    $('input[name="ItemSerial"]').val('');
 });
 
 
     // Event handler when clicking the Stock In button
     $('#stockInButton').click(function() {
-        var productsToStockIn = [];
-        $('#stockInListTable tbody tr').each(function() {
-            var row = $(this);
-            var barcode = row.find('td:eq(1)').text();
-            var product = row.find('td:eq(2)').text();
-            var type = row.find('td:eq(3)').text();
-            var unit = row.find('td:eq(4)').text();
-            var quantity = row.find('td:eq(5)').text();
-            var costing = row.find('td:eq(6)').text();
-            var price = row.find('td:eq(7)').text();
-            var wholesale = row.find('td:eq(8)').text();
-            var promo = row.find('td:eq(9)').text();
-            var deliverynum = row.find('td:eq(10)').text();
-            var supplier = row.find('td:eq(11)').text();
-            var receiver = row.find('td:eq(12)').text();
-            productsToStockIn.push({
-                barcode: barcode,
-                product: product,
-                type: type,
-                unit: unit,
-                quantity: quantity,
-                costing: costing,
-                price: price,
-                wholesale: wholesale,
-                promo: promo,
-                deliverynum: deliverynum,
-                supplier: supplier,
-                receiver: receiver
-            });
-        });
-
-        // Send all products to the server for insertion
-        $.ajax({
-            url: 'stocksInSave.php',
-            type: 'POST',
-            data: { products: JSON.stringify(productsToStockIn) },
-            success: function(response) {
-                // Handle the response from the server
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: response,
-                    showConfirmButton: false,
-                    timer: 1500 // Close the alert after 1.5 seconds
-                });
-            },
-            error: function(xhr, status, error) {
-                // Handle errors
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'An error occurred while stocking in products.',
-                    footer: '<pre>' + xhr.responseText + '</pre>' // Display the error message
-                });
-            }
+    var productsToStockIn = [];
+    $('#stockInListTable tbody tr').each(function() {
+        var row = $(this);
+        var barcode = row.find('td:eq(1)').text();
+        var product = row.find('td:eq(2)').text();
+        var type = row.find('td:eq(3)').text();
+        var unit = row.find('td:eq(4)').text();
+        var quantity = row.find('td:eq(5)').text();
+        var costing = row.find('td:eq(6)').text();
+        var price = row.find('td:eq(7)').text();
+        var wholesale = row.find('td:eq(8)').text();
+        var promo = row.find('td:eq(9)').text();
+        var deliverynum = row.find('td:eq(10)').text();
+        var supplier = row.find('td:eq(11)').text();
+        var receiver = row.find('td:eq(12)').text();
+        productsToStockIn.push({
+            barcode: barcode,
+            product: product,
+            type: type,
+            unit: unit,
+            quantity: quantity,
+            costing: costing,
+            price: price,
+            wholesale: wholesale,
+            promo: promo,
+            deliverynum: deliverynum,
+            supplier: supplier,
+            receiver: receiver
         });
     });
+
+    // Send all products to the server for insertion
+    $.ajax({
+        url: 'stocksInSave.php',
+        type: 'POST',
+        data: { products: JSON.stringify(productsToStockIn) },
+        success: function(response) {
+            // Handle the response from the server
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: response,
+                showConfirmButton: false,
+                timer: 1500 // Close the alert after 1.5 seconds
+            });
+            // Clear the table after successful insertion
+            $('#stockInListTable tbody').empty();
+        },
+        error: function(xhr, status, error) {
+            // Handle errors
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while stocking in products.',
+                footer: '<pre>' + xhr.responseText + '</pre>' // Display the error message
+            });
+        }
+    });
+});
+
 });
 
 </script>
