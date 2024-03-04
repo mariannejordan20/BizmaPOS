@@ -228,7 +228,7 @@ $results = $conn->query($sql);
        
     </form>
     <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
-                                <a href ="index1.php" class="btn btn-success" style="color: white;">
+                                <a href ="orderadd.php" class="btn btn-success" style="color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <?php } ?> 

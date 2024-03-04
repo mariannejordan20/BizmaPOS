@@ -48,9 +48,10 @@
 </style>
   </head>
   <body>
-    
+  <?php include('header.php'); ?>
+  <?php include ('menu.php'); ?>
     <div class="container shadow">
-   
+    <?php include('navbar.php'); ?>
       <div class="container-fluid shadow p-0 bg-white rounded mt-5 ms-0 d-flex justify-content-between">
         <div class="container">
           <img
@@ -84,7 +85,7 @@
         </div>
       </div>
       <div class="containe d-flex justify-content-around">
-        <div class="h5">MAIN WAREHOUSE</div>
+        <div class="h5">CLAIM STUB</div>
       </div>
       <div class="container d-flex justify-content-between">
       <div class="input-wrapper">
@@ -185,7 +186,7 @@
 
       <div class="d-flex justify-content-between">
       <div class="container d-flex flex-row mt-5 align-center justify-content-center" >
-        <table class="table-bordered table-striped me-5" style="width: 950rem;">
+        <table class="table-bordered table-striped me-5" style="width: 650rem;">
           <thead class=" table-dark text-center">
             <tr>
             <th colspan="2">Special Note and Instruction</th>
@@ -193,24 +194,7 @@
           </thead>
           <tbody>
     <tr>
-        <td>Product Condition: </td>
         <td><input type="text" contenteditable="true" value=""></td>
-    </tr>
-    <tr>
-        <td>Product Warranty: </td>
-        <td><input type="text" contenteditable="true" value=""></td>
-    </tr>
-    <tr>
-        <td>Product Availability: </td>
-        <td><input type="text" contenteditable="true" value=""></td>
-    </tr>
-    <tr>
-        <td>Mode of Payment: </td>
-        <td><input type="text" contenteditable="true" value=""></td>
-    </tr>
-    <tr>
-        <td>NON-VAR REG. TIN: </td>
-        <td><input type="text" contenteditable="true"></td>
     </tr>
 </tbody>
         </table>
