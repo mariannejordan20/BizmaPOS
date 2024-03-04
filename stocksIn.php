@@ -63,6 +63,10 @@ $results = $conn->query($sql);
     background-color: #fff; /* Optional: Add a background color */
     transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
     }
+    .custom-font-size {
+    font-size: 10px; /* Adjust the font size as needed */
+}
+
     #stocksinTable {
         width: 100%  ;
         border-spacing: 0  ;
@@ -154,7 +158,50 @@ $results = $conn->query($sql);
         <?php include ('menu.php'); ?>
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
             <div id="content">
-            <?php include('navbar.php'); ?>
+            <nav class="navbar navbar-expand navbar-light topbar static-top shadow" style="background-color: white">
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+    <ul class="navbar-nav ml-auto">
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo " " . $_SESSION['Name'] . " "; ?></span>
+                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+            </a>
+            
+            
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                 aria-labelledby="userDropdown">
+                 <a class="dropdown-item" href="logout.php">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+                <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
+                    <a class="dropdown-item dropdown-toggle" href="#" id="configDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-cogs"></i>
+                        <span style= "margin-left:5px">Config</span>
+                    </a>
+                    <div class="dropdown-menu shadow animated--grow-in"
+                         aria-labelledby="configDropdown">
+                        <a class="dropdown-item" href="userAccounts.php">User accounts</a>
+                        <a class="dropdown-item" href="ipAddressList.php">IP Addresses</a>
+                        
+                    </div>
+                  
+                    
+                <?php } ?>
+                
+            </div>
+        </li>
+    </ul>
+</nav>
+
+
+
                 
             <nav class="navbar navbar-expand navbar-light  topbar static-top shadow" style="background-color: white">
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -167,7 +214,54 @@ $results = $conn->query($sql);
 </nav>
 
 
+
+
+
 <div class="container-fluid">
+    
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
+      </div>
+      <div class="modal-body">
+        <!-- Sign Up Form -->
+        <form id="signupForm" action="createUser.php" method="POST">
+          <div class="mb-3">
+            <label for="signupUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="signupUsername" name="signupUsername">
+          </div>
+          <div class="mb-3">
+            <label for="signupPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="signupPassword" name="signupPassword">
+          </div>
+          <div class="mb-3">
+            <label for="signupConfirmPassword" class="form-label">Re-enter Password</label>
+            <input type="password" class="form-control" id="signupConfirmPassword" name="signupConfirmPassword">
+          </div>
+          <div class="mb-3">
+            <label for="NameOfUser" class="form-label">Name</label>
+            <input type="text" class="form-control" id="NameOfUser" name="NameOfUser">
+          </div>
+
+          <div class="mb-3">
+            <label for="signupRole" class="form-label">Role</label>
+            <select class="form-select" id="signupRole" name="signupRole">
+              <option value="" selected disabled>Choose Role</option>
+              <option value="admin">Admin</option>
+              <option value="staff">Staff</option>
+            </select>
+          </div>
+         
+          <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+    
         <div class="dropdown">
             <input type="text" class="form-control dropdown-toggle" id="productSearchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Product">
             <div id="searchResults" class="dropdown-menu" aria-labelledby="productSearchInput">
@@ -177,6 +271,26 @@ $results = $conn->query($sql);
     </div>
     <form action="">
     <div class="row">
+
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label for="DRNum" class="control-label">DR NO.</label>
+            <input type="text" name="DRNum" class="form-control form-control-sm rounded-0">
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label for="Supplier" class="control-label">Supplier</label>
+            <input type="text" name="Supplier" class="form-control form-control-sm rounded-0">
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label for="Receiver" class="control-label">Receiver</label>
+            <input type="text" name="Receiver" class="form-control form-control-sm rounded-0" value="<?php echo isset($_SESSION['Name']) ? $_SESSION['Name'] : ''; ?>"readonly>
+        </div>
+    </div>
+
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
         <div class="form-group">
             <label for="ID" class="control-label">ID</label>
@@ -204,6 +318,12 @@ $results = $conn->query($sql);
             <input type="text" name="Type" class="form-control form-control-sm rounded-0" readonly>
         </div>
     </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="serialNumberField" style="display: none;">
+    <div class="form-group">
+        <label for="ItemSerial" class="control-label">Serial</label>
+        <input type="text" name="ItemSerial" class="form-control form-control-sm rounded-0">
+    </div>
+</div>
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
@@ -245,12 +365,14 @@ $results = $conn->query($sql);
             <input type="number" name="Promo" class="form-control form-control-sm rounded-0">
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display: None;">
         <div class="form-group">
             <label for="DeliveryNumber" class="control-label">Delivery Number</label>
             <input type="text" name="DeliveryNumber" class="form-control form-control-sm rounded-0" required>
         </div>
     </div>
+
+    
     
 
     <!-- Add more input fields for other attributes here -->
@@ -263,35 +385,40 @@ $results = $conn->query($sql);
 </div>   
     
 </form>
-
 <div class="row">
     <div class="col-md-12">
         <h2>Products to Stock In</h2>
-        <table class="table text-center table-bordered" id="stockInListTable">
-            <thead>
-                <tr>
-                <th>Action</th>
-                    <th>Barcode</th>
-                    <th>Product Name</th>
-                    <th>Type</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Costing</th>
-                    <th>Price</th>
-                    <th>Wholesale</th>
-                    <th>Promo</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Placeholder for products to be stocked -->
-                
-                <!-- Add more rows for other products -->
-            </tbody>
-        </table>
+        <div class="table-responsive" style="max-height: 340px; overflow-y: scroll;">
+            <table class="table text-center table-bordered" id="stockInListTable">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Barcode</th>
+                        <th>Product Name</th>
+                        <th>Type</th>
+                        <th>Unit</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
+                        <th>SRP</th>
+                        <th>WS</th>
+                        <th>PR</th>
+                        <th>DR NO.</th>
+                        <th>Splr</th>
+                        <th>Rcvr</th>
+                    </tr>
+                </thead>
+                <tbody class="custom-font-size">
+    <!-- Placeholder for products to be stocked -->
+    
+    <!-- Add more rows for other products -->
+</tbody>
+
+            </table>
+        </div>
         <button id="stockInButton" class="btn btn-success">Stock In Products</button>
     </div>
 </div>
+
 
 
 
@@ -302,25 +429,7 @@ $results = $conn->query($sql);
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Bootstrap core JavaScript-->
   <!-- Bootstrap core JavaScript-->
@@ -362,7 +471,7 @@ $(document).ready(function(){
     });
 
     // Function to update the products to be stocked table
-    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo) {
+    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo,deliverynum,supplier,receiver) {
         var newRow = "<tr>" +
             "<td><button type='button' class='btn btn-danger btn-sm remove-product'><i class='fas fa-trash'></i></button>" + // Remove button with trash icon
             "<button type='button' class='btn btn-primary btn-sm edit-product'><i class='fas fa-edit'></i></button></td>" + // Edit button with edit icon
@@ -375,6 +484,9 @@ $(document).ready(function(){
             "<td>" + price + "</td>" +
             "<td>" + wholesale + "</td>" +
             "<td>" + promo + "</td>" +
+            "<td>" + deliverynum + "</td>" +
+            "<td>" + supplier + "</td>" +
+            "<td>" + receiver + "</td>" +
             "</tr>";
 
         // Append the new row to the table body
@@ -399,6 +511,9 @@ $(document).ready(function(){
         var price = row.find('td:eq(7)').text();
         var wholesale = row.find('td:eq(8)').text();
         var promo = row.find('td:eq(9)').text();
+        var deliverynum = row.find('td:eq(10)').text();
+        var supplier = row.find('td:eq(11)').text();
+        var receiver = row.find('td:eq(12)').text();
 
         // Update input fields with product details
         $('input[name="Barcode"]').val(barcode);
@@ -410,6 +525,9 @@ $(document).ready(function(){
         $('input[name="Price"]').val(price);
         $('input[name="Wholesale"]').val(wholesale);
         $('input[name="Promo"]').val(promo);
+        $('input[name="DRNum"]').val(deliverynum);
+        $('input[name="Supplier"]').val(supplier);
+        $('input[name="Receiver"]').val(receiver);
 
         // Remove the row from the table
         row.remove();
@@ -423,40 +541,51 @@ $(document).ready(function(){
 
     // Event delegation for handling click event on search results
     $('#searchResults').on('click', '.product-item', function(){
-        // Get product details from data attributes
-        var productId = $(this).data('product-id');
-        var barcode = $(this).data('barcode');
-        var product = $(this).data('product');
-        var type = $(this).data('type');
-        var unit = $(this).data('unit');
-        var quantity = $(this).data('quantity');
-        var costing = $(this).data('costing');
-        var price = $(this).data('price');
-        var wholesale = $(this).data('wholesale');
-        var promo = $(this).data('promo');
-        var warranty = $(this).data('warranty');
-        var categories = $(this).data('categories');
-        var subcategories = $(this).data('subcategories');
-        var seller = $(this).data('seller');
-        var supplier = $(this).data('supplier');
+    // Get product details from data attributes
+    var productId = $(this).data('product-id');
+    var barcode = $(this).data('barcode');
+    var product = $(this).data('product');
+    var type = $(this).data('type');
+    var unit = $(this).data('unit');
+    var quantity = $(this).data('quantity');
+    var costing = $(this).data('costing');
+    var price = $(this).data('price');
+    var wholesale = $(this).data('wholesale');
+    var promo = $(this).data('promo');
+    var warranty = $(this).data('warranty');
+    var categories = $(this).data('categories');
+    var subcategories = $(this).data('subcategories');
+    var seller = $(this).data('seller');
+    var supplier = $(this).data('supplier');
 
-        // Update input fields with product details
-        $('input[name="ID"]').val(productId);
-        $('input[name="Barcode"]').val(barcode);
-        $('input[name="Product"]').val(product);
-        $('input[name="Type"]').val(type);
-        $('input[name="Unit"]').val(unit);
-        $('input[name="Quantity"]').val(quantity);
-        $('input[name="Costing"]').val(costing);
-        $('input[name="Price"]').val(price);
-        $('input[name="Wholesale"]').val(wholesale);
-        $('input[name="Promo"]').val(promo);
-        $('input[name="Warranty"]').val(warranty);
-        $('input[name="Categories"]').val(categories);
-        $('input[name="SubCategories"]').val(subcategories);
-        $('input[name="Seller"]').val(seller);
-        $('input[name="Supplier"]').val(supplier);
-    });
+    // Update input fields with product details
+    $('input[name="ID"]').val(productId);
+    $('input[name="Barcode"]').val(barcode);
+    $('input[name="Product"]').val(product);
+    $('input[name="Type"]').val(type);
+    $('input[name="Unit"]').val(unit);
+    $('input[name="Quantity"]').val(quantity);
+    $('input[name="Costing"]').val(costing);
+    $('input[name="Price"]').val(price);
+    $('input[name="Wholesale"]').val(wholesale);
+    $('input[name="Promo"]').val(promo);
+    $('input[name="Warranty"]').val(warranty);
+    $('input[name="Categories"]').val(categories);
+    $('input[name="SubCategories"]').val(subcategories);
+    $('input[name="Seller"]').val(seller);
+    $('input[name="Supplier"]').val(supplier);
+
+    // Log the retrieved type for debugging
+    console.log("Type: " + type);
+
+    // Show/hide serial number field based on product type
+    if(type === 'W/ SERIAL') {
+        $('#serialNumberField').show();
+    } else {
+        $('#serialNumberField').hide();
+    }
+});
+
 
     // Event handler when clicking the Add button
    // Event handler when clicking the Add button
@@ -472,20 +601,23 @@ $('button[name="Save"]').click(function(){
     var price = $('input[name="Price"]').val();
     var wholesale = $('input[name="Wholesale"]').val();
     var promo = $('input[name="Promo"]').val();
+    var deliverynum = $('input[name="DRNum"]').val();
+    var supplier = $('input[name="Supplier"]').val();
+    var receiver = $('input[name="Receiver"]').val();
 
     // Check if quantity is not empty
-    if(quantity.trim() === "") {
+    if(quantity.trim() === "" || deliverynum.trim() === "") {
         // Show an alert or message indicating that quantity is required
         Swal.fire({
             icon: 'error',
             title: 'Error!',
-            text: 'Quantity field is required.',
+            text: 'Quantity or Delivery Number field is required.',
         });
         return; // Exit the function to prevent further execution
     }
 
     // Update the products to be stocked table
-    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo);
+    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum,supplier,receiver);
 });
 
 
@@ -503,6 +635,9 @@ $('button[name="Save"]').click(function(){
             var price = row.find('td:eq(7)').text();
             var wholesale = row.find('td:eq(8)').text();
             var promo = row.find('td:eq(9)').text();
+            var deliverynum = row.find('td:eq(10)').text();
+            var supplier = row.find('td:eq(11)').text();
+            var receiver = row.find('td:eq(12)').text();
             productsToStockIn.push({
                 barcode: barcode,
                 product: product,
@@ -512,7 +647,10 @@ $('button[name="Save"]').click(function(){
                 costing: costing,
                 price: price,
                 wholesale: wholesale,
-                promo: promo
+                promo: promo,
+                deliverynum: deliverynum,
+                supplier: supplier,
+                receiver: receiver
             });
         });
 
@@ -546,6 +684,34 @@ $('button[name="Save"]').click(function(){
 
 </script>
 
+<script>
+  document.getElementById('signupForm').addEventListener('submit', function(event) {
+    
+    event.preventDefault();
+
+  
+    var username = document.getElementById('signupUsername').value.trim();
+    var password = document.getElementById('signupPassword').value.trim();
+    var confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+    var name = document.getElementById('NameOfUser').value.trim();
+    var role = document.getElementById('signupRole').value;
+
+    // Check if any field is empty
+    if (!username || !password || !confirmPassword || !name || !role) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    // If all checks pass, submit the form
+    this.submit();
+  });
+</script>
 
 
 

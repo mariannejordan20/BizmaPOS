@@ -6,7 +6,7 @@ if(isset($_POST['products'])) {
     $products = json_decode($_POST['products'], true);
 
     $insertValues = [];
-    $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemSerial, Unit, Quantity,Costing,Price,Wholesale,Promo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemSerial, Unit, Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber,Supplier,Receiver) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     foreach($products as $product) {
         $barcode = $product['barcode'];
@@ -18,9 +18,12 @@ if(isset($_POST['products'])) {
         $price = $product['price'];
         $wholesale = $product['wholesale'];
         $promo = $product['promo'];
+        $deliverynum = $product['deliverynum'];
+        $supplier = $product['supplier'];
+        $receiver = $product['receiver'];
 
         // Bind parameters and execute the statement for each product
-        $stmt->bind_param("ssssiiiii", $barcode, $productName, $itemSerial, $unit, $quantity, $costing,$price,$wholesale,$promo);
+        $stmt->bind_param("ssssiiiiisss", $barcode, $productName, $itemSerial, $unit, $quantity, $costing,$price,$wholesale,$promo,$deliverynum,$supplier,$receiver);
         if ($stmt->execute()) {
             // Product successfully inserted
             $insertValues[] = true;
