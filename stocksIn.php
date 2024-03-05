@@ -201,25 +201,25 @@ $results = $conn->query($sql);
                                 // Format the ID to be six digits long
                                 $next_ENCNum = sprintf("%07d", $nextID);
                             ?>
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-3">
             <div class="form-group">
                 <label for="productSearchInput" class="control-label">Search Product</label>
-                <input type="text" class="form-control form-control-sm rounded-0" id="productSearchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Product">
+                <input type="text" class="form-control form-control-sm rounded" id="productSearchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Product" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 1px;">
                 <div id="searchResults" class="dropdown-menu" aria-labelledby="productSearchInput">
                     <!-- Search results will appear here -->
                 </div>
             </div>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-    <div class="form-group">
-        <label for="ENCNum" class="control-label">ENC No.</label>
-        <input type="text" name="ENCNum" class="form-control form-control-sm rounded-0" value="<?php echo $next_ENCNum; ?>" readonly>
-    </div>
-</div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 mt-3">
+            <div class="form-group">
+                <label for="ENCNum" class="control-label">ENC No.</label>
+                <input type="text" name="ENCNum" class="shadow-sm form-control form-control-sm rounded" value="<?php echo $next_ENCNum; ?>" readonly>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 mt-3">
             <div class="form-group">
                 <label for="currentDate" class="control-label">Date</label>
-                <input type="text" name="currentDate" class="form-control form-control-sm rounded-0" value="<?php echo date('Y-m-d'); ?>" readonly>
+                <input type="text" name="currentDate" class="shadow-sm form-control form-control-sm rounded" value="<?php echo date('Y-m-d'); ?>" readonly>
             </div>
         </div>
     </div>
@@ -229,47 +229,47 @@ $results = $conn->query($sql);
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="form-group">
             <label for="DRNum" class="control-label">DR NO.</label>
-            <input type="text" name="DRNum" class="form-control form-control-sm rounded-0">
+            <input type="text" name="DRNum" class="shadow-sm form-control form-control-sm rounded">
         </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="form-group">
             <label for="Supplier" class="control-label">Supplier</label>
-            <input type="text" name="Supplier" class="form-control form-control-sm rounded-0">
+            <input type="text" name="Supplier" class="shadow-sm form-control form-control-sm rounded">
         </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="form-group">
             <label for="Receiver" class="control-label">Receiver</label>
-            <input type="text" name="Receiver" class="form-control form-control-sm rounded-0" value="<?php echo isset($_SESSION['Name']) ? $_SESSION['Name'] : ''; ?>"readonly>
+            <input type="text" name="Receiver" class="shadow-sm form-control form-control-sm rounded" value="<?php echo isset($_SESSION['Name']) ? $_SESSION['Name'] : ''; ?>"readonly>
         </div>
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
         <div class="form-group">
             <label for="ID" class="control-label">ID</label>
-            <input type="text" name="ID" class="form-control form-control-sm rounded-0" readonly>
+            <input type="text" name="ID" class="shadow-sm form-control form-control-sm rounded" readonly>
         </div>
     </div>
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Barcode" class="control-label">Barcode</label>
-            <input type="text" name="Barcode" class="form-control form-control-sm rounded-0" readonly>
+            <input type="text" name="Barcode" class="shadow-sm form-control form-control-sm rounded" readonly>
         </div>
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="form-group">
             <label for="Product" class="control-label">Product</label>
-            <input type="text" name="Product" class="form-control form-control-sm rounded-0" readonly>
+            <input type="text" name="Product" class="shadow-sm form-control form-control-sm rounded" readonly>
         </div>
     </div>
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Type" class="control-label">Type</label>
-            <input type="text" name="Type" class="form-control form-control-sm rounded-0" readonly>
+            <input type="text" name="Type" class="shadow-sm form-control form-control-sm rounded" readonly>
         </div>
     </div>
     
@@ -277,47 +277,47 @@ $results = $conn->query($sql);
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Unit" class="control-label">Unit</label>
-            <input type="text" name="Unit" class="form-control form-control-sm rounded-0"readonly>
+            <input type="text" name="Unit" class="shadow-sm form-control form-control-sm rounded"readonly>
         </div>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Quantity" class="control-label">Quantity</label>
-            <input type="number" name="Quantity" class="form-control form-control-sm rounded-0" required>
+            <input type="number" name="Quantity" class="shadow-sm form-control form-control-sm rounded" required>
         </div>
     </div>
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Costing" class="control-label">Costing</label>
-            <input type="number" name="Costing" class="form-control form-control-sm rounded-0">
+            <input type="number" name="Costing" class="shadow-sm form-control form-control-sm rounded">
         </div>
     </div>
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Price" class="control-label">Price</label>
-            <input type="number" name="Price" class="form-control form-control-sm rounded-0">
+            <input type="number" name="Price" class="shadow-sm form-control form-control-sm rounded">
         </div>
     </div>
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Wholesale" class="control-label">Wholesale</label>
-            <input type="number" name="Wholesale" class="form-control form-control-sm rounded-0">
+            <input type="number" name="Wholesale" class="shadow-sm form-control form-control-sm rounded">
         </div>
     </div>
 
     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
         <div class="form-group">
             <label for="Promo" class="control-label">Promo</label>
-            <input type="number" name="Promo" class="form-control form-control-sm rounded-0">
+            <input type="number" name="Promo" class="shadow-sm form-control form-control-sm rounded">
         </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" id="serialNumberField" style="display: none;">
     <div class="form-group">
         <label for="ItemSerial" class="control-label">Serial</label>
-        <input type="text" name="ItemSerial" class="form-control form-control-sm rounded-0">
+        <input type="text" name="ItemSerial" class="shadow-sm form-control form-control-sm rounded">
     </div>
 </div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"style="Display: None;">
@@ -335,7 +335,7 @@ $results = $conn->query($sql);
 
 <div class="row">
     <div class="col-md-12">
-        <button type="submit" name="Save" value="Save" class="btn btn-success" style="float: right;">Add</button>
+        <button type="submit" name="Save" value="Save" class="btn btn-success" style="float: right;"><i class="fa fa-plus"></i></button>
     </div>
 </div>   
     
@@ -344,8 +344,8 @@ $results = $conn->query($sql);
     <div class="col-md-12">
         <h2>Products to Stock In</h2>
         <div class="table-responsive" style="max-height: 340px; overflow-y: scroll;">
-            <table class="table text-center table-bordered" id="stockInListTable">
-                <thead>
+            <table class="table text-sm text-center table-bordered" style="font-size: 13px; font-weight:bold;" id="stockInListTable">
+                <thead style="background-color: #313a46; color: #fff;">
                     <tr>
                         <th>Action</th>
                         <th>Barcode</th>
