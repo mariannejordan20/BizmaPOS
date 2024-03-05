@@ -30,8 +30,7 @@ $results = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add new Claim Stub</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         body {
             background-color: #f7f7f7;
@@ -123,7 +122,7 @@ $results = $conn->query($sql);
                                         </div>
                                         <div class="col-xs-2">
                                             <div class="form-group">
-                                                <label for="orderMD">MD#</label>
+                                                <label for="orderMD">Customer DR#</label>
                                                 <input type="text" class="form-control required" name="orderMD" id="orderMD">
                                             </div>
                                         </div>
@@ -249,6 +248,12 @@ $results = $conn->query($sql);
             </tr>
         </tbody>
     </table>
+<div class="row">
+    <div class="col-xs-12">
+        <button type="submit" class="btn btn-primary">Add Order</button>
+    </div>
+</div>
+
                 </div>
             </div>
 
