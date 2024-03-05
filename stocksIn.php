@@ -345,23 +345,25 @@ $results = $conn->query($sql);
         <h2>Products to Stock In</h2>
         <div class="table-responsive" style="max-height: 340px; overflow-y: scroll;">
             <table class="table text-center table-bordered" id="stockInListTable">
-                <thead>
-                    <tr>
-                        <th>Action</th>
-                        <th>Barcode</th>
-                        <th>Product Name</th>
-                        <th>Type</th>
-                        <th>Unit</th>
-                        <th>Qty</th>
-                        <th>Cost</th>
-                        <th>SRP</th>
-                        <th>WS</th>
-                        <th>PR</th>
-                        <th>DR NO.</th>
-                        <th>Splr</th>
-                        <th>Rcvr</th>
-                    </tr>
-                </thead>
+            <thead>
+    <tr>
+        <th style="font-size: 10px;">Act</th>
+        <th style="font-size: 10px;">Bcode</th>
+        <th style="font-size: 10px;">Product Name</th>
+        <th style="font-size: 10px;">Type</th>
+        <th style="font-size: 10px;">Unit</th>
+        <th style="font-size: 10px;">Qty</th>
+        <th style="font-size: 10px;">Cost</th>
+        <th style="font-size: 10px;">SRP</th>
+        <th style="font-size: 10px;">WS</th>
+        <th style="font-size: 10px;">PR</th>
+        <th style="font-size: 10px;">DR NO.</th>
+        <th style="font-size: 10px;">Splr</th>
+        <th style="font-size: 10px;">Rcvr</th>
+        <th style="font-size: 10px;">Srl</th>
+    </tr>
+</thead>
+
                 <tbody class="custom-font-size">
     <!-- Placeholder for products to be stocked -->
     
@@ -437,7 +439,7 @@ $(document).ready(function(){
     });
 
     // Function to update the products to be stocked table
-    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver) {
+    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial) {
         var newRow = "<tr>" +
             "<td><button type='button' class='btn btn-danger btn-sm remove-product'><i class='fas fa-trash'></i></button>" +
             "<button type='button' class='btn btn-primary btn-sm edit-product'><i class='fas fa-refresh'></i></button></td>" +
@@ -453,6 +455,7 @@ $(document).ready(function(){
             "<td>" + deliverynum + "</td>" +
             "<td>" + supplier + "</td>" +
             "<td>" + receiver + "</td>" +
+            "<td>" + itemserial + "</td>" +
             "</tr>";
 
         $('#stockInListTable tbody').append(newRow);
@@ -480,6 +483,7 @@ $(document).ready(function(){
         var deliverynum = row.find('td:eq(10)').text();
         var supplier = row.find('td:eq(11)').text();
         var receiver = row.find('td:eq(12)').text();
+        var itemserial = row.find('td:eq(13)').text();
 
         $('input[name="Barcode"]').val(barcode);
         $('input[name="Product"]').val(product);
@@ -493,6 +497,7 @@ $(document).ready(function(){
         $('input[name="DRNum"]').val(deliverynum);
         $('input[name="Supplier"]').val(supplier);
         $('input[name="Receiver"]').val(receiver);
+        $('input[name="ItemSerial"]').val(itemserial);
 
         row.remove();
         updateStockInButtonState();
@@ -568,6 +573,7 @@ $(document).ready(function(){
         var deliverynum = $('input[name="DRNum"]').val();
         var supplier = $('input[name="Supplier"]').val();
         var receiver = $('input[name="Receiver"]').val();
+        var itemserial = $('input[name="ItemSerial"]').val();
 
         if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
             Swal.fire({
@@ -586,7 +592,7 @@ $(document).ready(function(){
             return;
         }
 
-        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver);
+        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial);
         $('input[name="ItemSerial"]').val('');
     });
 
@@ -607,6 +613,7 @@ $(document).ready(function(){
             var deliverynum = row.find('td:eq(10)').text();
             var supplier = row.find('td:eq(11)').text();
             var receiver = row.find('td:eq(12)').text();
+            var itemserial = row.find('td:eq(13)').text();
             productsToStockIn.push({
                 barcode: barcode,
                 product: product,
@@ -619,7 +626,8 @@ $(document).ready(function(){
                 promo: promo,
                 deliverynum: deliverynum,
                 supplier: supplier,
-                receiver: receiver
+                receiver: receiver,
+                itemserial: itemserial
             });
         });
 
