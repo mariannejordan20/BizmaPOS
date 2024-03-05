@@ -211,50 +211,48 @@ $results = $conn->query($sql);
     <div id="wrapper">
     <?php include ('menu.php'); ?>
     <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
-    <div id="content">
-    <?php include('navbar.php'); ?>
-
-    <div class="container-fluid" style="padding-left: 2%;">
-    <div class="card-header" style="background-color: #eeeeee; border: none">
-        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">Order List</h3>
-    </div>
-    <div class="card-body">
-    <div class="order-section">
-    <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-    <form action="order.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
-            <div class=" searchAdjust">
-                <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
-            </div>    
-       
-    </form>
-    <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
-                                <a href ="orderadd.php" class="btn btn-success" style="color: white;">
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                                <?php } ?> 
-    </div>
-    <div class="container-fluid">
-    <div class="header-fixed">
-    <div class="table-responsive"  style="max-height: 340px; overflow-y: scroll;">
-    <table class="table text-center table-bordered" id="orderTable" width="100%" cellspacing="0">
-        <thead>
-            <tr class="text-white">
-                <th class="text-center">ACTION</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Item</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Serial</th>
-                <th class="text-center">Status</th>
-            </tr>
-        </thead>
-    </table>
-</div>
-    </div>
-    </div>
-    </div>
-    </div>
-</div>
-
+        <div id="content">
+        <?php include('navbar.php'); ?>
+            <div class="container-fluid" style="padding-left: 2%;">
+                <div class="card-header" style="background-color: #eeeeee; border: none">
+                    <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">Order List</h3>
+                </div>
+            <div class="card-body">
+                <div class="order-section">
+                    <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                        <form action="order.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                                <div class=" searchAdjust">
+                                    <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
+                                </div>    
+                        
+                        </form>
+                        <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
+                                                    <a href ="orderadd.php" class="btn btn-success" style="color: white;">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                    <?php } ?> 
+                    </div>
+                    <div class="container-fluid">
+                    <div class="header-fixed">
+                    <div class="table-responsive"  style="max-height: 340px; overflow-y: scroll;">
+                    <table class="table text-center table-bordered" id="orderTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class="text-white">
+                                <th class="text-center">ACTION</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Item</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Serial</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
     </div>

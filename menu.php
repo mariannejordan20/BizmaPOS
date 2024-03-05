@@ -131,12 +131,12 @@ include('header.php');
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHistory"
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#technical"
                 aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-soccer-ball-o"></i>
                 <span>Technical</span>
             </a>
-            <div id="collapseHistory" class="collapse" aria-labelledby="headingUtilities"
+            <div id="technical" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     

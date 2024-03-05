@@ -88,31 +88,31 @@
 </div>
 
 <div class="modal fade" id="addIPModal" tabindex="-1" aria-labelledby="addIPModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="addIPModalLabel">Register IP</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <!-- Sign Up Form -->
-                                                    <form id="addIP" action="ipAdd.php" method="POST">
-                                                    <div class="mb-3">
-                                                        <label for="ipAdd" class="form-label">IP Address</label>
-                                                        <input type="text" class="form-control" id="ipAdd" name="ipAdd">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="ipLocation" class="form-label">Location/Branch</label>
-                                                        <input type="text" class="form-control" id="ipLocation" name="ipLocation">
-                                                    </div>
+  <div class="modal-dialog">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="addIPModalLabel">Register IP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class ="fas fa-close"> </i></button>
+      </div>
+      <div class="modal-body">
+          <!-- Sign Up Form -->
+          <form id="addIP" action="ipAdd.php" method="POST">
+          <div class="mb-3">
+              <label for="ipAdd" class="form-label">IP Address</label>
+              <input type="text" class="form-control" id="ipAdd" name="ipAdd">
+          </div>
+          <div class="mb-3">
+              <label for="ipLocation" class="form-label">Location/Branch</label>
+              <input type="text" class="form-control" id="ipLocation" name="ipLocation">
+          </div>
 
 
-                                                    <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Register</button>
-                                                    </form>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </div>
+          <button type="submit" class="btn btn-block fa-lg" style="background-color: #ff3c00; color: white; font-weight: bold; padding:5px; padding-right: 1rem; padding-left: 1rem; font-size:12px;">Register</button>
+          </form>
+      </div>
+      </div>
+  </div>
+  </div>
 
 <script>
   document.getElementById('signupForm').addEventListener('submit', function(event) {
