@@ -24,6 +24,7 @@ $results = $conn->query($sql);
 <!DOCTYPE html>
 <html lang="en">
 <style>
+    
     #stocksinTable{
         cursor: pointer;
     }
@@ -186,10 +187,39 @@ $results = $conn->query($sql);
     
 
 <form action="">
-        <div class="dropdown">
-            <input type="text" class="form-control dropdown-toggle" id="productSearchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Product">
-            <div id="searchResults" class="dropdown-menu" aria-labelledby="productSearchInput">
-                <!-- Search results will appear here -->
+    <div class="row">
+
+    <?php
+                                $sqlMaxID = "SELECT MAX(ID) AS maxID FROM deliverycodes";
+                                $resultMaxID = $conn->query($sqlMaxID);
+                                $rowMaxID = $resultMaxID->fetch_assoc();
+                                $maxID = $rowMaxID['maxID'];
+
+                                
+                                $nextID = $maxID + 1;
+
+                                // Format the ID to be six digits long
+                                $next_ENCNum = sprintf("%07d", $nextID);
+                            ?>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <label for="productSearchInput" class="control-label">Search Product</label>
+                <input type="text" class="form-control form-control-sm rounded-0" id="productSearchInput" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Product">
+                <div id="searchResults" class="dropdown-menu" aria-labelledby="productSearchInput">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+    <div class="form-group">
+        <label for="ENCNum" class="control-label">ENC No.</label>
+        <input type="text" name="ENCNum" class="form-control form-control-sm rounded-0" value="<?php echo $next_ENCNum; ?>" readonly>
+    </div>
+</div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+            <div class="form-group">
+                <label for="currentDate" class="control-label">Date</label>
+                <input type="text" name="currentDate" class="form-control form-control-sm rounded-0" value="<?php echo date('Y-m-d'); ?>" readonly>
             </div>
         </div>
     </div>
@@ -382,6 +412,17 @@ $results = $conn->query($sql);
 
 <script>
 $(document).ready(function(){
+    // Function to check if there are products in the to be stocked in table
+    function checkStockInTable() {
+        return $('#stockInListTable tbody tr').length > 0;
+    }
+
+    // Update the Stock In button state based on the presence of products in the table
+    function updateStockInButtonState() {
+        var isTableEmpty = !checkStockInTable();
+        $('#stockInButton').prop('disabled', isTableEmpty);
+    }
+
     // Function to perform live search
     $('#productSearchInput').on('keyup', function(){
         var searchText = $(this).val();
@@ -396,10 +437,10 @@ $(document).ready(function(){
     });
 
     // Function to update the products to be stocked table
-    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo,deliverynum,supplier,receiver) {
+    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver) {
         var newRow = "<tr>" +
-            "<td><button type='button' class='btn btn-danger btn-sm remove-product'><i class='fas fa-trash'></i></button>" + // Remove button with trash icon
-            "<button type='button' class='btn btn-primary btn-sm edit-product'><i class='fas fa-edit'></i></button></td>" + // Edit button with edit icon
+            "<td><button type='button' class='btn btn-danger btn-sm remove-product'><i class='fas fa-trash'></i></button>" +
+            "<button type='button' class='btn btn-primary btn-sm edit-product'><i class='fas fa-refresh'></i></button></td>" +
             "<td>" + barcode + "</td>" +
             "<td>" + product + "</td>" +
             "<td>" + type + "</td>" +
@@ -414,19 +455,19 @@ $(document).ready(function(){
             "<td>" + receiver + "</td>" +
             "</tr>";
 
-        // Append the new row to the table body
         $('#stockInListTable tbody').append(newRow);
+        updateStockInButtonState();
     }
 
     // Function to remove product from the stock list
     function removeProductFromList(row) {
-        row.remove(); // Remove the row from the table
+        row.remove();
+        updateStockInButtonState();
     }
 
     // Event delegation for handling click event on edit buttons
     $('#stockInListTable').on('click', '.edit-product', function() {
-        var row = $(this).closest('tr'); // Get the closest row
-        // Retrieve the product details from the row and populate the input fields
+        var row = $(this).closest('tr');
         var barcode = row.find('td:eq(1)').text();
         var product = row.find('td:eq(2)').text();
         var type = row.find('td:eq(3)').text();
@@ -440,7 +481,6 @@ $(document).ready(function(){
         var supplier = row.find('td:eq(11)').text();
         var receiver = row.find('td:eq(12)').text();
 
-        // Update input fields with product details
         $('input[name="Barcode"]').val(barcode);
         $('input[name="Product"]').val(product);
         $('input[name="Type"]').val(type);
@@ -454,181 +494,174 @@ $(document).ready(function(){
         $('input[name="Supplier"]').val(supplier);
         $('input[name="Receiver"]').val(receiver);
 
-        // Remove the row from the table
         row.remove();
+        updateStockInButtonState();
     });
 
     // Event delegation for handling click event on remove buttons
     $('#stockInListTable').on('click', '.remove-product', function() {
-        var row = $(this).closest('tr'); // Get the closest row
-        removeProductFromList(row); // Remove the product from the stock list
+        var row = $(this).closest('tr');
+        removeProductFromList(row);
     });
 
     // Event delegation for handling click event on search results
     $('#searchResults').on('click', '.product-item', function(){
-    // Get product details from data attributes
-    var productId = $(this).data('product-id');
-    var barcode = $(this).data('barcode');
-    var product = $(this).data('product');
-    var type = $(this).data('type');
-    var unit = $(this).data('unit');
-    var quantity = $(this).data('quantity');
-    var costing = $(this).data('costing');
-    var price = $(this).data('price');
-    var wholesale = $(this).data('wholesale');
-    var promo = $(this).data('promo');
-    var warranty = $(this).data('warranty');
-    var categories = $(this).data('categories');
-    var subcategories = $(this).data('subcategories');
-    var seller = $(this).data('seller');
-    var supplier = $(this).data('supplier');
+        var productId = $(this).data('product-id');
+        var barcode = $(this).data('barcode');
+        var product = $(this).data('product');
+        var type = $(this).data('type');
+        var unit = $(this).data('unit');
+        var quantity = $(this).data('quantity');
+        var costing = $(this).data('costing');
+        var price = $(this).data('price');
+        var wholesale = $(this).data('wholesale');
+        var promo = $(this).data('promo');
+        var warranty = $(this).data('warranty');
+        var categories = $(this).data('categories');
+        var subcategories = $(this).data('subcategories');
+        var seller = $(this).data('seller');
+        var supplier = $(this).data('supplier');
 
-    // Update input fields with product details
-    $('input[name="ID"]').val(productId);
-    $('input[name="Barcode"]').val(barcode);
-    $('input[name="Product"]').val(product);
-    $('input[name="Type"]').val(type);
-    $('input[name="Unit"]').val(unit);
-    $('input[name="Quantity"]').val(quantity);
-    $('input[name="Costing"]').val(costing);
-    $('input[name="Price"]').val(price);
-    $('input[name="Wholesale"]').val(wholesale);
-    $('input[name="Promo"]').val(promo);
-    $('input[name="Warranty"]').val(warranty);
-    $('input[name="Categories"]').val(categories);
-    $('input[name="SubCategories"]').val(subcategories);
-    $('input[name="Seller"]').val(seller);
-    $('input[name="Supplier"]').val(supplier);
+        $('input[name="ID"]').val(productId);
+        $('input[name="Barcode"]').val(barcode);
+        $('input[name="Product"]').val(product);
+        $('input[name="Type"]').val(type);
+        $('input[name="Unit"]').val(unit);
+        $('input[name="Quantity"]').val(quantity);
+        $('input[name="Costing"]').val(costing);
+        $('input[name="Price"]').val(price);
+        $('input[name="Wholesale"]').val(wholesale);
+        $('input[name="Promo"]').val(promo);
+        $('input[name="Warranty"]').val(warranty);
+        $('input[name="Categories"]').val(categories);
+        $('input[name="SubCategories"]').val(subcategories);
+        $('input[name="Seller"]').val(seller);
+        $('input[name="Supplier"]').val(supplier);
 
-    // Log the retrieved type for debugging
-    console.log("Type: " + type);
+        console.log("Type: " + type);
 
-    // Show/hide serial number field based on product type
-    if(type === 'W/ SERIAL') {
-        // Set quantity to 1
-        $('input[name="Quantity"]').val(1);
-        // Make quantity input field read-only
-        $('input[name="Quantity"]').prop('readonly', true);
-        
-        $('#serialNumberField').show();
-    } else {
-        $('input[name="Quantity"]').val(quantity); // Set quantity to original value
-        // Make quantity input field editable
-        $('input[name="Quantity"]').prop('readonly', false);
-        $('#serialNumberField').hide();
-    }
+        if(type === 'W/ SERIAL') {
+            $('input[name="Quantity"]').val(1);
+            $('input[name="Quantity"]').prop('readonly', true);
+            $('#serialNumberField').show();
+        } else {
+            $('input[name="Quantity"]').val(quantity);
+            $('input[name="Quantity"]').prop('readonly', false);
+            $('#serialNumberField').hide();
+        }
 
-    
-});
-
+        updateStockInButtonState();
+    });
 
     // Event handler when clicking the Add button
-   // Event handler when clicking the Add button
-$('button[name="Save"]').click(function(){
-    // Get the values from the form fields
-    var productId = $('input[name="ID"]').val();
-    var barcode = $('input[name="Barcode"]').val();
-    var product = $('input[name="Product"]').val();
-    var type = $('input[name="Type"]').val();
-    var unit = $('input[name="Unit"]').val();
-    var quantity = $('input[name="Quantity"]').val();
-    var costing = $('input[name="Costing"]').val();
-    var price = $('input[name="Price"]').val();
-    var wholesale = $('input[name="Wholesale"]').val();
-    var promo = $('input[name="Promo"]').val();
-    var deliverynum = $('input[name="DRNum"]').val();
-    var supplier = $('input[name="Supplier"]').val();
-    var receiver = $('input[name="Receiver"]').val();
+    $('button[name="Save"]').click(function(){
+        var productId = $('input[name="ID"]').val();
+        var barcode = $('input[name="Barcode"]').val();
+        var product = $('input[name="Product"]').val();
+        var type = $('input[name="Type"]').val();
+        var unit = $('input[name="Unit"]').val();
+        var quantity = $('input[name="Quantity"]').val();
+        var costing = $('input[name="Costing"]').val();
+        var price = $('input[name="Price"]').val();
+        var wholesale = $('input[name="Wholesale"]').val();
+        var promo = $('input[name="Promo"]').val();
+        var deliverynum = $('input[name="DRNum"]').val();
+        var supplier = $('input[name="Supplier"]').val();
+        var receiver = $('input[name="Receiver"]').val();
 
-    // Check if quantity is not empty
-    if(quantity.trim() === "" || deliverynum.trim() === "") {
-        // Show an alert or message indicating that quantity is required
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'Quantity or Delivery Number field is required.',
-        });
-        return; // Exit the function to prevent further execution
-    }
-    if(type === 'W/ SERIAL' && $('input[name="ItemSerial"]').val().trim() === "") {
-    // Show an alert or message indicating that ItemSerial is required
-    Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Serial Number field is required.',
-    });
-    return; // Exit the function to prevent further execution
-}
-
-    // Update the products to be stocked table
-    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum,supplier,receiver);
-    $('input[name="ItemSerial"]').val('');
-});
-
-
-    // Event handler when clicking the Stock In button
-    $('#stockInButton').click(function() {
-    var productsToStockIn = [];
-    $('#stockInListTable tbody tr').each(function() {
-        var row = $(this);
-        var barcode = row.find('td:eq(1)').text();
-        var product = row.find('td:eq(2)').text();
-        var type = row.find('td:eq(3)').text();
-        var unit = row.find('td:eq(4)').text();
-        var quantity = row.find('td:eq(5)').text();
-        var costing = row.find('td:eq(6)').text();
-        var price = row.find('td:eq(7)').text();
-        var wholesale = row.find('td:eq(8)').text();
-        var promo = row.find('td:eq(9)').text();
-        var deliverynum = row.find('td:eq(10)').text();
-        var supplier = row.find('td:eq(11)').text();
-        var receiver = row.find('td:eq(12)').text();
-        productsToStockIn.push({
-            barcode: barcode,
-            product: product,
-            type: type,
-            unit: unit,
-            quantity: quantity,
-            costing: costing,
-            price: price,
-            wholesale: wholesale,
-            promo: promo,
-            deliverynum: deliverynum,
-            supplier: supplier,
-            receiver: receiver
-        });
-    });
-
-    // Send all products to the server for insertion
-    $.ajax({
-        url: 'stocksInSave.php',
-        type: 'POST',
-        data: { products: JSON.stringify(productsToStockIn) },
-        success: function(response) {
-            // Handle the response from the server
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: response,
-                showConfirmButton: false,
-                timer: 1500 // Close the alert after 1.5 seconds
-            });
-            // Clear the table after successful insertion
-            $('#stockInListTable tbody').empty();
-        },
-        error: function(xhr, status, error) {
-            // Handle errors
+        if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
-                text: 'An error occurred while stocking in products.',
-                footer: '<pre>' + xhr.responseText + '</pre>' // Display the error message
+                text: 'Please fill in required fields.',
             });
+            return;
         }
+        if(type === 'W/ SERIAL' && $('input[name="ItemSerial"]').val().trim() === "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Serial Number field is required.',
+            });
+            return;
+        }
+
+        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver);
+        $('input[name="ItemSerial"]').val('');
     });
+
+    // Event handler when clicking the Stock In button
+    $('#stockInButton').click(function() {
+        var productsToStockIn = [];
+        $('#stockInListTable tbody tr').each(function() {
+            var row = $(this);
+            var barcode = row.find('td:eq(1)').text();
+            var product = row.find('td:eq(2)').text();
+            var type = row.find('td:eq(3)').text();
+            var unit = row.find('td:eq(4)').text();
+            var quantity = row.find('td:eq(5)').text();
+            var costing = row.find('td:eq(6)').text();
+            var price = row.find('td:eq(7)').text();
+            var wholesale = row.find('td:eq(8)').text();
+            var promo = row.find('td:eq(9)').text();
+            var deliverynum = row.find('td:eq(10)').text();
+            var supplier = row.find('td:eq(11)').text();
+            var receiver = row.find('td:eq(12)').text();
+            productsToStockIn.push({
+                barcode: barcode,
+                product: product,
+                type: type,
+                unit: unit,
+                quantity: quantity,
+                costing: costing,
+                price: price,
+                wholesale: wholesale,
+                promo: promo,
+                deliverynum: deliverynum,
+                supplier: supplier,
+                receiver: receiver
+            });
+        });
+
+        if (productsToStockIn.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: 'No products available for stocking in.',
+            });
+            return;
+        }
+
+        $.ajax({
+            url: 'stocksInSave.php',
+            type: 'POST',
+            data: { products: JSON.stringify(productsToStockIn) },
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: response,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                $('#stockInListTable tbody').empty();
+                updateStockInButtonState();
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'An error occurred while stocking in products.',
+                    footer: '<pre>' + xhr.responseText + '</pre>'
+                });
+            }
+        });
+    });
+
+    // Initialize the Stock In button state
+    updateStockInButtonState();
 });
 
-});
 
 </script>
 

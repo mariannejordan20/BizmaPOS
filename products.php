@@ -317,7 +317,7 @@ $results = $conn->query($sql);
                         </div>
                             <div class="container-fluid">
                             <div class="header-fixed">
-                                <div class="table-responsive"  style="max-height: 340px; overflow-y: scroll;">
+                                <div class="table-responsive"  style="max-height: 400px; overflow-y: scroll;">
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white">
