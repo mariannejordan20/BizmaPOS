@@ -5,7 +5,7 @@ include('header.php');
 ?>
 
 <!-- Sidebar -->
-<ul class="sidebartrans navbar-nav sidebar sidebar-dark accordion shadow" id="accordionSidebar" style="background-color: #313a46; max-height: 800px;">
+<ul class="sidebartrans navbar-nav sidebar sidebar-dark accordion shadow" id="accordionSidebar" style="background-color: #313a46; max-height: auto;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">

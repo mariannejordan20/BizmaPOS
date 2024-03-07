@@ -15,13 +15,19 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, Barcode, Product,Unit,Quantity,Costing,Price,Wholesale,Promo,Categories, Seller , Supplier, Date_Registered from stockinhistory order by Categories";
+    $sql = "select ID, Barcode, Product,ItemType,Unit,Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber, Receiver, Supplier,ItemSerial,ENCNum, StockInDate from stocksintry order by ENCNum ";
     $results = $conn->query($sql);
 ?>
 
 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
 <style>
             .products-section {
     border-radius: 8px;
@@ -242,222 +248,325 @@ session_start();
     }
 }
 
+
+
 </style>
-<?php
-    include('header.php');
-?>
-
-
-
-
-
-
+</head>
 <body>
-
+    <?php include('header.php'); ?>
     <div id="wrapper">
-        <?php
-            include ('menu.php');
-        ?>
+        <?php include ('menu.php'); ?>
         <div id="content-wrapper" class="d-flex flex-column" style="background-color: #eeeeee;">
             <div id="content">
-                <?php
-                 include('navbar.php');
-                ?>
+                <?php include('navbar.php'); ?>
                 <div class="container-fluid" style="padding-left: 2%;">
-    <div class="card-header" style="background-color: #eeeeee; border: none">
-        <h3 class="card-title"  style="color: #313A46; font-family: Segoe UI; font-weight: bold;">STOCK IN HISTORY</h3>
-        
-    </div>
-
-        <div class="stockH-section">
-        <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
-                    <form action="products.php" method="get" class="form-inline mt-3 mb-3">
-                            <div class="input-group">
-                                <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search" oninput="searchProducts()">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn" style="background-color: #fe3c00; color:white">Search</button>
+                    <div class="card-header" style="background-color: #eeeeee; border: none">
+                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">STOCK IN LIST</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="products-section">
+                        <div class="mb-3 d-flex justify-content-between align-items-center ml-4 mr-4">
+                            <form action="products.php" method="get" class="searchAdjust form-inline mt-3 mb-3">
+                                <div class=" searchAdjust">
+                                    <input type="text" name="search" id="searchInput" class="searchAdjust form-control" placeholder="Search" oninput="searchProducts()">
+                                    <button type="button" class="btn note btn-success" data-toggle="modal" data-target="#NoteModal" onclick="editNote()">
+                            <i class="fa fa-sticky-note-o danger"></i>
+                        </button>
+                                        
+                                </div>
+                                
+                            </form>
+                            <!-- Note MODAL -->
+                            <div class="modal fade" id="NoteModal" tabindex="-1" role="dialog" aria-labelledby="NoteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="NoteModalLabel">NOTE</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Note Form -->
+                                            <form id="noteForm">
+                                                <div class="form-group">
+                                                    <label for="noteContent" style= "overflow: hidden;">Note Content:</label>
+                                                    <textarea class="form-control" id="noteContent" name="noteContent" rows="6" style="resize: vertical;" required></textarea> <!-- Change rows attribute value to 6 for larger initial size -->
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" onclick="updateNote()">Save Changes</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-            <a href ="productsAdd.php" class="btn" style="background-color: #fe3c00; color: white;">
-                <i class="fa fa-plus"></i>
-            </a>
-        </div>
-        <div class="container-fluid">
-            <div class="table-responsive">
-            <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
-
-                
-                <thead>
-                    <tr class="th" style="color: #000000">
-                    
-                        <th class="text-center  custom-column-width">ACTION</th>
-                        <th class="text-center  custom-column-width">BARCODE</th>
-                        <th class="text-center  custom-column-width">PRODUCT NAME</th>
-                        <th class="text-center  custom-column-width">UNIT</th>
-                        <th class="text-center  custom-column-width">QTY</th>
-                        <th class="text-center  custom-column-width">COSTING</th>
-                        <th class="text-center  custom-column-width">PRICE</th>
-                        <th class="text-center  custom-column-width">WHOLESALE</th>
-                        <th class="text-center  custom-column-width">PROMO</th>
-                        <th class="text-center  custom-column-width">CATEGORIES</th>
-                        <th class="text-center  custom-column-width">SELLER</th>
-                        <th class="text-center  custom-column-width">SUPPLIER</th>
-                        <th class="text-center  custom-column-width">STOCK IN DATE</th>
-                        
-                        
-                    </tr>
-                </thead>
-                <tbody class="custom-font-size" style="color: #313A46;">
-
-                <?php
-                                foreach ($results as $result) {
-                                    echo '<tr>
-                                            <td>
-
-                                            
-
-                                                <a href = "stocksInHistoryDelete.php?id='.$result['ID'].'">
-                                                <i class = "fa fa-trash text-danger"></i>
-                                                </a>
 
 
-                                            </td>
-                                            <td>'.strtoupper($result['Barcode']).'</td>
-                                            <td class="text-truncate" style="max-width: 150px;">'.strtoupper($result['Product']).'</td>
-                                            <td>'.strtoupper($result['Unit']).'</td>
-                                            <td>'.strtoupper($result['Quantity']).'</td>
-                                            <td>'.strtoupper($result['Costing']).'</td>
-                                            <td>'.strtoupper($result['Price']).'</td>
-                                            <td>'.strtoupper($result['Wholesale']).'</td>
-                                            <td>'.strtoupper($result['Promo']).'</td>
-                                            <td class="text-truncate" style="max-width: 75px;">'.strtoupper($result['Categories']).'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Seller']).'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Supplier']).'</td>
-                                            <td class="text-truncate" style="max-width: 100px;">'.strtoupper($result['Date_Registered']).'</td>
-                                            
 
-                                           
-
-                                        </tr>';
-                                        echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">'.$result['Product'].'</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                            <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
+                                <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                                <?php } ?>
                         </div>
-                        <div class="modal-body">
-                            
-                            <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
-                            <p><strong>Unit:</strong> '.$result['Unit'].'</p>
-                            <p><strong>Costing:</strong> '.$result['Costing'].'</p>
-                            <p><strong>Price:</strong> '.$result['Price'].'</p>
-                            <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
-                            <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
-                            <p><strong>Category:</strong> '.$result['Categories'].'</p>
-                            
-                            <p><strong>Seller:</strong> '.$result['Seller'].'</p>
-                            <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
-                            <p><strong>Date:</strong> '.$result['Date_Registered'].'</p>
-                            
-                          
-                            
-                            
+                            <div class="container-fluid">
+                            <div class="header-fixed">
+                                <div class="table-responsive"  style="max-height: 400px; overflow-y: scroll;">
+                                    <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr class="text-white">
+                                            
+                                                <th class="text-center">ACTION</th>
+                                                <th class="text-center">ENC NUMBER</th>
+                                                <th class="text-center">BARCODE</th>
+                                                <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
+                                                <th class="text-center" style="padding-right: 150px;">SERIAL</th>
+                                                <th class="text-center" style="padding-right: 50px">TYPE</th>
+                                                <th class="text-center">UNIT</th>
+                                                <th class="text-center">QTY</th>
+                                                <th class="text-center" style="padding-right: 30px">COSTING</th>
+                                                <th class="text-center" style="padding-right: 30px">REG-PRICE</th>
+                                                <th class="text-center">WHOLESALE</th>
+                                                <th class="text-center" style="padding-right: 33px">PROMO</th>
+                                                <th class="text-center">DELIVERY NO.</th>
+                                                <th class="text-center">SUPPLIER</th>
+                                                <th class="text-center">RECEIVER</th>
+                                                <th class="text-center">STOCK IN DATE</th>
+                                            </tr>
+                                        </thead>
+                            </div>
+                                        <tbody class="custom-font-size" style="color: #313A46;">
+                                        <?php
+foreach ($results as $result) {
+    echo '<tr>';
 
+    echo '<td>';
+    echo '<a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>';
+    if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
+        echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
+        <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+    }
+    echo '</td>';
+
+    echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ENCNum'] . '</td>
+            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
+            <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
+            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['ItemSerial'] . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' . $result['ItemType'] . '</td>
+            <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
+            <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Wholesale']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Promo']) . '</td>
+            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['DeliveryNumber'] . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Supplier']) . '</td>
+            <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Receiver']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['StockInDate'] . '</td>
+        </tr>';
+
+    echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">'.$result['Product'].'</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>ENC NUM:</strong> '.$result['ENCNum'].'</p>
+                        <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
+                        <p><strong>Serial:</strong> '.$result['ItemSerial'].'</p>
+                        <p><strong>Unit:</strong> '.$result['Unit'].'</p>
+                        <p><strong>Costing:</strong> '.$result['Costing'].'</p>
+                        <p><strong>Price:</strong> '.$result['Price'].'</p>
+                        <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
+                        <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
+                        <p><strong>DR NO.</strong> '.$result['DeliveryNumber'].'</p>
+                        <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
+                        <p><strong>Receiver:</strong> '.$result['Receiver'].'</p>
+                        <p><strong>Stock In Date</strong> '.$result['StockInDate'].'</p>
+                    </div>
+                </div>
+            </div>
+        </div>';
+}
+?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-3">
+                        <ul class="pagination">
+                                
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>';
-                                }
-
-                            ?>
-                        </tbody>
-
-                  </div>     
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-        </div> 
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap core JavaScript-->
+    <!-- Add your JavaScript scripts here -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    
-    <!-- Page level custom scripts -->
     <script src="assetsDT/js/bootstrap.bundle.min.js"></script>
     <script src="assetsDT/js/jquery-3.6.0.min.js"></script>
     <script src="assetsDT/js/pdfmake.min.js"></script>
     <script src="assetsDT/js/vfs_fonts.js"></script>
     <script src="assetsDT/js/custom.js"></script>
-
     <script src="js/sweetalert2.all.min.js"></script>
-  <script src="js/sweetalert.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+    <script src="js/delete.js"></script>
 
-<script src="js/delete.js"></script>
 
-<?php
-   if(isset($_SESSION['status']) && $_SESSION['status'] !=''){
+    <script>
+    function copyToClipboard(text) {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Text copied to clipboard: " + text);
+    }
+</script>
+
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        populateDropdown("unitFilter", 4); // Index of Unit column
+        populateDropdown("categoryFilter", 10); // Index of Category column
+    });
+
+function populateDropdown(selectId, columnIndex) {
+    var select = document.getElementById(selectId);
+    var options = [];
+    var table = document.getElementById("productsTable");
+    var rows = table.getElementsByTagName("tr");
+    for (var i = 1; i < rows.length; i++) {
+        var cell = rows[i].getElementsByTagName("td")[columnIndex];
+        var value = cell.textContent || cell.innerText;
+        if (!options.includes(value)) {
+            options.push(value);
+            var option = document.createElement("option");
+            option.text = value;
+            select.add(option);
+        }
+    }
+}
+
+    function filterTable() {
+        var selectUnit = document.getElementById("unitFilter");
+        var selectCategory = document.getElementById("categoryFilter");
+        var filterUnit = selectUnit.value.toUpperCase();
+        var filterCategory = selectCategory.value.toUpperCase();
+        var searchInput = document.getElementById("searchInput").value.toUpperCase();
+        var table = document.getElementById("productsTable");
+        var tr = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < tr.length; i++) {
+            var tdUnit = tr[i].getElementsByTagName("td")[4]; // Index of Unit column
+            var tdCategory = tr[i].getElementsByTagName("td")[10]; // Index of Category column
+            var tdProductName = tr[i].getElementsByTagName("td")[3]; // Index of Product Name column
+            var tdBarcode = tr[i].getElementsByTagName("td")[2]; // Index of Barcode column
+            if (tdUnit && tdCategory && tdProductName && tdBarcode) {
+                var unitMatch = filterUnit === '' || tdUnit.textContent.toUpperCase() === filterUnit;
+                var categoryMatch = filterCategory === '' || tdCategory.textContent.toUpperCase() === filterCategory;
+                var productNameMatch = tdProductName.textContent.toUpperCase().indexOf(searchInput) > -1;
+                var barcodeMatch = tdBarcode.textContent.toUpperCase().indexOf(searchInput) > -1;
+                if ((unitMatch && categoryMatch) && (productNameMatch || barcodeMatch)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    document.getElementById("unitFilter").addEventListener("change", filterTable);
+    document.getElementById("categoryFilter").addEventListener("change", filterTable);
+    document.getElementById("searchInput").addEventListener("input", filterTable);
+</script>
+
+<script>
+    function editNote() {
+        // Fetch current note content from database
+        $.ajax({
+            url: "fetchNote.php", // Your PHP script to fetch note content
+            type: 'get',
+            success: function(data, status) {
+                // Populate modal with fetched data
+                document.getElementById('noteContent').value = data;
+            },
+            error: function(xhr, status, error) {
+                // Handle error, if needed
+                console.error("Failed to fetch note");
+            }
+        });
+    }
+
+    function updateNote() {
+    // Get updated note content from form
+    var noteContent = document.getElementById('noteContent').value;
+
+    // Perform AJAX request to update note
+    $.ajax({
+        url: "updateNote.php", // Your PHP script to update note content
+        type: 'post',
+        data: {
+            noteContent: noteContent
+        },
+        success: function(data, status) {
+            // Handle success
+            console.log("Success: " + data);
+            // Optionally, show a success message using sweetalert
+            Swal.fire({
+                icon: 'success',
+                title: 'Note updated successfully',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            // Close the modal after a delay
+            setTimeout(function() {
+                $('#NoteModal').modal('hide');
+            }, 1500); // Adjust the delay as needed
+        },
+        error: function(xhr, status, error) {
+            // Handle error
+            console.error("Error: " + error);
+            // Optionally, show an error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            });
+        }
+    });
+}
+
+
+
+
+</script>
+
+    <?php
+       if(isset($_SESSION['status']) && $_SESSION['status'] !=''){
     ?>
-      <script>
-      swal({
-      title: "<?php echo $_SESSION['status'];?>",
-      icon: "<?php echo $_SESSION['status_code'];?>",
-       });
- </script>
- <?php
-      unset($_SESSION['status']);
-   }
-?>
-
-
+    <script>
+        swal({
+            title: "<?php echo $_SESSION['status'];?>",
+            icon: "<?php echo $_SESSION['status_code'];?>",
+        });
+    </script>
+    <?php
+        unset($_SESSION['status']);
+    }
+    ?>
 </body>
-
 </html>

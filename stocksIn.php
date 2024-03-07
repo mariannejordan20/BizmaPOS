@@ -218,8 +218,8 @@ $results = $conn->query($sql);
         </div>
         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 mt-3">
             <div class="form-group">
-                <label for="currentDate" class="control-label">Date</label>
-                <input type="text" name="currentDate" class="shadow-sm form-control form-control-sm rounded" value="<?php echo date('Y-m-d'); ?>" readonly>
+                <label for="CurrentDate" class="control-label">Date</label>
+                <input type="text" name="CurrentDate" class="shadow-sm form-control form-control-sm rounded" value="<?php echo date('Y-m-d'); ?>" readonly>
             </div>
         </div>
     </div>
@@ -360,6 +360,11 @@ $results = $conn->query($sql);
                         <th>DR NO.</th>
                         <th>Splr</th>
                         <th>Rcvr</th>
+                        <th>Srl</th>
+                        <th style="display:none">ENC</th>
+                        <th style="display:none">Date</th>
+                        
+
                     </tr>
                 </thead>
                 <tbody class="custom-font-size">
@@ -437,7 +442,7 @@ $(document).ready(function(){
     });
 
     // Function to update the products to be stocked table
-    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver) {
+    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate) {
         var newRow = "<tr>" +
             "<td><button type='button' class='btn btn-danger btn-sm remove-product'><i class='fas fa-trash'></i></button>" +
             "<button type='button' class='btn btn-primary btn-sm edit-product'><i class='fas fa-refresh'></i></button></td>" +
@@ -453,6 +458,9 @@ $(document).ready(function(){
             "<td>" + deliverynum + "</td>" +
             "<td>" + supplier + "</td>" +
             "<td>" + receiver + "</td>" +
+            "<td>" + itemserial + "</td>" +
+            "<td style='display: none;'>" + encnum + "</td>" +
+            "<td style='display: none;'>" + currentdate + "</td>" +
             "</tr>";
 
         $('#stockInListTable tbody').append(newRow);
@@ -480,6 +488,7 @@ $(document).ready(function(){
         var deliverynum = row.find('td:eq(10)').text();
         var supplier = row.find('td:eq(11)').text();
         var receiver = row.find('td:eq(12)').text();
+        var itemserial = row.find('td:eq(13)').text();
 
         $('input[name="Barcode"]').val(barcode);
         $('input[name="Product"]').val(product);
@@ -493,6 +502,7 @@ $(document).ready(function(){
         $('input[name="DRNum"]').val(deliverynum);
         $('input[name="Supplier"]').val(supplier);
         $('input[name="Receiver"]').val(receiver);
+        $('input[name="ItemSerial"]').val(itemserial);
 
         row.remove();
         updateStockInButtonState();
@@ -521,6 +531,7 @@ $(document).ready(function(){
         var subcategories = $(this).data('subcategories');
         var seller = $(this).data('seller');
         var supplier = $(this).data('supplier');
+       
 
         $('input[name="ID"]').val(productId);
         $('input[name="Barcode"]').val(barcode);
@@ -537,6 +548,7 @@ $(document).ready(function(){
         $('input[name="SubCategories"]').val(subcategories);
         $('input[name="Seller"]').val(seller);
         $('input[name="Supplier"]').val(supplier);
+       
 
         console.log("Type: " + type);
 
@@ -568,6 +580,9 @@ $(document).ready(function(){
         var deliverynum = $('input[name="DRNum"]').val();
         var supplier = $('input[name="Supplier"]').val();
         var receiver = $('input[name="Receiver"]').val();
+        var itemserial = $('input[name="ItemSerial"]').val();
+        var encnum = $('input[name="ENCNum"]').val();
+        var currentdate = $('input[name="CurrentDate"]').val();
 
         if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
             Swal.fire({
@@ -586,7 +601,7 @@ $(document).ready(function(){
             return;
         }
 
-        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver);
+        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate);
         $('input[name="ItemSerial"]').val('');
     });
 
@@ -607,6 +622,9 @@ $(document).ready(function(){
             var deliverynum = row.find('td:eq(10)').text();
             var supplier = row.find('td:eq(11)').text();
             var receiver = row.find('td:eq(12)').text();
+            var itemserial = row.find('td:eq(13)').text();
+            var encnum = row.find('td:eq(14)').text();
+            var currentdate = row.find('td:eq(15)').text();
             productsToStockIn.push({
                 barcode: barcode,
                 product: product,
@@ -619,7 +637,10 @@ $(document).ready(function(){
                 promo: promo,
                 deliverynum: deliverynum,
                 supplier: supplier,
-                receiver: receiver
+                receiver: receiver,
+                itemserial: itemserial,
+                encnum: encnum,
+                currentdate: currentdate
             });
         });
 
@@ -662,18 +683,7 @@ $(document).ready(function(){
     updateStockInButtonState();
 });
 
-
 </script>
-
-
-
-
-
-
-
-
-
-
 
 <!-- Include your delete.js script here -->
 <script src="js/delete.js"></script>
