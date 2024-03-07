@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, Barcode, Product,ItemType,Unit,Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber, Receiver, Supplier,ItemSerial,ENCNum, StockInDate from stocksintry order by ENCNum ";
+    $sql = "select ID , encnumber,DeliveryNumber,Supplier,Receiver,stockindate from deliverycodes ";
     $results = $conn->query($sql);
 ?>
 
@@ -261,7 +261,7 @@ session_start();
                 <?php include('navbar.php'); ?>
                 <div class="container-fluid" style="padding-left: 2%;">
                     <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">STOCK IN LOGS</h3>
+                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">STOCK IN SUMMARY</h3>
                     </div>
                     <div class="card-body">
                         <div class="products-section">
@@ -320,16 +320,6 @@ session_start();
                                             
                                                 <th class="text-center">ACTION</th>
                                                 <th class="text-center">ENC NUMBER</th>
-                                                <th class="text-center">BARCODE</th>
-                                                <th class="text-center" style="padding-right: 150px;">PRODUCT NAME</th>
-                                                <th class="text-center" style="padding-right: 50px;">SERIAL</th>
-                                                <th class="text-center" style="padding-right: 50px">TYPE</th>
-                                                <th class="text-center">UNIT</th>
-                                                <th class="text-center">QTY</th>
-                                                <th class="text-center" style="padding-right: 30px">COSTING</th>
-                                                <th class="text-center" style="padding-right: 30px">REG-PRICE</th>
-                                                <th class="text-center">WHOLESALE</th>
-                                                <th class="text-center" style="padding-right: 33px">PROMO</th>
                                                 <th class="text-center">DELIVERY NO.</th>
                                                 <th class="text-center">SUPPLIER</th>
                                                 <th class="text-center">RECEIVER</th>
@@ -343,54 +333,21 @@ foreach ($results as $result) {
     echo '<tr>';
 
     echo '<td>';
-    echo '<a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>';
+    echo '<a class="mr-2" href="#?id='.$result['encnumber'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['encnumber'].'"><i class="fa fa-eye"></i></a>';
     if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
         echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
         <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
     }
     echo '</td>';
 
-    echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['ENCNum'] . '</td>
-            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['Barcode'] . '</td>
-            <td class="text-truncate"  style="max-width: 150px;  position: relative;">'.'<button class="btn copy-button" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="copyToClipboard(\''.$result['Product'].'\')"><i class="fa fa-clipboard"></i></button>' .strtoupper ($result['Product']) . '</td>
-            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['ItemSerial'] . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' . $result['ItemType'] . '</td>
-            <td class="text-truncate" style="max-width: 50px;">' . $result['Unit'] . '</td>
-            <td class="text-truncate text-right" style="max-width: 50px; ">' . $result['Quantity'] . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Costing']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Price']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Wholesale']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 100px;">' . number_format($result['Promo']) . '</td>
-            <td class="text-truncate text-center" style="max-width: 100px;">' . $result['DeliveryNumber'] . '</td>
+    echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['encnumber'] . '</td>
+    <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['DeliveryNumber']) . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Supplier']) . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Receiver']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['StockInDate'] . '</td>
+            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['stockindate'] . '</td>
         </tr>';
 
-    echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">'.$result['Product'].'</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                    </div>
-                    <div class="modal-body">
-                        <p><strong>ENC NUM:</strong> '.$result['ENCNum'].'</p>
-                        <p><strong>Barcode:</strong> '.$result['Barcode'].'</p>
-                        <p><strong>Serial:</strong> '.$result['ItemSerial'].'</p>
-                        <p><strong>Unit:</strong> '.$result['Unit'].'</p>
-                        <p><strong>Costing:</strong> '.$result['Costing'].'</p>
-                        <p><strong>Price:</strong> '.$result['Price'].'</p>
-                        <p><strong>Wholesale Price:</strong> '.$result['Wholesale'].'</p>
-                        <p><strong>Promo Price:</strong> '.$result['Promo'].'</p>
-                        <p><strong>DR NO.</strong> '.$result['DeliveryNumber'].'</p>
-                        <p><strong>Supplier:</strong> '.$result['Supplier'].'</p>
-                        <p><strong>Receiver:</strong> '.$result['Receiver'].'</p>
-                        <p><strong>Stock In Date:</strong> '.$result['StockInDate'].'</p>
-                    </div>
-                </div>
-            </div>
-        </div>';
+    
 }
 ?>
 

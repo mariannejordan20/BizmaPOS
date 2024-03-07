@@ -2,11 +2,12 @@
 session_start();
 include('connection.php');
 
-
 if(isset($_POST['products'])) {
     $products = json_decode($_POST['products'], true);
 
     $insertValues = [];
+    $insertDeliveryCodes = false; // Flag to ensure delivery codes are inserted only once
+
     $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber,Supplier,Receiver,itemSerial,ENCNum,StockInDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     foreach($products as $product) {
@@ -36,18 +37,22 @@ if(isset($_POST['products'])) {
             $insertValues[] = false;
         }
 
-        $insertDeliveryCodeQuery = "INSERT INTO deliverycodes (encnumber) VALUES (?)";
-    $insertDeliveryCodeStmt = $conn->prepare($insertDeliveryCodeQuery);
-    $insertDeliveryCodeStmt->bind_param("s", $encnum);
-    $insertDeliveryCodeStmt->execute();
-    $insertDeliveryCodeStmt->close();
-
         // Update quantity in the products table
         $updateQuantityQuery = "UPDATE products SET Quantity = Quantity + ? WHERE Barcode = ?";
         $updateStmt = $conn->prepare($updateQuantityQuery);
         $updateStmt->bind_param("is", $quantity, $barcode);
         $updateStmt->execute();
         $updateStmt->close();
+
+        // Insert delivery codes only once
+        if (!$insertDeliveryCodes) {
+            $insertDeliveryCodeQuery = "INSERT INTO deliverycodes (encnumber,DeliveryNumber,Supplier, Receiver) VALUES (?,?,?,?)";
+            $insertDeliveryCodeStmt = $conn->prepare($insertDeliveryCodeQuery);
+            $insertDeliveryCodeStmt->bind_param("ssss", $encnum,$deliverynum,$supplier,$receiver);
+            $insertDeliveryCodeStmt->execute();
+            $insertDeliveryCodeStmt->close();
+            $insertDeliveryCodes = true; // Set flag to true after inserting delivery codes
+        }
     }
     
     $stmt->close();
