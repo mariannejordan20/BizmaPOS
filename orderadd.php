@@ -14,14 +14,6 @@ if (empty($haslog)){
     exit;
 }
 
-
-
-$sql = "SELECT ID, ProductID, Barcode, Product, ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered 
-        FROM products 
-        ORDER BY Categories";
-$results = $conn->query($sql);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -105,32 +97,32 @@ $results = $conn->query($sql);
                                     <a href="#" class="close" data-dismiss="alert">&times;</a>
                                     <div class="message"></div>
                                 </div>
-                                <form action="" id="addorder">
-                                    <div class="row form-group-row">
+                                <form action="orderaddsave.php" method="POST">
+                                    <div class="row form-group-row" style="padding-left: 130px;">
                                         <!-- Invoice and Due Date Fields -->
                                         <div class="col-xs-2">
                                             <div class="form-group">
-                                                <label for="invoice_date">Order Date</label>
-                                                <input type="date" class="form-control required" name="invoice_date" id="invoice_date">
+                                                <label for="order_date">Order Date</label>
+                                                <input type="date" class="form-control required" name="order_date" id="order_date">
                                             </div>
                                         </div>
                                         <div class="col-xs-2">
-                                            <div class="form-group">
-                                                <label for="invoice_due_date">Due Date</label>
-                                                <input type="date" class="form-control required" name="invoice_due_date" id="invoice_due_date">
+                                            <div class="form-group" style="padding-left: 20px;">
+                                                <label for="order_time">Time</label>
+                                                <input type="Time" class="form-control required" name="order_time" id="order_time">
                                             </div>
                                         </div>
                                         <div class="col-xs-2">
-                                            <div class="form-group">
-                                                <label for="orderMD">Customer DR#</label>
-                                                <input type="text" class="form-control required" name="orderMD" id="orderMD">
+                                            <div class="form-group" style="padding-left: 20px;">
+                                                <label for="customer_DR">Customer DR#</label>
+                                                <input type="text" class="form-control required" name="customer_DR" id="customer_DR">
                                             </div>
                                         </div>
                                                 <div class="col-xs-2">
                                                     <!-- Select Type Fields -->
-                                                    <div class="form-group">
-                                                        <label for="invoice_type">Select Type</label>
-                                                        <select name="invoice_type" id="invoice_type" class="form-control">
+                                                    <div class="form-group" style="padding-left: 20px;">
+                                                        <label for="order_type">Select Type</label>
+                                                        <select name="order_type" id="order_type" class="form-control">
                                                             <option value="claim" selected>Claim Stub</option>
                                                             <option value="quote">Quote</option>
                                                             <option value="receipt">Receipt</option>
@@ -139,123 +131,127 @@ $results = $conn->query($sql);
                                                 </div>
                                                 <div class="col-xs-2">
                                                     <!-- Invoice Status Fields -->
-                                                    <div class="form-group">
-                                                        <label for="invoice_status">Order Status</label>
-                                                        <select name="invoice_status" id="invoice_status" class="form-control">
+                                                    <div class="form-group" style="padding-left: 20px;">
+                                                        <label for="order_status">Order Status</label>
+                                                        <select name="order_status" id="order_status" class="form-control">
                                                             <option value="open" selected>Open</option>
                                                             <option value="paid">Paid</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                                    <div class="row" style="padding-left: 60px;">
                         <!-- Customer Information Panel -->
-                        <div class="col-xs-6">
+                        <div class="col-xs-6" style="width: 450px">
                             <div class="panel panel-default customer-panel">
                                 <div class="panel-heading">
-                                    <h4 class="float-left">Customer Information</h4>
-                                    <a href="#" class="float-right select-customer"><b>OR</b> Select Existing Customer</a>
+                                    <h5 class="float-left">Customer Information</h5>
                                     <div class="clear"></div>
                                 </div>
                                 <div class="panel-body form-group form-group-sm">
                                 <div class="row">
 								<div class="col-xs-6">
-									<div class="form-group">
-                                    <input type="text" class="form-control margin-bottom copy-input required" name="customer_name" id="customer_name" placeholder="Enter Name" tabindex="1" oninput="copyCustomerToShipping()">
+                                <div class="form-group" style="padding-left: 20px;">
+                                        <input type="text" class="form-control margin-bottom copy-input required" name="customer_name" id="customer_name" placeholder="Enter Name" tabindex="1" oninput="copyCustomerToShipping()" style="width: 180px;">
+                                    </div>
 
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control margin-bottom copy-input required" name="customer_address_1" id="customer_address_1" placeholder="Address" tabindex="3" oninput="copyCustomerToShipping()">	
+									<div class="form-group" style="padding-left: 20px;">
+										<input type="text" class="form-control margin-bottom copy-input required" name="customer_address_1" id="customer_address_1" placeholder="Address" tabindex="3" oninput="copyCustomerToShipping()" style="width: 180px;">	
 									</div>
 
 								</div>
 								<div class="col-xs-6">
 
-								    <div class="form-group">
-								    	<input type="text" class="form-control margin-bottom copy-input required" name="customer_county" id="customer_county" placeholder="Country" tabindex="6" oninput="copyCustomerToShipping()">
+								    <div class="form-group" style="padding-left: 20px;">
+								    	<input type="text" class="form-control margin-bottom copy-input required" name="customer_county" id="customer_county" placeholder="Country" tabindex="6" oninput="copyCustomerToShipping()" style="width: 180px;">
 								    </div>
-								    <div class="form-group no-margin-bottom">
-								    	<input type="text" class="form-control required" name="customer_phone" id="customer_phone" placeholder="Phone Number" tabindex="8">
+								    <div class="form-group no-margin-bottom" style="padding-left: 20px;">
+								    	<input type="text" class="form-control required" name="customer_phone" id="customer_phone" placeholder="Phone Number" tabindex="8" style="width: 180px;">
 									</div>
 								</div>
 							</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-6 text-right">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4>Shipping Information</h4>
-						</div>
-						<div class="panel-body form-group form-group-sm">
+
+                        <div class="col-xs-6" style="padding-left: 60px; width: 500px">
+                            <div class="panel panel-default customer-panel" >
+                                <div class="panel-heading">
+                                    <h5 class="float-left">Customer Shipping Information</h5>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="panel-body form-group form-group-sm">
 							<div class="row">
 								<div class="col-xs-6">
-									<div class="form-group">
-										<input type="text" class="form-control margin-bottom required" name="customer_name_ship" id="customer_name_ship" placeholder="Enter Name" tabindex="9">
+									<div class="form-group" style="padding-left: 20px;">
+										<input type="text" class="form-control margin-bottom required" name="customer_name_ship" id="customer_name_ship" placeholder="Enter Name" tabindex="9" style="width: 180px;">
 									</div>
-									<div class="form-group">
-										<input type="text" class="form-control margin-bottom" name="customer_address_ship" id="customer_address_ship" placeholder="Address " tabindex="11">	
+									<div class="form-group" style="padding-left: 20px;">
+										<input type="text" class="form-control margin-bottom" name="customer_address_ship" id="customer_address_ship" placeholder="Address " tabindex="11" style="width: 180px;">	
 									</div>
 
 								</div>
 								<div class="col-xs-6">
 
-                                <div class="form-group no-margin-bottom">
-										<input type="text" class="form-control required" name="customer_county_ship" id="customer_county_ship" placeholder="Country" tabindex="13">
+                                <div class="form-group no-margin-bottom" style="padding-left: 20px;">
+										<input type="text" class="form-control required" name="customer_county_ship" id="customer_county_ship" placeholder="Country" tabindex="13" style="width: 180px;">
 									</div>
 								</div>
 							</div>
 						</div>
-					    </div>
-				    </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <table class="table table-bordered table-hover table-striped" id="orderadd">
-        <thead>
-            <tr>
-                <th>
-                    <h4>Qty</h4>
-                </th>
-                <th width="500">
-                    <h4><a href="#" class="btn btn-success btn-xs add-row"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> Product Description</h4>
-                </th>
-                <th>
-                    <h4>Serial</h4>
-                </th>
-            </tr>
-        </thead>
+                    <table class="table table-bordered table-hover table-striped" id="orderadd" style="margin-left: 3%">
+                    <thead>
+                <tr >
+                    <th style="padding-top: 10px;">
+                        <h5>Qty</h5>
+                    </th>
+                    <th width="500">
+                        <h5><a href="#" class="btn btn-success btn-xs fa fa-plus add-row"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> Product Description</h5>
+                    </th>
+                    <th>
+                        <h5>Serial</h5>
+                    </th>
+                </tr>
+            </thead>
+
         <tbody>
             <tr>
                 <td class="text-right">
                     <div class="form-group form-group-sm no-margin-bottom">
-                        <input type="number" class="form-control invoice_product_qty calculate" name="qty" value="1">
+                        <input type="number" class="form-control invoice_product_qty calculate" name="qty" id="qty"value="1">
                     </div>
                 </td>
                 <td>
                     <div class="form-group form-group-sm no-margin-bottom" style="display: flex; align-items: center;">
-                        <a href="#" class="btn btn-danger btn-xs delete-row" style="margin-right: 5px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-                        <input type="text" class="form-control form-group-sm item-input invoice_product" name="product_desc" placeholder="Enter Product Name OR Description">
+                        <a href="#" class="btn btn-danger btn-xs fa fa-minus delete-row" style="margin-right: 5px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                        <input type="text" class="form-control form-group-sm item-input invoice_product" name="product_desc" id="product_desc" placeholder="Enter Product Name OR Description">
                     </div>
                 </td>
                 <td class="text-right">
                     <div class="form-group form-group-sm no-margin-bottom">
-                        <input type="number" class="form-control" name="serial">
+                        <input type="number" class="form-control" name="product_serial" id="product_serial">
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
-<div class="row">
-    <div class="col-xs-12">
-        <button type="submit" class="btn btn-primary">Add Order</button>
-    </div>
-</div>
-
+                <div class="row" style="padding-left: 10px;">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">Add Order</button>
                 </div>
             </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
             <script>
         // Function to add a new row
@@ -266,7 +262,7 @@ $results = $conn->query($sql);
             var cell2 = newRow.insertCell(1);
             var cell3 = newRow.insertCell(2);
             cell1.innerHTML = '<div class="form-group form-group-sm no-margin-bottom"><input type="number" class="form-control invoice_product_qty calculate" name="qty" value="1"></div>';
-            cell2.innerHTML = '<div class="form-group form-group-sm no-margin-bottom" style="display: flex; align-items: center;"><a href="#" class="btn btn-danger btn-xs delete-row" style="margin-right: 5px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a><input type="text" class="form-control form-group-sm item-input invoice_product" name="product_desc" placeholder="Enter Product Name OR Description"></div>';
+            cell2.innerHTML = '<div class="form-group form-group-sm no-margin-bottom" style="display: flex; align-items: center;"><a href="#" class="btn btn-danger btn-xs fa fa-minus delete-row" style="margin-right: 5px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a><input type="text" class="form-control form-group-sm item-input invoice_product" name="product_desc" placeholder="Enter Product Name OR Description"></div>';
             cell3.innerHTML = '<div class="form-group form-group-sm no-margin-bottom"><input type="number" class="form-control" name="serial"></div>';
 
             // Attach event listener to the new delete button

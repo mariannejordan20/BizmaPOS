@@ -13,13 +13,10 @@ if (empty($haslog)){
     header("location: login.php");
     exit;
 }
-
-
-
-$sql = "SELECT ID, ProductID, Barcode, Product, ItemType, Warranty, Unit, Quantity, Costing, Price, Wholesale, Promo, Categories, SubCategory, Seller, Supplier, Date_Registered 
-        FROM products 
-        ORDER BY Categories";
+$sql = "SELECT ID, Order_date, Order_time, Customer_DR, Order_type, Order_status, customer_name, customer_address_1, customer_county, customer_phone, customer_name_ship, customer_address_ship, customer_county_ship, qty, Seller, product_desc, product_serial 
+        FROM order";
 $results = $conn->query($sql);
+
 
 
 ?>
@@ -247,6 +244,31 @@ $results = $conn->query($sql);
                             </tr>
                         </thead>
                     </table>
+                    <tbody>
+                    <?php
+                                                if ($results) {
+                                                    while ($result = $results->fetch_assoc()) {
+                                                        echo '<tr>';
+                                                        echo '<td>';
+                                                        echo '<a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>';
+                                                        if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
+                                                            echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
+                                                                  <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+                                                        }
+                                                        echo '</td>';
+                                                        echo '<td class="text-truncate text-center">'  .$result['Order_date'] . '</td>
+                                                              <td class="text-truncate text-center">' . $result['product_desc'] . '</td>
+                                                              <td class="text-truncate">' . $result['customer_name'] . '</td>
+                                                              <td class="text-truncate text-right">' . $result['product_serial'] . '</td>
+                                                              <td class="text-truncate text-right">' . number_format($result['Order_status']) . '</td>
+                                                              </tr>';
+                                                    }
+                                                } else {
+                                                    echo "Error: " . $conn->error;
+                                                }
+                                                ?>
+
+                                    </tbody>
                 </div>
                     </div>
                     </div>
