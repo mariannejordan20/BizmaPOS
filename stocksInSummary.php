@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID , encnumber,DeliveryNumber,Supplier,Receiver,stockindate from deliverycodes ";
+    $sql = "select ID , encnumber,DeliveryNumber,Supplier,Receiver,stockindate,TotalVal from deliverycodes order by encnumber desc ";
     $results = $conn->query($sql);
 ?>
 
@@ -323,6 +323,7 @@ session_start();
                                                 <th class="text-center">DELIVERY NO.</th>
                                                 <th class="text-center">SUPPLIER</th>
                                                 <th class="text-center">RECEIVER</th>
+                                                <th class="text-center">TOTAL AMT</th>
                                                 <th class="text-center">STOCK IN DATE</th>
                                             </tr>
                                         </thead>
@@ -344,6 +345,7 @@ foreach ($results as $result) {
     <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['DeliveryNumber']) . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Supplier']) . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Receiver']) . '</td>
+            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['TotalVal'] . '</td>
             <td class="text-truncate text-right" style="max-width: 75px;">' . $result['stockindate'] . '</td>
         </tr>';
 

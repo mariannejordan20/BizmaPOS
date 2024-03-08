@@ -725,7 +725,8 @@ $(document).ready(function(){
                 });
                 $('#stockInListTable tbody').empty();
                 updateStockInButtonState();
-                updateTotalAmount(); // Reset total amount after stocking in
+                updateTotalAmount();
+                location.reload(); // Reset total amount after stocking in
             },
             error: function(xhr, status, error) {
                 Swal.fire({

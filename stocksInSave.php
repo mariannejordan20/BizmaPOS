@@ -7,8 +7,9 @@ if(isset($_POST['products'])) {
 
     $insertValues = [];
     $insertDeliveryCodes = false; // Flag to ensure delivery codes are inserted only once
+    $totalValue = 0; // Initialize total value
 
-    $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber,Supplier,Receiver,itemSerial,ENCNum,TotalValRow) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity, Costing, Price, Wholesale, Promo, DeliveryNumber, Supplier, Receiver, itemSerial, ENCNum, TotalValRow) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     foreach($products as $product) {
         $barcode = $product['barcode'];
@@ -26,11 +27,13 @@ if(isset($_POST['products'])) {
         $itemSerial = $product['itemserial'];
         $encnum = $product['encnum'];
         $totalvalrow = $product['totalvalrow'];
-        
-        
+
+        // Calculate total value for this product and accumulate it
+        $productTotalValue = $quantity * $costing;
+        $totalValue += $productTotalValue;
 
         // Bind parameters and execute the statement for each product
-        $stmt->bind_param("ssssiiiiisssssi", $barcode, $productName, $itemType, $unit, $quantity, $costing,$price,$wholesale,$promo,$deliverynum,$supplier,$receiver,$itemSerial,$encnum,$totalvalrow);
+        $stmt->bind_param("ssssiiiiisssssi", $barcode, $productName, $itemType, $unit, $quantity, $costing, $price, $wholesale, $promo, $deliverynum, $supplier, $receiver, $itemSerial, $encnum, $totalvalrow);
         if ($stmt->execute()) {
             // Product successfully inserted
             $insertValues[] = true;
@@ -45,18 +48,19 @@ if(isset($_POST['products'])) {
         $updateStmt->bind_param("is", $quantity, $barcode);
         $updateStmt->execute();
         $updateStmt->close();
-
-        // Insert delivery codes only once
-        if (!$insertDeliveryCodes) {
-            $insertDeliveryCodeQuery = "INSERT INTO deliverycodes (encnumber,DeliveryNumber,Supplier, Receiver) VALUES (?,?,?,?)";
-            $insertDeliveryCodeStmt = $conn->prepare($insertDeliveryCodeQuery);
-            $insertDeliveryCodeStmt->bind_param("ssss", $encnum,$deliverynum,$supplier,$receiver);
-            $insertDeliveryCodeStmt->execute();
-            $insertDeliveryCodeStmt->close();
-            $insertDeliveryCodes = true; // Set flag to true after inserting delivery codes
-        }
     }
-    
+
+    // Insert delivery codes only once
+    if (!empty($products) && !$insertDeliveryCodes) {
+        // Insert total value into deliverycodes table
+        $insertDeliveryCodeQuery = "INSERT INTO deliverycodes (encnumber, DeliveryNumber, Supplier, Receiver, TotalVal) VALUES (?, ?, ?, ?, ?)";
+        $insertDeliveryCodeStmt = $conn->prepare($insertDeliveryCodeQuery);
+        $insertDeliveryCodeStmt->bind_param("ssssd", $encnum, $deliverynum, $supplier, $receiver, $totalValue);
+        $insertDeliveryCodeStmt->execute();
+        $insertDeliveryCodeStmt->close();
+        $insertDeliveryCodes = true; // Set flag to true after inserting delivery codes
+    }
+
     $stmt->close();
 
     // Check if all products were inserted successfully
