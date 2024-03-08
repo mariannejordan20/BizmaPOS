@@ -8,7 +8,7 @@ if(isset($_POST['products'])) {
     $insertValues = [];
     $insertDeliveryCodes = false; // Flag to ensure delivery codes are inserted only once
 
-    $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber,Supplier,Receiver,itemSerial,ENCNum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber,Supplier,Receiver,itemSerial,ENCNum,TotalValRow) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     foreach($products as $product) {
         $barcode = $product['barcode'];
@@ -25,10 +25,12 @@ if(isset($_POST['products'])) {
         $receiver = $product['receiver'];
         $itemSerial = $product['itemserial'];
         $encnum = $product['encnum'];
+        $totalvalrow = $product['totalvalrow'];
+        
         
 
         // Bind parameters and execute the statement for each product
-        $stmt->bind_param("ssssiiiiisssss", $barcode, $productName, $itemType, $unit, $quantity, $costing,$price,$wholesale,$promo,$deliverynum,$supplier,$receiver,$itemSerial,$encnum);
+        $stmt->bind_param("ssssiiiiisssssi", $barcode, $productName, $itemType, $unit, $quantity, $costing,$price,$wholesale,$promo,$deliverynum,$supplier,$receiver,$itemSerial,$encnum,$totalvalrow);
         if ($stmt->execute()) {
             // Product successfully inserted
             $insertValues[] = true;
