@@ -441,7 +441,7 @@ $(document).ready(function(){
     });
 
     // Function to update the products to be stocked table
-    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate) {
+    function updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum) {
         var newRow = "<tr>" +
             "<td><button type='button' class='btn btn-danger btn-sm remove-product'><i class='fas fa-trash'></i></button>" +
             "<button type='button' class='btn btn-primary btn-sm edit-product'><i class='fas fa-refresh'></i></button></td>" +
@@ -459,7 +459,7 @@ $(document).ready(function(){
             "<td>" + receiver + "</td>" +
             "<td>" + itemserial + "</td>" +
             "<td style='display: none;'>" + encnum + "</td>" +
-            "<td style='display: none;'>" + currentdate + "</td>" +
+           
             "</tr>";
 
         $('#stockInListTable tbody').append(newRow);
@@ -581,7 +581,7 @@ $(document).ready(function(){
     var receiver = $('input[name="Receiver"]').val();
     var itemserial = $('input[name="ItemSerial"]').val();
     var encnum = $('input[name="ENCNum"]').val();
-    var currentdate = $('input[name="CurrentDate"]').val();
+   
 
     if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
         Swal.fire({
@@ -619,7 +619,7 @@ $(document).ready(function(){
                 cancelButtonText: 'No',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate);
+                    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum);
                     $('input[name="ItemSerial"]').val('');
                 }
             });
@@ -627,7 +627,7 @@ $(document).ready(function(){
         }
     }
 
-    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate);
+    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum);
     $('input[name="ItemSerial"]').val('');
 });
 
@@ -651,7 +651,7 @@ $(document).ready(function(){
             var receiver = row.find('td:eq(12)').text();
             var itemserial = row.find('td:eq(13)').text();
             var encnum = row.find('td:eq(14)').text();
-            var currentdate = row.find('td:eq(15)').text();
+            
             productsToStockIn.push({
                 barcode: barcode,
                 product: product,
@@ -666,8 +666,8 @@ $(document).ready(function(){
                 supplier: supplier,
                 receiver: receiver,
                 itemserial: itemserial,
-                encnum: encnum,
-                currentdate: currentdate
+                encnum: encnum
+                
             });
         });
 
