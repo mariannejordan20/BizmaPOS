@@ -414,7 +414,6 @@ $results = $conn->query($sql);
 <script src="js/sweetalert.min.js"></script>
 
 <!-- Your custom script -->
-
 <script>
 $(document).ready(function(){
     // Function to check if there are products in the to be stocked in table
@@ -567,43 +566,71 @@ $(document).ready(function(){
 
     // Event handler when clicking the Add button
     $('button[name="Save"]').click(function(){
-        var productId = $('input[name="ID"]').val();
-        var barcode = $('input[name="Barcode"]').val();
-        var product = $('input[name="Product"]').val();
-        var type = $('input[name="Type"]').val();
-        var unit = $('input[name="Unit"]').val();
-        var quantity = $('input[name="Quantity"]').val();
-        var costing = $('input[name="Costing"]').val();
-        var price = $('input[name="Price"]').val();
-        var wholesale = $('input[name="Wholesale"]').val();
-        var promo = $('input[name="Promo"]').val();
-        var deliverynum = $('input[name="DRNum"]').val();
-        var supplier = $('input[name="Supplier"]').val();
-        var receiver = $('input[name="Receiver"]').val();
-        var itemserial = $('input[name="ItemSerial"]').val();
-        var encnum = $('input[name="ENCNum"]').val();
-        var currentdate = $('input[name="CurrentDate"]').val();
+    var productId = $('input[name="ID"]').val();
+    var barcode = $('input[name="Barcode"]').val();
+    var product = $('input[name="Product"]').val();
+    var type = $('input[name="Type"]').val();
+    var unit = $('input[name="Unit"]').val();
+    var quantity = $('input[name="Quantity"]').val();
+    var costing = $('input[name="Costing"]').val();
+    var price = $('input[name="Price"]').val();
+    var wholesale = $('input[name="Wholesale"]').val();
+    var promo = $('input[name="Promo"]').val();
+    var deliverynum = $('input[name="DRNum"]').val();
+    var supplier = $('input[name="Supplier"]').val();
+    var receiver = $('input[name="Receiver"]').val();
+    var itemserial = $('input[name="ItemSerial"]').val();
+    var encnum = $('input[name="ENCNum"]').val();
+    var currentdate = $('input[name="CurrentDate"]').val();
 
-        if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
+    if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please fill in required fields.',
+        });
+        return;
+    }
+    if(type === 'W/ SERIAL' && $('input[name="ItemSerial"]').val().trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Serial Number field is required.',
+        });
+        return;
+    }
+    
+    if ($('input[name="ItemSerial"]').val().trim() !== "") {
+        var exists = false;
+        $('#stockInListTable tbody tr').each(function() {
+            var existingSerialNumber = $(this).find('td:eq(13)').text();
+            if (existingSerialNumber === itemserial) {
+                exists = true;
+                return false; // Exit the loop early if serial number is found
+            }
+        });
+        if (exists) {
             Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Please fill in required fields.',
+                icon: 'question',
+                title: 'Duplicate Serial Number',
+                text: 'Serial number already exists in the table. Do you want to proceed?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate);
+                    $('input[name="ItemSerial"]').val('');
+                }
             });
             return;
         }
-        if(type === 'W/ SERIAL' && $('input[name="ItemSerial"]').val().trim() === "") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Serial Number field is required.',
-            });
-            return;
-        }
+    }
 
-        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate);
-        $('input[name="ItemSerial"]').val('');
-    });
+    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum,currentdate);
+    $('input[name="ItemSerial"]').val('');
+});
+
 
     // Event handler when clicking the Stock In button
     $('#stockInButton').click(function() {
@@ -682,7 +709,6 @@ $(document).ready(function(){
     // Initialize the Stock In button state
     updateStockInButtonState();
 });
-
 </script>
 
 <!-- Include your delete.js script here -->
