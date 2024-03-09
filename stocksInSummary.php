@@ -386,7 +386,8 @@ session_start();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="editContinueBtn">Edit/Continue</button>
+                <button id="editContinueAllBtn" class="btn btn-primary">Edit/Continue All</button>
+
             </div>
         </div>
     </div>
@@ -443,6 +444,30 @@ session_start();
 </script>
 
 
+<script>
+    
+    // Define a function to handle the click event of the "Edit/Continue All" button
+    $('#editContinueAllBtn').click(function() {
+        // Clear existing rows in the other table before copying
+        $('#stockInListTable tbody').empty();
+
+        // Clone each row from the modal table and append them to the table in the other file
+        $('#productsTableBody tr').each(function() {
+            var newRow = $('<tr>').append($(this).html());
+            $('#stockInListTable tbody').append(newRow);
+        });
+        
+        // Close the modal after copying the rows
+        $('#viewProductsModal').modal('hide');
+        
+        // Redirect to the other file
+        window.location.href = 'stocksIn.php';
+    });
+</script>
+
+
+
+
 
     <script>
     function copyToClipboard(text) {
@@ -458,6 +483,7 @@ session_start();
 
 
     <script>
+        
     document.addEventListener("DOMContentLoaded", function() {
         populateDropdown("unitFilter", 4); // Index of Unit column
         populateDropdown("categoryFilter", 10); // Index of Category column
