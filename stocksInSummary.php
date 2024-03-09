@@ -20,7 +20,7 @@ session_start();
 ?>
 
 
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -311,53 +311,89 @@ session_start();
                                 </a>
                                 <?php } ?>
                         </div>
-                            <div class="container-fluid">
-                            <div class="header-fixed">
-                                <div class="table-responsive"  style="max-height: 400px; overflow-y: scroll;">
-                                    <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr class="text-white">
-                                            
-                                                <th class="text-center">ACTION</th>
-                                                <th class="text-center">ENC NUMBER</th>
-                                                <th class="text-center">DELIVERY NO.</th>
-                                                <th class="text-center">SUPPLIER</th>
-                                                <th class="text-center">RECEIVER</th>
-                                                <th class="text-center">TOTAL AMT</th>
-                                                <th class="text-center">STOCK IN DATE</th>
-                                            </tr>
-                                        </thead>
-                            </div>
-                                        <tbody class="custom-font-size" style="color: #313A46;">
-                                        <?php
-foreach ($results as $result) {
-    echo '<tr>';
+                        <div class="container-fluid">
+    <div class="header-fixed">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: scroll;">
+            <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="text-white">
+                        <th class="text-center">ACTION</th>
+                        <th class="text-center">ENC NUMBER</th>
+                        <th class="text-center">DELIVERY NO.</th>
+                        <th class="text-center">SUPPLIER</th>
+                        <th class="text-center">RECEIVER</th>
+                        <th class="text-center">TOTAL AMT</th>
+                        <th class="text-center">STOCK IN DATE</th>
+                    </tr>
+                </thead>
+                <tbody class="custom-font-size" style="color: #313A46;">
+                    <?php
+                        foreach ($results as $result) {
+                            echo '<tr>';
+                            echo '<td>';
+                            echo '<a class="mr-2" href="#" onclick="viewProducts(\'' . $result['encnumber'] . '\')" data-toggle="modal" data-target="#viewProductsModal"><i class="fa fa-eye"></i></a>';
+                            if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
+                                echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
+                                <a href="stocksInSummaryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+                            }
+                            echo '</td>';
+                            echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['encnumber'] . '</td>
+                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['DeliveryNumber']) . '</td>
+                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Supplier']) . '</td>
+                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Receiver']) . '</td>
+                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['TotalVal'] . '</td>
+                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['stockindate'] . '</td>
+                            </tr>';
+                        }
+                    ?>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
 
-    echo '<td>';
-    echo '<a class="mr-2" href="#?id='.$result['encnumber'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['encnumber'].'"><i class="fa fa-eye"></i></a>';
-    if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
-        echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-        <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
-    }
-    echo '</td>';
+<div class="modal fade" id="viewProductsModal" tabindex="-1" role="dialog" aria-labelledby="viewProductsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document"> <!-- Updated modal classes -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewProductsModalLabel">View Products</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="viewProductsModalBody">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Barcode</th>
+                            <th>Product</th>
+                            <th>Type</th>
+                            <th>Unit</th>
+                            <th>Quantity</th>
+                            <th>Costing</th>
+                            <th>Price</th>
+                            <th>Wholesale</th>
+                            <th>Promo</th>
+                            <th>Delivery Number</th>
+                            <th>Supplier</th>
+                            <th>Receiver</th>
+                            <th>Stock In Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Product rows will be displayed here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-    echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['encnumber'] . '</td>
-    <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['DeliveryNumber']) . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Supplier']) . '</td>
-            <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Receiver']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['TotalVal'] . '</td>
-            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['stockindate'] . '</td>
-        </tr>';
 
-    
-}
-?>
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+
+
+
                         <div class="d-flex justify-content-end mt-3">
                         <ul class="pagination">
                                 
@@ -382,6 +418,23 @@ foreach ($results as $result) {
     <script src="js/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="js/delete.js"></script>
+
+    <script>
+    function viewProducts(encnumber) {
+        $.ajax({
+            url: 'fetchStockedInProducts.php',
+            type: 'POST',
+            data: {encnumber: encnumber},
+            success: function(response) {
+                $('#productsTableBody').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching products:', error);
+            }
+        });
+    }
+</script>
+
 
 
     <script>
