@@ -333,8 +333,7 @@ session_start();
                             echo '<td>';
                             echo '<a class="mr-2" href="#" onclick="viewProducts(\'' . $result['encnumber'] . '\')" data-toggle="modal" data-target="#viewProductsModal"><i class="fa fa-eye"></i></a>';
                             if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
-                                echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-                                <a href="stocksInSummaryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+                                echo '<a href="stocksInSummaryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
                             }
                             echo '</td>';
                             echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['encnumber'] . '</td>
@@ -353,7 +352,7 @@ session_start();
 </div>
 
 <div class="modal fade" id="viewProductsModal" tabindex="-1" role="dialog" aria-labelledby="viewProductsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered" role="document"> <!-- Updated modal classes -->
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="viewProductsModalLabel">View Products</h5>
@@ -384,6 +383,10 @@ session_start();
                         <!-- Product rows will be displayed here -->
                     </tbody>
                 </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="editContinueBtn">Edit/Continue</button>
             </div>
         </div>
     </div>
@@ -418,6 +421,10 @@ session_start();
     <script src="js/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="js/delete.js"></script>
+
+    
+
+
 
     <script>
     function viewProducts(encnumber) {

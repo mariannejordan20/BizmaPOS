@@ -712,31 +712,34 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: 'stocksInSave.php',
-            type: 'POST',
-            data: { products: JSON.stringify(productsToStockIn) },
-            success: function(response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: response,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                $('#stockInListTable tbody').empty();
-                updateStockInButtonState();
-                updateTotalAmount();
-                location.reload(); // Reset total amount after stocking in
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: 'An error occurred while stocking in products.',
-                    footer: '<pre>' + xhr.responseText + '</pre>'
-                });
-            }
+    url: 'stocksInSave.php',
+    type: 'POST',
+    data: { products: JSON.stringify(productsToStockIn) },
+    success: function(response) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: response,
+            showConfirmButton: false,
+            timer: 1500
+        }).then(function() {
+            // After the success message is shown and the timer has elapsed, reload the page
+            location.reload(); // Reset total amount after stocking in
         });
+        $('#stockInListTable tbody').empty();
+        updateStockInButtonState();
+        updateTotalAmount();
+    },
+    error: function(xhr, status, error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'An error occurred while stocking in products.',
+            footer: '<pre>' + xhr.responseText + '</pre>'
+        });
+    }
+});
+
     });
 
     // Initialize the Stock In button state
