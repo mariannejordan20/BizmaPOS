@@ -221,13 +221,13 @@ if (empty($haslog)) {
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="form-group">
             <label for="DRNum" class="control-label">DR NO.</label>
-            <input type="text" name="DRNum" class="shadow-sm form-control form-control-sm rounded">
+            <input type="text" name="DRNum" class="shadow-sm form-control form-control-sm rounded" value="<?=$row['DeliveryNumber']?>" >
         </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <div class="form-group">
             <label for="Supplier" class="control-label">Supplier</label>
-            <input type="text" name="Supplier" class="shadow-sm form-control form-control-sm rounded">
+            <input type="text" name="Supplier" class="shadow-sm form-control form-control-sm rounded"  value="<?=$row['Supplier']?>">
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
@@ -743,7 +743,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-    url: 'stocksInSave.php',
+    url: 'stocksInSummaryEditSave.php',
     type: 'POST',
     data: { products: JSON.stringify(productsToStockIn) },
     success: function(response) {
