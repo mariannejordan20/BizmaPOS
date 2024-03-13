@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID , encnumber,DeliveryNumber,Supplier,Receiver,stockindate,TotalVal from deliverycodes order by encnumber desc ";
+    $sql = "select ID, encnumber,StockOutType,OrderedBy,ApprovedBy,Consignee,stockOutDate,TotalVal,Charges from stockoutsummary order by encnumber desc ";
     $results = $conn->query($sql);
 ?>
 
@@ -261,7 +261,7 @@ session_start();
                 <?php include('navbar.php'); ?>
                 <div class="container-fluid" style="padding-left: 2%;">
                     <div class="card-header" style="background-color: #eeeeee; border: none">
-                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">STOCK IN SUMMARY</h3>
+                        <h3 class="card-title" style="color: #313A46; margin-bottom: -10px">STOCK OUT SUMMARY</h3>
                     </div>
                     <div class="card-body">
                         <div class="products-section">
@@ -318,12 +318,14 @@ session_start();
                 <thead>
                     <tr class="text-white">
                         <th class="text-center">ACTION</th>
+                        <th class="text-center">STOCK OUT TYPE</th>
                         <th class="text-center">ENC NUMBER</th>
-                        <th class="text-center">DELIVERY NO.</th>
-                        <th class="text-center">SUPPLIER</th>
-                        <th class="text-center">RECEIVER</th>
+                        <th class="text-center">ORDERED BY</th>
+                        <th class="text-center">APPROVED BY</th>
+                        <th class="text-center">CONSIGNEE</th>
                         <th class="text-center">TOTAL AMT</th>
-                        <th class="text-center">STOCK IN DATE</th>
+                        <th class="text-center">Charges</th>
+                        <th class="text-center">STOCK OUT DATE</th>
                     </tr>
                 </thead>
                 <tbody class="custom-font-size" style="color: #313A46;">
@@ -334,15 +336,17 @@ session_start();
                             echo '<a class="mr-2" href="#" onclick="viewProducts(\'' . $result['encnumber'] . '\')" data-toggle="modal" data-target="#viewProductsModal"><i class="fa fa-eye"></i></a>';
                             if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
                                 echo'<a href="stocksInSummaryEdit.php?id='.$result['encnumber'].'"><i class="fa fa-edit text-primary"></i></a>
-                                 <a href="stocksInSummaryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+                                 <a href="stocksOutSummaryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
                             }
                             echo '</td>';
-                            echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['encnumber'] . '</td>
-                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['DeliveryNumber']) . '</td>
-                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Supplier']) . '</td>
-                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Receiver']) . '</td>
+                            echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['StockOutType'] . '</td>
+                            <td class="text-truncate text-center" style="max-width: 50px;">'  .$result['encnumber'] . '</td>
+                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['OrderedBy']) . '</td>
+                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['ApprovedBy']) . '</td>
+                                <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Consignee']) . '</td>
                                 <td class="text-truncate text-right" style="max-width: 75px;">' . $result['TotalVal'] . '</td>
-                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['stockindate'] . '</td>
+                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['Charges'] . '</td>
+                                <td class="text-truncate text-right" style="max-width: 75px;">' . $result['stockOutDate'] . '</td>
                             </tr>';
                         }
                     ?>
@@ -365,20 +369,20 @@ session_start();
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Stock Out Type</th>
                             <th>Barcode</th>
                             <th>Product</th>
+                            <th>Serial</th>
                             <th>Type</th>
                             <th>Unit</th>
                             <th>Quantity</th>
                             <th>Costing</th>
-                            <th>Price</th>
-                            <th>Wholesale</th>
-                            <th>Promo</th>
-                            <th>Delivery Number</th>
-                            <th>Supplier</th>
-                            <th>Receiver</th>
-                            <th>Total AMT</th>
-                            <th>Stock In Date</th>
+                            <th>Charges</th>
+                            <th>TotalValRow</th>
+                            <th>Ordered By</th>
+                            <th>Approved By</th>
+                            <th>Consignee</th>
+                            <th>Stock Out Date</th>
                         </tr>
                     </thead>
                     <tbody id="productsTableBody">
@@ -432,7 +436,7 @@ session_start();
     <script>
     function viewProducts(encnumber) {
         $.ajax({
-            url: 'fetchStockedInProducts.php',
+            url: 'fetchStockedOutProducts.php',
             type: 'POST',
             data: {encnumber: encnumber},
             success: function(response) {

@@ -52,9 +52,9 @@ if(isset($_POST['products'])) {
     // Insert delivery codes only once
     if (!empty($products) && !$insertStockOutSummary) {
         // Insert total value into deliverycodes table
-        $insertStockOutQuery = "INSERT INTO stockoutsummary (encnumber, StockOutType, OrderedBy, ApprovedBy,Consignee, TotalVal) VALUES (?, ?, ?, ?, ?, ?)";
+        $insertStockOutQuery = "INSERT INTO stockoutsummary (encnumber, StockOutType, OrderedBy, ApprovedBy,Consignee, TotalVal, Charges) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $insertStockOutStmt = $conn->prepare($insertStockOutQuery);
-        $insertStockOutStmt->bind_param("sssssd", $encnum, $stockouttype, $orderedby, $approvedby,$consignee, $totalValue);
+        $insertStockOutStmt->bind_param("sssssdd", $encnum, $stockouttype, $orderedby, $approvedby,$consignee, $totalValue, $charges);
         $insertStockOutStmt->execute();
         $insertStockOutStmt->close();
         $insertStockOutSummary = true; // Set flag to true after inserting delivery codes

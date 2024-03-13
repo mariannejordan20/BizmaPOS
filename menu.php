@@ -159,7 +159,7 @@ include('header.php');
                     <a class="collapse-item" href="productsEditHistory.php">Product Edit History </a>
                     <a class="collapse-item" href="stocksInSummary.php">Stock In Summary</a>
                     <a class="collapse-item" href="stocksInHistory.php">Stock In + History</a>
-                    
+                    <a class="collapse-item" href="stocksOutSummary.php">Stock Out Summary</a>
                     <a class="collapse-item" href="stocksOutHistory.php">Stock Out - History </a>
                     
                 </div>

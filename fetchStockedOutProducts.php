@@ -8,27 +8,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['encnumber'])) {
         $encnumber = $_POST['encnumber'];
         // Fetch products based on the provided encnumber
-        $sql = "SELECT Barcode, Product, ItemType, Unit, Quantity, Costing, Price, Wholesale, Promo, DeliveryNumber, Supplier, Receiver,TotalValRow, StockInDate FROM stocksintry WHERE ENCNum = '$encnumber'";
+        $sql = "SELECT Barcode, Product, ItemType, Unit,StockOutType,ItemSerial, Quantity, Costing, Charges, OrderedBy, ApprovedBy,Consignee,TotalValRow, StockOutDate FROM stockouthistory WHERE ENCNum = '$encnumber'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Display products
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
+                echo '<td>' . $row['StockOutType'] . '</td>';
                 echo '<td>' . $row['Barcode'] . '</td>';
                 echo '<td>' . $row['Product'] . '</td>';
+                echo '<td>' . $row['ItemSerial'] . '</td>';
                 echo '<td>' . $row['ItemType'] . '</td>';
                 echo '<td>' . $row['Unit'] . '</td>';
                 echo '<td>' . $row['Quantity'] . '</td>';
                 echo '<td>' . $row['Costing'] . '</td>';
-                echo '<td>' . $row['Price'] . '</td>';
-                echo '<td>' . $row['Wholesale'] . '</td>';
-                echo '<td>' . $row['Promo'] . '</td>';
-                echo '<td>' . $row['DeliveryNumber'] . '</td>';
-                echo '<td>' . $row['Supplier'] . '</td>';
-                echo '<td>' . $row['Receiver'] . '</td>';
+                echo '<td>' . $row['Charges'] . '</td>';
                 echo '<td>' . $row['TotalValRow'] . '</td>';
-                echo '<td>' . $row['StockInDate'] . '</td>';
+                echo '<td>' . $row['OrderedBy'] . '</td>';
+                echo '<td>' . $row['ApprovedBy'] . '</td>';
+                echo '<td>' . $row['Consignee'] . '</td>';
+                echo '<td>' . $row['StockOutDate'] . '</td>';
                 echo '</tr>';
             }
         } else {
