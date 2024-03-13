@@ -185,8 +185,8 @@ $results = $conn->query($sql);
 
 <div class="container-fluid">
     
+<form action = "stocksInSaveSingle.php" method="post" enctype="multipart/form-data">
 
-<form action="">
     <div class="row">
 
     <?php
@@ -216,6 +216,7 @@ $results = $conn->query($sql);
                 <input type="text" name="ENCNum" class="shadow-sm form-control form-control-sm rounded" value="<?php echo $next_ENCNum; ?>" readonly>
             </div>
         </div>
+        
         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 mt-3">
             <div class="form-group">
                 <label for="CurrentDate" class="control-label">Date</label>
@@ -350,6 +351,7 @@ $results = $conn->query($sql);
     </div>
 </div>   
     
+
 </form>
 <div class="row">
     <div class="col-md-12">
@@ -660,7 +662,54 @@ $(document).ready(function(){
 
         updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum);
         $('input[name="ItemSerial"]').val('');
+        var data = {
+        barcode: barcode,
+        product: product,
+        type: type,
+        unit: unit,
+        quantity: quantity,
+        costing: costing,
+        price: price,
+        wholesale: wholesale,
+        promo: promo,
+        deliverynum: deliverynum,
+        supplier: supplier,
+        receiver: receiver,
+        itemserial: itemserial,
+        encnum: encnum
+    };
+
+    // Send AJAX request to insert the data into the database
+    $.ajax({
+        url: 'stocksInSaveSingle.php',
+        type: 'POST',
+        data: data,
+        success: function(response) {
+            // Handle success response
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Record inserted successfully.',
+            });
+            
+            // Update the table with the newly inserted data
+           
+            
+
+        },
+        error: function(xhr, status, error) {
+            // Handle error response
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while inserting the record.',
+                footer: '<pre>' + xhr.responseText + '</pre>'
+            });
+        }
     });
+});
+        
+  
 
     // Event handler when clicking the Stock In button
     $('#stockInButton').click(function() {
