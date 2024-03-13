@@ -353,7 +353,7 @@ $results = $conn->query($sql);
 </form>
 <div class="row">
     <div class="col-md-12">
-        <h2>Products to Stock In</h2>
+        <h5>Products to Stock In</h5>
         <div class="table-responsive" style="max-height: 340px; overflow-y: scroll;">
             <table class="table text-sm text-center table-bordered" style="font-size: 13px; font-weight:bold;" id="stockInListTable">
                 <thead style="background-color: #313a46; color: #fff;">

@@ -306,7 +306,7 @@ session_start();
 
 
                             <?php if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') { ?>
-                                <a href ="productsAdd.php" class="btn btn-success" style="color: white;">
+                                <a href ="stocksIn.php" class="btn btn-success" style="color: white;">
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <?php } ?>
