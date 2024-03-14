@@ -2,8 +2,6 @@
 session_start();
 include('connection.php');
 
-
-
 // Retrieve and sanitize form data
 $product = mysqli_real_escape_string($conn, $_POST['product']);
 $barcode = mysqli_real_escape_string($conn, $_POST['barcode']);
@@ -21,19 +19,27 @@ $ItemSerial = mysqli_real_escape_string($conn, $_POST['itemserial']);
 $EncNum = mysqli_real_escape_string($conn, $_POST['encnum']);
 $TotalVal = $Quantity * $Costing;
 
-$insertEncodeNumQuery = "INSERT INTO deliverycodes (encnumber, DeliveryNumber, Supplier, Receiver)
-                VALUES ('$EncNum','$DRNum','$Supplier','$Receiver')";
-// Execute the query
-if(mysqli_query($conn, $insertEncodeNumQuery)) {
-    echo "Delivery code inserted successfully.";
+// Check if the encnumber already exists in the deliverycodes table
+$checkEncNumQuery = "SELECT * FROM deliverycodes WHERE encnumber = '$EncNum'";
+$result = mysqli_query($conn, $checkEncNumQuery);
+
+if (mysqli_num_rows($result) > 0) {
+    // If the encnumber already exists, do not insert into deliverycodes table
+    echo "Error: ENCNum already exists.";
 } else {
-    echo "Error: " . $insertEncodeNumQuery . "<br>" . mysqli_error($conn);
+    // Insert into deliverycodes table
+    $insertEncodeNumQuery = "INSERT INTO deliverycodes (encnumber, DeliveryNumber, Supplier, Receiver)
+                            VALUES ('$EncNum','$DRNum','$Supplier','$Receiver')";
+    if(mysqli_query($conn, $insertEncodeNumQuery)) {
+        echo "Delivery code inserted successfully.";
+    } else {
+        echo "Error: " . $insertEncodeNumQuery . "<br>" . mysqli_error($conn);
+    }
 }
 
-
+// Insert into stocksintry table
 $insertStocksQuery = "INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity, Costing, Price, Wholesale, Promo, DeliveryNumber, Supplier, Receiver, ItemSerial, ENCNum, TotalValRow) 
-                VALUES ('$barcode', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Wholesale', '$Promo', '$DRNum', '$Supplier', '$Receiver', '$ItemSerial', '$EncNum', '$TotalVal')";
-// Execute the query
+                    VALUES ('$barcode', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Wholesale', '$Promo', '$DRNum', '$Supplier', '$Receiver', '$ItemSerial', '$EncNum', '$TotalVal')";
 if(mysqli_query($conn, $insertStocksQuery)) {
     echo "Stock record inserted successfully.";
 } else {

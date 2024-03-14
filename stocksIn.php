@@ -190,16 +190,7 @@ $results = $conn->query($sql);
     <div class="row">
 
     <?php
-                                $sqlMaxID = "SELECT MAX(ID) AS maxID FROM deliverycodes";
-                                $resultMaxID = $conn->query($sqlMaxID);
-                                $rowMaxID = $resultMaxID->fetch_assoc();
-                                $maxID = $rowMaxID['maxID'];
-
-                                
-                                $nextID = $maxID + 1;
-
-                                // Format the ID to be six digits long
-                                $next_ENCNum = sprintf("%07d", $nextID);
+                               
                             ?>
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-3">
             <div class="form-group">
@@ -210,12 +201,14 @@ $results = $conn->query($sql);
                 </div>
             </div>
         </div>
+
         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 mt-3">
-            <div class="form-group">
-                <label for="ENCNum" class="control-label">ENC No.</label>
-                <input type="text" name="ENCNum" class="shadow-sm form-control form-control-sm rounded" value="<?php echo $next_ENCNum; ?>" readonly>
-            </div>
-        </div>
+    <div class="form-group">
+        <label for="ENCNum" class="control-label">ENC No.</label>
+        <input type="text" name="ENCNum" id="ENCNum" class="shadow-sm form-control form-control-sm rounded" value="0000000" readonly>
+    </div>
+</div>
+
         
         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 mt-3">
             <div class="form-group">
@@ -431,10 +424,30 @@ $results = $conn->query($sql);
 <!-- Your custom script -->
 <script>
 $(document).ready(function(){
-    // Function to check if there are products in the to be stocked in table
-    function checkStockInTable() {
-        return $('#stockInListTable tbody tr').length > 0;
-    }
+
+// Variable to track whether the first "ADD" button is clicked
+var firstAddClicked = false;
+
+// Function to get the max encode number
+function getMaxEncodeNumber() {
+    $.ajax({
+        url: 'getMaxEncodeNumber.php', // Path to your PHP file
+        type: 'GET',
+        success: function(response) {
+            // Update the ENCNum input field with the retrieved value
+            $('input[name="ENCNum"]').val(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching max encode number:', error);
+        }
+    });
+}
+
+
+// Function to check if there are products in the to be stocked in table
+function checkStockInTable() {
+    return $('#stockInListTable tbody tr').length > 0;
+}
 
     // Update the Stock In button state based on the presence of products in the table
     function updateStockInButtonState() {
@@ -484,8 +497,6 @@ $(document).ready(function(){
         updateStockInButtonState();
         updateTotalAmount(); // Update total amount after adding the new row
     }
-
-    // Function to remove product from the stock list
     function removeProductFromList(row) {
         row.remove();
         updateStockInButtonState();
@@ -534,6 +545,10 @@ $(document).ready(function(){
         removeProductFromList(row);
     });
 
+
+
+    // Function to remove product from the stock list
+   
     // Event delegation for handling click event on search results
     $('#searchResults').on('click', '.product-item', function(){
         var productId = $(this).data('product-id');
@@ -599,70 +614,86 @@ $(document).ready(function(){
 
     // Event handler when clicking the Add button
     $('button[name="Save"]').click(function(){
-        var productId = $('input[name="ID"]').val();
-        var barcode = $('input[name="Barcode"]').val();
-        var product = $('input[name="Product"]').val();
-        var type = $('input[name="Type"]').val();
-        var unit = $('input[name="Unit"]').val();
-        var quantity = $('input[name="Quantity"]').val();
-        var costing = $('input[name="Costing"]').val();
-        var price = $('input[name="Price"]').val();
-        var wholesale = $('input[name="Wholesale"]').val();
-        var promo = $('input[name="Promo"]').val();
-        var deliverynum = $('input[name="DRNum"]').val();
-        var supplier = $('input[name="Supplier"]').val();
-        var receiver = $('input[name="Receiver"]').val();
-        var itemserial = $('input[name="ItemSerial"]').val();
-        var encnum = $('input[name="ENCNum"]').val();
-        
+    if (!firstAddClicked) {
+        // Fetch max encode number only when first "ADD" button is clicked
+        getMaxEncodeNumber();
+        firstAddClicked = true; // Set flag to true after first click
 
-        if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Please fill in required fields.',
-            });
-            return;
-        }
-        if(type === 'W/ SERIAL' && $('input[name="ItemSerial"]').val().trim() === "") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Serial Number field is required.',
-            });
-            return;
-        }
+        // After fetching ENCNum, wait for 500 milliseconds before proceeding
+        setTimeout(function() {
+            insertRecord();
+        }, 10);
+    } else {
+        // If first "ADD" button is already clicked, directly insert the record
+        insertRecord();
+    }
+});
 
-        if ($('input[name="ItemSerial"]').val().trim() !== "") {
-            var exists = false;
-            $('#stockInListTable tbody tr').each(function() {
-                var existingSerialNumber = $(this).find('td:eq(13)').text();
-                if (existingSerialNumber === itemserial) {
-                    exists = true;
-                    return false; // Exit the loop early if serial number is found
+// Function to insert record after getting ENCNum
+function insertRecord() {
+    var productId = $('input[name="ID"]').val();
+    var barcode = $('input[name="Barcode"]').val();
+    var product = $('input[name="Product"]').val();
+    var type = $('input[name="Type"]').val();
+    var unit = $('input[name="Unit"]').val();
+    var quantity = $('input[name="Quantity"]').val();
+    var costing = $('input[name="Costing"]').val();
+    var price = $('input[name="Price"]').val();
+    var wholesale = $('input[name="Wholesale"]').val();
+    var promo = $('input[name="Promo"]').val();
+    var deliverynum = $('input[name="DRNum"]').val();
+    var supplier = $('input[name="Supplier"]').val();
+    var receiver = $('input[name="Receiver"]').val();
+    var itemserial = $('input[name="ItemSerial"]').val();
+    var encnum = $('input[name="ENCNum"]').val();
+
+    if(quantity.trim() === "" || deliverynum.trim() === "" || product.trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please fill in required fields.',
+        });
+        return;
+    }
+    if(type === 'W/ SERIAL' && $('input[name="ItemSerial"]').val().trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Serial Number field is required.',
+        });
+        return;
+    }
+
+    if ($('input[name="ItemSerial"]').val().trim() !== "") {
+        var exists = false;
+        $('#stockInListTable tbody tr').each(function() {
+            var existingSerialNumber = $(this).find('td:eq(13)').text();
+            if (existingSerialNumber === itemserial) {
+                exists = true;
+                return false; // Exit the loop early if serial number is found
+            }
+        });
+        if (exists) {
+            Swal.fire({
+                icon: 'question',
+                title: 'Duplicate Serial Number',
+                text: 'Serial number already exists in the table. Do you want to proceed?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum);
+                    $('input[name="ItemSerial"]').val('');
                 }
             });
-            if (exists) {
-                Swal.fire({
-                    icon: 'question',
-                    title: 'Duplicate Serial Number',
-                    text: 'Serial number already exists in the table. Do you want to proceed?',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum);
-                        $('input[name="ItemSerial"]').val('');
-                    }
-                });
-                return;
-            }
+            return;
         }
+    }
 
-        updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum);
-        $('input[name="ItemSerial"]').val('');
-        var data = {
+    updateStockInList(productId, barcode, product, type, unit, quantity, costing, price, wholesale, promo, deliverynum, supplier, receiver,itemserial,encnum);
+    $('input[name="ItemSerial"]').val('');
+    var data = {
         barcode: barcode,
         product: product,
         type: type,
@@ -679,39 +710,34 @@ $(document).ready(function(){
         encnum: encnum
     };
 
-    // Send AJAX request to insert the data into the database
-    $.ajax({
-        url: 'stocksInSaveSingle.php',
-        type: 'POST',
-        data: data,
-        success: function(response) {
-            // Handle success response
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Record inserted successfully.',
-            });
-            
-            // Update the table with the newly inserted data
-           
-            
+    // Send AJAX request to insert the data into the database after a delay
+    setTimeout(function() {
+        $.ajax({
+            url: 'stocksInSaveSingle.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                // Handle success response
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Record inserted successfully.',
+                });
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'An error occurred while inserting the record.',
+                    footer: '<pre>' + xhr.responseText + '</pre>'
+                });
+            }
+        });
+    }, 10); // Delay of 500 milliseconds
+}
 
-        },
-        error: function(xhr, status, error) {
-            // Handle error response
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'An error occurred while inserting the record.',
-                footer: '<pre>' + xhr.responseText + '</pre>'
-            });
-        }
-    });
-});
-        
-  
-
-    // Event handler when clicking the Stock In button
+            // Event handler when clicking the Stock In button
     $('#stockInButton').click(function() {
         var productsToStockIn = [];
         $('#stockInListTable tbody tr').each(function() {
@@ -790,6 +816,11 @@ $(document).ready(function(){
 });
 
     });
+
+  
+
+    // Event handler when clicking the Stock In button
+   
 
     // Initialize the Stock In button state
     updateStockInButtonState();
