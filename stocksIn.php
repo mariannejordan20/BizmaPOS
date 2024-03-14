@@ -622,7 +622,7 @@ function checkStockInTable() {
         // After fetching ENCNum, wait for 500 milliseconds before proceeding
         setTimeout(function() {
             insertRecord();
-        }, 10);
+        }, 5);
     } else {
         // If first "ADD" button is already clicked, directly insert the record
         insertRecord();
@@ -734,7 +734,7 @@ function insertRecord() {
                 });
             }
         });
-    }, 10); // Delay of 500 milliseconds
+    }, 5); // Delay of 500 milliseconds
 }
 
             // Event handler when clicking the Stock In button
