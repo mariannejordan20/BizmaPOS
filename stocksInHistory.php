@@ -344,7 +344,7 @@ foreach ($results as $result) {
     echo '<a class="mr-2" href="#?id='.$result['ID'].'" data-bs-toggle="modal" data-bs-target="#productsModal'.$result['ID'].'"><i class="fa fa-eye"></i></a>';
     if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
         echo '<a class="mr-2" href="productsEdit.php?id='.$result['ID'].'"><i class="fa fa-edit"></i></a>
-        <a href="productsDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+        <a href="stocksInHistoryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
     }
     echo '</td>';
 
