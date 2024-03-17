@@ -186,6 +186,7 @@ $results = $conn->query($sql);
             display: flex; /* Use flexbox layout */
     align-items: center; /* Center items vertically */
         }
+        
     }
 
     @media (max-width: 768px) {
@@ -197,7 +198,7 @@ $results = $conn->query($sql);
 
     @media (min-width: 1000px) {
         .header-fixed .table-responsive {
-        max-height: 500px; /* Set a maximum height for the table on larger screens */
+        max-height: 400px; /* Set a maximum height for the table on larger screens */
     }
         .modal-body {
         max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
