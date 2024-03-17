@@ -23,6 +23,8 @@ $TotalVal = $Quantity * $Costing;
 $checkEncNumQuery = "SELECT * FROM deliverycodes WHERE encnumber = '$EncNum'";
 $result = mysqli_query($conn, $checkEncNumQuery);
 
+
+
 if (mysqli_num_rows($result) > 0) {
     // If the encnumber already exists, do not insert into deliverycodes table
     echo "Error: ENCNum already exists.";
@@ -45,6 +47,21 @@ if(mysqli_query($conn, $insertStocksQuery)) {
 } else {
     echo "Error: " . $insertStocksQuery . "<br>" . mysqli_error($conn);
 }
+if(mysqli_query($conn, $insertStocksQuery)) {
+    echo "Stock record inserted successfully.";
+
+    // Update quantity in products table
+    $updateQuantityQuery = "UPDATE products SET quantity = quantity + $Quantity WHERE Barcode = '$barcode'";
+    if(mysqli_query($conn, $updateQuantityQuery)) {
+        echo "Product quantity updated successfully.";
+    } else {
+        echo "Error updating product quantity: " . mysqli_error($conn);
+    }
+} else {
+    echo "Error: " . $insertStocksQuery . "<br>" . mysqli_error($conn);
+}
+
+
 
 // Close the database connection
 mysqli_close($conn);

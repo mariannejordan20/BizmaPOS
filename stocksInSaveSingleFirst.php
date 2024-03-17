@@ -38,6 +38,14 @@ $insertStocksQuery = "INSERT INTO stocksintry (PrevID,Barcode, Product, ItemType
                     VALUES ('$productId','$barcode', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Wholesale', '$Promo', '$DRNum', '$Supplier', '$Receiver', '$ItemSerial', '$EncNum', '$TotalVal')";
 if(mysqli_query($conn, $insertStocksQuery)) {
     echo "Stock record inserted successfully.";
+
+    // Update quantity in products table
+    $updateQuantityQuery = "UPDATE products SET quantity = quantity + $Quantity WHERE Barcode = '$barcode'";
+    if(mysqli_query($conn, $updateQuantityQuery)) {
+        echo "Product quantity updated successfully.";
+    } else {
+        echo "Error updating product quantity: " . mysqli_error($conn);
+    }
 } else {
     echo "Error: " . $insertStocksQuery . "<br>" . mysqli_error($conn);
 }

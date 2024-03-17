@@ -362,7 +362,7 @@ foreach ($results as $result) {
             <td class="text-truncate text-center" style="max-width: 100px;">' . $result['DeliveryNumber'] . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Supplier']) . '</td>
             <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Receiver']) . '</td>
-            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['StockInDate'] . '</td>
+            <td class="text-truncate text-right" style="max-width: 150px;">' . $result['StockInDate'] . '</td>
         </tr>';
 
     echo '<div class="modal fade" id="productsModal'.$result['ID'].'" tabindex="-1" aria-labelledby="productsModal'.$result['ID'].'" aria-hidden="true">

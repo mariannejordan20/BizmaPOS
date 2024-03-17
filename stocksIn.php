@@ -672,12 +672,10 @@ function deleteProductFromDatabase(productId, row) {
     // Event handler when clicking the Add button
     $('button[name="Save"]').click(function() {
     if (firstTimeClicked) {
-        getMaxEncodeNumber();
-        return; // Return here to prevent further execution until getMaxEncodeNumber finishes
+        getMaxEncodeNumber(); // Call getMaxEncodeNumber first
+    } else {
+        insertData(); // Call insertData directly if not the first time
     }
-
-    // Rest of your code that should execute after getMaxEncodeNumber
-    insertData();
 });
 
 function insertData() {
@@ -829,7 +827,6 @@ function getMaxEncodeNumber() {
         }
     });
 }
-
 
 $('#stockInButton').click(function() {
         var productsToStockIn = [];
