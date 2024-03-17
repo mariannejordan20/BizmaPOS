@@ -188,8 +188,17 @@ $results = $conn->query($sql);
         }
     }
 
-    @media (min-width: 1000px) {
+    @media (max-width: 768px) {
+    .header-fixed .table-responsive {
+        max-height: 300px; /* Set a maximum height for the table on smaller screens */
+    }
+}
 
+
+    @media (min-width: 1000px) {
+        .header-fixed .table-responsive {
+        max-height: 500px; /* Set a maximum height for the table on larger screens */
+    }
         .modal-body {
         max-height: calc(100vh - 100px); /* Adjust as needed, considering modal header height */
         overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
@@ -317,7 +326,7 @@ $results = $conn->query($sql);
                         </div>
                             <div class="container-fluid">
                             <div class="header-fixed">
-                                <div class="table-responsive"  style="max-height: 400px; overflow-y: scroll;">
+                                <div class="table-responsive"  style=" overflow-y: scroll;">
                                     <table class="table text-center table-bordered" id="productsTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr class="text-white">
