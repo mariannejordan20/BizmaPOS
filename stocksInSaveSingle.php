@@ -47,19 +47,15 @@ if(mysqli_query($conn, $insertStocksQuery)) {
 } else {
     echo "Error: " . $insertStocksQuery . "<br>" . mysqli_error($conn);
 }
-if(mysqli_query($conn, $insertStocksQuery)) {
-    echo "Stock record inserted successfully.";
 
-    // Update quantity in products table
+
+if(mysqli_query($conn, $updateQuantityQuery)) { // Update quantity in products table
     $updateQuantityQuery = "UPDATE products SET quantity = quantity + $Quantity WHERE Barcode = '$barcode'";
-    if(mysqli_query($conn, $updateQuantityQuery)) {
-        echo "Product quantity updated successfully.";
-    } else {
-        echo "Error updating product quantity: " . mysqli_error($conn);
-    }
-} else {
-    echo "Error: " . $insertStocksQuery . "<br>" . mysqli_error($conn);
+    echo "Product quantity updated successfully.";
 }
+ else {    echo "Error updating product quantity: " . mysqli_error($conn);
+    }
+
 
 
 

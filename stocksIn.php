@@ -431,19 +431,7 @@ $results = $conn->query($sql);
 $(document).ready(function(){
     var firstTimeClicked = true;
      // Flag to track if it's the first time clicking the Add button
-    function getMaxEncodeNumber() {
-    $.ajax({
-        url: 'getMaxEncodeNumber.php', // Path to your PHP file
-        type: 'GET',
-        success: function(response) {
-            // Update the ENCNum input field with the retrieved value
-            $('input[name="ENCNum"]').val(response);
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching max encode number:', error);
-        }
-    });
-}
+   
     // Function to check if there are products in the to be stocked in table
     function checkStockInTable() {
         return $('#stockInListTable tbody tr').length > 0;
@@ -670,9 +658,11 @@ function deleteProductFromDatabase(productId, row) {
     });
 
     // Event handler when clicking the Add button
-    $('button[name="Save"]').click(function() {
+    var firstTimeClicked = true; // Flag to determine if it's the first time Add button clicked
+
+$('button[name="Save"]').click(function() {
     if (firstTimeClicked) {
-        getMaxEncodeNumber(); // Call getMaxEncodeNumber first
+        getMaxEncodeNumber(); // Call getMaxEncodeNumber only the first time
     } else {
         insertData(); // Call insertData directly if not the first time
     }
@@ -771,12 +761,9 @@ function insertData() {
                 encnum: encnum
             };
 
-            // Determine which URL to use based on first time click
-            var saveUrl = firstTimeClicked ? 'stocksInSaveSingleFirst.php' : 'stocksInSaveSingle.php';
-
             // Send AJAX request to insert the data into the database
             $.ajax({
-                url: saveUrl,
+                url: 'stocksInSaveSingle.php', // Always use stocksInSaveSingle.php
                 type: 'POST',
                 data: data,
                 success: function(response) {
@@ -828,84 +815,8 @@ function getMaxEncodeNumber() {
     });
 }
 
-$('#stockInButton').click(function() {
-        var productsToStockIn = [];
-        $('#stockInListTable tbody tr').each(function() {
-            var row = $(this);
-            var barcode = row.find('td:eq(2)').text();
-            var product = row.find('td:eq(3)').text();
-            var type = row.find('td:eq(4)').text();
-            var unit = row.find('td:eq(5)').text();
-            var quantity = row.find('td:eq(6)').text();
-            var costing = row.find('td:eq(7)').text();
-            var price = row.find('td:eq(8)').text();
-            var wholesale = row.find('td:eq(9)').text();
-            var promo = row.find('td:eq(10)').text();
-            var deliverynum = row.find('td:eq(11)').text();
-            var supplier = row.find('td:eq(12)').text();
-            var receiver = row.find('td:eq(13)').text();
-            var itemserial = row.find('td:eq(14)').text();
-            var encnum = row.find('td:eq(15)').text();
-            var totalvalrow = row.find('td:eq(16)').text();
 
-            productsToStockIn.push({
-                barcode: barcode,
-                product: product,
-                type: type,
-                unit: unit,
-                quantity: quantity,
-                costing: costing,
-                price: price,
-                wholesale: wholesale,
-                promo: promo,
-                deliverynum: deliverynum,
-                supplier: supplier,
-                receiver: receiver,
-                itemserial: itemserial,
-                encnum: encnum,
-                totalvalrow: totalvalrow
-            });
-        });
 
-        if (productsToStockIn.length === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Warning!',
-                text: 'No products available for stocking in.',
-            });
-            return;
-        }
-
-        $.ajax({
-    url: 'stocksInSave.php',
-    type: 'POST',
-    data: { products: JSON.stringify(productsToStockIn) },
-    success: function(response) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: response,
-            showConfirmButton: false,
-            timer: 1500
-        }).then(function() {
-            // After the success message is shown and the timer has elapsed, reload the page
-            location.reload(); // Reset total amount after stocking in
-        });
-        $('#stockInListTable tbody').empty();
-        updateStockInButtonState();
-        updateTotalAmount();
-    },
-    error: function(xhr, status, error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'An error occurred while stocking in products.',
-            footer: '<pre>' + xhr.responseText + '</pre>'
-        });
-    }
-});
-
-    });
 
   
 
