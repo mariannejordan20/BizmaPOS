@@ -43,7 +43,7 @@ include('connection.php');
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="Product" class="control-label">Product</label>
                                 <input type="text" name="Product" class="shadow-sm form-control form-control-sm rounded" readonly>
@@ -67,14 +67,20 @@ include('connection.php');
                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
                             <div class="form-group">
                                 <label for="Quantity" class="control-label">Quantity</label>
-                                <input type="number" name="Quantity" class="shadow-sm form-control form-control-sm rounded" required>
+                                <input type="number" name="Quantity" class="shadow-sm form-control form-control-sm rounded" >
                             </div>
                         </div>
-
+                        
                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                             <div class="form-group">
                                 <label for="Costing" class="control-label">Costing</label>
                                 <input type="number" name="Costing" class="shadow-sm form-control form-control-sm rounded">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md- col-sm-3 col-xs-3" id="serialNumberField" style="display: none;">
+                            <div class="form-group">
+                                <label for="ItemSerial" class="control-label">Serial</label>
+                                <input type="text" name="ItemSerial" class="shadow-sm form-control form-control-sm rounded" >
                             </div>
                         </div>
 </div>
