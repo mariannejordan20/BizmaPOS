@@ -89,22 +89,11 @@
                             <legend style="color: #313A46;">Product Information</legend>
                             <div class="row">
 
-                           <?php
-                                $sqlMaxID = "SELECT MAX(ID) AS maxID FROM products";
-                                $resultMaxID = $conn->query($sqlMaxID);
-                                $rowMaxID = $resultMaxID->fetch_assoc();
-                                $maxID = $rowMaxID['maxID'];
-
-                                
-                                $nextID = $maxID + 1;
-
-                                // Format the ID to be six digits long
-                                $next_IDcode = sprintf("%06d", $nextID);
-                            ?>
+                           
                                  <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                     <div class="form-group">
                                     <label for="ID" class="control-label">ID</label>
-                                   <input type="number" name="ID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
+                                   <input type="number" name="ID" class="form-control form-control-sm rounded-5" readonly value="0000000"/>
 
                                     </div>
                                 </div>
@@ -125,12 +114,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="ProductID" class="control-label">Product ID</label>
-                                        <input type="hidden" name="ProductID" class="form-control form-control-sm rounded-5" readonly value="<?= $next_IDcode ?>"/>
-                                    </div>
-                                </div>
+                                
 
 
                                 

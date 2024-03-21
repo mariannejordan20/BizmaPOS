@@ -2,7 +2,7 @@
 session_start();
 include('connection.php');
 
-$productId = mysqli_real_escape_string($conn, $_POST['productId']);
+
 $product = mysqli_real_escape_string($conn, $_POST['product']);
 $barcode = mysqli_real_escape_string($conn, $_POST['barcode']);
 $type = mysqli_real_escape_string($conn, $_POST['type']);
@@ -40,23 +40,23 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Insert into stocksintry table
-$insertStocksQuery = "INSERT INTO stocksintry (PrevID,Barcode, Product, ItemType, Unit, Quantity, Costing, Price, Wholesale, Promo, DeliveryNumber, Supplier, Receiver, ItemSerial, ENCNum, TotalValRow) 
-                    VALUES ('$productId','$barcode', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Wholesale', '$Promo', '$DRNum', '$Supplier', '$Receiver', '$ItemSerial', '$EncNum', '$TotalVal')";
+$insertStocksQuery = "INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity, Costing, Price, Wholesale, Promo, DeliveryNumber, Supplier, Receiver, ItemSerial, ENCNum, TotalValRow) 
+                    VALUES ('$barcode', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Wholesale', '$Promo', '$DRNum', '$Supplier', '$Receiver', '$ItemSerial', '$EncNum', '$TotalVal')";
 if(mysqli_query($conn, $insertStocksQuery)) {
     echo "Stock record inserted successfully.";
-} else {
+
+   
+    if(mysqli_query($conn, $updateQuantityQuery)) {
+        $updateQuantityQuery = "UPDATE products SET Quantity = Quantity + $Quantity, Costing = $Costing, Price = $Price, Wholesale = $Wholesale, Promo = $Promo  WHERE Barcode = '$barcode'";
+        echo "Product quantity updated successfully.";
+    } else {
+        echo "Error updating product quantity: " . mysqli_error($conn);
+    }
+ 
+}
+else {
     echo "Error: " . $insertStocksQuery . "<br>" . mysqli_error($conn);
 }
-
-
-if(mysqli_query($conn, $updateQuantityQuery)) { // Update quantity in products table
-    $updateQuantityQuery = "UPDATE products SET quantity = quantity + $Quantity WHERE Barcode = '$barcode'";
-    echo "Product quantity updated successfully.";
-}
- else {    echo "Error updating product quantity: " . mysqli_error($conn);
-    }
-
-
 
 
 // Close the database connection

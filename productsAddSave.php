@@ -1,8 +1,7 @@
 <?php
 session_start();
 include('connection.php');
-$id = $_POST['ID'];
-$productid = $_POST['ProductID'];
+
 $barcode = $_POST['Barcode'];
 $type = $_POST['ItemType'];
 $product = $_POST['Product'];
@@ -18,6 +17,18 @@ $supplier = $_POST['Supplier'];
 $date = $_POST['Date_Registered'];
 $subcategories = $_POST['SubCategories'];
 
+
+                                $sqlMaxID = "SELECT MAX(ID) AS maxID FROM products";
+                                $resultMaxID = $conn->query($sqlMaxID);
+                                $rowMaxID = $resultMaxID->fetch_assoc();
+                                $maxID = $rowMaxID['maxID'];
+
+                                
+                                $nextID = $maxID + 1;
+
+                                // Format the ID to be six digits long
+                                $next_IDcode = sprintf("%06d", $nextID);
+                           
 
 
 
@@ -47,11 +58,11 @@ if (mysqli_num_rows($query) > 0) {
             $_SESSION['status'] = "Product already exists!";
             $_SESSION['status_code'] = "error";
             header("location:products.php");
-        }
+        }   
         else{
 
 
-        $add2 = "insert into products set ID ='$id', ProductID = '$productid',ItemType = '$type', Barcode = '$productid',Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
+        $add2 = "insert into products set ProductID = '$next_IDcode',ItemType = '$type', Barcode = '$next_IDcode',Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
         $res2 = $conn->query($add2);
         if ($res2) {
             $_SESSION['status'] = "Product Information Saved";
@@ -61,7 +72,7 @@ if (mysqli_num_rows($query) > 0) {
     }
     }else{
 
-    $add = "insert into products set ID ='$id',ProductID = '$productid',ItemType = '$type', Barcode = '$barcode', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
+    $add = "insert into products ProductID = '$next_IDcode',ItemType = '$type', Barcode = '$barcode', Product = '$product', Unit = '$unit', Costing = '$costing', Price = '$price', Wholesale = '$wholesale', Promo = '$promo', Categories = '$categories',SubCategory = '$subcategories', Seller = '$seller', Supplier = '$supplier', Warranty = '$warranty'";
 
     $res = $conn->query($add);
 

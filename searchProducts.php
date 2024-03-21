@@ -5,6 +5,7 @@ include('connection.php');
 $searchText = $_POST['searchText'];
 
 $sql = "SELECT ID, Barcode, Product, ItemType, Unit, Costing, Price, Wholesale, Promo, Warranty, Categories, SubCategory, Seller, Supplier FROM products WHERE Product LIKE '%$searchText%' ORDER BY Categories";
+
 $results = $conn->query($sql);
 
 if ($results->num_rows > 0) {

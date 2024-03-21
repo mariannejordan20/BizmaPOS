@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID, Barcode, Product,ItemType,Unit,Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber, Receiver, Supplier,ItemSerial,ENCNum, StockInDate from stocksintry order by ENCNum ";
+    $sql = "select ID, Barcode, Product,ItemType,Unit,Quantity,Costing,Price,Wholesale,Promo,DeliveryNumber, Receiver, Supplier,ItemSerial,ENCNum, StockInDate from stocksintry order by ENCNum desc ";
     $results = $conn->query($sql);
 ?>
 

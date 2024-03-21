@@ -5,7 +5,7 @@ include('connection.php');
 // Include getMaxEncodeNumber.php to get the generated encode number
 include('getMaxEncodeNumber.php');
 
-$productId = mysqli_real_escape_string($conn, $_POST['productId']);
+
 $product = mysqli_real_escape_string($conn, $_POST['product']);
 $barcode = mysqli_real_escape_string($conn, $_POST['barcode']);
 $type = mysqli_real_escape_string($conn, $_POST['type']);
@@ -34,13 +34,13 @@ if(mysqli_query($conn, $insertEncodeNumQuery)) {
     echo "Error: " . $insertEncodeNumQuery . "<br>" . mysqli_error($conn);
 }
 
-$insertStocksQuery = "INSERT INTO stocksintry (PrevID,Barcode, Product, ItemType, Unit, Quantity, Costing, Price, Wholesale, Promo, DeliveryNumber, Supplier, Receiver, ItemSerial, ENCNum, TotalValRow) 
-                    VALUES ('$productId','$barcode', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Wholesale', '$Promo', '$DRNum', '$Supplier', '$Receiver', '$ItemSerial', '$EncNum', '$TotalVal')";
+$insertStocksQuery = "INSERT INTO stocksintry (Barcode, Product, ItemType, Unit, Quantity, Costing, Price, Wholesale, Promo, DeliveryNumber, Supplier, Receiver, ItemSerial, ENCNum, TotalValRow) 
+                    VALUES ('$barcode', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Wholesale', '$Promo', '$DRNum', '$Supplier', '$Receiver', '$ItemSerial', '$EncNum', '$TotalVal')";
 if(mysqli_query($conn, $insertStocksQuery)) {
     echo "Stock record inserted successfully.";
-
+    
     // Update quantity in products table
-    $updateQuantityQuery = "UPDATE products SET quantity = quantity + $Quantity WHERE Barcode = '$barcode'";
+    $updateQuantityQuery = "UPDATE products SET Quantity = Quantity + $Quantity, Costing = $Costing, Price = $Price, Wholesale = $Wholesale, Promo = $Promo WHERE Barcode = '$barcode'";
     if(mysqli_query($conn, $updateQuantityQuery)) {
         echo "Product quantity updated successfully.";
     } else {
