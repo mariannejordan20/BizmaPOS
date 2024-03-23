@@ -3,7 +3,7 @@ session_start();
 include('connection.php');
 
 
-include('getMaxInvoiceNumber.php');
+
 
 
 $product = mysqli_real_escape_string($conn, $_POST['product']);
@@ -15,8 +15,8 @@ $Costing = mysqli_real_escape_string($conn, $_POST['costing']);
 $Price = mysqli_real_escape_string($conn, $_POST['price']);
 $ItemSerial = mysqli_real_escape_string($conn, $_POST['itemserial']);
 $Warranty = mysqli_real_escape_string($conn, $_POST['warranty']);
+$invoiceNum = mysqli_real_escape_string($conn, $_POST['invoicenum']);
 
-$invoiceNum = $formattedInvoiceNumber;
 
 $TotalVal = $Quantity * $Price;
 

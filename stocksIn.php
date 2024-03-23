@@ -506,7 +506,7 @@ $results = $conn->query($sql);
                 $('#serialNumberField').hide();
             }
 
-            updateStockInButtonState();
+         
             updateTotalAmount();
         });
 

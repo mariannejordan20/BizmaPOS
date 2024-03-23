@@ -45,7 +45,7 @@ include('connection.php');
                     </div>
                 </div>
 
-    <div class="form-group col-md-6" >
+        <div class="form-group col-md-6" style= "Display: none;" >
             <label for="modalInvoice" class="control-label">Invoice Num</label>
             <input type="text" name="modalInvoice" id="modalInvoice" class="shadow-sm form-control form-control-sm rounded">
           </div>
@@ -64,21 +64,25 @@ include('connection.php');
         
         <div class="form-row">
         
-        <div class="form-group col-md-6" style = "Display:none;">
+        <div class="form-group col-md-6" style="Display: none">
             <label for="modalProduct" class="control-label">Product</label>
             <input type="text" id="modalProduct" class="shadow-sm form-control form-control-sm rounded">
           </div>
-        <div class="form-group col-md-6" style = "Display:none;">
+        <div class="form-group col-md-6" style="Display: none">
             <label for="modalType" class="control-label">Type</label>
             <input type="text" id="modalType" class="shadow-sm form-control form-control-sm rounded">
           </div>
-          <div class="form-group col-md-6" >
+          <div class="form-group col-md-6" style="Display: none"> >
             <label for="modalBarcode" class="control-label">Barcode</label>
             <input type="text" id="modalBarcode" class="shadow-sm form-control form-control-sm rounded">
           </div>
           <div class="form-group col-md-6">
             <label for="modalPrice" class="control-label">Price</label>
             <input type="number" id="modalPrice" class="shadow-sm form-control form-control-sm rounded">
+          </div>
+          <div class="form-group col-md-6" style = "Display:none;">
+            <label for="modalWarranty" class="control-label">Warranty</label>
+            <input type="number" id="modalWarranty" class="shadow-sm form-control form-control-sm rounded">
           </div>
           <div class="form-group col-md-6"style = "Display:none;">
             <label for="modalCosting" class="control-label">Costing</label>
@@ -112,14 +116,14 @@ include('connection.php');
                                         <table class="table text-sm " style="font-size: 12px;" id="salesTable">
                                             <thead style="background-color: #313a46; color: #fff;">
                                                 <tr class="table-bordered">
-                                                    <th>Barcode</th>
+                                                    <th>Act</th>
+                                                    <th>Bcode</th>
                                                     <th style="padding-right: 150px;">Product</th>
                                                     <th>Unit</th>
                                                     <th>Qty</th>
                                                     <th>Srp</th>
-                                                    <th>Warranty</th>
-                                                    <th>Cat</th>
-                                                    <th>S-Cat</th>
+                                                    <th>Wrnty</th>
+                                                    <th>Serial</th>
                                                     <th>T-Amt</th>
                                                 </tr>
                                             </thead>
@@ -144,13 +148,13 @@ include('connection.php');
                                     <h6 class="font-weight-bold mb-3 text-left text-dark" style="background-color:#eeeeee; border-top: 1px solid gray; border-bottom: 1px solid gray; margin: 0; padding: 10px;">Amount:</h6>
                                     <div class="mt-1 d-flex justify-content-between" style="border-bottom: 1px solid gray;">
                                         <p class="display-4 text-right" style="color: black; font-weight: bold; margin: 0; padding: 10px;"></p>
-                                        <p class="display-4 text-right" id="TotalAmount" style="color: black; font-weight: bold; margin: 0; padding: 10px;">0.00</p>
+                                        <p class="display-4 text-right" id="TotalAmount" style="color: black; font-weight: bold; margin: 0; padding: 10px;">0</p>
                                     </div>
                                     <!-- Transaction and Invoice numbers -->
                     
                                     <div class="mt-1 d-flex justify-content-between">
     <p class="font-weight-bold text-right text-dark" style="margin: 0; font-size: 14px;">Invoice No:</p>
-    <p class="font-weight-bold text-right text-dark" id="invoiceNumber" style="margin: 0; font-size: 14px;">000000</p>
+    <p class="font-weight-bold text-right text-dark" id="invoiceNumber" style="margin: 0; font-size: 14px;"></p>
 </div>
 
                                 </div>
@@ -210,11 +214,54 @@ include('connection.php');
     
 <script>
 $(document).ready(function (){
-   
+
+    function initializeButtonState() {
+    var hasData = checkInputs();
+    $('#addToSales').prop('disabled', !hasData);
+}
+
+initializeButtonState();
+
+$('#modalQuantity, #modalSerial, #modalType, #modalProduct').on('input', function () {
+    var hasData = checkInputs();
+    $('#addToSales').prop('disabled', !hasData); // Corrected the selector here
+});
+
+function checkInputs() {
+    var Quantity = $('#modalQuantity').val().trim();
+    var ItemSerial = $('#modalSerial').val().trim();
+    var Product = $('#modalProduct').val().trim();
+    var type = $('#modalType').val().trim();
+
+    // Check if Quantity and Product have data
+    if (Quantity !== "" && Product !== "") {
+        // If the type is 'W/ SERIAL', check if ItemSerial has data
+        if (type === 'W/ SERIAL' && ItemSerial === "") {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+
     // Function to show product modal
     function showProductModal() {
         $('#productModal').modal('show');
+        
     }
+
+    var firstTimeClicked = true;
+    // Event listener for the "Save" button in the modal
+    $('#addToSales').on('click', function() {
+        if (firstTimeClicked) {
+        getMaxInvoiceNumber();
+        fetchSalesData();
+        }else{
+            insertData();
+            fetchSalesData();
+        }  
+    });
 
     function getMaxInvoiceNumber() {
             $.ajax({
@@ -231,7 +278,7 @@ $(document).ready(function (){
         }
 
         function insertData() {
-       
+        var invoicenum = $('input[name="modalInvoice"]').val();
         var barcode = $('#modalBarcode').val();
         var product = $('#modalProduct').val();
         var type = $('#modalType').val();
@@ -239,38 +286,110 @@ $(document).ready(function (){
         var quantity = $('#modalQuantity').val();
         var price = $('#modalPrice').val();
         var costing = $('#modalCosting').val();
+        var warranty = $('#modalWarranty').val();
+        var itemserial = $('#modalSerial').val();
         
-        // Make AJAX request to insert data into the database
+        if (quantity.trim() === ""  || product.trim() === "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Please fill in required fields.'
+                });
+                return;
+            }
+            if (type === 'W/ SERIAL' && $('#modalSerial').val().trim() === "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Serial Number field is required.'
+                });
+                return;
+            }
+
+            if ($('#modalSerial').val().trim() !== "") {
+                var exists = false;
+                $('#stockInListTable tbody tr').each(function () {
+                    var existingSerialNumber = $(this).find('td:eq(7)').text();
+                    if (existingSerialNumber === itemserial) {
+                        exists = true;
+                        return false;
+                    }
+                });
+                if (exists) {
+                    Swal.fire({
+                        icon: 'question',
+                        title: 'Duplicate Serial Number',
+                        text: 'Serial number already exists in the table. Do you want to proceed?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            insertDataToServer();
+                              $('#modalSerial').val()('');
+                            // Proceed with data insertion
+                           
+                        }
+                    });
+                    return;
+                }
+            }
+
+            // If no duplicate serial, proceed with data insertion
+            insertDataToServer();
+        }
+
+        function insertDataToServer() {
+        var invoicenum = $('input[name="modalInvoice"]').val();
+        var barcode = $('#modalBarcode').val();
+        var product = $('#modalProduct').val();
+        var type = $('#modalType').val();
+        var unit = $('#modalUnit').val();
+        var quantity = $('#modalQuantity').val();
+        var price = $('#modalPrice').val();
+        var costing = $('#modalCosting').val();
+        var warranty = $('#modalWarranty').val();
+        var itemserial = $('#modalSerial').val();
+
+        var data = {
+        invoicenum: invoicenum,
+        barcode: barcode,
+        product: product,
+        type: type,
+        unit: unit,
+        quantity: quantity,
+        costing: costing,
+        price: price,
+        warranty: warranty,
+        itemserial: itemserial // Corrected this line
+       
+    };
+        
+    var saveUrl = firstTimeClicked ? 'salesSaveFirst.php' : 'salesSave.php';
+
         $.ajax({
-            url: 'salesSaveFirst.php',
+            url: saveUrl,
             type: 'POST',
-            data: {
-                barcode: barcode,
-                product: product,
-                type: type,
-                unit: unit,
-                quantity: quantity,
-                price: price,
-                costing: costing
-            },
+            data: data,
             success: function (response) {
                 // Handle success response if needed
                 console.log('Data inserted successfully.');
+                $('#invoiceNumber').text($('#modalInvoice').val());
+                $('#productModal').modal('hide');
+                fetchSalesData();
             },
             error: function (xhr, status, error) {
                 console.error('Error inserting data:', error);
             }
         });
+        firstTimeClicked = false;
+        $('#modalSerial').val()('');
         $('#productModal').modal('hide');
+        fetchSalesData();
     }
 
-    // Event listener for the "Save" button in the modal
-    $('#addToSales').on('click', function() {
-        // Call the insertData function when the "Save" button is clicked
-        getMaxInvoiceNumber();
-        
-        
-    });
+
+   
 
     $('#searchResults').on('click', '.product-item', function () {
         var productId = $(this).data('product-id');
@@ -300,6 +419,7 @@ $(document).ready(function (){
         $('#modalQuantity').val(quantity);
         $('#modalPrice').val(price);
         $('#modalCosting').val(costing);
+        $('#modalWarranty').val(warranty);
         
         // Set other values as needed...
 
@@ -316,6 +436,7 @@ $(document).ready(function (){
             $('input[name="Quantity"]').prop('readonly', false);
             $('#serialNumberField').hide();
         }
+        
         showProductModal();
 
         updateTotalAmount();
@@ -333,9 +454,72 @@ $(document).ready(function (){
         });
     });
 
+    
+
 
 
 });
+
+function updateTotalAmount() {
+    var totalAmount = 0;
+    $('#salesTable tbody tr').each(function () {
+        var rowTotal = parseFloat($(this).find('td:eq(8)').text()); // Assuming TotalValRow is in the 15th column
+        totalAmount += rowTotal;
+    });
+
+    // Check if totalAmount has decimals
+    var formattedTotalAmount = totalAmount % 1 === 0 ? totalAmount.toFixed(0) : totalAmount.toFixed(2);
+    
+    $('#TotalAmount').text(formattedTotalAmount); // Update the total amount text
+}
+
+
+function fetchSalesData() {
+        var invoicenum = $('input[name="modalInvoice"]').val();
+
+        $.ajax({
+            url: 'getSales.php', // Change this to the endpoint for fetching data from stocksintry
+            type: 'POST',
+            data: { invoicenum: invoicenum },
+            success: function (response) {
+                // Assuming response contains data in the appropriate format, update the table
+                $('#salesTable tbody').html(response);
+                updateTotalAmount();
+               
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching stocks in data:', error);
+            }
+        });
+    }
+
+    function deleteRow(rowId) {
+    Swal.fire({
+        title: 'Confirm Deletion',
+        text: 'Are you sure you want to delete this entry?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'salesdeleterow.php',
+                type: 'POST',
+                data: { id: rowId },
+                success: function (response) {
+                    console.log('Row deleted successfully:', response);
+                    fetchSalesData(); // Refresh the table after successful deletion
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error deleting row:', error);
+                }
+            });
+        }
+    });
+    
+}
 
 </script>
 
