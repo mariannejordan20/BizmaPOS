@@ -108,6 +108,44 @@ include('connection.php');
     </div>
   </div>
 </div>
+ <!-- Process order modal -->
+
+ <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Customer Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Search bar -->
+                <input type="text" id="customerSearchInput" class="form-control mb-3" placeholder="Search Customer">
+
+                <!-- Table to display customer information -->
+                <table class="table" id="customerTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact Number</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customerTableBody">
+                        <!-- Customer information rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Select Customer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -174,7 +212,7 @@ include('connection.php');
                                         <p class="font-weight-bold mb-3 text-left text-dark" style="  margin: 0; padding: px;">Sales Man:</p>
                                         
                                         <!-- Button for processing order payment -->
-                                        <button class="btn btn-secondary" style="width:100%; margin-top: 10px;">Process Order Payment</button>
+                                        <button class="btn btn-secondary" id="ProcessOrder" style="width:100%; margin-top: 10px;">Process Order Payment</button>
                                     </div>
                                 </div>
                             </div>
@@ -226,6 +264,49 @@ $('#modalQuantity, #modalSerial, #modalType, #modalProduct').on('input', functio
     var hasData = checkInputs();
     $('#addToSales').prop('disabled', !hasData); // Corrected the selector here
 });
+
+ $('#ProcessOrder').on('click', function () {
+            // Display the customer modal
+            $('#customerModal').modal('show');
+        });
+
+        // Event listener for the customer search input
+        function searchCustomers(searchText) {
+        $.ajax({
+            url: 'searchCustomer.php',
+            type: 'POST',
+            data: { searchText: searchText },
+            success: function (response) {
+                $('#customerSearchResults').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error searching for customers:', error);
+            }
+        });
+    }
+
+    // Event listener for keyup event on customer search input
+    $('#customerSearchInput').on('keyup', function () {
+        var searchText = $(this).val();
+        searchCustomers(searchText);
+    });
+
+    // Event listener for selecting a customer from the search results
+    $('#customerSearchResults').on('click', '.customer-item', function () {
+        var customerId = $(this).data('customer-id');
+        var name = $(this).data('name');
+        var contactNumber = $(this).data('contact-number');
+        var address = $(this).data('address');
+
+        // Update modal inputs with selected customer information
+        $('#customerName').val(name);
+        $('#customerContactNumber').val(contactNumber);
+        $('#customerAddress').val(address);
+
+        // Close the dropdown and clear the search input
+        $('#customerSearchResults').html('');
+        $('#customerSearchInput').val('');
+    });
 
 function checkInputs() {
     var Quantity = $('#modalQuantity').val().trim();
