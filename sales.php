@@ -1,6 +1,21 @@
 <?php
 session_start();
 include('connection.php');
+
+
+if (isset($_SESSION['hasLog'])){
+    $haslog = $_SESSION['hasLog'];
+} else {
+    $haslog = 0;
+}
+
+if (empty($haslog)){
+    header("location: login.php");
+    exit;
+}
+
+
+
 ?>
 
 
@@ -9,7 +24,10 @@ include('connection.php');
 <?php include('header.php'); ?>
 <style>
     
-
+    .customer-item:hover {
+        background-color: #f8f9fa; /* Change the background color to your desired color */
+        cursor: pointer; /* Change the cursor to pointer when hovering */
+    }
 
     #salesTable th {
         color: white;
@@ -121,21 +139,27 @@ include('connection.php');
             </div>
             <div class="modal-body">
                 <!-- Search bar -->
-                <input type="text" id="customerSearchInput" class="form-control mb-3" placeholder="Search Customer">
+                <div class="dropdown">
+                    <input type="text" id="customerSearchInput" class="form-control mb-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Search Customer" style="font-size: 16px; border: 2px solid #3498db; padding: 10px; border-radius: 1px;">
+                    <div id="searchCustomerResults" class="dropdown-menu" aria-labelledby="customerSearchInput" style="position: absolute; top: calc(100% + 5px); left: 0; z-index: 1000; width: 100%; max-height: 300px; overflow-y: auto;">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
 
-                <!-- Table to display customer information -->
-                <table class="table" id="customerTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Contact Number</th>
-                            <th>Address</th>
-                        </tr>
-                    </thead>
-                    <tbody id="customerTableBody">
-                        <!-- Customer information rows will be inserted here -->
-                    </tbody>
-                </table>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="modalCustomerName" class="control-label">Customer Name</label>
+                        <input type="text" id="modalCustomerName" class="shadow-sm form-control form-control-sm rounded" readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="modalCustomerContact" class="control-label">Contact</label>
+                        <input type="text" id="modalCustomerContact" class="shadow-sm form-control form-control-sm rounded">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="modalCustomerAddress" class="control-label">Address</label>
+                        <input type="text" id="modalCustomerAddress" class="shadow-sm form-control form-control-sm rounded" readonly>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -144,6 +168,7 @@ include('connection.php');
         </div>
     </div>
 </div>
+
 
 
 
@@ -265,48 +290,9 @@ $('#modalQuantity, #modalSerial, #modalType, #modalProduct').on('input', functio
     $('#addToSales').prop('disabled', !hasData); // Corrected the selector here
 });
 
- $('#ProcessOrder').on('click', function () {
-            // Display the customer modal
-            $('#customerModal').modal('show');
-        });
 
-        // Event listener for the customer search input
-        function searchCustomers(searchText) {
-        $.ajax({
-            url: 'searchCustomer.php',
-            type: 'POST',
-            data: { searchText: searchText },
-            success: function (response) {
-                $('#customerSearchResults').html(response);
-            },
-            error: function (xhr, status, error) {
-                console.error('Error searching for customers:', error);
-            }
-        });
-    }
 
-    // Event listener for keyup event on customer search input
-    $('#customerSearchInput').on('keyup', function () {
-        var searchText = $(this).val();
-        searchCustomers(searchText);
-    });
-
-    // Event listener for selecting a customer from the search results
-    $('#customerSearchResults').on('click', '.customer-item', function () {
-        var customerId = $(this).data('customer-id');
-        var name = $(this).data('name');
-        var contactNumber = $(this).data('contact-number');
-        var address = $(this).data('address');
-
-        // Update modal inputs with selected customer information
-        $('#customerName').val(name);
-        $('#customerContactNumber').val(contactNumber);
-        $('#customerAddress').val(address);
-
-        // Close the dropdown and clear the search input
-        $('#customerSearchResults').html('');
-        $('#customerSearchInput').val('');
-    });
+      
 
 function checkInputs() {
     var Quantity = $('#modalQuantity').val().trim();
@@ -534,6 +520,45 @@ function checkInputs() {
             }
         });
     });
+
+    $('#ProcessOrder').on('click', function () {
+            // Display the customer modal
+            $('#customerModal').modal('show');
+        });
+
+        $('#customerSearchInput').on('keyup', function () {
+            var searchText = $(this).val();
+            $.ajax({
+                url: 'searchSalesCustomer.php', // Replace with the actual URL of your PHP script
+                type: 'POST',
+                data: { searchText: searchText },
+                success: function (response) {
+                    $('#searchCustomerResults').html(response);
+                }
+            });
+        });
+
+        // Assume the showCustomerModal function is defined elsewhere in your code
+        function showCustomerModal() {
+            // Implementation of showCustomerModal function
+        }
+
+        $('#searchCustomerResults').on('click', '.customer-item', function () {
+            var customerId = $(this).data('customer-id');
+            var customerName = $(this).data('customer-name');
+            var customerContact = $(this).data('customer-contact');
+            var customerAddress = $(this).data('customer-address');
+
+            $('#customerModalLabel').text(customerName + ' - ' + customerId);
+
+            // Set values in modal inputs
+            $('#modalCustomerId').val(customerId);
+            $('#modalCustomerName').val(customerName);
+            $('#modalCustomerContact').val(customerContact);
+            $('#modalCustomerAddress').val(customerAddress);
+
+           
+        });
 
     
 
