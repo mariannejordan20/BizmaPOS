@@ -23,7 +23,11 @@ if (empty($haslog)){
 <html lang="en">
 <?php include('header.php'); ?>
 <style>
-    
+    .customer-info {
+    display: flex;
+    justify-content: space-between;
+}
+
     .customer-item:hover {
         background-color: #f8f9fa; /* Change the background color to your desired color */
         cursor: pointer; /* Change the cursor to pointer when hovering */
@@ -132,7 +136,7 @@ if (empty($haslog)){
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="customerModalLabel">Customer Information</h5>
+                <h5 class="modal-title" >Customer Information</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -147,6 +151,11 @@ if (empty($haslog)){
                 </div>
 
                 <div class="form-row">
+
+                <div class="form-group col-md-3" style= "Display: none;" >
+            <label for="modalInvoice" class="control-label">Invoice Num</label>
+            <input type="text" name="modalInvoice" id="modalInvoice" class="shadow-sm form-control form-control-sm rounded">
+          </div>
                     <div class="form-group col-md-4">
                         <label for="modalCustomerName" class="control-label">Customer Name</label>
                         <input type="text" id="modalCustomerName" class="shadow-sm form-control form-control-sm rounded" readonly>
@@ -163,11 +172,56 @@ if (empty($haslog)){
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Select Customer</button>
+                <button type="button" class="btn btn-primary" id="selectCustomerBtn">Select Customer</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<!-- Payment Modal -->
+<!-- Payment Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="totalAmount" class="font-weight-bold">Total Amount</label>
+                    <input type="text" class="form-control form-control-lg" id="totalAmount" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="tenderAmount" class="font-weight-bold">Tender Amount</label>
+                    <input type="text" class="form-control form-control-lg" id="tenderAmount">
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod" class="font-weight-bold">Payment Method</label>
+                    <select class="form-control" id="paymentMethod">
+                        <option>Cash</option>
+                        <option>Credit Card</option>
+                        <option>Debit Card</option>
+                        <!-- Add more payment methods as needed -->
+                    </select>
+                </div>
+                <!-- Add other payment-related fields here as needed -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="confirmPaymentBtn">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -233,11 +287,18 @@ if (empty($haslog)){
                                         <h6 class="font-weight-bold mb-3 text-left text-dark" style="background-color:#eeeeee; border-top: 1px solid gray; border-bottom: 1px solid gray; margin: 0; padding: 10px;">Details Pannel:</h6>
                                         <!-- Additional content for the second card goes here -->
                                         <p class="font-weight-bold mb-3 text-left text-dark" style="  margin: 0; padding: px;">Site Location:</p>
-                                        <p class="font-weight-bold mb-3 text-left text-dark" style="  margin: 0; padding: px;">Customer:</p>
+                                        <!-- Customer name display -->
+                                        <div class="customer-info">
+    <p class="font-weight-bold mb-3 text-left text-dark" style="margin: 0; padding: px;">Customer:</p>
+    <p class="font-weight-bold text-right text-dark" id="customerNameDisplay" style="margin: 0; font-size: 14px;"></p>
+</div>
+
+
                                         <p class="font-weight-bold mb-3 text-left text-dark" style="  margin: 0; padding: px;">Sales Man:</p>
                                         
                                         <!-- Button for processing order payment -->
                                         <button class="btn btn-secondary" id="ProcessOrder" style="width:100%; margin-top: 10px;">Process Order Payment</button>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -316,6 +377,10 @@ function checkInputs() {
     function showProductModal() {
         $('#productModal').modal('show');
         
+    }
+
+    function showPaymentModal() {
+        $('#paymentModal').modal('show');
     }
 
     var firstTimeClicked = true;
@@ -559,6 +624,29 @@ function checkInputs() {
 
            
         });
+
+        $('#selectCustomerBtn').on('click', function() {
+        var invoiceNum = $('#modalInvoice').val(); // Assuming the invoice number is stored in a hidden input field with id "modalInvoice"
+        var customerName = $('#modalCustomerName').val(); // Assuming the selected customer's name is stored in an input field with id "modalCustomerName"
+        
+        // Perform AJAX request to update sales history
+        $.ajax({
+            url: 'salesCustomerUpdate.php', // Replace 'updateSalesHistory.php' with the actual URL of your PHP script for updating the sales history
+            method: 'POST',
+            data: { invoiceNum: invoiceNum, customerName: customerName },
+            success: function(response) {
+                // Handle success response if needed
+                console.log('Sales history updated successfully.');
+                $('#customerNameDisplay').text(customerName);
+                $('#customerModal').modal('hide');
+                showPaymentModal();
+            },
+            error: function(xhr, status, error) {
+                // Handle error if needed
+                console.error('Error updating sales history:', error);
+            }
+        });
+    });
 
     
 
