@@ -184,9 +184,8 @@ if (empty($haslog)){
 
 
 <!-- Payment Modal -->
-<!-- Payment Modal -->
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="paymentModalLabel">Payment Details</h5>
@@ -195,27 +194,127 @@ if (empty($haslog)){
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="totalAmount" class="font-weight-bold">Total Amount</label>
-                    <input type="text" class="form-control form-control-lg" id="totalAmount" readonly>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Content for the first column -->
+                                <!-- Example content: -->
+                                <div class="form-group">
+                                    <label for="totalAmount" class="font-weight-bold">Total Amount</label>
+                                    <input type="text" class="form-control form-control-lg" id="totalAmount" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tenderAmount" class="font-weight-bold">Tender Amount</label>
+                                    <input type="text" class="form-control form-control-lg" id="tenderAmount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="paymentMethod" class="font-weight-bold">Payment Method</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select class="form-control" id="paymentMethod">
+                                                <option>Cash</option>
+                                                <option>Credit Card</option>
+                                                <option>Debit Card</option>
+                                                <!-- Add more payment methods as needed -->
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-control" id="paymentMethod">
+                                                <option>Cash</option>
+                                                <option>Credit Card</option>
+                                                <option>Debit Card</option>
+                                                <!-- Add more payment methods as needed -->
+                                            </select>
+                                        </div>
+                                        <!-- Add another column if needed -->
+                                    </div>  
+                                </div>
+
+                                <!-- Add other payment-related fields here as needed -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Content for the second column -->
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">[ Numpad ]</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(1)">1</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(2)">2</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(3)">3</button>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(4)">4</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(5)">5</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(6)">6</button>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(7)">7</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(8)">8</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(9)">9</button>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(10)">10</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(50)">50</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(100)">100</button>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-8">
+                                                <button type="button" class="btn btn-secondary btn-block" onclick="appendToTenderAmount(0)">0</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-danger btn-block" onclick="clearTenderAmount()">Clear</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <script>
+                                    function appendToTenderAmount(value) {
+                                        var tenderAmountInput = document.getElementById('tenderAmount');
+                                        tenderAmountInput.value += value;
+                                    }
+
+                                    function clearTenderAmount() {
+                                        var tenderAmountInput = document.getElementById('tenderAmount');
+                                        tenderAmountInput.value = '';
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="tenderAmount" class="font-weight-bold">Tender Amount</label>
-                    <input type="text" class="form-control form-control-lg" id="tenderAmount">
-                </div>
-                <div class="form-group">
-                    <label for="paymentMethod" class="font-weight-bold">Payment Method</label>
-                    <select class="form-control" id="paymentMethod">
-                        <option>Cash</option>
-                        <option>Credit Card</option>
-                        <option>Debit Card</option>
-                        <!-- Add more payment methods as needed -->
-                    </select>
-                </div>
-                <!-- Add other payment-related fields here as needed -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="confirmPaymentBtn">Confirm Payment</button>
             </div>
         </div>
