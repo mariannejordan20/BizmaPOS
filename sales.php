@@ -23,6 +23,12 @@ if (empty($haslog)){
 <html lang="en">
 <?php include('header.php'); ?>
 <style>
+    /* Adjust overflow for the amount display */
+.card-body .mt-1 {
+    overflow-x: auto;
+    white-space: nowrap; /* Prevent line breaks */
+}
+
     .customer-info {
     display: flex;
     justify-content: space-between;
@@ -357,25 +363,25 @@ if (empty($haslog)){
                         <div class="col-md-3">
                         <!-- First card with shadow -->
                         <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                            <div class="card-body p-0">
-                                <!-- Additional Sales Information or Widgets -->
-                                <div class="card-body text-center">
-                                    <!-- Small Digital Number Display -->
-                                    <h6 class="font-weight-bold mb-3 text-left text-dark" style="background-color:#eeeeee; border-top: 1px solid gray; border-bottom: 1px solid gray; margin: 0; padding: 10px;">Amount:</h6>
-                                    <div class="mt-1 d-flex justify-content-between" style="border-bottom: 1px solid gray;">
-                                        <p class="display-4 text-right" style="color: black; font-weight: bold; margin: 0; padding: 10px;"></p>
-                                        <p class="display-4 text-right" id="TotalAmount" style="color: black; font-weight: bold; margin: 0; padding: 10px;">0</p>
-                                    </div>
-                                    <!-- Transaction and Invoice numbers -->
-                    
-                                    <div class="mt-1 d-flex justify-content-between">
-    <p class="font-weight-bold text-right text-dark" style="margin: 0; font-size: 14px;">Invoice No:</p>
-    <p class="font-weight-bold text-right text-dark" id="invoiceNumber" style="margin: 0; font-size: 14px;"></p>
+    <div class="card-body p-0">
+        <!-- Additional Sales Information or Widgets -->
+        <div class="card-body text-center">
+            <!-- Small Digital Number Display -->
+            <h6 class="font-weight-bold mb-3 text-left text-dark" style="background-color:#eeeeee; border-top: 1px solid gray; border-bottom: 1px solid gray; margin: 0; padding: 10px;">Amount:</h6>
+            <div class="mt-1 d-flex justify-content-between" style="border-bottom: 1px solid gray; overflow-x: auto;">
+                <p class="display-4 text-right" style="color: black; font-weight: bold; margin: 0; padding: 10px;"></p>
+                <p class="display-4 text-right" id="TotalAmount" style="color: black; font-weight: bold; font-size:250%; margin: 0; padding: 10px;">0</p>
+            </div>
+            <!-- Transaction and Invoice numbers -->
+
+            <div class="mt-1 d-flex justify-content-between">
+                <p class="font-weight-bold text-right text-dark" style="margin: 0; font-size: 14px;">Invoice No:</p>
+                <p class="font-weight-bold text-right text-dark" id="invoiceNumber" style="margin: 0; font-size: 14px;"></p>
+            </div>
+        </div>
+    </div>
 </div>
 
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Second card below the amount card -->
                         <div class="card mt-3" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
