@@ -218,12 +218,10 @@ if (empty($haslog)){
                                     <label for="paymentMethod" class="font-weight-bold">Payment Method</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select class="form-control" id="paymentMethod">
-                                                <option>Cash</option>
-                                                <option>Credit Card</option>
-                                                <option>Debit Card</option>
-                                                <!-- Add more payment methods as needed -->
-                                            </select>
+                                            <input class="form-control" id="CustomerName" readonly>
+                                               
+                                            
+                                            
                                         </div>
                                         <div class="col-md-6">
                                             <select class="form-control" id="paymentMethod">
@@ -726,7 +724,7 @@ function checkInputs() {
             $('#modalCustomerName').val(customerName);
             $('#modalCustomerContact').val(customerContact);
             $('#modalCustomerAddress').val(customerAddress);
-
+            $('#CustomerName').val(customerName);
            
         });
 
@@ -770,6 +768,8 @@ function updateTotalAmount() {
     var formattedTotalAmount = totalAmount % 1 === 0 ? totalAmount.toFixed(0) : totalAmount.toFixed(2);
     
     $('#TotalAmount').text(formattedTotalAmount); // Update the total amount text
+    $('#totalAmount').val(formattedTotalAmount);
+    
 }
 
 
