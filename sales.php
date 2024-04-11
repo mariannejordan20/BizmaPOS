@@ -208,11 +208,11 @@ if (empty($haslog)){
                                 <!-- Example content: -->
                                 <div class="form-group">
                                     <label for="totalAmount" class="font-weight-bold">Total Amount</label>
-                                    <input type="text" class="form-control form-control-lg" id="totalAmount" readonly>
+                                    <input style="font-size: 50px;" type="text" class="form-control form-control-lg font-weight-bold text-right" id="totalAmount" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="tenderAmount" class="font-weight-bold">Tender Amount</label>
-                                    <input type="text" class="form-control form-control-lg" id="tenderAmount">
+                                    <input type="text" class="form-control form-control-lg text-right" id="tenderAmount">
                                 </div>
                                 <div class="form-group">
                                     <label for="paymentMethod" class="font-weight-bold">Payment Method</label>
