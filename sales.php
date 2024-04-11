@@ -24,6 +24,14 @@ if (empty($haslog)){
 <html lang="en">
 <?php include('header.php'); ?>
 <style>
+    .custom-select-sm {
+    height: calc(1.5em + .75rem + 2px); /* Adjust the height as needed */
+}
+
+    .text-right {
+    text-align: right;
+}
+
     /* Adjust overflow for the amount display */
 .card-body .mt-1 {
     overflow-x: auto;
@@ -328,7 +336,7 @@ if (empty($haslog)){
 
 <!-- Change Modal -->
 <div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document"> <!-- Added modal-lg class for a larger modal -->
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="changeModalLabel">Change Details</h5>
@@ -337,15 +345,83 @@ if (empty($haslog)){
                 </button>
             </div>
             <div class="modal-body">
-                <p>The change is: <span id="changeAmount"></span></p>
+                <h6 class="modal-title font-weight-bold mb-2" id="changeModalLabel">Are these order (ITEMS) were released?</h6>
+                <div class="row">
+                    <div class="col-md-6 text-center"> <!-- Left Column -->
+                        <button type="button" class="btn btn-secondary btn-block">[ F2 ] Not Yet</button> <!-- Added btn-block class for full width -->
+                    </div>
+                    <div class="col-md-6 text-center"> <!-- Right Column -->
+                        <button type="button" class="btn btn-success btn-block">[ F3 ] Yes</button> <!-- Added btn-block class for full width -->
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <p>Amount:</p>
+                                        <p>TL Tendered:</p>
+                                        <hr>
+                                        <p class="font-weight-bold">Change:</p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <p class="text-right" id="totalAmount">1800.00</p>
+                                        <p class="text-right">2000.00</p>
+                                        <hr>
+                                        <p class="text-right font-weight-bold"><span id="changeAmount"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <p>Release Date</p>
+                                        <p>[ MMDDYY ] <br> </p>
+                                        <p class="font-weight-bold"> 04  11  24</p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <p>Release Via / Via</p>
+                                        <select class="form-control custom-select-sm" id="paymentMethod"> <!-- Added custom-select-sm class -->
+                                            <option>PICKUP</option>
+                                            <option>Credit Card</option>
+                                            <option>Debit Card</option>
+                                            <!-- Add more payment methods as needed -->
+                                        </select>
+                                        <select class="form-control custom-select-sm mt-2" id="paymentMethod"> <!-- Added custom-select-sm class -->
+                                            <option>INSTORE</option>
+                                            <option>Credit Card</option>
+                                            <option>Debit Card</option>
+                                            <!-- Add more payment methods as needed -->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="printReceipt()">Print</button>
+                <div class="row">
+                    <div class="col-md-4 mb-2"> <!-- Three buttons per row -->
+                        <h6 class="modal-title font-weight-bold mb-2" id="changeModalLabel">Print Receipt?</h6>
+                    </div>
+                    <div class="col-md-4 mb-2"> <!-- Three buttons per row -->
+                        <button type="button" class="btn btn-primary btn-block">[Enter] Yes Print</button>
+                    </div>
+                    <div class="col-md-4 mb-2"> <!-- Three buttons per row -->
+                        <button type="button" class="btn btn-secondary btn-block">[F12] Don't Print</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
