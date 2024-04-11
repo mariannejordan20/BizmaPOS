@@ -16,6 +16,7 @@ if (empty($haslog)){
 
 
 
+
 ?>
 
 
@@ -325,6 +326,28 @@ if (empty($haslog)){
     </div>
 </div>
 
+<!-- Change Modal -->
+<div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeModalLabel">Change Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The change is: <span id="changeAmount"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="printReceipt()">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -453,6 +476,32 @@ $('#modalQuantity, #modalSerial, #modalType, #modalProduct').on('input', functio
     var hasData = checkInputs();
     $('#addToSales').prop('disabled', !hasData); // Corrected the selector here
 });
+
+// Modify the existing event listener for the confirmPaymentBtn
+$('#confirmPaymentBtn').on('click', function() {
+    openChangeModal();
+});
+
+function calculateChange() {
+    var totalAmount = parseFloat(document.getElementById('totalAmount').value);
+    var tenderAmount = parseFloat(document.getElementById('tenderAmount').value);
+
+    var change = tenderAmount - totalAmount;
+    return change.toFixed(2); // Round to two decimal places
+}
+
+// Function to open the change modal and display the change amount
+function openChangeModal() {
+    var changeAmount = calculateChange();
+    document.getElementById('changeAmount').textContent = changeAmount;
+    $('#changeModal').modal('show');
+}
+
+// Function to print the receipt
+function printReceipt() {
+    // Implement your printing logic here
+    alert('Printing receipt...');
+}
 
 
 

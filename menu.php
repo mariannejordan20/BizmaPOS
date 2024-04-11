@@ -157,6 +157,7 @@ include('header.php');
                 <div class="bg-white py-2 collapse-inner rounded">
                     
                     <a class="collapse-item" href="productsEditHistory.php">Product Edit History </a>
+                    <a class="collapse-item" href="salessummary.php">Sales Summary</a>
                     <a class="collapse-item" href="stocksInSummary.php">Stock In Summary</a>
                     <a class="collapse-item" href="stocksInHistory.php">Stock In + History</a>
                     <a class="collapse-item" href="stocksOutSummary.php">Stock Out Summary</a>
