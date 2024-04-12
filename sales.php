@@ -334,12 +334,12 @@ if (empty($haslog)){
     </div>
 </div>
 
-<!-- Change Modal -->
+<!-- Change Modal OR THE FINAL MODAL -->
 <div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document"> <!-- Added modal-lg class for a larger modal -->
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="changeModalLabel">Change Details</h5>
+                <h5 class="modal-title" id="changeModalLabel">Purchase Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -351,7 +351,7 @@ if (empty($haslog)){
                         <button type="button" class="btn btn-secondary btn-block">[ F2 ] Not Yet</button> <!-- Added btn-block class for full width -->
                     </div>
                     <div class="col-md-6 text-center"> <!-- Right Column -->
-                        <button type="button" class="btn btn-success btn-block">[ F3 ] Yes</button> <!-- Added btn-block class for full width -->
+                        <button type="button" class="btn btn-secondary btn-block">[ F3 ] Yes</button> <!-- Added btn-block class for full width -->
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -366,8 +366,8 @@ if (empty($haslog)){
                                         <p class="font-weight-bold">Change:</p>
                                     </div>
                                     <div class="col-md-5">
-                                        <p class="text-right" id="totalAmount">1800.00</p>
-                                        <p class="text-right">2000.00</p>
+                                        <p class="text-right" id="finalTotalAmount"></p>
+                                        <p class="text-right" id="finalTenderedAmount"></p>
                                         <hr>
                                         <p class="text-right font-weight-bold"><span id="changeAmount"></span></p>
                                     </div>
@@ -382,20 +382,20 @@ if (empty($haslog)){
                                     <div class="col-md-5">
                                         <p>Release Date</p>
                                         <p>[ MMDDYY ] <br> </p>
-                                        <p class="font-weight-bold"> 04  11  24</p>
+                                        <p class="font-weight-bold" id="currentDate"></p>
                                     </div>
                                     <div class="col-md-7">
                                         <p>Release Via / Via</p>
-                                        <select class="form-control custom-select-sm" id="paymentMethod"> <!-- Added custom-select-sm class -->
+                                        <select class="form-control custom-select-sm" id="purchaseMethod"> <!-- Added custom-select-sm class -->
                                             <option>PICKUP</option>
-                                            <option>Credit Card</option>
-                                            <option>Debit Card</option>
+                                            <option>DELIVERY</option>
+                                            
                                             <!-- Add more payment methods as needed -->
                                         </select>
-                                        <select class="form-control custom-select-sm mt-2" id="paymentMethod"> <!-- Added custom-select-sm class -->
-                                            <option>INSTORE</option>
-                                            <option>Credit Card</option>
-                                            <option>Debit Card</option>
+                                        <select class="form-control custom-select-sm mt-2" id="Branch"> <!-- Added custom-select-sm class -->
+                                            <option>MANDAUE</option>
+                                            <option>CEBU</option>
+                                            <option>DANAO</option>
                                             <!-- Add more payment methods as needed -->
                                         </select>
                                     </div>
@@ -537,7 +537,18 @@ if (empty($haslog)){
     <script src="js/sweetalert2.all.min.js"></script>
     <script src="js/sweetalert.min.js"></script>
 
+   
+    <script>
+    // Get the current date
+    var currentDate = new Date();
     
+    // Format the date as desired (e.g., "[04/12/24]")
+    var formattedDate = '[' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '/' + ('0' + currentDate.getDate()).slice(-2) + '/' + ('' + currentDate.getFullYear()).slice(-2) + ']';
+    
+    // Update the content of the element with the formatted date
+    document.getElementById('currentDate').textContent = formattedDate;
+</script>
+
 <script>
 $(document).ready(function (){
 
@@ -561,7 +572,7 @@ $('#confirmPaymentBtn').on('click', function() {
 function calculateChange() {
     var totalAmount = parseFloat(document.getElementById('totalAmount').value);
     var tenderAmount = parseFloat(document.getElementById('tenderAmount').value);
-
+    $('#finalTenderedAmount').text(tenderAmount);
     var change = tenderAmount - totalAmount;
     return change.toFixed(2); // Round to two decimal places
 }
@@ -579,9 +590,6 @@ function printReceipt() {
     alert('Printing receipt...');
 }
 
-
-
-      
 
 function checkInputs() {
     var Quantity = $('#modalQuantity').val().trim();
@@ -892,8 +900,10 @@ function updateTotalAmount() {
     // Check if totalAmount has decimals
     var formattedTotalAmount = totalAmount % 1 === 0 ? totalAmount.toFixed(0) : totalAmount.toFixed(2);
     
+    
     $('#TotalAmount').text(formattedTotalAmount); // Update the total amount text
     $('#totalAmount').val(formattedTotalAmount);
+    $('#finalTotalAmount').text(formattedTotalAmount);
     
 }
 
