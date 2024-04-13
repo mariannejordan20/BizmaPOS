@@ -20,8 +20,8 @@ $invoiceNum = $formattedInvoiceNumber;
 
 $TotalVal = $Quantity * $Price;
 
-$insertInvoiceNumQuery = "INSERT INTO invoice (InvoiceNumber)
-                        VALUES ('$invoiceNum')";
+$insertInvoiceNumQuery = "INSERT INTO invoice (InvoiceNumber,TotalAmount)
+                        VALUES ('$invoiceNum','$TotalVal')";
 if(mysqli_query($conn, $insertInvoiceNumQuery)) {
     echo "Invoice successfully added.";
     $_SESSION['invoiceNumber'] = $invoiceNum;

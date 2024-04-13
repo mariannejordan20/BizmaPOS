@@ -15,7 +15,7 @@ session_start();
         exit;
     }
 
-    $sql = "select ID , InvoiceNumber,Customer,Branch,Salesman,TotalAmount,SalesDate from invoice order by InvoiceNumber desc ";
+    $sql = "select ID , InvoiceNumber,Customer,Branch,Salesman,PurchaseStatus,TotalAmount,SalesDate from invoice order by InvoiceNumber desc ";
     $results = $conn->query($sql);
 ?>
 
@@ -292,6 +292,8 @@ session_start();
                                                     </th>
                                                     <th class="text-center">SALESMAN</th>
                                                     <th class="text-center">TOTAL AMT</th>
+                                                    <th class="text-center">STATUS</th>
+
                                                     <th class="text-center">DOP</th>
                                                 </tr>
                                             </thead>
@@ -307,12 +309,22 @@ session_start();
                                                         }
                                                         echo '</td>';
                                                         echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['InvoiceNumber'] . '</td>
-                                                            <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Customer']) . '</td>
-                                                            <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Branch']) . '</td>
-                                                            <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Salesman']) . '</td>
-                                                            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['TotalAmount'] . '</td>
-                                                            <td class="text-truncate text-right" style="max-width: 75px;">' . $result['SalesDate'] . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Customer']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Branch']) . '</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">' . strtoupper ($result['Salesman']) . '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['TotalAmount'] . '</td>
+                                                        <td class="text-truncate text-center" style="max-width: 75px;">';
+                                                        if ($result['PurchaseStatus'] == 1) {
+                                                            echo "Pending";
+                                                        } elseif ($result['PurchaseStatus'] == 2) {
+                                                            echo "Completed";
+                                                        } else {
+                                                            echo "Unknown";
+                                                        }
+                                                        echo '</td>
+                                                        <td class="text-truncate text-right" style="max-width: 75px;">' . $result['SalesDate'] . '</td>
                                                         </tr>';
+
                                                     }
                                                 ?>
                                             </tbody>

@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Update saleshistory table
     $sql = "UPDATE saleshistory SET Customer = '$customerName' WHERE invoiceNumber = '$invoiceNum'";
+    $sql2 = "UPDATE invoice SET Customer = '$customerName' WHERE invoiceNumber = '$invoiceNum'";
+    mysqli_query($conn, $sql2);
     
     if (mysqli_query($conn, $sql)) {
         // Query executed successfully

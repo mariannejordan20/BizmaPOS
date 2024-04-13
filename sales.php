@@ -345,15 +345,8 @@ if (empty($haslog)){
                 </button>
             </div>
             <div class="modal-body">
-                <h6 class="modal-title font-weight-bold mb-2" id="changeModalLabel">Are these order (ITEMS) were released?</h6>
-                <div class="row">
-                    <div class="col-md-6 text-center"> <!-- Left Column -->
-                        <button type="button" class="btn btn-secondary btn-block">[ F2 ] Not Yet</button> <!-- Added btn-block class for full width -->
-                    </div>
-                    <div class="col-md-6 text-center"> <!-- Right Column -->
-                        <button type="button" class="btn btn-secondary btn-block">[ F3 ] Yes</button> <!-- Added btn-block class for full width -->
-                    </div>
-                </div>
+             
+                
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <div class="card">
@@ -385,7 +378,7 @@ if (empty($haslog)){
                                         <p class="font-weight-bold" id="currentDate"></p>
                                     </div>
                                     <div class="col-md-7">
-                                        <p>Release Via / Via</p>
+                                        <p>Release Via</p>
                                         <select class="form-control custom-select-sm" id="purchaseMethod"> <!-- Added custom-select-sm class -->
                                             <option>PICKUP</option>
                                             <option>DELIVERY</option>
@@ -393,9 +386,8 @@ if (empty($haslog)){
                                             <!-- Add more payment methods as needed -->
                                         </select>
                                         <select class="form-control custom-select-sm mt-2" id="Branch"> <!-- Added custom-select-sm class -->
-                                            <option>MANDAUE</option>
-                                            <option>CEBU</option>
-                                            <option>DANAO</option>
+                                            <option>INSTORE</option>
+                                            
                                             <!-- Add more payment methods as needed -->
                                         </select>
                                     </div>
@@ -414,7 +406,7 @@ if (empty($haslog)){
                         <button type="button" class="btn btn-primary btn-block">[Enter] Yes Print</button>
                     </div>
                     <div class="col-md-4 mb-2"> <!-- Three buttons per row -->
-                        <button type="button" class="btn btn-secondary btn-block">[F12] Don't Print</button>
+                        <button type="button" class="btn btn-secondary btn-block" id="noPrint">[F12] Don't Print</button>
                     </div>
                 </div>
             </div>
@@ -589,6 +581,32 @@ function printReceipt() {
     // Implement your printing logic here
     alert('Printing receipt...');
 }
+
+$('#noPrint').on('click', function() {
+    var invoiceNumber = $('input[name="modalInvoice"]').val();
+
+    // Make an AJAX request to update the database
+    $.ajax({
+        url: 'updateInvoiceStatus.php',
+        type: 'POST',
+        data: {
+            invoiceNumber: invoiceNumber
+        },
+        success: function(response) {
+            console.log('Invoice status updated successfully.');
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error('Error updating invoice status:', error);
+            // Handle error if needed
+        }
+    });
+
+    
+});
+
+
+
 
 
 function checkInputs() {

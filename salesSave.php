@@ -20,14 +20,12 @@ $invoiceNum = mysqli_real_escape_string($conn, $_POST['invoicenum']);
 
 $TotalVal = $Quantity * $Price;
 
-$insertInvoiceNumQuery = "INSERT INTO invoice (InvoiceNumber)
-                        VALUES ('$invoiceNum')";
-if(mysqli_query($conn, $insertInvoiceNumQuery)) {
-    echo "Invoice successfully added.";
-    $_SESSION['invoiceNumber'] = $invoiceNum;
-} else {
-    echo "Error: " . $insertInvoiceNumQuery . "<br>" . mysqli_error($conn);
+$updateInvoice = "UPDATE invoice SET TotalAmount = TotalAmount + $TotalVal WHERE InvoiceNumber = '$invoiceNum'";
+if (!mysqli_query($conn, $updateInvoice)) {
+    echo "Error updating TotalAmount: " . mysqli_error($conn);
+    exit();
 }
+
 
 $insertSalesQuery = "INSERT INTO saleshistory (Barcode,InvoiceNumber, Product, ItemType, Unit, Quantity, Costing, Price, Warranty, ItemSerial, TotalValRow) 
                     VALUES ('$barcode','$invoiceNum', '$product', '$type', '$unit', '$Quantity', '$Costing', '$Price', '$Warranty', '$ItemSerial', '$TotalVal')";
