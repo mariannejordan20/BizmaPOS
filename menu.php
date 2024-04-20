@@ -104,7 +104,7 @@ include('header.php');
                     
                     <a class="collapse-item" href="stocksIn.php">Stock In +</a>
                    
-                    <a class="collapse-item" href="stocksOut.php">Stock out - </a>
+                    <a class="collapse-item" href="stocksOut.php">Stock out - (need edit)</a>
                     <a class="collapse-item" href="products.php">Inventory List </a>
                     
                 </div>

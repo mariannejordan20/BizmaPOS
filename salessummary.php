@@ -305,7 +305,7 @@ session_start();
                                                         echo '<a class="mr-2" href="#" onclick="viewProducts(\'' . $result['InvoiceNumber'] . '\')" data-toggle="modal" data-target="#viewProductsModal"><i class="fa fa-eye"></i></a>';
                                                         if ($_SESSION['Type'] == 'ADMIN' || $_SESSION['Type'] == 'MANAGER') {
                                                             echo'<a href="stocksInSummaryEdit.php?id='.$result['InvoiceNumber'].'"><i class="fa fa-edit text-primary"></i></a>
-                                                            <a href="stocksInSummaryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
+                                                            <a href="salesSummaryDelete.php?id='.$result['ID'].'"><i class="fa fa-trash text-danger"></i></a>';
                                                         }
                                                         echo '</td>';
                                                         echo '<td class="text-truncate text-center" style="max-width: 50px;">'  .$result['InvoiceNumber'] . '</td>

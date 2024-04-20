@@ -142,11 +142,7 @@
 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
     <div class="form-group">
         <label for="Categories" class="control-label">Category</label>
-        <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
-            </span>
-        </a>
+        
         <div id="categoriesDropdownContainer">
             <select name="Categories" id="Categories" class="form-control form-control-sm rounded-5" required>
                 <option value="" selected disabled>Select a category</option>
@@ -193,12 +189,8 @@
 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
     <div class="form-group">
         <label for="SubCategories" class="control-label">Sub-Category</label>
-        <!-- Add new unit modal trigger -->
-        <a href="#" data-toggle="modal" data-target="#AddUModal" style="background-color: white; float: right">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus-circle" style="color: #ff3c00; margin-top: 6px; margin-right: 4px"></i>
-            </span>
-        </a>
+        
+        
         <select name="SubCategories" id="SubCategories" class="form-control form-control-sm rounded-5" >
             <!-- Placeholder option for subcategories -->
             <option value="" disabled>Select a category first</option>
